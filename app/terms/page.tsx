@@ -9,7 +9,7 @@ export default function Terms() {
       <p className="text-xs text-muted">Template — have it reviewed by counsel before launch.</p>
 
       <h2 className="font-semibold text-ink">Educational use only</h2>
-      <p>All content is general information. It is not medical advice, diagnosis or treatment, and it does not create a doctor–patient relationship. Always consult a board-certified dermatologist or licensed practitioner about your own situation.</p>
+      <p>All content is general information. It is not medical advice, diagnosis or treatment, and it does not create a doctor–patient relationship. Always consult a board-certified dermatologist, plastic surgeon or other licensed medical provider about your own situation.</p>
 
       <h2 className="font-semibold text-ink">Prices and listings</h2>
       <p>Price ranges are rough estimates and may be out of date. Provider listings and links to third-party directories are for convenience and are not endorsements, referrals or guarantees. Ratings are copied from public sources on the date shown. Verify credentials and licensing yourself.</p>

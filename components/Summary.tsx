@@ -4,6 +4,7 @@ import { directoryLinks } from "@/lib/clinics";
 import { downtimeShort, usd, type Match } from "@/lib/match";
 import type { City } from "@/lib/types";
 import { LeadCaptureForm } from "./LeadCaptureForm";
+import { Dots } from "./ProcedureFacts";
 
 export function Summary({
   city,
@@ -18,13 +19,13 @@ export function Summary({
 }) {
   const [area, setArea] = useState("");
   const [showEmail, setShowEmail] = useState(false);
-  const links = directoryLinks(city, area);
+  const links = directoryLinks(city, area, saved.map((m) => m.procedure.name));
 
   return (
     <section className="animate-in space-y-8">
       <div>
         <h1 className="text-2xl font-semibold mb-1.5">Your list</h1>
-        <p className="text-sm text-muted">Topics to bring to a dermatologist — not recommendations.</p>
+        <p className="text-sm text-muted">Ideas to discuss at a consultation — not recommendations.</p>
       </div>
 
       {saved.length === 0 ? (
@@ -35,18 +36,25 @@ export function Summary({
       ) : (
         <ul className="rounded-3xl bg-white border border-line divide-y divide-line">
           {saved.map(({ procedure: p }) => (
-            <li key={p.id} className="flex items-center justify-between gap-3 px-5 py-4">
-              <span className="font-medium text-sm">{p.name}</span>
-              <span className="text-xs text-muted text-right shrink-0">
-                {usd(p.cost[city][0])}+<br />{downtimeShort(p.downtimeDays)}
-              </span>
+            <li key={p.id} className="px-5 py-4">
+              <div className="flex items-baseline justify-between gap-3">
+                <a href={`/procedures/${p.id}`} className="font-medium">{p.name}</a>
+                <span className="text-sm shrink-0">from {usd(p.cost[city][0])}</span>
+              </div>
+              <div className="flex items-center gap-4 mt-1.5 text-[11px] text-muted">
+                <span className="flex items-center gap-1.5">Pain <Dots value={p.pain} max={5} label="Pain" /></span>
+                <span>{downtimeShort(p.downtimeDays)}</span>
+              </div>
             </li>
           ))}
         </ul>
       )}
 
       <div>
-        <h2 className="font-semibold mb-3">Find a dermatologist</h2>
+        <h2 className="font-semibold mb-1">Find a provider</h2>
+        <p className="text-xs text-muted mb-3">
+          Look for a board-certified dermatologist or plastic surgeon, or a med spa run under one.
+        </p>
         <label className="block mb-3">
           <span className="sr-only">ZIP code or neighborhood (optional)</span>
           <input
@@ -58,14 +66,20 @@ export function Summary({
           />
         </label>
         <div className="grid gap-2.5">
-          {links.slice(0, 2).map((l) => (
-            <a key={l.href} href={l.href} target="_blank" rel="noopener noreferrer" className="tile flex items-center justify-between">
+          {links.byProcedure.map((l) => (
+            <a key={l.href} href={l.href} target="_blank" rel="noopener noreferrer" className="tile flex items-center justify-between py-3.5">
+              <span className="text-sm"><span className="font-medium">{l.short}</span> <span className="text-muted">near you</span></span>
+              <span aria-hidden="true" className="text-muted">↗</span>
+            </a>
+          ))}
+          {links.directories.map((l) => (
+            <a key={l.href} href={l.href} target="_blank" rel="noopener noreferrer" className="tile flex items-center justify-between py-3.5">
               <span className="text-sm font-medium">{l.short}</span>
               <span aria-hidden="true" className="text-muted">↗</span>
             </a>
           ))}
-          <a href={links[2].href} target="_blank" rel="noopener noreferrer" className="text-xs text-muted underline text-center mt-1">
-            {links[2].short}
+          <a href={links.license.href} target="_blank" rel="noopener noreferrer" className="text-xs text-muted underline text-center mt-1">
+            {links.license.short}
           </a>
         </div>
       </div>

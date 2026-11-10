@@ -1,7 +1,8 @@
 "use client";
 import { useRef, useState } from "react";
 import { CAUTIONS } from "@/lib/cautions";
-import { downtimeShort, usd, type Match } from "@/lib/match";
+import type { Match } from "@/lib/match";
+import { ApproachTag, KeyFacts, MoreFacts } from "./ProcedureFacts";
 import type { City } from "@/lib/types";
 
 /** A single procedure card. Swipe right / tap ♡ to save, swipe left / tap Skip to pass. */
@@ -17,7 +18,6 @@ export function ProcedureCard({
   onSkip: () => void;
 }) {
   const p = match.procedure;
-  const [lo, hi] = p.cost[city];
   const [open, setOpen] = useState(false);
   const [dx, setDx] = useState(0);
   const start = useRef<number | null>(null);
@@ -45,19 +45,12 @@ export function ProcedureCard({
         style={{ transform: dx ? `translateX(${dx}px) rotate(${dx / 30}deg)` : undefined, touchAction: "pan-y" }}
         className={"bg-white rounded-3xl border border-line p-6 shadow-sm select-none " + (dx ? "" : "transition-transform")}
       >
-        <h2 className="text-xl font-semibold leading-snug mb-2">{p.name}</h2>
-        <p className="text-sm text-muted leading-relaxed mb-5">{p.summary}</p>
+        <ApproachTag p={p} />
+        <h2 className="text-xl font-semibold leading-snug">{p.name}</h2>
+        <p className="text-sm text-muted mb-3">{p.what}</p>
+        <p className="text-sm leading-relaxed mb-5">{p.summary}</p>
 
-        <dl className="grid grid-cols-2 gap-3 mb-4">
-          <div className="rounded-2xl bg-sand p-3">
-            <dt className="text-[11px] text-muted">Per visit*</dt>
-            <dd className="font-semibold">{usd(lo)}–{usd(hi).replace("$", "")}</dd>
-          </div>
-          <div className="rounded-2xl bg-sand p-3">
-            <dt className="text-[11px] text-muted">Recovery</dt>
-            <dd className="font-semibold">{downtimeShort(p.downtimeDays)}</dd>
-          </div>
-        </dl>
+        <div className="mb-4"><KeyFacts p={p} city={city} /></div>
 
         {match.flagged.length > 0 && (
           <p className="text-sm mb-3">
@@ -70,15 +63,7 @@ export function ProcedureCard({
           {open ? "Less" : "More details"}
         </button>
         {open && (
-          <dl className="mt-3 space-y-2 text-sm animate-in">
-            <div><dt className="text-[11px] text-muted">Sessions</dt><dd>{p.sessions}</dd></div>
-            <div><dt className="text-[11px] text-muted">Who does it</dt><dd>{p.performedBy}</dd></div>
-            <div>
-              <dt className="text-[11px] text-muted">Not usually advised with</dt>
-              <dd>{p.contraindications.map((c) => CAUTIONS[c].short).join(" · ")}</dd>
-            </div>
-            <div><dt className="text-[11px] text-muted">Good to know</dt><dd>{p.notes}</dd></div>
-          </dl>
+          <div className="mt-4 animate-in"><MoreFacts p={p} /></div>
         )}
       </article>
 

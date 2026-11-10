@@ -2,14 +2,14 @@
 import { useMemo, useState } from "react";
 import { CITY_LABELS } from "@/lib/clinics";
 import { matchProcedures } from "@/lib/match";
-import { GOAL_LABELS } from "@/lib/procedures";
-import type { Budget, Caution, City, Downtime, Goal } from "@/lib/types";
+import { GOAL_LABELS, PROCEDURES } from "@/lib/procedures";
+import type { Budget, Caution, City, Downtime, Goal, Prefer } from "@/lib/types";
 import { ProcedureCard } from "./ProcedureCard";
 import { Question } from "./Question";
 import { Summary } from "./Summary";
 
-type Step = "city" | "goal" | "budget" | "downtime" | "pregnant" | "health" | "browse" | "done";
-const QUIZ: Step[] = ["city", "goal", "budget", "downtime", "pregnant", "health"];
+type Step = "city" | "goal" | "prefer" | "budget" | "downtime" | "pregnant" | "health" | "browse" | "done";
+const QUIZ: Step[] = ["city", "goal", "prefer", "budget", "downtime", "pregnant", "health"];
 
 /**
  * One tap per screen. Answers live in React state only (data minimization):
@@ -20,6 +20,7 @@ export function Guide() {
   const step = history[history.length - 1];
   const [city, setCity] = useState<City>();
   const [goal, setGoal] = useState<Goal>();
+  const [prefer, setPrefer] = useState<Prefer>();
   const [budget, setBudget] = useState<Budget>();
   const [downtime, setDowntime] = useState<Downtime>();
   const [pregnant, setPregnant] = useState<"yes" | "no">();
@@ -35,8 +36,8 @@ export function Guide() {
     const cautions: Caution[] = [];
     if (pregnant === "yes") cautions.push("pregnancy");
     if (health === "yes") cautions.push("active-skin", "isotretinoin", "blood-thinners");
-    return matchProcedures({ goals: [goal], budget, downtime, cautions });
-  }, [goal, budget, downtime, pregnant, health]);
+    return matchProcedures({ goals: [goal], budget, downtime, cautions, prefer });
+  }, [goal, prefer, budget, downtime, pregnant, health]);
 
   const startBrowsing = () => {
     setIndex(0);
@@ -81,6 +82,11 @@ export function Guide() {
           }}
         />
       )}
+      {step === "city" && (
+        <a href="/procedures" className="mt-8 text-center text-sm text-muted underline">
+          Or browse all {PROCEDURES.length} procedures
+        </a>
+      )}
 
       {step === "goal" && (
         <Question
@@ -91,6 +97,23 @@ export function Guide() {
           selected={goal}
           onPick={(v) => {
             setGoal(v);
+            go(v === "hair" || v === "body" ? "budget" : "prefer");
+          }}
+        />
+      )}
+
+      {step === "prefer" && (
+        <Question<Prefer>
+          key="prefer"
+          title="What kind of results do you like?"
+          options={[
+            { value: "natural", label: "Natural", hint: "Boost my own collagen — gradual, subtle" },
+            { value: "instant", label: "Instant", hint: "Fillers & injectables — see it right away" },
+            { value: "any", label: "Show me both" },
+          ]}
+          selected={prefer}
+          onPick={(v) => {
+            setPrefer(v);
             go("budget");
           }}
         />
@@ -190,6 +213,7 @@ export function Guide() {
           onRestart={() => {
             setHistory(["city"]);
             setGoal(undefined);
+            setPrefer(undefined);
             setBudget(undefined);
             setDowntime(undefined);
             setPregnant(undefined);

@@ -29,7 +29,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className="min-h-[100dvh] flex flex-col">
         <header className="max-w-md w-full mx-auto px-5 pt-5">
-          <Link href="/" className="text-sm font-semibold tracking-tight">Aesthetic Guide <span className="text-muted font-normal">NYC & Miami</span></Link>
+          <div className="flex items-center justify-between gap-3">
+            <Link href="/" className="text-sm font-semibold tracking-tight">Aesthetic Guide <span className="text-muted font-normal">NYC & Miami</span></Link>
+            <Link href="/procedures" className="text-xs text-muted hover:text-ink">All procedures</Link>
+          </div>
         </header>
         <main className="flex-1 w-full max-w-md mx-auto px-5 py-6 flex flex-col">{children}</main>
         <Footer />

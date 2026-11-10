@@ -25,15 +25,19 @@ export const CLINICS: Clinic[] = [];
 
 export const CITY_LABELS: Record<City, string> = { nyc: "New York City", miami: "Miami" };
 
-/** Public directories that let users find and verify providers themselves. */
-export function directoryLinks(city: City, area: string) {
-  const near = area.trim() || (city === "nyc" ? "New York, NY" : "Miami, FL");
-  const q = encodeURIComponent(`board certified dermatologist near ${near}`);
-  return [
-    { short: "Nearby on Google Maps", href: `https://www.google.com/maps/search/?api=1&query=${q}` },
-    { short: "Board-certified directory (AAD)", href: "https://find-a-derm.aad.org/" },
-    city === "nyc"
-      ? { short: "Check a provider's NY license", href: "https://www.op.nysed.gov/verification-search" }
-      : { short: "Check a provider's Florida license", href: "https://mqa-internet.doh.state.fl.us/MQASearchServices/HealthCareProviders" },
-  ];
+/** Where to look for a qualified provider. Users verify credentials themselves. */
+export function directoryLinks(city: City, area: string, procedureNames: string[] = []) {
+  const near = area.trim() ? `${area.trim()} ${city === "nyc" ? "New York" : "Miami"}` : city === "nyc" ? "New York, NY" : "Miami, FL";
+  const maps = (q: string) => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`;
+  return {
+    byProcedure: procedureNames.map((n) => ({ short: n, href: maps(`${n} near ${near}`) })),
+    directories: [
+      { short: "Board-certified dermatologists (AAD)", href: "https://find-a-derm.aad.org/" },
+      { short: "Board-certified plastic surgeons (ASPS)", href: "https://www.plasticsurgery.org/find-a-surgeon" },
+    ],
+    license:
+      city === "nyc"
+        ? { short: "Check a provider's NY license", href: "https://www.op.nysed.gov/verification-search" }
+        : { short: "Check a provider's Florida license", href: "https://mqa-internet.doh.state.fl.us/MQASearchServices/HealthCareProviders" },
+  };
 }
