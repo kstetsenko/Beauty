@@ -1,65 +1,92 @@
+"use client";
+import { useRef, useState } from "react";
 import { CAUTIONS } from "@/lib/cautions";
-import { usd, type Match } from "@/lib/match";
+import { downtimeShort, usd, type Match } from "@/lib/match";
 import type { City } from "@/lib/types";
 
-const TIER = ["", "$", "$$", "$$$"];
-
-export function ProcedureCard({ match, city }: { match: Match; city: City }) {
+/** A single procedure card. Swipe right / tap ♡ to save, swipe left / tap Skip to pass. */
+export function ProcedureCard({
+  match,
+  city,
+  onSave,
+  onSkip,
+}: {
+  match: Match;
+  city: City;
+  onSave: () => void;
+  onSkip: () => void;
+}) {
   const p = match.procedure;
   const [lo, hi] = p.cost[city];
-  const flagged = new Set(match.flagged);
+  const [open, setOpen] = useState(false);
+  const [dx, setDx] = useState(0);
+  const start = useRef<number | null>(null);
+
+  const end = () => {
+    if (dx > 90) onSave();
+    else if (dx < -90) onSkip();
+    start.current = null;
+    setDx(0);
+  };
 
   return (
-    <article className="bg-white rounded-2xl border border-neutral-200 p-5 shadow-sm">
-      {match.flagged.length > 0 && (
-        <div role="note" className="mb-3 rounded-xl bg-red-50 border border-red-200 px-3 py-2 text-xs text-red-800">
-          <strong>⚠ Talk to a doctor first:</strong> you noted something that is often a reason to avoid or delay this
-          procedure ({match.flagged.map((c) => CAUTIONS[c].short).join(", ")}).
-        </div>
-      )}
+    <div className="animate-in">
+      <article
+        onPointerDown={(e) => {
+          if ((e.target as HTMLElement).closest("button")) return;
+          start.current = e.clientX;
+        }}
+        onPointerMove={(e) => start.current !== null && setDx(e.clientX - start.current)}
+        onPointerUp={end}
+        onPointerCancel={() => {
+          start.current = null;
+          setDx(0);
+        }}
+        style={{ transform: dx ? `translateX(${dx}px) rotate(${dx / 30}deg)` : undefined, touchAction: "pan-y" }}
+        className={"bg-white rounded-3xl border border-line p-6 shadow-sm select-none " + (dx ? "" : "transition-transform")}
+      >
+        <h2 className="text-xl font-semibold leading-snug mb-2">{p.name}</h2>
+        <p className="text-sm text-muted leading-relaxed mb-5">{p.summary}</p>
 
-      <div className="flex items-start justify-between gap-3 mb-2">
-        <h3 className="font-semibold text-lg leading-snug">{p.name}</h3>
-        <span className="shrink-0 text-xs font-semibold rounded-full bg-neutral-100 px-2.5 py-1">{TIER[p.tier]}</span>
+        <dl className="grid grid-cols-2 gap-3 mb-4">
+          <div className="rounded-2xl bg-sand p-3">
+            <dt className="text-[11px] text-muted">Per visit*</dt>
+            <dd className="font-semibold">{usd(lo)}–{usd(hi).replace("$", "")}</dd>
+          </div>
+          <div className="rounded-2xl bg-sand p-3">
+            <dt className="text-[11px] text-muted">Recovery</dt>
+            <dd className="font-semibold">{downtimeShort(p.downtimeDays)}</dd>
+          </div>
+        </dl>
+
+        {match.flagged.length > 0 && (
+          <p className="text-sm mb-3">
+            <span className="text-rose" aria-hidden="true">●</span> Ask your doctor first — you mentioned{" "}
+            {match.flagged.map((c) => CAUTIONS[c].short.toLowerCase()).join(", ")}.
+          </p>
+        )}
+
+        <button type="button" onClick={() => setOpen(!open)} aria-expanded={open} className="text-sm underline text-muted">
+          {open ? "Less" : "More details"}
+        </button>
+        {open && (
+          <dl className="mt-3 space-y-2 text-sm animate-in">
+            <div><dt className="text-[11px] text-muted">Sessions</dt><dd>{p.sessions}</dd></div>
+            <div><dt className="text-[11px] text-muted">Who does it</dt><dd>{p.performedBy}</dd></div>
+            <div>
+              <dt className="text-[11px] text-muted">Not usually advised with</dt>
+              <dd>{p.contraindications.map((c) => CAUTIONS[c].short).join(" · ")}</dd>
+            </div>
+            <div><dt className="text-[11px] text-muted">Good to know</dt><dd>{p.notes}</dd></div>
+          </dl>
+        )}
+      </article>
+
+      <div className="grid grid-cols-2 gap-3 mt-4">
+        <button type="button" onClick={onSkip} className="btn-soft">Skip</button>
+        <button type="button" onClick={onSave} className="btn-main"><span className="text-rose">♥</span> Save</button>
       </div>
-      <p className="text-sm text-neutral-600 mb-4">{p.summary}</p>
-
-      <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-3 text-sm mb-4">
-        <div>
-          <dt className="text-xs uppercase tracking-wide text-neutral-500">Typical cost per session*</dt>
-          <dd className="font-medium">{usd(lo)} – {usd(hi)}</dd>
-        </div>
-        <div>
-          <dt className="text-xs uppercase tracking-wide text-neutral-500">Downtime</dt>
-          <dd className="font-medium">{p.downtimeLabel}</dd>
-        </div>
-        <div>
-          <dt className="text-xs uppercase tracking-wide text-neutral-500">Sessions</dt>
-          <dd>{p.sessions}</dd>
-        </div>
-        <div>
-          <dt className="text-xs uppercase tracking-wide text-neutral-500">Who should perform it</dt>
-          <dd>{p.performedBy}</dd>
-        </div>
-      </dl>
-
-      <div className="mb-3">
-        <p className="text-xs uppercase tracking-wide text-neutral-500 mb-1.5">Not usually recommended with</p>
-        <ul className="flex flex-wrap gap-1.5">
-          {p.contraindications.map((c) => (
-            <li
-              key={c}
-              className={
-                "text-xs rounded-full px-2.5 py-1 border " +
-                (flagged.has(c) ? "bg-red-100 border-red-300 text-red-800 font-semibold" : "bg-amber-50 border-amber-200 text-amber-900")
-              }
-            >
-              ⚠ {CAUTIONS[c].short}
-            </li>
-          ))}
-        </ul>
-      </div>
-      <p className="text-xs text-neutral-500">{p.notes}</p>
-    </article>
+      <p className="text-[11px] text-muted text-center mt-3">*Typical local estimate, not a quote.</p>
+    </div>
   );
 }

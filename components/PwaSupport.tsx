@@ -54,7 +54,7 @@ export function PwaSupport() {
   if (hidden || (!ios && !deferred)) return null;
 
   return (
-    <div className="fixed bottom-3 inset-x-3 z-40 mx-auto max-w-md rounded-2xl bg-neutral-900 text-white p-4 shadow-xl flex items-start gap-3">
+    <div className="fixed bottom-3 inset-x-3 z-40 mx-auto max-w-sm rounded-2xl bg-white border border-line p-4 shadow-lg flex items-center gap-3">
       <p className="text-sm flex-1">
         {ios ? (
           <>Install this guide: tap <strong>Share</strong> <span aria-hidden="true">⎋</span> then <strong>Add to Home Screen</strong>.</>
@@ -65,7 +65,7 @@ export function PwaSupport() {
       {deferred && (
         <button
           type="button"
-          className="text-sm font-medium bg-white text-neutral-900 rounded-lg px-3 py-1.5"
+          className="text-sm font-medium bg-ink text-white rounded-full px-4 py-1.5"
           onClick={async () => {
             await deferred.prompt();
             await deferred.userChoice.catch(() => null);
@@ -76,7 +76,7 @@ export function PwaSupport() {
           Install
         </button>
       )}
-      <button type="button" aria-label="Dismiss" onClick={dismiss} className="text-neutral-400 hover:text-white px-1">✕</button>
+      <button type="button" aria-label="Dismiss" onClick={dismiss} className="text-muted hover:text-ink px-1">✕</button>
     </div>
   );
 }

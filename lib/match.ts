@@ -26,3 +26,9 @@ export function matchProcedures(a: QuizAnswers): Match[] {
 export function usd(n: number) {
   return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(n);
 }
+
+export function downtimeShort([lo, hi]: [number, number]) {
+  if (hi === 0) return "None";
+  if (lo === 0 && hi === 1) return "Up to 1 day";
+  return `${lo || 1}–${hi} days`;
+}

@@ -30,31 +30,10 @@ export function directoryLinks(city: City, area: string) {
   const near = area.trim() || (city === "nyc" ? "New York, NY" : "Miami, FL");
   const q = encodeURIComponent(`board certified dermatologist near ${near}`);
   return [
-    {
-      label: "Google Maps: board-certified dermatologists nearby",
-      href: `https://www.google.com/maps/search/?api=1&query=${q}`,
-      note: "See public Google ratings and reviews",
-    },
-    {
-      label: "American Academy of Dermatology — Find a Dermatologist",
-      href: "https://find-a-derm.aad.org/",
-      note: "Board-certified dermatologists",
-    },
-    {
-      label: "American Society of Plastic Surgeons — Find a Surgeon",
-      href: "https://www.plasticsurgery.org/find-a-surgeon",
-      note: "Board-certified plastic surgeons",
-    },
+    { short: "Nearby on Google Maps", href: `https://www.google.com/maps/search/?api=1&query=${q}` },
+    { short: "Board-certified directory (AAD)", href: "https://find-a-derm.aad.org/" },
     city === "nyc"
-      ? {
-          label: "NY State Office of the Professions — License Verification",
-          href: "https://www.op.nysed.gov/verification-search",
-          note: "Check a provider's New York license",
-        }
-      : {
-          label: "Florida Department of Health — License Verification",
-          href: "https://mqa-internet.doh.state.fl.us/MQASearchServices/HealthCareProviders",
-          note: "Check a provider's Florida license",
-        },
+      ? { short: "Check a provider's NY license", href: "https://www.op.nysed.gov/verification-search" }
+      : { short: "Check a provider's Florida license", href: "https://mqa-internet.doh.state.fl.us/MQASearchServices/HealthCareProviders" },
   ];
 }

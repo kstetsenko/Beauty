@@ -17,7 +17,8 @@ npm run build && npm start   # production mode (service worker active)
 ## What's where
 | Area | Files |
 |---|---|
-| 3-step flow (city → quiz → results) | `components/Guide.tsx`, `CityStep.tsx`, `QuizStep.tsx`, `Results.tsx` |
+| One-tap quiz → swipe cards → saved list | `components/Guide.tsx`, `Question.tsx`, `ProcedureCard.tsx`, `Summary.tsx` |
+| Colors (one neutral palette) | `tailwind.config.ts` |
 | Mandatory disclaimer (18+, versioned) | `components/DisclaimerModal.tsx` (bump `KEY` when the text changes) |
 | Persistent footer disclaimer | `components/Footer.tsx` |
 | Procedure data, prices, contraindications | `lib/procedures.ts`, `lib/cautions.ts` |

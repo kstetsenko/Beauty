@@ -7,7 +7,7 @@ export const CONSENT_TEXT =
 
 interface Props {
   city: City;
-  /** Procedure ids from the results. Health answers are never sent. */
+  /** Saved procedure ids. Health answers are never sent. */
   procedureIds: string[];
 }
 
@@ -32,21 +32,18 @@ export function LeadCaptureForm({ city, procedureIds }: Props) {
       const data = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(data.error || "Something went wrong. Please try again.");
       setStatus("success");
-      setEmail("");
     } catch (err) {
       setStatus("error");
       setMessage(err instanceof Error ? err.message : "Something went wrong. Please try again.");
     }
   };
 
-  return (
-    <form onSubmit={handleSubmit} className="bg-neutral-50 p-6 rounded-2xl border border-neutral-200" noValidate={false}>
-      <h3 className="font-medium text-neutral-900 mb-1">Save Your Procedure Guide</h3>
-      <p className="text-xs text-neutral-500 mb-4">
-        Get your personalized breakdown sent straight to your inbox. We only send the procedure names and your city —
-        never your health answers.
-      </p>
+  if (status === "success") {
+    return <p className="rounded-3xl bg-blush p-5 text-center text-sm font-medium animate-in">Sent ✓ Check your inbox.</p>;
+  }
 
+  return (
+    <form onSubmit={handleSubmit} className="rounded-3xl bg-white border border-line p-5 space-y-4 animate-in">
       <label htmlFor="lead-email" className="sr-only">Email address</label>
       <input
         id="lead-email"
@@ -54,11 +51,11 @@ export function LeadCaptureForm({ city, procedureIds }: Props) {
         autoComplete="email"
         inputMode="email"
         maxLength={254}
-        placeholder="Enter your email address"
+        placeholder="Your email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         required
-        className="w-full px-4 py-2.5 rounded-xl border border-neutral-300 text-sm mb-3 focus:outline-none focus:ring-2 focus:ring-neutral-900"
+        className="w-full rounded-full border border-line px-5 py-3 text-sm focus:outline-none focus:border-ink"
       />
 
       {/* Honeypot: hidden from people, often filled by bots. */}
@@ -69,30 +66,23 @@ export function LeadCaptureForm({ city, procedureIds }: Props) {
         </label>
       </div>
 
-      <label className="flex items-start gap-2.5 mb-4 cursor-pointer">
+      <label className="flex items-start gap-3 cursor-pointer">
         <input
           type="checkbox"
           checked={consented}
           onChange={(e) => setConsented(e.target.checked)}
-          className="mt-0.5 h-4 w-4 shrink-0 accent-neutral-900"
+          className="mt-0.5 h-5 w-5 shrink-0 accent-ink"
           required
         />
-        <span className="text-xs text-neutral-600 leading-normal">
-          {CONSENT_TEXT} You can unsubscribe at any time. See our{" "}
-          <a href="/privacy" className="underline">Privacy Policy</a>.
+        <span className="text-xs text-muted leading-normal">
+          {CONSENT_TEXT} Unsubscribe anytime. <a href="/privacy" className="underline">Privacy</a>
         </span>
       </label>
 
-      <button
-        type="submit"
-        disabled={!consented || status === "sending" || status === "success"}
-        className="w-full bg-neutral-900 text-white text-sm font-medium py-2.5 rounded-xl hover:bg-neutral-800 disabled:opacity-50 transition-all"
-      >
-        {status === "success" ? "Saved Successfully ✓" : status === "sending" ? "Sending…" : "Send My Guide"}
+      <button type="submit" disabled={!consented || !email || status === "sending"} className="btn-main">
+        {status === "sending" ? "Sending…" : "Send my list"}
       </button>
-      <p role="status" aria-live="polite" className="text-xs mt-2 min-h-[1rem] text-red-700">
-        {status === "error" ? message : ""}
-      </p>
+      {status === "error" && <p role="alert" className="text-xs text-center">{message}</p>}
     </form>
   );
 }

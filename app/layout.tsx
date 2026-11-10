@@ -21,20 +21,17 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
-  themeColor: "#171717",
+  themeColor: "#f8f6f3",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className="min-h-screen flex flex-col">
-        <header className="bg-white border-b border-neutral-200">
-          <div className="max-w-3xl mx-auto px-4 py-4 flex items-center justify-between gap-3">
-            <Link href="/" className="font-semibold tracking-tight">Aesthetic Guide <span className="text-neutral-400 font-normal">NYC & Miami</span></Link>
-            <span className="text-[11px] uppercase tracking-wider rounded-full border border-neutral-300 px-2 py-0.5 text-neutral-500 shrink-0">Educational</span>
-          </div>
+      <body className="min-h-[100dvh] flex flex-col">
+        <header className="max-w-md w-full mx-auto px-5 pt-5">
+          <Link href="/" className="text-sm font-semibold tracking-tight">Aesthetic Guide <span className="text-muted font-normal">NYC & Miami</span></Link>
         </header>
-        <main className="flex-1 w-full max-w-3xl mx-auto px-4 py-8">{children}</main>
+        <main className="flex-1 w-full max-w-md mx-auto px-5 py-6 flex flex-col">{children}</main>
         <Footer />
         <DisclaimerModal />
         <PwaSupport />

@@ -4,5 +4,13 @@
 
 :root { color-scheme: light; }
 html { -webkit-text-size-adjust: 100%; }
-body { @apply bg-stone-50 text-neutral-900 antialiased; }
-:focus-visible { outline: 2px solid #171717; outline-offset: 2px; }
+body { @apply bg-sand text-ink antialiased; }
+:focus-visible { outline: 2px solid #1f1d1b; outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { .animate-in { animation: none; } }
+
+@layer components {
+  .btn { @apply w-full rounded-full py-3.5 font-medium transition-colors disabled:opacity-40; }
+  .btn-main { @apply btn bg-ink text-white hover:bg-black; }
+  .btn-soft { @apply btn bg-white border border-line hover:border-ink; }
+  .tile { @apply w-full rounded-2xl bg-white border border-line px-4 py-4 text-left transition-colors hover:border-ink; }
+}
