@@ -14,7 +14,7 @@ const RAW: Raw[] = [
   {
     id: "sofwave", name: "Sofwave", what: "Ultrasound skin tightening", approach: "energy", onset: 3,
     summary: "Ultrasound energy heats the skin's middle layer to trigger new collagen, gently lifting brows, jawline and neck.",
-    goals: ["lift", "lines", "texture"], cost: { nyc: [3000, 4500], miami: [2500, 4000] }, priceUnit: "full face",
+    goals: ["lift", "lines"], cost: { nyc: [3000, 4500], miami: [2500, 4000] }, priceUnit: "full face",
     sessions: "Usually 1", lasts: "About 1 year; results build over 3 months", downtimeDays: [0, 0], pain: 2, results: 2,
     performedBy: "Physician-supervised clinic", contraindications: ["pregnancy", "active-skin"],
     notes: "Known for being more comfortable than older ultrasound devices.",
@@ -38,7 +38,7 @@ const RAW: Raw[] = [
   {
     id: "morpheus8", name: "Morpheus8", what: "Radiofrequency microneedling", approach: "energy", onset: 3, minAge: 22,
     summary: "Tiny needles deliver radiofrequency heat under the skin to tighten, smooth texture and soften acne scars.",
-    goals: ["texture", "acne", "lift", "contour"], cost: { nyc: [1000, 2000], miami: [1000, 2000] }, priceUnit: "per session",
+    goals: ["texture", "acne", "lift"], cost: { nyc: [1000, 2000], miami: [1000, 2000] }, priceUnit: "per session",
     sessions: "1–3, about 4–6 weeks apart", lasts: "1 year or more with maintenance", downtimeDays: [2, 5], pain: 4, results: 2,
     performedBy: "Dermatologist, plastic surgeon or supervised clinician",
     contraindications: ["pregnancy", "active-skin", "keloid", "blood-thinners", "isotretinoin"],
@@ -114,8 +114,8 @@ const RAW: Raw[] = [
   },
   {
     id: "lip-filler", name: "Lip Filler", what: "Hyaluronic acid filler", approach: "ha", onset: 1, minAge: 22,
-    summary: "A gel made from hyaluronic acid — a substance naturally found in skin — injected to add shape and volume to the lips and soften lines around the mouth.",
-    goals: ["volume", "lines"], cost: { nyc: [550, 1200], miami: [600, 1000] }, priceUnit: "per syringe",
+    summary: "A gel made from hyaluronic acid — a substance naturally found in skin — injected to add shape and volume to the lips.",
+    goals: ["volume"], cost: { nyc: [550, 1200], miami: [600, 1000] }, priceUnit: "per syringe",
     sessions: "Single visit", lasts: "About 6–12 months", downtimeDays: [1, 3], pain: 3, results: 3,
     performedBy: "Physician, PA or NP", contraindications: ["pregnancy", "active-skin", "blood-thinners", "autoimmune"],
     notes: "Reversible with an enzyme if needed. Ask for a natural amount.",
@@ -200,7 +200,7 @@ const RAW: Raw[] = [
   {
     id: "pico", name: "Pico Laser", what: "PicoSure / PicoWay", approach: "laser", onset: 2,
     summary: "Ultra-fast laser pulses break up pigment and refresh texture with little downtime.",
-    goals: ["pigment", "texture"], cost: { nyc: [500, 900], miami: [400, 800] }, priceUnit: "per session",
+    goals: ["pigment", "texture", "acne"], cost: { nyc: [500, 900], miami: [400, 800] }, priceUnit: "per session",
     sessions: "3–5, about 4 weeks apart", lasts: "Long-lasting with sun protection", downtimeDays: [1, 3], pain: 3, results: 2,
     performedBy: "Dermatologist or supervised clinician", contraindications: ["pregnancy", "active-skin"],
     notes: "Often chosen for melasma and stubborn spots — ask about your skin type.",

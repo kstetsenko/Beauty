@@ -5,6 +5,7 @@ import { downtimeShort, usd, type Match } from "@/lib/match";
 import { GOAL_LABELS } from "@/lib/procedures";
 import type { Budget, City, Goal } from "@/lib/types";
 import { LeadCaptureForm } from "./LeadCaptureForm";
+import { Disclosure } from "./Disclosure";
 import { Dots } from "./ProcedureFacts";
 
 const TIER = ["", "$", "$$", "$$$"];
@@ -128,22 +129,16 @@ export function Summary({
         </div>
       )}
 
-      <div>
-        <h2 className="font-semibold mb-1">Check credentials</h2>
+      <Disclosure title="Check a provider's credentials" hint="Board certification and license lookups">
         <p className="text-xs text-muted mb-3">Look for a board-certified dermatologist or plastic surgeon, or a med spa supervised by one.</p>
-        <div className="grid gap-2.5">
+        <div className="grid gap-2">
           {links.directories.map((l) => (
-            <a key={l.href} href={l.href} target="_blank" rel="noopener noreferrer" className="tile flex items-center justify-between py-3.5">
-              <span className="text-sm font-medium">{l.short}</span>
-              <span aria-hidden="true" className="text-muted">↗</span>
-            </a>
+            <a key={l.href} href={l.href} target="_blank" rel="noopener noreferrer" className="text-sm underline">{l.short} ↗</a>
           ))}
-          <a href={links.license.href} target="_blank" rel="noopener noreferrer" className="text-xs text-muted underline text-center mt-1">
-            {links.license.short}
-          </a>
+          <a href={links.license.href} target="_blank" rel="noopener noreferrer" className="text-sm underline">{links.license.short} ↗</a>
         </div>
         <p className="text-[11px] text-muted mt-3">We don&apos;t receive payment from clinics or directories linked here.</p>
-      </div>
+      </Disclosure>
 
       <button type="button" onClick={onRestart} className="block mx-auto text-sm text-muted underline">Start over</button>
     </section>

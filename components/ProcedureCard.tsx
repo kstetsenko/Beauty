@@ -2,7 +2,7 @@
 import { useRef, useState } from "react";
 import { CAUTIONS } from "@/lib/cautions";
 import type { Match } from "@/lib/match";
-import { ApproachTag, KeyFacts, MoreFacts } from "./ProcedureFacts";
+import { ApproachTag, DetailSections, KeyFacts } from "./ProcedureFacts";
 import type { Budget, City } from "@/lib/types";
 
 /** A single procedure card. Swipe right / tap ♡ to save, swipe left / tap Skip to pass. */
@@ -79,12 +79,12 @@ export function ProcedureCard({
         )}
 
         <button type="button" onClick={() => setOpen(!open)} aria-expanded={open} className="text-sm underline text-muted">
-          {open ? "Less" : "More details"}
+          {open ? "Hide details" : "Tap for details: risks, research, recovery"}
         </button>
         {open && (
           <div className="mt-4 animate-in">
-            <MoreFacts p={p} city={city} />
-            <a href={`/procedures/${p.id}?city=${city}`} className="inline-block mt-3 text-sm underline">Studies, price sources & questions to ask →</a>
+            <DetailSections p={p} city={city} withPrice={false} />
+            <a href={`/procedures/${p.id}?city=${city}`} className="inline-block mt-3 text-sm underline">Open full page →</a>
           </div>
         )}
       </article>

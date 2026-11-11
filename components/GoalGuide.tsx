@@ -5,6 +5,7 @@ import { APPROACHES, GOAL_LABELS, PROCEDURES } from "@/lib/procedures";
 import { EVIDENCE_LABELS, RESEARCH } from "@/lib/research";
 import { TRENDS } from "@/lib/trends";
 import type { City, Goal } from "@/lib/types";
+import { Disclosure } from "./Disclosure";
 import { Dots } from "./ProcedureFacts";
 
 /** All options for one goal, ordered least → most involved, each linking to its page. */
@@ -28,70 +29,66 @@ export function GoalGuide({ goal, city }: { goal: Goal; city: City }) {
         <a href={`/goals/${goal}?city=${other}`} className="rounded-full border border-line px-3.5 py-1.5 hover:border-ink">{CITY_LABELS[other]}</a>
       </div>
 
-      {g.foundation && (
-        <section className="rounded-3xl bg-blush p-5">
-          <h2 className="font-semibold mb-1">Start here: daily basics</h2>
-          <p className="text-sm leading-relaxed">
-            Broad-spectrum SPF 30+ every day, and a retinoid at night. Dermatologists recommend these before and alongside any
-            procedure.
-          </p>
-          <div className="flex flex-col gap-1 mt-2 text-sm">
-            <a href={`/procedures/tretinoin?city=${city}`} className="underline">Prescription retinoid (tretinoin) →</a>
-            <a href={SUNSCREEN.url} target="_blank" rel="noopener noreferrer" className="underline">{SUNSCREEN.label} ↗</a>
-          </div>
-        </section>
-      )}
+      <p className="text-xs text-muted px-1">{options.length} options, from least to most involved. Tap a group to see them.</p>
 
-      {groups.map(({ a, list }) => (
-        <section key={a}>
-          <h2 className="font-semibold">{APPROACHES[a].label}</h2>
-          <p className="text-xs text-muted mb-2">{APPROACHES[a].hint}</p>
-          <ul className="rounded-3xl bg-white border border-line divide-y divide-line">
-            {list.map((p) => (
-              <li key={p.id}>
-                <a href={`/procedures/${p.id}?city=${city}`} className="flex items-center justify-between gap-3 px-5 py-4 hover:bg-sand">
-                  <span className="min-w-0">
-                    <span className="block font-medium">{p.name}</span>
-                    <span className="block text-xs text-muted">{p.what}</span>
-                    <span className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-1.5 text-[11px] text-muted">
-                      <span className="flex items-center gap-1.5">Research <Dots value={RESEARCH[p.id].evidence} max={3} label="Evidence" /> {EVIDENCE_LABELS[RESEARCH[p.id].evidence]}</span>
-                      <span>Recovery: {downtimeShort(p.downtimeDays).toLowerCase()}</span>
+      <div className="space-y-2.5">
+        {g.foundation && (
+          <Disclosure tone="soft" title="Start here: daily basics" hint="What dermatologists recommend first">
+            <p className="text-sm leading-relaxed">
+              Broad-spectrum SPF 30+ every day, and a retinoid at night — before and alongside any procedure.
+            </p>
+            <div className="flex flex-col gap-1 mt-2 text-sm">
+              <a href={`/procedures/tretinoin?city=${city}`} className="underline">Prescription retinoid (tretinoin) →</a>
+              <a href={SUNSCREEN.url} target="_blank" rel="noopener noreferrer" className="underline">{SUNSCREEN.label} ↗</a>
+            </div>
+          </Disclosure>
+        )}
+
+        {groups.map(({ a, list }) => (
+          <Disclosure key={a} title={APPROACHES[a].label} hint={`${list.length} option${list.length > 1 ? "s" : ""} · ${APPROACHES[a].hint}`}>
+            <ul className="divide-y divide-line -mx-5 border-t border-line">
+              {list.map((p) => (
+                <li key={p.id}>
+                  <a href={`/procedures/${p.id}?city=${city}`} className="flex items-center justify-between gap-3 px-5 py-3.5 hover:bg-sand">
+                    <span className="min-w-0">
+                      <span className="block font-medium">{p.name}</span>
+                      <span className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-1 text-[11px] text-muted">
+                        <span className="flex items-center gap-1.5">Research <Dots value={RESEARCH[p.id].evidence} max={3} label="Evidence" /> {EVIDENCE_LABELS[RESEARCH[p.id].evidence]}</span>
+                        <span>Recovery: {downtimeShort(p.downtimeDays).toLowerCase()}</span>
+                      </span>
                     </span>
-                  </span>
-                  <span className="text-sm shrink-0 text-right">
-                    from {usd(p.cost[city][0])}
-                    <span className="block text-muted" aria-hidden="true">›</span>
-                  </span>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </section>
-      ))}
+                    <span className="text-sm shrink-0 text-right">
+                      from {usd(p.cost[city][0])}
+                      <span className="block text-muted" aria-hidden="true">›</span>
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </Disclosure>
+        ))}
 
-      {trends.map((t) => (
-        <section key={t.id} className="rounded-3xl border border-line bg-white p-5">
-          <p className="text-[11px] font-medium uppercase tracking-wide text-muted">Trending — {t.status}</p>
-          <h2 className="font-semibold mt-0.5 mb-1">{t.name}</h2>
-          <p className="text-sm leading-relaxed mb-2">{t.why}</p>
-          <ul className="space-y-1">
-            {t.links.map((l) => (
+        {trends.map((t) => (
+          <Disclosure key={t.id} title={`Trending: ${t.name}`} hint={`${t.status} — tap before you try it`}>
+            <p className="text-sm leading-relaxed mb-2">{t.why}</p>
+            <ul className="space-y-1">
+              {t.links.map((l) => (
+                <li key={l.url}><a href={l.url} target="_blank" rel="noopener noreferrer" className="text-sm underline">{l.label} ↗</a></li>
+              ))}
+            </ul>
+          </Disclosure>
+        ))}
+
+        <Disclosure title="Learn more" hint="Dermatologist-written guides">
+          <ul className="space-y-1.5">
+            {g.learn.map((l) => (
               <li key={l.url}><a href={l.url} target="_blank" rel="noopener noreferrer" className="text-sm underline">{l.label} ↗</a></li>
             ))}
           </ul>
-        </section>
-      ))}
+        </Disclosure>
+      </div>
 
-      <section>
-        <h2 className="font-semibold mb-2">Learn more</h2>
-        <ul className="space-y-1.5">
-          {g.learn.map((l) => (
-            <li key={l.url}><a href={l.url} target="_blank" rel="noopener noreferrer" className="text-sm underline">{l.label} ↗</a></li>
-          ))}
-        </ul>
-      </section>
-
-      <a href="/" className="btn-main block text-center">Take the 1-minute quiz for a personal shortlist</a>
+      <a href="/" className="btn-main block text-center">Get my personal shortlist (1-min quiz)</a>
       <p className="text-[11px] text-muted text-center">
         Educational information only — not medical advice. Prices are typical ranges, not quotes. <a href="/sources" className="underline">How we research</a>
       </p>

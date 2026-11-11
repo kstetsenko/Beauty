@@ -1,7 +1,7 @@
 import { CITY_LABELS, directoryLinks } from "@/lib/clinics";
 import { GOAL_LABELS } from "@/lib/procedures";
 import type { City, Procedure } from "@/lib/types";
-import { ApproachTag, KeyFacts, MoreFacts, ResearchSection } from "./ProcedureFacts";
+import { ApproachTag, DetailSections, KeyFacts } from "./ProcedureFacts";
 
 export function ProcedureDetail({ p, city }: { p: Procedure; city: City }) {
   const other: City = city === "nyc" ? "miami" : "nyc";
@@ -19,16 +19,12 @@ export function ProcedureDetail({ p, city }: { p: Procedure; city: City }) {
           <span className="rounded-full bg-ink text-white px-3.5 py-1.5">{CITY_LABELS[city]}</span>
           <a href={`/procedures/${p.id}?city=${other}`} className="rounded-full border border-line px-3.5 py-1.5 hover:border-ink">{CITY_LABELS[other]}</a>
         </div>
-        <div className="mb-6"><KeyFacts p={p} city={city} /></div>
-        <MoreFacts p={p} city={city} />
+        <KeyFacts p={p} city={city} />
       </div>
-      <a href={maps.href} target="_blank" rel="noopener noreferrer" className="btn-main block text-center mt-4">
-        Find {p.name} providers in {CITY_LABELS[city]} ↗
-      </a>
-      <a href={`/compare?ids=${p.id}&city=${city}`} className="btn-soft block text-center mt-3 text-sm">Compare with another treatment</a>
-      <div className="mt-4"><ResearchSection p={p} city={city} /></div>
+      <p className="text-xs text-muted mt-5 mb-2 px-1">Tap a topic to learn more</p>
+      <DetailSections p={p} city={city} />
       <section className="mt-4">
-        <h2 className="font-semibold mb-2">Compare other options for</h2>
+        <h2 className="font-semibold mb-2">See other options for</h2>
         <div className="flex flex-wrap gap-2">
           {p.goals.map((g) => (
             <a key={g} href={`/goals/${g}?city=${city}`} className="rounded-full border border-line bg-white px-3.5 py-1.5 text-sm hover:border-ink">
@@ -37,6 +33,10 @@ export function ProcedureDetail({ p, city }: { p: Procedure; city: City }) {
           ))}
         </div>
       </section>
+      <a href={maps.href} target="_blank" rel="noopener noreferrer" className="btn-main block text-center mt-5">
+        Find {p.name} providers in {CITY_LABELS[city]} ↗
+      </a>
+      <a href={`/compare?ids=${p.id}&city=${city}`} className="btn-soft block text-center mt-3 text-sm">Compare with another treatment</a>
       <p className="text-[11px] text-muted text-center mt-4">
         *Price ranges are not quotes. Educational information only — not medical advice. Brand names belong to their owners;
         we are not affiliated with any brand or clinic. <a href="/sources" className="underline">How we research</a>

@@ -3,6 +3,7 @@ import { downtimeShort, usd } from "@/lib/match";
 import { APPROACHES, ONSET_LABELS, PAIN_LABELS, RESULT_LABELS } from "@/lib/procedures";
 import { SAFETY } from "@/lib/safety";
 import { LEARN } from "@/lib/learn";
+import { Disclosure } from "./Disclosure";
 import { CONSULT_QUESTIONS, CHECKED, EVIDENCE_LABELS, RESEARCH, priceChecked } from "@/lib/research";
 import type { City, Procedure } from "@/lib/types";
 
@@ -55,124 +56,122 @@ export function KeyFacts({ p, city }: { p: Procedure; city: City }) {
   );
 }
 
-export function MoreFacts({ p, city }: { p: Procedure; city: City }) {
-  const r = RESEARCH[p.id];
-  return (
-    <dl className="space-y-2.5 text-sm">
-      <div><dt className="text-[11px] text-muted">How it works</dt><dd>{APPROACHES[p.approach].label} — {APPROACHES[p.approach].hint.charAt(0).toLowerCase() + APPROACHES[p.approach].hint.slice(1)}.</dd></div>
-      <div><dt className="text-[11px] text-muted">When you&apos;ll see results</dt><dd>{r.resultsIn}</dd></div>
-      <div><dt className="text-[11px] text-muted">Common side effects</dt><dd>{r.sideEffects}</dd></div>
-      {SAFETY[p.id] && (
-        <div>
-          <dt className="text-[11px] text-muted">Rare but serious</dt>
-          <dd>{SAFETY[p.id].serious}</dd>
-          {SAFETY[p.id].getHelpIf && <dd className="mt-1"><strong className="font-medium">Get medical help right away if:</strong> {SAFETY[p.id].getHelpIf}</dd>}
-        </div>
-      )}
-      {p.minAge && <div><dt className="text-[11px] text-muted">Age</dt><dd>FDA-authorized for adults {p.minAge} and older.</dd></div>}
-      {r.unitPrice && <div><dt className="text-[11px] text-muted">Price per unit</dt><dd>{r.unitPrice[city]}</dd></div>}
-      <div>
-        <dt className="text-[11px] text-muted mb-1">Research behind it</dt>
-        <dd className="flex items-center gap-2"><Dots value={r.evidence} max={3} label="Evidence" /> <span>{EVIDENCE_LABELS[r.evidence]} evidence</span></dd>
-        <dd className="text-muted text-xs mt-1">{r.evidenceNote}</dd>
-      </div>
-      <div><dt className="text-[11px] text-muted">Sessions</dt><dd>{p.sessions}</dd></div>
-      <div><dt className="text-[11px] text-muted">How long it lasts</dt><dd>{p.lasts}</dd></div>
-      <div><dt className="text-[11px] text-muted">Who does it</dt><dd>{p.performedBy}</dd></div>
-      <div>
-        <dt className="text-[11px] text-muted">Not usually advised with</dt>
-        <dd>{p.contraindications.map((c) => CAUTIONS[c].short).join(" · ")}</dd>
-      </div>
-      <div><dt className="text-[11px] text-muted">Good to know</dt><dd>{p.notes}</dd></div>
-    </dl>
-  );
-}
+const Row = ({ label, children }: { label: string; children: React.ReactNode }) => (
+  <div>
+    <dt className="text-[11px] text-muted">{label}</dt>
+    <dd className="text-sm">{children}</dd>
+  </div>
+);
 
-function lastsShort(s: string) {
-  const t = s.split(";")[0].replace(/^Up to about /i, "up to ~").replace(/^About /i, "~");
-  return t.charAt(0).toLowerCase() + t.slice(1);
-}
+const ExtLink = ({ href, children }: { href: string; children: React.ReactNode }) => (
+  <a href={href} target="_blank" rel="noopener noreferrer" className="text-sm underline decoration-line underline-offset-2 hover:decoration-ink">
+    {children} ↗
+  </a>
+);
 
-/** Studies, price sources and consultation questions (procedure page). */
-export function ResearchSection({ p, city }: { p: Procedure; city: City }) {
+/**
+ * Everything beyond the four key facts, split into tap-to-open sections so
+ * people open only what they want. Used on the swipe card and the procedure page.
+ */
+export function DetailSections({ p, city, withPrice = true }: { p: Procedure; city: City; withPrice?: boolean }) {
   const r = RESEARCH[p.id];
+  const safety = SAFETY[p.id];
   const seen = new Set<string>();
   const prices = r.prices.filter((x) => (!x.city || x.city === city) && !seen.has(x.url) && seen.add(x.url));
+  const learn = [...(LEARN[p.id] ?? []), ...(safety?.links ?? [])];
+
   return (
-    <div className="space-y-4">
-      {(LEARN[p.id]?.length || SAFETY[p.id]) && (
-        <section className="bg-white rounded-3xl border border-line p-6">
-          <h2 className="font-semibold mb-1">Learn more</h2>
-          <p className="text-xs text-muted mb-3">Plain-language guides from medical organizations and the FDA.</p>
-          <ul className="space-y-2">
-            {[...(LEARN[p.id] ?? []), ...(SAFETY[p.id]?.links ?? [])].map((l) => (
-              <li key={l.url}>
-                <a href={l.url} target="_blank" rel="noopener noreferrer" className="text-sm underline decoration-line underline-offset-2 hover:decoration-ink">{l.label} ↗</a>
-              </li>
-            ))}
-          </ul>
-          <a
-            href={`https://www.youtube.com/results?search_query=${encodeURIComponent(p.name.split(" / ")[0] + " dermatologist explains")}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="block text-sm underline mt-3"
-          >
-            Watch explainer videos on YouTube ↗
-          </a>
-          <p className="text-[11px] text-muted">A YouTube search — videos are not reviewed by us. Check the presenter is a board-certified doctor.</p>
-        </section>
-      )}
-      <section className="bg-white rounded-3xl border border-line p-6">
-        <h2 className="font-semibold mb-1">What the research says</h2>
-        <p className="flex items-center gap-2 text-sm mb-1"><Dots value={r.evidence} max={3} label="Evidence" /> {EVIDENCE_LABELS[r.evidence]} evidence</p>
-        <p className="text-sm text-muted mb-4">{r.evidenceNote}</p>
+    <div className="rounded-2xl bg-white border border-line">
+      <Disclosure tone="plain" title="How it works" hint={APPROACHES[p.approach].label}>
+        <dl className="space-y-2.5">
+          <Row label="In short">{APPROACHES[p.approach].hint}.</Row>
+          <Row label="Sessions">{p.sessions}</Row>
+          <Row label="Who does it">{p.performedBy}</Row>
+          {p.minAge && <Row label="Age">FDA-authorized for adults {p.minAge} and older.</Row>}
+        </dl>
+      </Disclosure>
+
+      <Disclosure tone="plain" title="Results & recovery" hint={`Results ${ONSET_LABELS[p.onset].toLowerCase()}`}>
+        <dl className="space-y-2.5">
+          <Row label="When you'll see results">{r.resultsIn}</Row>
+          <Row label="How long it lasts">{p.lasts}</Row>
+          <Row label="Good to know">{p.notes}</Row>
+        </dl>
+      </Disclosure>
+
+      <Disclosure tone="plain" title="Side effects & safety" hint={safety ? "Includes rare but serious risks" : "Common side effects"}>
+        <dl className="space-y-2.5">
+          <Row label="Common">{r.sideEffects}</Row>
+          {safety && <Row label="Rare but serious">{safety.serious}</Row>}
+          {safety?.getHelpIf && (
+            <Row label="Get medical help right away if">{safety.getHelpIf}</Row>
+          )}
+          <Row label="Not usually advised with">{p.contraindications.map((c) => CAUTIONS[c].short).join(" · ")}</Row>
+        </dl>
+      </Disclosure>
+
+      <Disclosure
+        tone="plain"
+        title="What the research says"
+        hint={<span className="inline-flex items-center gap-2"><Dots value={r.evidence} max={3} label="Evidence" /> {EVIDENCE_LABELS[r.evidence]} evidence</span>}
+      >
+        <p className="text-sm mb-3">{r.evidenceNote}</p>
         {r.studies.length > 0 ? (
           <ul className="space-y-3">
             {r.studies.map((st) => (
               <li key={st.url}>
-                <a href={st.url} target="_blank" rel="noopener noreferrer" className="text-sm underline decoration-line underline-offset-2 hover:decoration-ink">{st.title}</a>
-                <span className="block text-[11px] text-muted mt-0.5">{st.kind} · PubMed ↗</span>
+                <ExtLink href={st.url}>{st.title}</ExtLink>
+                <span className="block text-[11px] text-muted mt-0.5">{st.kind} · PubMed</span>
               </li>
             ))}
           </ul>
         ) : (
           <p className="text-sm">No published clinical studies found.</p>
         )}
-        <p className="text-[11px] text-muted mt-4">
-          Links open the study summary on PubMed (U.S. National Library of Medicine). Many studies are small or funded by the
-          product&apos;s maker. Research describes groups of people, not you — ask your provider what applies to your skin.
-        </p>
-      </section>
-
-      <section className="bg-white rounded-3xl border border-line p-6">
-        <h2 className="font-semibold mb-1">Where the price comes from</h2>
-        <p className="text-sm text-muted mb-3">
-          {priceChecked(p.id, city)
-            ? `Based on prices published by clinics or RealSelf patient reports, checked ${CHECKED}.`
-            : `No clinic in this city publishes a price online, so this is an estimate (checked ${CHECKED}).`}
-        </p>
-        {prices.length > 0 && (
-          <ul className="space-y-2">
-            {prices.map((x) => (
-              <li key={x.url}>
-                <a href={x.url} target="_blank" rel="noopener noreferrer nofollow" className="text-sm underline decoration-line underline-offset-2 hover:decoration-ink">{x.label} ↗</a>
-              </li>
-            ))}
-          </ul>
-        )}
         <p className="text-[11px] text-muted mt-3">
-          Prices change often and may not include numbing, consultation fees or touch-ups. Sources are listed for reference
-          only and are not endorsements.
+          Many studies are small or funded by the product&apos;s maker. Research describes groups of people, not you.
         </p>
-      </section>
+      </Disclosure>
 
-      <section className="bg-white rounded-3xl border border-line p-6">
-        <h2 className="font-semibold mb-3">Questions to ask at your consultation</h2>
+      {withPrice && (
+        <Disclosure tone="plain" title="About the price" hint={priceChecked(p.id, city) ? "From published clinic prices" : "Estimate"}>
+          {r.unitPrice && <p className="text-sm mb-2">Per unit: {r.unitPrice[city]}</p>}
+          <p className="text-sm mb-2">
+            {priceChecked(p.id, city)
+              ? `Based on prices published by clinics or RealSelf patient reports, checked ${CHECKED}.`
+              : `No clinic in this city publishes a price online, so this is an estimate (checked ${CHECKED}).`}
+          </p>
+          {prices.length > 0 && (
+            <ul className="space-y-1.5">
+              {prices.map((x) => <li key={x.url}><ExtLink href={x.url}>{x.label}</ExtLink></li>)}
+            </ul>
+          )}
+          <p className="text-[11px] text-muted mt-2">May not include numbing, consultation fees or touch-ups. A price far below others is a red flag.</p>
+        </Disclosure>
+      )}
+
+      <Disclosure tone="plain" title="Questions to ask your provider" hint="6 questions">
         <ol className="list-decimal pl-5 space-y-2 text-sm">
           {CONSULT_QUESTIONS.map((q) => <li key={q}>{q}</li>)}
         </ol>
-        <p className="text-[11px] text-muted mt-3">A price far below others is a red flag — it can mean diluted or non-genuine product.</p>
-      </section>
+      </Disclosure>
+
+      <Disclosure tone="plain" title="Learn more & videos" hint="AAD, ASPS and FDA guides">
+        <ul className="space-y-2">
+          {learn.map((l) => <li key={l.url}><ExtLink href={l.url}>{l.label}</ExtLink></li>)}
+          <li>
+            <ExtLink href={`https://www.youtube.com/results?search_query=${encodeURIComponent(p.name.split(" / ")[0] + " dermatologist explains")}`}>
+              Explainer videos on YouTube
+            </ExtLink>
+            <span className="block text-[11px] text-muted">A YouTube search — not reviewed by us. Check the presenter is a board-certified doctor.</span>
+          </li>
+        </ul>
+      </Disclosure>
     </div>
   );
+}
+
+function lastsShort(s: string) {
+  const t = s.split(";")[0].replace(/^Up to about /i, "up to ~").replace(/^About /i, "~");
+  return t.charAt(0).toLowerCase() + t.slice(1);
 }
