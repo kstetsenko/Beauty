@@ -64,8 +64,8 @@ export function Guide() {
   const go = (s: Step) => setHistory((h) => [...h, s]);
   const back = () => setHistory((h) => (h.length > 1 ? h.slice(0, -1) : h));
 
-  const all = useMemo(() => {
-    if (!goals.length || !budget) return [];
+  const result = useMemo(() => {
+    if (!goals.length || !budget) return { shown: [], hidden: [] };
     return matchProcedures({
       goals,
       budget,
@@ -77,6 +77,7 @@ export function Guide() {
       recent,
     });
   }, [goals, budget, flags, age, tone, recent]);
+  const all = result.shown;
   const matches = all.filter(
     (m) => onsetFilter === "all" || (onsetFilter === "now" ? m.procedure.onset === 1 : m.procedure.onset === 3),
   );
@@ -247,7 +248,10 @@ export function Guide() {
           {matches.length === 0 ? (
             <section className="animate-in text-center">
               <h1 className="text-2xl font-semibold mb-2">No matches</h1>
-              <p className="text-sm text-muted mb-6">Try another filter, a bigger budget, or allowing a little downtime.</p>
+              <p className="text-sm text-muted mb-6">
+                Try another filter, a bigger budget, or allowing a little downtime.
+                {result.hidden.length > 0 && ` ${result.hidden.length} treatment${result.hidden.length > 1 ? "s were" : " was"} hidden because of your safety answers.`}
+              </p>
               <button type="button" onClick={() => setHistory(["city", "goals", "about", "safety", "recent", "budget"])} className="btn-main">
                 Change answers
               </button>
@@ -275,6 +279,7 @@ export function Guide() {
           city={city}
           budget={budget}
           goals={goals}
+          hidden={result.hidden}
           saved={all.filter((m) => saved.includes(m.procedure.id))}
           onBrowseAgain={() => {
             setIndex(0);

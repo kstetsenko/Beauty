@@ -1,5 +1,6 @@
 import { PROCEDURES } from "./procedures";
 import { belowMinAge, notesFor, type Note } from "./advice";
+import { CAUTIONS } from "./cautions";
 import type { Procedure, QuizAnswers } from "./types";
 
 const MAX_DOWNTIME = { none: 1, short: 7, any: Infinity } as const;
@@ -11,19 +12,44 @@ export interface Match {
   notes: Note[];
 }
 
-/** Rank procedures against quiz answers. Pure function, runs in the browser. */
-export function matchProcedures(a: QuizAnswers): Match[] {
-  return PROCEDURES.filter(
-    (p) => p.tier <= a.budget && p.downtimeDays[1] <= MAX_DOWNTIME[a.downtime] && !belowMinAge(p, a),
-  )
-    .map((p) => ({
+export interface Hidden {
+  procedure: Procedure;
+  reasons: string[];
+}
+
+/** Why a procedure is not shown to this person (empty = safe to show). */
+export function safetyReasons(p: Procedure, a: QuizAnswers): string[] {
+  const r = p.contraindications.filter((c) => a.cautions.includes(c)).map((c) => CAUTIONS[c].short);
+  if (belowMinAge(p, a)) r.push(`FDA-authorized for ages ${p.minAge}+`);
+  if (p.id === "ipl" && a.tone === "deep") r.push("Generally advised against for deep skin tones (burn and dark-mark risk)");
+  return r;
+}
+
+/**
+ * Rank procedures against quiz answers. Treatments that conflict with the
+ * person's safety answers are removed from `shown` and listed in `hidden`
+ * with the reason. Pure function, runs in the browser.
+ */
+export function matchProcedures(a: QuizAnswers): { shown: Match[]; hidden: Hidden[] } {
+  const relevant = PROCEDURES.filter((p) => p.goals.some((g) => a.goals.includes(g)));
+  const hidden: Hidden[] = [];
+  const shown: Match[] = [];
+  for (const p of relevant) {
+    const reasons = safetyReasons(p, a);
+    if (reasons.length) {
+      hidden.push({ procedure: p, reasons });
+      continue;
+    }
+    if (p.tier > a.budget || p.downtimeDays[1] > MAX_DOWNTIME[a.downtime]) continue;
+    shown.push({
       procedure: p,
       score: p.goals.filter((g) => a.goals.includes(g)).length,
-      flagged: p.contraindications.filter((c) => a.cautions.includes(c)),
+      flagged: [],
       notes: notesFor(p, a),
-    }))
-    .filter((m) => m.score > 0)
-    .sort((x, y) => y.score - x.score || x.flagged.length - y.flagged.length || x.procedure.tier - y.procedure.tier);
+    });
+  }
+  shown.sort((x, y) => y.score - x.score || x.procedure.tier - y.procedure.tier);
+  return { shown, hidden };
 }
 
 export function usd(n: number) {

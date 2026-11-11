@@ -8,7 +8,7 @@ export type Route =
   | { name: "goals" }
   | { name: "goal"; goal: string; city: "nyc" | "miami" }
   | { name: "procedure"; id: string; city: "nyc" | "miami" }
-  | { name: "compare"; ids: string[]; city: "nyc" | "miami" };
+  | { name: "compare"; ids: string[]; city: "nyc" | "miami"; goal: string };
 
 const cityOf = (c: string | null) => (c === "miami" ? "miami" : "nyc");
 
@@ -21,7 +21,7 @@ export function toHash(href: string): string {
   if (parts[0] === "goals") return "goals";
   if (parts[0] === "compare") {
     const ids = (url.searchParams.get("ids") || "").split(",").filter(Boolean);
-    return `compare-${city}` + ids.map((i) => `--${i}`).join("");
+    return `compare-${city}-${url.searchParams.get("goal") || "any"}` + ids.map((i) => `--${i}`).join("");
   }
   if (["procedures", "sources", "privacy", "terms", "insights"].includes(parts[0])) return parts[0];
   return "home";
@@ -36,7 +36,8 @@ export function fromHash(hash: string): Route {
   if (h === "goals") return { name: "goals" };
   if (h.startsWith("compare-")) {
     const [head, ...ids] = h.split("--");
-    return { name: "compare", city: cityOf(head.replace("compare-", "")), ids };
+    const [c, goal] = head.replace("compare-", "").split("-");
+    return { name: "compare", city: cityOf(c), goal: goal && goal !== "any" ? goal : "", ids };
   }
   if (h === "procedures" || h === "sources" || h === "privacy" || h === "terms" || h === "insights") return { name: h };
   return { name: "home" };

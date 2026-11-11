@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { CITY_LABELS, CLINICS, directoryLinks } from "@/lib/clinics";
-import { downtimeShort, usd, type Match } from "@/lib/match";
+import { downtimeShort, usd, type Hidden, type Match } from "@/lib/match";
 import { GOAL_LABELS } from "@/lib/procedures";
 import type { Budget, City, Goal } from "@/lib/types";
 import { LeadCaptureForm } from "./LeadCaptureForm";
@@ -14,6 +14,7 @@ export function Summary({
   city,
   budget,
   goals = [],
+  hidden = [],
   saved,
   onBrowseAgain,
   onRestart,
@@ -21,6 +22,7 @@ export function Summary({
   city: City;
   budget?: Budget;
   goals?: Goal[];
+  hidden?: Hidden[];
   saved: Match[];
   onBrowseAgain: () => void;
   onRestart: () => void;
@@ -30,6 +32,10 @@ export function Summary({
   const where = area.trim() || CITY_LABELS[city];
   const links = directoryLinks(city, area, saved.map((m) => m.procedure.name));
   const ids = saved.map((m) => m.procedure.id);
+  // Compare only like with like: saved treatments that share one of the user's goals.
+  const compareGroups = goals
+    .map((g) => ({ g, list: saved.filter((m) => m.procedure.goals.includes(g)).map((m) => m.procedure.id) }))
+    .filter((x) => x.list.length >= 2);
   const clinics = CLINICS.filter((c) => c.city === city && c.offers.some((o) => ids.includes(o)));
 
   return (
@@ -104,14 +110,16 @@ export function Summary({
             </div>
           )}
 
-          <div className="grid grid-cols-2 gap-3">
-            {saved.length >= 2 ? (
-              <a href={`/compare?ids=${ids.slice(0, 3).join(",")}&city=${city}`} className="btn-soft text-center text-sm">Compare side by side</a>
-            ) : (
-              <a href={`/compare?ids=${ids[0]}&city=${city}`} className="btn-soft text-center text-sm">Compare with another</a>
-            )}
-            <button type="button" onClick={() => setShowEmail(true)} className="btn-soft text-sm">Email me this guide</button>
-          </div>
+          {compareGroups.length > 0 && (
+            <div className="grid gap-2">
+              {compareGroups.map(({ g, list }) => (
+                <a key={g} href={`/compare?goal=${g}&ids=${list.slice(0, 3).join(",")}&city=${city}`} className="btn-soft text-center text-sm">
+                  Compare your {GOAL_LABELS[g].toLowerCase()} options
+                </a>
+              ))}
+            </div>
+          )}
+          <button type="button" onClick={() => setShowEmail(true)} className="btn-soft text-sm">Email me this guide</button>
           {showEmail && <LeadCaptureForm city={city} procedureIds={ids} />}
         </>
       )}
@@ -127,6 +135,20 @@ export function Summary({
             ))}
           </div>
         </div>
+      )}
+
+      {hidden.length > 0 && (
+        <Disclosure title={`Hidden for your safety (${hidden.length})`} hint="Treatments that usually aren't advised with your answers">
+          <ul className="space-y-2.5">
+            {hidden.map(({ procedure: p, reasons }) => (
+              <li key={p.id} className="text-sm">
+                <a href={`/procedures/${p.id}?city=${city}`} className="font-medium underline">{p.name}</a>
+                <span className="block text-xs text-muted">Not usually advised with: {reasons.join(" · ")}</span>
+              </li>
+            ))}
+          </ul>
+          <p className="text-[11px] text-muted mt-3">A dermatologist can tell you whether any of these could still be right for you.</p>
+        </Disclosure>
       )}
 
       <Disclosure title="Check a provider's credentials" hint="Board certification and license lookups">

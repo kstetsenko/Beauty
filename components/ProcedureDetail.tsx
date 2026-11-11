@@ -36,7 +36,7 @@ export function ProcedureDetail({ p, city }: { p: Procedure; city: City }) {
       <a href={maps.href} target="_blank" rel="noopener noreferrer" className="btn-main block text-center mt-5">
         Find {p.name} providers in {CITY_LABELS[city]} ↗
       </a>
-      <a href={`/compare?ids=${p.id}&city=${city}`} className="btn-soft block text-center mt-3 text-sm">Compare with another treatment</a>
+      <a href={`/compare?ids=${p.id}&city=${city}`} className="btn-soft block text-center mt-3 text-sm">Compare with similar treatments</a>
       <p className="text-[11px] text-muted text-center mt-4">
         *Price ranges are not quotes. Educational information only — not medical advice. Brand names belong to their owners;
         we are not affiliated with any brand or clinic. <a href="/sources" className="underline">How we research</a>

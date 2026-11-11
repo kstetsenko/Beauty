@@ -7,7 +7,10 @@ export function useSearchParams() {
   const r = fromHash(hash);
   const q = new URLSearchParams();
   if ("city" in r) q.set("city", r.city);
-  if (r.name === "compare") q.set("ids", r.ids.join(","));
+  if (r.name === "compare") {
+    if (r.ids.length) q.set("ids", r.ids.join(","));
+    if (r.goal) q.set("goal", r.goal);
+  }
   return q;
 }
 
