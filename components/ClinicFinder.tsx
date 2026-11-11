@@ -78,7 +78,7 @@ export function ClinicFinder({ treatment, city: initialCity, area: initialArea =
       <Disclosure title="Search on your own" hint="Google Maps, board-certification directories, license lookup">
         <div className="grid gap-2.5">
           <TrackedLink href={links.byProcedure[0].href} ev={{ kind: "maps", treatment: p.id, city, area }} className="text-sm underline">
-            {p.approach === "topical" ? "Dermatologists" : name} near {area || "me"} on Google Maps ↗
+            {name} near {area || "me"} on Google Maps ↗
           </TrackedLink>
           {links.directories.map((l) => (
             <TrackedLink key={l.href} href={l.href} ev={{ kind: "directory", city }} className="text-sm underline">{l.short} ↗</TrackedLink>

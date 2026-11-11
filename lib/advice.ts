@@ -14,7 +14,7 @@ const pm = (id: string) => `https://pubmed.ncbi.nlm.nih.gov/${id}/`;
 const pmc = (id: string) => `https://pmc.ncbi.nlm.nih.gov/articles/${id}/`;
 
 const RESURFACING = new Set(["co2", "erbium", "fraxel", "halo", "moxi", "clear-brilliant", "tixel", "pico", "peel"]);
-const LIGHT = new Set(["co2", "erbium", "fraxel", "halo", "moxi", "clear-brilliant", "laser-genesis", "pico", "ipl", "pdl"]);
+const LIGHT = new Set(["co2", "erbium", "fraxel", "halo", "moxi", "clear-brilliant", "laser-genesis", "pico", "ipl", "pdl", "ktp"]);
 const ENERGY = new Set(["sofwave", "ultherapy", "thermage", "morpheus8", "emface", "tixel"]);
 
 export function notesFor(p: Procedure, a: QuizAnswers): Note[] {
@@ -32,14 +32,8 @@ export function notesFor(p: Procedure, a: QuizAnswers): Note[] {
     n.push({ text: "With melasma, laser and light results are often temporary and can rebound darker. Topical treatment and sun protection usually come first.", source: { label: "Meta-analysis: lasers for melasma", url: pmc("PMC13128289") } });
   if (a.conditions?.includes("melasma") && id === "peel")
     n.push({ text: "Peels have evidence for melasma, but it often returns without maintenance.", source: { label: "Meta-analysis: peels for melasma", url: pm("32947652") } });
-  if (a.conditions?.includes("melasma") && id === "melasma-cream")
-    n.push({ text: "For melasma, dermatologists usually start with a prescription cream and strict sun protection.", source: { label: "AAD — Melasma treatment", url: "https://www.aad.org/public/diseases/a-z/melasma-treatment" } });
-  if (a.cautions.includes("pregnancy") && id === "azelaic")
-    n.push({ text: "Reviews list azelaic acid among the lower-risk options during pregnancy. Confirm with your obstetric provider.", source: { label: "Review: skin treatment in pregnancy", url: pmc("PMC9823189") } });
-  if (a.conditions?.includes("melasma") && id === "azelaic")
-    n.push({ text: "An alternative to hydroquinone for melasma, with fewer restrictions.", source: { label: "Meta-analysis: azelaic acid vs hydroquinone", url: pmc("PMC10339666") } });
-  if (a.conditions?.includes("rosacea") && id === "rx-redness")
-    n.push({ text: "Made for persistent rosacea redness; studies show improvement from the first day.", source: { label: "Pooled phase 3 trials", url: pm("30500142") } });
+  if (a.conditions?.includes("melasma") && id === "laser-toning")
+    n.push({ text: "Used specifically for melasma. Meta-analyses find it helps, but melasma often returns, and many sessions can leave white spots.", source: { label: "Meta-analysis: low-fluence Nd:YAG for melasma", url: pm("36533794") } });
   if (a.conditions?.includes("rosacea") && id === "ipl")
     n.push({ text: "IPL and pulsed-dye laser both reduce rosacea redness in studies.", source: { label: "Meta-analysis: IPL & PDL for rosacea", url: pm("39240125") } });
   if (a.conditions?.includes("cold-sores") && RESURFACING.has(id))

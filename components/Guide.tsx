@@ -105,6 +105,15 @@ export function Guide() {
 
       {step === "city" && (
         <>
+          <div className="mb-8">
+            <p className="text-xs uppercase tracking-wide text-muted mb-2">Aesthetic Guide · NYC &amp; Miami</p>
+            <p className="text-xl font-semibold leading-snug mb-3">Every in-clinic face treatment, ranked for your skin — with the evidence.</p>
+            <ul className="space-y-1.5 text-sm">
+              <li>✓ {PROCEDURES.length} treatments, from facials to lasers and injectables, filtered for your skin tone, health and recent treatments</li>
+              <li>✓ Research strength, local prices, recovery and risks for each, with sources</li>
+              <li>✓ No paid rankings: clinics can&apos;t buy a higher spot</li>
+            </ul>
+          </div>
           <Question
             key="city"
             title="Where are you?"

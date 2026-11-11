@@ -75,5 +75,5 @@ export function directoryLinks(city: City, area: string, procedureNames: string[
 
 /** What to search for on the map: prescription creams are prescribed by a dermatologist, not a "provider of" the cream. */
 export function mapsTerm(p: Procedure) {
-  return p.approach === "topical" ? "dermatologist" : p.name.split(" / ")[0];
+  return p.name.split(" / ")[0].replace(/ \(.*\)$/, "");
 }

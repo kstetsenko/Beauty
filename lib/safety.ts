@@ -34,6 +34,8 @@ const LASER: Safety = {
 
 export const SAFETY: Record<string, Safety> = {
   "cheek-filler": FILLER,
+  "smile-filler": FILLER,
+  bellafill: FILLER,
   radiesse: FILLER,
   skinvive: FILLER,
   sculptra: FILLER,

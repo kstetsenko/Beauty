@@ -21,6 +21,9 @@ const AAD = {
   firm: { label: "AAD — Many ways to firm sagging skin", url: "https://www.aad.org/public/cosmetic/younger-looking/firm-sagging-skin" },
   sunDamage: { label: "AAD — How dermatologists treat sun-damaged skin", url: "https://www.aad.org/public/everyday-care/sun-protection/sun-damage-skin/wrinkles-sun-damage-can-be-treated" },
   acneScars: { label: "AAD — Acne scars: consultation and treatment", url: "https://www.aad.org/public/diseases/acne/derm-treat/scars/treatment" },
+  acneLights: { label: "AAD — Lasers and lights: how well do they treat acne?", url: "https://www.aad.org/public/diseases/acne-and-rosacea/lasers-and-lights-how-well-do-they-treat-acne" },
+  ak: { label: "AAD — Actinic keratosis treatment (explains PDT)", url: "https://www.aad.org/public/diseases/skin-cancer/actinic-keratosis-treatment" },
+  acne: { label: "AAD — Acne: diagnosis and treatment", url: "https://www.aad.org/public/diseases/acne/derm-treat/treat" },
   rosaceaLasers: { label: "AAD — Lasers and lights for rosacea", url: "https://www.aad.org/public/diseases/rosacea/treatment/lasers-lights" },
   lasersTreat: { label: "AAD — Skin conditions lasers can treat", url: "https://www.aad.org/public/diseases/a-z/skin-conditions-lasers-treat" },
   needling: { label: "AAD — Microneedling can fade scars and uneven tone", url: "https://www.aad.org/public/cosmetic/scars-stretch-marks/microneedling-fade-scars" },
@@ -28,7 +31,6 @@ const AAD = {
   peelsOverview: { label: "AAD — Chemical peels: overview", url: "https://www.aad.org/public/cosmetic/younger-looking/chemical-peels-overview" },
   peelsFaq: { label: "AAD — Chemical peels: FAQs", url: "https://www.aad.org/public/cosmetic/younger-looking/chemical-peels-faqs" },
   younger: { label: "AAD — Younger-looking skin", url: "https://www.aad.org/public/cosmetic/younger-looking" },
-  retinoid: { label: "AAD — Retinoid or retinol?", url: "https://www.aad.org/public/everyday-care/skin-care-secrets/anti-aging/retinoid-retinol" },
   wrinkles: { label: "AAD — Wrinkles", url: "https://www.aad.org/public/cosmetic/wrinkles" },
   melasma: { label: "AAD — Melasma: diagnosis and treatment", url: "https://www.aad.org/public/diseases/a-z/melasma-treatment" },
   unsafe: { label: "AAD — Five unsafe skin care trends to avoid", url: "https://www.aad.org/news/5-unsafe-skin-care-trends-to-avoid" },
@@ -40,6 +42,14 @@ const ASPS = {
 const FILLERS = [AAD.fillersOverview, AAD.fillersFaq, AAD.fillersPrep];
 
 export const LEARN: Record<string, Link[]> = {
+  "smile-filler": FILLERS,
+  bellafill: [AAD.fillersOverview, AAD.acneScars],
+  "tca-cross": [AAD.acneScars, AAD.peelsOverview],
+  aerolase: [AAD.acneLights, AAD.acne],
+  "laser-toning": [AAD.melasma, AAD.lasersTreat],
+  pdt: [AAD.acneLights, AAD.ak],
+  ktp: [AAD.rosaceaLasers, AAD.lasersTreat],
+  microcurrent: [AAD.younger],
   botox: [AAD.botoxOverview, AAD.botoxFaq],
   "cheek-filler": FILLERS,
   "under-eye": FILLERS,
@@ -67,10 +77,6 @@ export const LEARN: Record<string, Link[]> = {
   hydrafacial: [AAD.younger],
   dermaplaning: [AAD.younger],
   threads: [ASPS.threads],
-  tretinoin: [AAD.retinoid, AAD.sunDamage],
-  "rx-redness": [AAD.rosaceaLasers, { label: "AAD — Rosacea: diagnosis and treatment", url: "https://www.aad.org/public/diseases/rosacea/treatment/diagnosis-treat" }],
-  "melasma-cream": [AAD.melasma],
-  azelaic: [AAD.melasma, { label: "AAD — Rosacea: diagnosis and treatment", url: "https://www.aad.org/public/diseases/rosacea/treatment/diagnosis-treat" }],
   subcision: [AAD.acneScars],
   microdermabrasion: [AAD.sunDamage, { label: "ASPS — Microdermabrasion cost", url: "https://www.plasticsurgery.org/cosmetic-procedures/microdermabrasion/cost" }],
   erbium: [AAD.firm, AAD.sunDamage],
@@ -80,9 +86,9 @@ export const LEARN: Record<string, Link[]> = {
 /** Plain-language starting point for each goal, as a dermatologist would frame it. */
 export const GOAL_GUIDE: Record<Goal, { intro: string; foundation: boolean; learn: Link[] }> = {
   lines: {
-    intro: "Daily SPF 30+ and a retinoid are the foundation. Lines that appear when you move (frown, forehead, crow's feet) respond to neuromodulators; lines at rest may need filler or resurfacing.",
+    intro: "Lines that appear when you move (frown, forehead, crow's feet) respond to neuromodulators. Folds and lines at rest may need filler, resurfacing or collagen-building treatments. Daily SPF 30+ protects any result.",
     foundation: true,
-    learn: [AAD.wrinkles, AAD.retinoid],
+    learn: [AAD.wrinkles, AAD.sunDamage],
   },
   lift: {
     intro: "Ultrasound and radiofrequency tighten gradually, with the best results around 6 months. Laser resurfacing tightens more but needs downtime. Ask a board-certified dermatologist or plastic surgeon whether non-surgical options can give the result you expect.",
@@ -90,7 +96,7 @@ export const GOAL_GUIDE: Record<Goal, { intro: string; foundation: boolean; lear
     learn: [AAD.firm],
   },
   texture: {
-    intro: "Resurfacing — lasers, peels and microneedling — renews the skin's surface. A retinoid improves texture over months and supports any procedure.",
+    intro: "Resurfacing — lasers, peels and microneedling — renews the skin's surface. Gentle options need several sessions; stronger ones need downtime.",
     foundation: true,
     learn: [AAD.sunDamage, AAD.younger],
   },
@@ -100,29 +106,34 @@ export const GOAL_GUIDE: Record<Goal, { intro: string; foundation: boolean; lear
     learn: [AAD.fillersOverview, AAD.fillersFaq],
   },
   pigment: {
-    intro: "Sun protection comes first — spots come back without it. Lasers, IPL and peels lighten sun spots. Melasma is different: prescription creams usually come first, and some lasers can make it worse.",
+    intro: "Sun protection comes first — spots come back without it. Lasers, IPL and peels lighten sun spots. Melasma is different: a dermatologist usually starts with sun protection and medical treatment, and some lasers can make it worse; low-energy laser toning and peels are used with care.",
     foundation: true,
     learn: [AAD.sunDamage, AAD.melasma],
   },
   redness: {
-    intro: "Prescription creams reduce rosacea redness within hours; pulsed dye laser and IPL reduce persistent redness and visible vessels over a few sessions. A dermatologist can confirm whether it is rosacea.",
+    intro: "Pulsed dye laser, KTP laser and IPL reduce persistent redness and visible vessels over a few sessions. A dermatologist can confirm whether it is rosacea and whether you also need medical treatment.",
     foundation: false,
     learn: [AAD.rosaceaLasers],
   },
   acne: {
-    intro: "Get breakouts under control first. Then subcision (for rolling scars), microneedling, RF microneedling, lasers or peels can soften scars — combinations often work best; a retinoid helps mild scarring.",
+    intro: "Get breakouts under control first. Then subcision (for rolling scars), microneedling, RF microneedling, lasers or peels can soften scars — combinations often work best. TCA CROSS suits narrow ice-pick scars.",
     foundation: true,
     learn: [AAD.acneScars, AAD.needling],
   },
   glow: {
-    intro: "Start with daily SPF and a retinoid. Gentle options — facials, light peels, gentle lasers or skin boosters — add glow with little or no downtime.",
+    intro: "Gentle options — facials, light peels, gentle lasers or skin boosters — add glow with little or no downtime. Many facials have little research, and we say so on each one.",
     foundation: true,
-    learn: [AAD.younger, AAD.retinoid],
+    learn: [AAD.younger, AAD.sunDamage],
+  },
+  breakouts: {
+    intro: "Acne is first treated with medicine by a dermatologist. In-office options — peels, PDT and lasers such as Aerolase — can help alongside it. The AAD's acne guideline found the evidence too limited to formally recommend these procedures, and they rarely clear acne on their own.",
+    foundation: false,
+    learn: [AAD.acneLights, AAD.acne, { label: "AAD — Updated guidelines for acne management", url: "https://www.aad.org/news/updated-guidelines-acne-management" }],
   },
 };
 
 /** Order options from least to most involved, the way a dermatologist would build a plan. */
-export const APPROACH_ORDER = ["topical", "toxin", "ha", "skin", "biostim", "laser", "energy", "threads"] as const;
+export const APPROACH_ORDER = ["toxin", "ha", "skin", "biostim", "laser", "energy", "threads"] as const;
 
 export const SUNSCREEN: Link = AAD.sunDamage;
 export const UNSAFE_TRENDS: Link = AAD.unsafe;

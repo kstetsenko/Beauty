@@ -42,7 +42,6 @@ re-checked. Nothing in the app should be added without a source of the kind list
 | Chemical Peel | Estimate | Published | 2 | Some |
 | IPL / BBL Photofacial | Estimate | Estimate | 2 | Some |
 | Pico Laser | Estimate | Estimate | 2 | Some |
-| Prescription Retinoid (Tretinoin) | Estimate | Estimate | 2 | Strong |
 | Under-Eye Filler | Published | Estimate | 2 | Strong |
 | Pulsed Dye Laser (Vbeam) | Estimate | Estimate | 2 | Some |
 | Microdermabrasion | Estimate | Published | 2 | Limited |
@@ -51,10 +50,15 @@ re-checked. Nothing in the app should be added without a source of the kind list
 | Laser Genesis | Estimate | Estimate | 1 | Limited |
 | Tixel | Published | Estimate | 1 | Limited |
 | LED Light Therapy | Published | Estimate | 2 | Limited |
-| Prescription Redness Cream | Estimate | Estimate | 2 | Strong |
-| Prescription Melasma Cream | Estimate | Estimate | 2 | Some |
 | Subcision | Estimate | Estimate | 2 | Some |
-| Azelaic Acid | Estimate | Estimate | 3 | Some |
+| Smile-Line Filler | Published | Estimate | 2 | Strong |
+| Bellafill | Estimate | Estimate | 3 | Some |
+| TCA CROSS | Estimate | Estimate | 3 | Some |
+| Aerolase (650-µs laser) | Estimate | Estimate | 2 | Some |
+| Laser Toning (Q-switched Nd:YAG) | Published | Estimate | 2 | Some |
+| Photodynamic Therapy (PDT) | Estimate | Estimate | 2 | Some |
+| KTP Laser (Excel V) | Estimate | Estimate | 2 | Some |
+| Microcurrent Facial | Published (Fresha listings) | Published (Fresha listings) | 1 | Limited |
 
 ## Known gaps
 - Several Miami prices (and some NYC) are estimates because clinics do not publish them.
@@ -88,8 +92,21 @@ re-checked. Nothing in the app should be added without a source of the kind list
 | HydraFacial, Dermaplaning | Texture | No clinical trials; kept only as "glow" facials |
 | Chemical Peel | Acne scars | Cited evidence covers melasma and active acne, not scars |
 | Pico laser | Acne scars | Cited studies cover wrinkles, pigment and photoaging; added Lines |
-| Tretinoin | Acne scars | Evidence is for sun-damaged skin; it treats active acne, not scars |
+| Tretinoin | Acne scars | (Later removed: prescription creams are out of scope) |
 | EMFACE | Lifting | The one study measured wrinkles only |
 
 - **Questions to ask a provider** are now written per treatment (lib/questions.ts), from that treatment's own
   sessions, risks and safety notices. `npm run check` fails if a treatment has fewer than 3 or a question repeats.
+
+## In-clinic services only; new treatments and goal (2026-11-11)
+- **Removed** prescription creams (tretinoin, redness creams, melasma creams, azelaic acid): the guide now lists
+  in-clinic services only. General advice keeps daily SPF.
+- **Added** 8 in-clinic treatments, each with PubMed studies and an evidence label (weak evidence is shown as such):
+  smile-line filler, Bellafill, TCA CROSS, Aerolase, laser toning, photodynamic therapy, KTP (Excel V), microcurrent.
+  No NYC/Miami clinic page published prices for Bellafill, TCA CROSS, Aerolase, PDT or KTP, so those are national
+  ranges labeled "Estimate".
+- **New goal "Breakouts"** (active acne): Aerolase, PDT, chemical peels (systematic review of RCTs), pulsed dye laser
+  and IPL (randomized split-face trial). The goal page quotes the AAD guideline: evidence was too limited to formally
+  recommend procedures for acne.
+- **Quick plans** on the results list (Event in 2 weeks, First time, Best value, Long-lasting) are filters over
+  existing data: recovery days, pain, onset, starting price, evidence and the "how long it lasts" text.

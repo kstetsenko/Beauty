@@ -283,6 +283,7 @@ export const RESEARCH: Record<string, Research> = {
     evidence: 2,
     evidenceNote: "Good evidence for melasma and acne; melasma often returns without maintenance.",
     studies: [
+      { title: "Chemical peels for acne vulgaris: a systematic review of randomised controlled trials", url: pm("29705755"), kind: "Systematic review" },
       { title: "Efficacy and tolerability of chemical peeling as a single agent for melasma in dark-skinned patients: A systematic review and meta-analysis of comparative trials", url: pm("32947652"), kind: "Meta-analysis" },
       { title: "Glycolic acid peel therapy — a current review", url: pm("24399880"), kind: "Review" },
     ],
@@ -294,6 +295,7 @@ export const RESEARCH: Record<string, Research> = {
     evidence: 2,
     evidenceNote: "Works better for sun spots and redness than for wrinkles.",
     studies: [
+      { title: "Intense pulsed light vs. pulsed-dye laser in the treatment of facial acne: a randomized split-face trial", url: pm("20002654"), kind: "Randomized trial" },
       { title: "A split-face study of intense pulsed light on photoaging skin in Chinese population", url: pm("20166160"), kind: "Clinical study" },
       { title: "Intense pulsed light (IPL): a review", url: pm("20166155"), kind: "Review" },
     ],
@@ -307,17 +309,6 @@ export const RESEARCH: Record<string, Research> = {
     studies: [
       { title: "Safety and efficacy of a novel diffractive lens array using a picosecond 755 nm alexandrite laser for treatment of wrinkles", url: pm("27681221"), kind: "Clinical study" },
       { title: "Three-Year Results of Facial Photoaging in Asian Patients After Alexandrite 755 nm Picosecond Laser With Diffractive Lens Array: A Split-Face, Single-Blinded, Randomized Controlled Comparison", url: pm("33604905"), kind: "Randomized trial" },
-    ],
-  },
-  tretinoin: {
-    resultsIn: "Gradually over 3–6 months of nightly use",
-    sideEffects: "Dryness, peeling, redness and sun sensitivity, mostly in the first weeks",
-    prices: [{ label: "GoodRx — tretinoin cream prices (national)", url: "https://www.goodrx.com/tretinoin" }],
-    evidence: 3,
-    evidenceNote: "A meta-analysis of randomized trials found tretinoin safe and effective for fine and coarse wrinkles from sun damage.",
-    studies: [
-      { title: "Tretinoin for Photodamaged Facial Skin: Systematic Review and Meta-Analysis of Randomized Controlled Trials", url: pm("41236273"), kind: "Meta-analysis" },
-      { title: "Long-term efficacy and safety of tretinoin emollient cream 0.05% in the treatment of photodamaged facial skin: a two-year, randomized, placebo-controlled trial", url: pm("16060712"), kind: "Randomized trial" },
     ],
   },
   "under-eye": {
@@ -338,6 +329,7 @@ export const RESEARCH: Record<string, Research> = {
     evidence: 2,
     evidenceNote: "A meta-analysis found pulsed dye laser and IPL both reduce rosacea redness; most trials are small.",
     studies: [
+      { title: "Intense pulsed light vs. pulsed-dye laser in the treatment of facial acne: a randomized split-face trial", url: pm("20002654"), kind: "Randomized trial" },
       { title: "Meta-Analysis of the Efficacy of Intense Pulsed Light and Pulsed-Dye Laser Therapy in the Management of Rosacea", url: pm("39240125"), kind: "Meta-analysis" },
       { title: "Beyond efficacy: pulse duration is crucial for adverse events in pulsed dye laser therapy for rosacea", url: pm("42112600"), kind: "Randomized trial" },
     ],
@@ -423,31 +415,6 @@ export const RESEARCH: Record<string, Research> = {
       { title: "A Controlled Trial to Determine the Efficacy of Red and Near-Infrared Light Treatment in Patient Satisfaction, Reduction of Fine Lines, Wrinkles, Skin Roughness, and Intradermal Collagen Density Increase", url: pmc("PMC3926176"), kind: "Clinical study" },
     ],
   },
-  "rx-redness": {
-    resultsIn: "Within hours of applying",
-    sideEffects: "Skin irritation; occasionally redness rebounds or worsens",
-    prices: [{ label: "GoodRx — Rhofade prices (national)", url: "https://www.goodrx.com/rhofade" }],
-    evidence: 3,
-    evidenceNote: "Two phase 3 randomized trials (885 people) found oxymetazoline reduced persistent rosacea redness versus placebo.",
-    studies: [
-      { title: "Topical Oxymetazoline Cream 1.0% for Persistent Facial Erythema Associated With Rosacea: Pooled Analysis of the Two Phase 3, 29-Day, Randomized, Controlled REVEAL Trials", url: pm("30500142"), kind: "Randomized trial" },
-      { title: "Pivotal Trial of the Efficacy and Safety of Oxymetazoline Cream 1.0% for the Treatment of Persistent Facial Erythema Associated With Rosacea: Findings from the Second REVEAL Trial", url: pm("29537447"), kind: "Randomized trial" },
-    ],
-  },
-  "melasma-cream": {
-    resultsIn: "Over about 8 weeks",
-    sideEffects: "Redness, dryness, peeling or irritation",
-    prices: [
-      { label: "GoodRx — Tri-Luma prices (national)", url: "https://www.goodrx.com/tri-luma" },
-      { label: "GoodRx — hydroquinone prices (national)", url: "https://www.goodrx.com/hydroquinone" },
-    ],
-    evidence: 2,
-    evidenceNote: "A Cochrane review found the triple cream more effective than hydroquinone alone, but trials were short; melasma often returns.",
-    studies: [
-      { title: "Systematic review of randomized controlled trials on interventions for melasma: an abridged Cochrane review", url: pm("24438951"), kind: "Systematic review" },
-      { title: "A randomized controlled trial of the efficacy and safety of a fixed triple combination (fluocinolone acetonide 0.01%, hydroquinone 4%, tretinoin 0.05%) compared with hydroquinone 4% cream in Asian patients with moderate to severe melasma", url: pm("18616780"), kind: "Randomized trial" },
-    ],
-  },
   subcision: {
     resultsIn: "Some lift right away; more over weeks as healing settles",
     sideEffects: "Bruising, swelling and tenderness for several days; small lumps",
@@ -459,16 +426,105 @@ export const RESEARCH: Record<string, Research> = {
       { title: "Subcision in acne scarring: A review of clinical trials", url: pm("36315903"), kind: "Review" },
     ],
   },
-  azelaic: {
-    resultsIn: "Gradually over 2–3 months",
-    sideEffects: "Mild stinging, itching or dryness, usually temporary",
-    prices: [{ label: "GoodRx — azelaic acid prices (national)", url: "https://www.goodrx.com/azelaic-acid" }],
-    evidence: 2,
-    evidenceNote: "A meta-analysis of randomized trials found it may reduce melasma more than hydroquinone; the 15% gel was FDA-approved for rosacea in 2002 after phase 3 trials.",
+  "smile-filler": {
+    resultsIn: "Right away; settles in about 2 weeks",
+    sideEffects: "Swelling, bruising, tenderness; rare but serious blocked blood vessel",
+    prices: [
+      { label: "Dr. Kopelman (NYC) — Juvéderm cost by syringe", url: "https://drkopelman.com/juvederm-filler-cost/", city: "nyc" },
+      { label: "Haute Living — filler cost guide (concierge practices incl. Miami)", url: "https://hauteliving.com/hautemd/costs/facial-balancing-cost" },
+    ],
+    evidence: 3,
+    evidenceNote: "Many randomized trials; a meta-analysis of randomized trials covers fillers for the nasolabial (smile-line) area. Most trials compare one filler brand with another.",
     studies: [
-      { title: "Azelaic Acid Versus Hydroquinone for Managing Patients With Melasma: Systematic Review and Meta-Analysis of Randomized Controlled Trials", url: pmc("PMC10339666"), kind: "Meta-analysis" },
-      { title: "The efficacy and safety of minocycline, metronidazole, ivermectin, and azelaic acid in moderate-to-severe papulopustular rosacea: A systematic review and network meta-analysis", url: pmc("PMC11979399"), kind: "Meta-analysis" },
-      { title: "Treatment of Acne Vulgaris During Pregnancy and Lactation: A Narrative Review (azelaic acid among first-line options)", url: pmc("PMC9823189"), kind: "Review" },
+      { title: "Tissue Fillers for the Nasolabial Fold Area: A Systematic Review and Meta-Analysis of Randomized Clinical Trials", url: pmc("PMC8481177"), kind: "Meta-analysis" },
+      { title: "A prospective, split-face, randomized, comparative study of safety and 12-month longevity of three formulations of hyaluronic acid dermal filler for treatment of nasolabial folds", url: pm("22759250"), kind: "Randomized trial" },
+    ],
+  },
+  bellafill: {
+    resultsIn: "Right away, improving over the following months",
+    sideEffects: "Swelling, redness, tenderness, lumps; rare but serious blocked blood vessel",
+    prices: [
+      { label: "RealSelf — Bellafill cost (national, with city averages)", url: "https://www.realself.com/nonsurgical/bellafill/cost" },
+      { label: "Empire Medical Training — ASPS average per syringe", url: "https://www.empiremedicaltraining.com/blog/collagen-injection-cost" },
+    ],
+    evidence: 2,
+    evidenceNote: "One manufacturer-sponsored, double-blind randomized trial (the basis of FDA approval for acne scars) found 64% success vs 33% with saline; a Cochrane review rates filler evidence for acne scars as moderate.",
+    studies: [
+      { title: "A double-blind, randomized, multicenter, controlled trial of suspended polymethylmethacrylate microspheres for the correction of atrophic facial acne scars", url: pm("24725475"), kind: "Randomized trial" },
+      { title: "Interventions for acne scars (Cochrane review)", url: pmc("PMC7069546"), kind: "Systematic review" },
+      { title: "Recent Advances and Future Directions in Bellafill as a Regenerative Biomaterial: Biological Mechanisms, Clinical Applications, and Safety", url: pmc("PMC13263406"), kind: "Review" },
+    ],
+  },
+  "tca-cross": {
+    resultsIn: "Gradually over several sessions",
+    sideEffects: "Brief burning, redness and small scabs; dark marks are possible, more often on deeper skin tones",
+    prices: [{ label: "acne.org — CROSS technique cost (national)", url: "https://www.acne.org/treatment/cross-technique/cost" }],
+    evidence: 2,
+    evidenceNote: "Mostly small studies and case series; a 2026 review of 937 patients found it safe and effective. A small randomized trial found pinpoint CO2 laser more effective.",
+    studies: [
+      { title: "Evaluation of CROSS technique with 100% TCA in the management of ice pick acne scars in darker skin types", url: pm("21332915"), kind: "Clinical study" },
+      { title: "Randomized clinical trial of CO2 LASER pinpoint irradiation technique versus chemical reconstruction of skin scars (CROSS) in treating ice pick acne scars", url: pm("24131091"), kind: "Randomized trial" },
+      { title: "The Use of Chemical Reconstruction of Skin Scars (CROSS) Method With Trichloroacetic Acid (TCA) for Atrophic Scars: A Comprehensive Review", url: pm("42482854"), kind: "Review" },
+    ],
+  },
+  aerolase: {
+    resultsIn: "Over a series of sessions",
+    sideEffects: "Mild warmth; occasional acne flare-ups and dryness",
+    prices: [{ label: "Beautifi — Neo Elite (Aerolase) average cost (national)", url: "https://www.beautifi.com/procedures/neo-elite" }],
+    evidence: 2,
+    evidenceNote: "A small double-blind, sham-controlled trial (20 people) and a 225-patient retrospective study, including skin of color, found it improved acne.",
+    studies: [
+      { title: "650 usec 1064nm Nd:YAG laser treatment of acne: A double-blind randomized control study", url: pm("32447830"), kind: "Randomized trial" },
+      { title: "Treatment of Acne Vulgaris With a 650-ms, 1064-nm Nd:YAG Laser: A Retrospective Study", url: pm("39663902"), kind: "Clinical study" },
+    ],
+  },
+  "laser-toning": {
+    resultsIn: "Gradually over a series",
+    sideEffects: "Mild redness; white spots (loss of pigment) with many sessions; melasma can return",
+    prices: [{ label: "Tribeca Park Dermatology (NYC) — Spectra laser", url: "https://triparkderm.com/treatments/spectra/", city: "nyc" }],
+    evidence: 2,
+    evidenceNote: "Meta-analyses of small studies find it improves melasma, more when combined with other treatments; results fade over time and melasma often returns.",
+    studies: [
+      { title: "Efficacy of low-fluence 1064 nm Q-switched Nd:YAG laser for the treatment of melasma: A meta-analysis and systematic review", url: pm("35621242"), kind: "Meta-analysis" },
+      { title: "Efficacy and Safety of Low Fluence Nd:YAG Laser Treatment in Melasma: A Meta-Analysis and Systematic Review", url: pm("36533794"), kind: "Meta-analysis" },
+    ],
+  },
+  pdt: {
+    resultsIn: "Within weeks; best after a series",
+    sideEffects: "Stinging during light exposure; redness, swelling, crusting and peeling for several days",
+    prices: [
+      { label: "Medical News Today — PDT for acne cost per session", url: "https://www.medicalnewstoday.com/articles/319256.php" },
+      { label: "RealSelf — cost of photodynamic therapy (doctor answers)", url: "https://www.realself.com/question/cost-photodynamic-therapy" },
+    ],
+    evidence: 2,
+    evidenceNote: "A meta-analysis of 13 randomized trials found it helps inflammatory acne; a systematic review of 24 studies supports it for overall sun-damaged skin quality. Protocols vary and most trials are small.",
+    studies: [
+      { title: "Efficacy of photodynamic therapy for the treatment of inflammatory acne vulgaris: A systematic review and meta-analysis", url: pm("31654468"), kind: "Meta-analysis" },
+      { title: "Light-Emitting Diode-Based Photodynamic Therapy for Photoaging, Scars, and Dyspigmentation: A Systematic Review", url: pm("32091415"), kind: "Systematic review" },
+    ],
+  },
+  ktp: {
+    resultsIn: "Within 1–3 weeks after each session",
+    sideEffects: "Redness and swelling for a few days; rarely dark marks",
+    prices: [],
+    evidence: 2,
+    evidenceNote: "Small studies: in a split-face trial it cleared facial vessels faster than pulsed dye laser; a 102-patient series reported most facial vessels improved or cleared.",
+    studies: [
+      { title: "A split-face comparison study of pulsed 532-nm KTP laser and 595-nm pulsed dye laser in the treatment of facial telangiectasias and diffuse telangiectatic facial erythema", url: pm("17430378"), kind: "Randomized trial" },
+      { title: "Treatment of superficial cutaneous vascular lesions: experience with the KTP 532 nm laser", url: pm("15316851"), kind: "Clinical study" },
+    ],
+  },
+  microcurrent: {
+    resultsIn: "Right away; temporary",
+    sideEffects: "Tingling; generally mild",
+    prices: [
+      { label: "Fresha — microcurrent facials in New York", url: "https://www.fresha.com/lp/en/tt/microcurrent-facials/in/us-new-york", city: "nyc" },
+      { label: "Fresha — microcurrent facials in Miami", url: "https://www.fresha.com/lp/en/tt/microcurrent-facials/in/us-miami", city: "miami" },
+    ],
+    evidence: 1,
+    evidenceNote: "Very little independent research: a review of beauty devices notes few studies focus on microcurrent, and most are small, uncontrolled or manufacturer-linked.",
+    studies: [
+      { title: "Development of Home Beauty Devices for Facial Rejuvenation: Establishment of Efficacy Evaluation System", url: pmc("PMC10929553"), kind: "Review" },
     ],
   },
 };

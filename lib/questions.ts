@@ -122,12 +122,6 @@ export const QUESTIONS: Record<string, string[]> = {
     "How many sessions (usually 3–5), and what results do you expect for my skin type?",
     "If I have melasma, what is your plan to keep it from getting darker?",
   ],
-  tretinoin: [
-    "Which strength should I start with, and how often in the first weeks?",
-    "How should I deal with dryness and peeling while my skin adjusts?",
-    "If I'm pregnant, trying to get pregnant or breastfeeding, what should I use instead?",
-    "What does the prescription cost, and is a generic or discount coupon available?",
-  ],
   "under-eye": [
     "Am I a good candidate, or is my under-eye issue puffiness or pigment that filler won't help?",
     "Which filler and how much? Do you use a needle or a blunt cannula here?",
@@ -170,24 +164,49 @@ export const QUESTIONS: Record<string, string[]> = {
     "Results in studies are modest. What is realistic for my lines or glow?",
     "Would a home device give a similar result for less?",
   ],
-  "rx-redness": [
-    "Is my redness rosacea, and will this cream help background redness, bumps, or both?",
-    "What happens to the redness when the cream wears off each day?",
-    "What does it cost, and is there a discount program or a cheaper option?",
-  ],
-  "melasma-cream": [
-    "Which cream (triple cream or hydroquinone), at what strength, and for how many weeks?",
-    "What side effects should make me stop and call you?",
-    "What is the maintenance plan once my melasma fades, since it often returns?",
-  ],
   subcision: [
     "Which of my scars are rolling scars that subcision helps most?",
     "Will you combine it with a laser or microneedling, and in what order?",
     "How many sessions (often 1–3), and how much bruising should I expect?",
   ],
-  azelaic: [
-    "Is the 15% gel (Finacea) or a cream better for my redness or spots?",
-    "How long before I should see a change?",
-    "If I'm pregnant or breastfeeding, is it OK for me? (Also check with your obstetric provider.)",
+  "smile-filler": [
+    "Which filler is right for my smile lines (e.g. Vollure, Refyne or Defyne), and how many syringes?",
+    "Would treating my cheeks give a more natural result than filling the folds directly?",
+    "Do you keep hyaluronidase on site in case a vessel is blocked?",
+  ],
+  bellafill: [
+    "Bellafill contains bovine collagen. Will I need an allergy skin test first?",
+    "It's permanent and can't be dissolved. How do you avoid lumps, and what if I don't like the result?",
+    "Are my scars the rolling type it was approved for, and how many syringes will I need?",
+  ],
+  "tca-cross": [
+    "Which of my scars are ice-pick or boxcar scars that CROSS suits?",
+    "What acid strength will you use, and how many sessions apart?",
+    "With my skin tone, how will you prepare my skin to lower the risk of dark marks?",
+  ],
+  aerolase: [
+    "How many sessions (often 4–6, two weeks apart) and what does the full course cost?",
+    "Should I keep using my acne medicine during treatment?",
+    "What maintenance will I need once my skin is clear?",
+  ],
+  "laser-toning": [
+    "How many sessions do you plan, and how do you avoid white spots from too many?",
+    "Will you combine it with another melasma treatment?",
+    "What's the maintenance plan, since melasma often comes back?",
+  ],
+  pdt: [
+    "Is this for acne, sun damage or both, and which light (blue or red) will you use?",
+    "How long must I avoid daylight afterward, and how bad is the peeling?",
+    "How many sessions do I need, and is any of it covered by insurance?",
+  ],
+  ktp: [
+    "Are my vessels small enough for KTP, or would pulsed dye laser suit them better?",
+    "How much swelling and redness should I expect, and for how long?",
+    "Is it safe for my skin tone at the settings you'll use?",
+  ],
+  microcurrent: [
+    "What result should I expect, and how long does it last after each session?",
+    "How many sessions are in the series, and what does it cost in total?",
+    "Is it safe if I have a pacemaker or other implanted device?",
   ],
 };

@@ -43,10 +43,9 @@ function GoalGuideFor({ goal, profile }: { goal: Goal; profile: import("@/lib/pr
         {g.foundation && (
           <Disclosure tone="soft" title="Start here: daily basics" hint="What dermatologists recommend first">
             <p className="text-sm leading-relaxed">
-              Broad-spectrum SPF 30+ every day, and a retinoid at night — before and alongside any procedure.
+              Broad-spectrum SPF 30+ every day — before and after any treatment, so results last and spots don't return.
             </p>
             <div className="flex flex-col gap-1 mt-2 text-sm">
-              <a href={`/procedures/tretinoin?city=${city}`} className="underline">Prescription retinoid (tretinoin) →</a>
               <a href={SUNSCREEN.url} target="_blank" rel="noopener noreferrer" className="underline">{SUNSCREEN.label} ↗</a>
             </div>
           </Disclosure>

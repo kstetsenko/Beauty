@@ -176,7 +176,7 @@ const RAW: Raw[] = [
   {
     id: "peel", name: "Chemical Peel", what: "Superficial to medium acid peel", aka: ["VI Peel", "Glycolic peel", "TCA peel", "Salicylic peel"], approach: "skin", onset: 2,
     summary: "An acid solution removes the outer layer to brighten tone, smooth texture and calm breakouts.",
-    goals: ["glow", "texture", "pigment"], cost: { nyc: [150, 500], miami: [150, 400] }, priceUnit: "per session",
+    goals: ["glow", "texture", "pigment", "breakouts"], cost: { nyc: [150, 500], miami: [150, 400] }, priceUnit: "per session",
     sessions: "3–6, about 4 weeks apart", lasts: "Months with skincare", downtimeDays: [0, 5], pain: 2, results: 2,
     performedBy: "Dermatologist or supervised aesthetician", contraindications: ["pregnancy", "active-skin"],
     notes: "Deeper skin tones: choose a provider experienced with peels.",
@@ -184,7 +184,7 @@ const RAW: Raw[] = [
   {
     id: "ipl", name: "IPL / BBL Photofacial", what: "Broadband light therapy", aka: ["BBL", "BBL HERO", "Lumecca", "Photofacial"], approach: "laser", onset: 2,
     summary: "Light targets sun spots, redness and broken capillaries for a clearer, even tone. Also used for rosacea redness.",
-    goals: ["pigment", "redness", "glow"], cost: { nyc: [400, 850], miami: [350, 750] }, priceUnit: "per session",
+    goals: ["pigment", "redness", "glow", "breakouts"], cost: { nyc: [400, 850], miami: [350, 750] }, priceUnit: "per session",
     sessions: "3–5, about 4 weeks apart", lasts: "Months to years with sun protection", downtimeDays: [1, 7], pain: 2, results: 2,
     performedBy: "Dermatologist or supervised clinician", contraindications: ["pregnancy", "active-skin"],
     notes: "Usually not suitable for deeper or tanned skin tones.",
@@ -201,14 +201,6 @@ const RAW: Raw[] = [
   // ── Body & hair ─────────────────────────────────────────────────────
   // ── Added: foundation, trending and specialist options ────────────────
   {
-    id: "tretinoin", name: "Prescription Retinoid (Tretinoin)", what: "Prescription vitamin A cream", aka: ["Retin-A", "Renova", "Retinoid"], approach: "topical", collagen: true, onset: 3,
-    summary: "The best-studied at-home treatment for fine lines, rough texture and sun spots. Used nightly, results build over months.",
-    goals: ["lines", "texture", "pigment", "glow"], cost: { nyc: [30, 100], miami: [30, 100] }, priceUnit: "per 45 g tube, plus a doctor visit",
-    sessions: "Nightly at home", lasts: "As long as you keep using it", downtimeDays: [0, 0], pain: 1, results: 2,
-    performedBy: "Prescribed by a dermatologist or other clinician", contraindications: ["pregnancy"],
-    notes: "Start slowly — dryness and peeling are common at first. Pair with daily SPF 30+.",
-  },
-  {
     id: "under-eye", name: "Under-Eye Filler", what: "Hyaluronic acid for under-eye hollows", aka: ["Restylane Eyelight", "Tear trough filler"], approach: "ha", onset: 1, minAge: 22,
     summary: "A soft filler placed under the eyes to soften hollows and shadows. Some products are FDA-approved for this area.",
     goals: ["volume"], cost: { nyc: [1000, 2500], miami: [850, 1200] }, priceUnit: "per syringe",
@@ -219,7 +211,7 @@ const RAW: Raw[] = [
   {
     id: "pdl", name: "Pulsed Dye Laser (Vbeam)", what: "Laser for redness and broken capillaries", aka: ["Vbeam Perfecta", "Pulsed dye laser"], approach: "laser", onset: 2,
     summary: "A yellow-light laser that targets blood vessels to reduce persistent redness, rosacea flushing and visible capillaries.",
-    goals: ["redness"], cost: { nyc: [400, 800], miami: [400, 800] }, priceUnit: "per session",
+    goals: ["redness", "breakouts"], cost: { nyc: [400, 800], miami: [400, 800] }, priceUnit: "per session",
     sessions: "Usually several, about 4 weeks apart", lasts: "Months to years; redness can return", downtimeDays: [0, 7], pain: 2, results: 2,
     performedBy: "Dermatologist", contraindications: ["pregnancy", "active-skin"],
     notes: "Some settings cause temporary purple bruising for 1–2 weeks — ask which to expect.",
@@ -276,22 +268,6 @@ const RAW: Raw[] = [
   },
   // ── Added: prescription options and scar surgery ───────────────────────
   {
-    id: "rx-redness", name: "Prescription Redness Cream", what: "Oxymetazoline (Rhofade) or brimonidine (Mirvaso)", aka: ["Rhofade", "Mirvaso", "Oxymetazoline", "Brimonidine"], approach: "topical", onset: 1,
-    summary: "A daily prescription cream that temporarily narrows facial blood vessels to reduce persistent rosacea redness, starting within hours.",
-    goals: ["redness"], cost: { nyc: [150, 870], miami: [150, 870] }, priceUnit: "per tube (with or without discount coupons)",
-    sessions: "Once a day", lasts: "Works while you use it", downtimeDays: [0, 0], pain: 1, results: 2,
-    performedBy: "Prescribed by a dermatologist or other clinician", contraindications: [],
-    notes: "Reduces background redness, not bumps. The main trials enrolled mostly lighter skin types.",
-  },
-  {
-    id: "melasma-cream", name: "Prescription Melasma Cream", what: "Triple cream (Tri-Luma) or hydroquinone", aka: ["Tri-Luma", "Hydroquinone", "Triple combination cream"], approach: "topical", onset: 3,
-    summary: "A prescription cream that fades melasma and dark patches; dermatologists usually start here before lasers.",
-    goals: ["pigment"], cost: { nyc: [25, 235], miami: [25, 235] }, priceUnit: "per tube",
-    sessions: "Daily for about 8 weeks, then as directed", lasts: "Melasma often returns; maintenance and sun protection are needed", downtimeDays: [0, 0], pain: 1, results: 2,
-    performedBy: "Prescribed by a dermatologist", contraindications: ["pregnancy"],
-    notes: "Use under a doctor's care. Hydroquinone is no longer sold over the counter in the U.S.",
-  },
-  {
     id: "subcision", name: "Subcision", what: "Releasing tethered acne scars with a needle or cannula", approach: "skin", onset: 2,
     summary: "A dermatologist slips a needle or blunt cannula under rolling acne scars to cut the bands pulling them down.",
     goals: ["acne"], cost: { nyc: [400, 2600], miami: [200, 1500] }, priceUnit: "per session",
@@ -299,13 +275,72 @@ const RAW: Raw[] = [
     performedBy: "Board-certified dermatologist", contraindications: ["active-skin", "keloid", "blood-thinners"],
     notes: "Works best on rolling scars; ice-pick and boxcar scars respond less. Often combined with lasers.",
   },
+  // ── Added: more in-clinic options (Nov 2026) ───────────────────────────
   {
-    id: "azelaic", name: "Azelaic Acid", what: "Prescription cream or gel (Finacea)", aka: ["Finacea", "Azelex", "Azelaic acid 15%", "Azelaic acid 20%"], approach: "topical", onset: 3,
-    summary: "A gentle prescription cream or gel that fades melasma and dark spots and calms rosacea bumps and redness.",
-    goals: ["pigment", "redness"], cost: { nyc: [25, 40], miami: [25, 40] }, priceUnit: "per 50 g tube (generic, with discount coupon)",
-    sessions: "Usually twice a day", lasts: "Works while you use it", downtimeDays: [0, 0], pain: 1, results: 2,
-    performedBy: "Prescribed by a dermatologist or other clinician", contraindications: [],
-    notes: "Reviews consider it a low-risk choice during pregnancy — confirm with your obstetric provider.",
+    id: "smile-filler", name: "Smile-Line Filler", what: "Hyaluronic acid filler for folds and lines", aka: ["Nasolabial fold filler", "Marionette line filler", "Juvéderm Vollure", "Restylane Refyne", "Restylane Defyne"], approach: "ha", onset: 1, minAge: 22,
+    summary: "A hyaluronic acid gel placed under the folds from nose to mouth (smile lines) or the lines below the mouth, softening them right away.",
+    goals: ["lines", "volume"], cost: { nyc: [800, 1500], miami: [700, 1500] }, priceUnit: "per syringe",
+    sessions: "Single visit", lasts: "About 6–12 months (trials followed people for 6–12 months)", downtimeDays: [1, 3], pain: 2, results: 2,
+    performedBy: "Board-certified dermatologist or plastic surgeon recommended",
+    contraindications: ["pregnancy", "active-skin", "blood-thinners", "autoimmune"],
+    notes: "Dissolvable with an enzyme if needed. Most trials compare one filler brand with another, and results are similar.",
+  },
+  {
+    id: "bellafill", name: "Bellafill", what: "Long-lasting collagen + PMMA filler", aka: ["PMMA filler", "Polymethylmethacrylate-collagen filler"], approach: "biostim", collagen: true, onset: 1, minAge: 22,
+    summary: "A filler made of bovine collagen with tiny permanent beads. FDA-approved for smile lines and for rolling acne scars.",
+    goals: ["acne", "lines"], cost: { nyc: [1050, 3300], miami: [1050, 3300] }, priceUnit: "per treatment (often several syringes)",
+    sessions: "Usually 1–2 visits", lasts: "Long-lasting; the main acne-scar trial followed people for 12 months", downtimeDays: [1, 3], pain: 2, results: 2,
+    performedBy: "Board-certified dermatologist or plastic surgeon",
+    contraindications: ["pregnancy", "active-skin", "blood-thinners", "autoimmune", "keloid"],
+    notes: "Not dissolvable. A review warns that too much placed too close to the surface can leave a lasting bump.",
+  },
+  {
+    id: "tca-cross", name: "TCA CROSS", what: "Pinpoint acid for ice-pick scars", aka: ["Chemical reconstruction of skin scars", "CROSS technique"], approach: "skin", collagen: true, onset: 3,
+    summary: "A dermatologist dabs a strong acid into the bottom of narrow, deep acne scars so they fill in with new collagen over several sessions.",
+    goals: ["acne"], cost: { nyc: [750, 4000], miami: [750, 4000] }, priceUnit: "per course (depends on the number of scars)",
+    sessions: "Often several, a few weeks apart", lasts: "Long-lasting", downtimeDays: [3, 7], pain: 2, results: 2,
+    performedBy: "Board-certified dermatologist", contraindications: ["pregnancy", "active-skin", "keloid"],
+    notes: "Best for narrow ice-pick and boxcar scars. On deeper skin tones, providers often prepare the skin first to lower the risk of dark marks.",
+  },
+  {
+    id: "aerolase", name: "Aerolase (650-µs laser)", what: "Gentle Nd:YAG laser for active acne", aka: ["Aerolase Neo Elite", "NeoClear", "650-microsecond laser"], approach: "laser", onset: 2,
+    summary: "A short-pulse 1064 nm laser that calms active breakouts with little discomfort and no downtime.",
+    goals: ["breakouts"], cost: { nyc: [250, 500], miami: [250, 500] }, priceUnit: "per session",
+    sessions: "About 4–6, every 2 weeks", lasts: "Varies; maintenance is common", downtimeDays: [0, 0], pain: 1, results: 2,
+    performedBy: "Dermatologist or supervised clinician", contraindications: ["pregnancy", "active-skin"],
+    notes: "Studies included people with skin of color. Studies are small; ask how it fits with any acne medicine you use.",
+  },
+  {
+    id: "laser-toning", name: "Laser Toning (Q-switched Nd:YAG)", what: "Low-energy laser for melasma and uneven tone", aka: ["Q-switched Nd:YAG", "Spectra laser", "Hollywood Spectra"], approach: "laser", onset: 2,
+    summary: "Many gentle passes of a low-energy laser that gradually lighten melasma and blotchy pigment.",
+    goals: ["pigment"], cost: { nyc: [400, 500], miami: [250, 500] }, priceUnit: "per session",
+    sessions: "Often 4–8, a few weeks apart", lasts: "Melasma often returns; maintenance is needed", downtimeDays: [0, 1], pain: 1, results: 2,
+    performedBy: "Dermatologist or supervised clinician", contraindications: ["pregnancy", "active-skin"],
+    notes: "Too many sessions can leave white spots (loss of pigment); a meta-analysis linked this to the number of sessions.",
+  },
+  {
+    id: "pdt", name: "Photodynamic Therapy (PDT)", what: "Light-activated solution for acne and sun damage", aka: ["Blue light therapy", "Levulan PDT", "BLU-U", "ALA-PDT"], approach: "laser", onset: 2,
+    summary: "A light-sensitizing solution is applied to the skin, then activated with blue or red light to calm acne and improve sun-damaged skin.",
+    goals: ["breakouts", "texture", "lines"], cost: { nyc: [100, 400], miami: [100, 400] }, priceUnit: "per session",
+    sessions: "Often 2–4, a few weeks apart", lasts: "Months; acne often needs repeat sessions", downtimeDays: [1, 7], pain: 2, results: 2,
+    performedBy: "Dermatologist", contraindications: ["pregnancy", "active-skin"],
+    notes: "FDA-approved for precancerous spots (actinic keratoses); use for acne or cosmetic sun damage is off-label. Expect redness and peeling, and strict sun avoidance right after.",
+  },
+  {
+    id: "ktp", name: "KTP Laser (Excel V)", what: "Green-light laser for broken capillaries and redness", aka: ["Excel V", "Excel V+", "532 nm KTP laser"], approach: "laser", onset: 2,
+    summary: "A 532 nm laser that targets small visible vessels and redness on the face.",
+    goals: ["redness"], cost: { nyc: [200, 500], miami: [200, 500] }, priceUnit: "per session",
+    sessions: "Usually 1–3", lasts: "Months to years; new vessels can appear", downtimeDays: [0, 7], pain: 2, results: 2,
+    performedBy: "Dermatologist", contraindications: ["pregnancy", "active-skin"],
+    notes: "In a small split-face study it cleared vessels faster than pulsed dye laser but caused more swelling and redness.",
+  },
+  {
+    id: "microcurrent", name: "Microcurrent Facial", what: "Low-level electrical current facial", aka: ["Microcurrent lifting facial", "Microcurrent toning"], approach: "skin", onset: 1,
+    summary: "A spa facial that passes a gentle electrical current over the face, marketed for a toned, lifted look.",
+    goals: ["glow"], cost: { nyc: [100, 180], miami: [95, 185] }, priceUnit: "per session",
+    sessions: "Often sold as a series", lasts: "Temporary", downtimeDays: [0, 0], pain: 1, results: 1,
+    performedBy: "Licensed aesthetician", contraindications: ["pregnancy"],
+    notes: "Very little independent research. Tell the provider if you have a pacemaker or other implanted electronic device.",
   },
 ];
 
@@ -316,7 +351,6 @@ function tierOf(nycLow: number): Tier {
 export const PROCEDURES: Procedure[] = RAW.map((p) => ({ ...p, tier: tierOf(p.cost.nyc[0]) }));
 
 export const APPROACHES: Record<Approach, { label: string; short: string; hint: string }> = {
-  topical: { label: "Prescription skincare", short: "Skincare", hint: "Daily treatment at home, prescribed by a clinician; results build over months" },
   energy: { label: "Energy-based devices", short: "Energy devices", hint: "Ultrasound, radiofrequency, microwave or heat works in the skin; results build over weeks to months" },
   laser: { label: "Lasers & light", short: "Lasers & light", hint: "Light energy resurfaces skin or targets pigment, redness or hair" },
   biostim: { label: "Collagen-stimulating injectables", short: "Biostimulators", hint: "Injected materials that prompt your own collagen over time" },
@@ -337,6 +371,7 @@ export const GOAL_LABELS: Record<string, string> = {
   redness: "Redness",
   acne: "Acne Scars",
   glow: "Overall Glow",
+  breakouts: "Breakouts",
 };
 
 export const PAIN_LABELS = ["", "Minimal", "Mild", "Moderate", "Strong", "Intense"];

@@ -15,7 +15,6 @@ export interface Milestone {
 }
 
 export const TIMELINE: Milestone[] = [
-  { year: "1995", title: "Tretinoin approved for fine wrinkles (Renova)", detail: "The first prescription cream approved for fine wrinkles, spots and roughness from sun damage.", ids: ["tretinoin"], source: { label: "FDA label — Renova", url: "https://www.accessdata.fda.gov/drugsatfda_docs/label/2000/19963S5%2C7LBL.PDF" } },
   { year: "2002", title: "Botox Cosmetic approved for frown lines", detail: "Dysport followed in 2009, Jeuveau in 2019 and long-acting Daxxify in 2022.", ids: ["botox"], source: { label: "Drugs.com — Daxxify approval (neuromodulator history)", url: "https://www.drugs.com/newdrugs/fda-approves-daxxify-daxibotulinumtoxina-lanm-temporary-improvement-moderate-severe-glabellar-lines-5894.html" } },
   { year: "2003", title: "First hyaluronic acid filler approved (Restylane)", detail: "Juvéderm followed in 2006 and Voluma for cheeks in 2013.", ids: ["cheek-filler"], source: { label: "MDedge — Update on hyaluronic acid fillers", url: "https://www.mdedge.com/content/update-hyaluronic-acid-fillers-facial-rejuvenation/page/0/1" } },
   { year: "2004", title: "Fractional laser resurfacing introduced (Fraxel)", detail: "Treating skin in tiny columns made resurfacing safer with shorter recovery.", ids: ["fraxel", "co2", "halo", "moxi", "clear-brilliant"], source: { label: "JCAD — Update on fractional laser technology", url: "https://jcadonline.com/aesthetic-update-update-on-fractional-laser-technology/" } },

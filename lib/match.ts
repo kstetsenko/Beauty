@@ -66,7 +66,7 @@ export function downtimeShort([lo, hi]: [number, number]) {
 /** Condition-specific first steps (AAD: melasma → prescription cream first; rosacea redness → Rx cream or vascular laser/light). */
 function conditionBoost(p: Procedure, a: QuizAnswers) {
   let b = 0;
-  if (a.conditions?.includes("melasma") && ["melasma-cream", "azelaic"].includes(p.id)) b += 2;
-  if (a.conditions?.includes("rosacea") && ["rx-redness", "azelaic", "pdl", "ipl"].includes(p.id)) b += 1;
+  if (a.conditions?.includes("melasma") && p.id === "laser-toning") b += 2;
+  if (a.conditions?.includes("rosacea") && ["pdl", "ktp", "ipl"].includes(p.id)) b += 1;
   return b;
 }

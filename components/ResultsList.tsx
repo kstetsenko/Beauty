@@ -9,7 +9,7 @@ import { Disclosure } from "./Disclosure";
 import { ApproachTag, DetailSections, Dots } from "./ProcedureFacts";
 
 type Sort = "match" | "evidence" | "price" | "downtime";
-type Filter = "collagen" | "now" | "nodowntime" | "noneedles";
+type Filter = "event" | "gentle" | "lasting" | "under500" | "strong" | "collagen" | "now" | "nodowntime" | "noneedles" | "lowpain";
 
 const SORTS: [Sort, string][] = [
   ["match", "Best match"],
@@ -18,15 +18,40 @@ const SORTS: [Sort, string][] = [
   ["downtime", "Least downtime"],
 ];
 const FILTERS: [Filter, string][] = [
+  ["strong", "Strong research only"],
+  ["under500", "Starts under $500"],
+  ["lasting", "Lasts a year or more"],
   ["collagen", "Builds your own collagen"],
   ["now", "Results right away"],
   ["nodowntime", "No downtime"],
+  ["lowpain", "Low pain"],
   ["noneedles", "No needles"],
 ];
+/** One-tap plans: each sets a filter combination and a sort. */
+const PLANS: { label: string; hint: string; filters: Filter[]; sort: Sort }[] = [
+  { label: "Event in 2 weeks", hint: "Shows within days, at most a day of recovery", filters: ["event"], sort: "match" },
+  { label: "First time", hint: "Low pain, short recovery, not permanent", filters: ["gentle"], sort: "evidence" },
+  { label: "Best value", hint: "Starts under $500, best research first", filters: ["under500"], sort: "evidence" },
+  { label: "Long-lasting", hint: "Results that last a year or more", filters: ["lasting"], sort: "evidence" },
+];
+const PERMANENT = new Set(["bellafill"]);
+const LASTING = /^(about 1 year|1–2 years|1 year|years|long-lasting|up to about 2 years|about 12–18 months)/i;
 const NEEDLES = new Set(["microneedling", "prp", "morpheus8", "subcision"]);
 const hasNeedles = (p: Procedure) => ["toxin", "ha", "biostim", "threads"].includes(p.approach) || NEEDLES.has(p.id);
-const passes = (p: Procedure, f: Filter) =>
-  f === "collagen" ? !!p.collagen : f === "now" ? p.onset === 1 : f === "nodowntime" ? p.downtimeDays[1] === 0 : !hasNeedles(p);
+function passes(p: Procedure, f: Filter, city: City) {
+  switch (f) {
+    case "event": return p.downtimeDays[1] <= 1 && p.onset <= 2;
+    case "gentle": return p.pain <= 2 && p.downtimeDays[1] <= 3 && !PERMANENT.has(p.id);
+    case "lasting": return LASTING.test(p.lasts);
+    case "under500": return p.cost[city][0] < 500;
+    case "strong": return RESEARCH[p.id].evidence === 3;
+    case "collagen": return !!p.collagen;
+    case "now": return p.onset === 1;
+    case "nodowntime": return p.downtimeDays[1] === 0;
+    case "lowpain": return p.pain <= 2;
+    case "noneedles": return !hasNeedles(p);
+  }
+}
 
 const chip = (on: boolean) =>
   "shrink-0 rounded-full border px-3 py-1.5 text-xs transition-colors " + (on ? "bg-ink text-white border-ink" : "bg-white border-line hover:border-ink");
@@ -51,7 +76,7 @@ export function ResultsList({
   const [filters, setFilters] = useState<Filter[]>([]);
 
   const list = useMemo(() => {
-    const base = matches.filter((m) => filters.every((f) => passes(m.procedure, f)));
+    const base = matches.filter((m) => filters.every((f) => passes(m.procedure, f, city)));
     const ev = (m: Match) => RESEARCH[m.procedure.id].evidence;
     const sorted = [...base];
     if (sort === "evidence") sorted.sort((a, b) => ev(b) - ev(a) || b.score - a.score);
@@ -67,6 +92,20 @@ export function ResultsList({
         {matches.length} treatments fit your answers{hiddenCount ? ` (${hiddenCount} hidden for safety — see the end of your list)` : ""}. Tap one for details, ♥ to save.
       </p>
 
+      <p className="text-[11px] text-muted mb-1.5">Quick plans</p>
+      <div className="grid grid-cols-2 gap-2 mb-3">
+        {PLANS.map((pl) => {
+          const on = pl.filters.every((f) => filters.includes(f)) && filters.length === pl.filters.length && sort === pl.sort;
+          return (
+            <button key={pl.label} type="button" aria-pressed={on}
+              onClick={() => { if (on) { setFilters([]); setSort("match"); } else { setFilters(pl.filters); setSort(pl.sort); } }}
+              className={"rounded-2xl border px-3 py-2 text-left transition-colors min-w-0 " + (on ? "bg-ink text-white border-ink" : "bg-white border-line hover:border-ink")}>
+              <span className="block text-sm font-medium truncate">{pl.label}</span>
+              <span className={"block text-[11px] leading-snug " + (on ? "text-white/80" : "text-muted")}>{pl.hint}</span>
+            </button>
+          );
+        })}
+      </div>
       <p className="text-[11px] text-muted mb-1.5">Sort by</p>
       <div className="flex gap-2 overflow-x-auto -mx-5 px-5 pb-2 [scrollbar-width:none]" role="radiogroup" aria-label="Sort">
         {SORTS.map(([v, l]) => (

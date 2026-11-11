@@ -33,6 +33,14 @@ async function check(url) {
 // ---- 2. Treatments to search on PubMed (names parsed from lib/procedures.ts)
 // Exact search phrases where a product name alone is ambiguous (e.g. "IPL" also means a brain region).
 const TERMS = {
+  "smile-filler": ["nasolabial fold hyaluronic acid filler"],
+  bellafill: ["polymethylmethacrylate filler"],
+  "tca-cross": ["CROSS trichloroacetic acid scars"],
+  aerolase: ["650 microsecond Nd:YAG acne"],
+  "laser-toning": ["low-fluence Q-switched Nd:YAG melasma"],
+  pdt: ["photodynamic therapy acne", "photodynamic therapy photoaging"],
+  ktp: ["532 nm KTP laser facial"],
+  microcurrent: ["microcurrent facial"],
   ipl: ["intense pulsed light", "BBL photofacial"],
   co2: ["fractional CO2 laser", "carbon dioxide laser resurfacing"],
   botox: ["botulinum toxin", "onabotulinumtoxinA", "daxibotulinumtoxinA"],
@@ -41,10 +49,6 @@ const TERMS = {
   erbium: ["erbium laser resurfacing", "Er:YAG resurfacing"],
   peel: ["chemical peel"],
   prp: ["platelet-rich plasma microneedling"],
-  "rx-redness": ["oxymetazoline", "brimonidine gel"],
-  "melasma-cream": ["triple combination cream melasma", "hydroquinone melasma"],
-  azelaic: ["azelaic acid"],
-  tretinoin: ["tretinoin photoaging", "topical tretinoin"],
   "cheek-filler": ["midface volume hyaluronic acid", "cheek augmentation filler"],
   "under-eye": ["infraorbital hollow filler", "tear trough filler"],
   threads: ["thread lift", "polydioxanone thread"],

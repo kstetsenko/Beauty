@@ -8,7 +8,6 @@ const GROUPS: { label: string; approaches: Approach[] }[] = [
   { label: "Lasers & light", approaches: ["laser"] },
   { label: "Tightening & RF devices", approaches: ["energy"] },
   { label: "Facials, peels & needling", approaches: ["skin"] },
-  { label: "Prescription creams", approaches: ["topical"] },
 ];
 const short = (name: string) => name.split(" / ")[0];
 
