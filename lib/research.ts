@@ -427,6 +427,87 @@ export const RESEARCH: Record<string, Research> = {
       { title: "Beyond efficacy: pulse duration is crucial for adverse events in pulsed dye laser therapy for rosacea", url: pm("42112600"), kind: "Randomized trial" },
     ],
   },
+  sclerotherapy: {
+    resultsIn: "Veins usually fade over 3–6 weeks",
+    sideEffects: "Bruising, temporary brown marks, and sometimes a mat of tiny new red vessels",
+    prices: [
+      { label: "Dr. Debra Jaliman (NYC) — vein treatment", url: "https://dermatologist-nyc.com/laser-vein-treatment", city: "nyc" },
+      { label: "Perfect B (Miami) — sclerotherapy", url: "https://www.perfectb.com/?p=24891", city: "miami" },
+      { label: "RealSelf — sclerotherapy cost (national)", url: "https://www.realself.com/nonsurgical/sclerotherapy/cost" },
+    ],
+    evidence: 3,
+    evidenceNote: "A Cochrane review found sclerosing injections clear spider veins better than placebo; brown marks are the main cosmetic side effect.",
+    studies: [
+      { title: "Treatment for telangiectasias and reticular veins", url: pm("34637138"), kind: "Systematic review" },
+      { title: "Sclerotherapy for Reticular Veins in the Lower Limbs: A Triple-Blind Randomized Clinical Trial", url: pm("28973414"), kind: "Randomized trial" },
+    ],
+  },
+  microdermabrasion: {
+    resultsIn: "Right away; mild",
+    sideEffects: "Redness for a few hours, mild sensitivity",
+    prices: [{ label: "Fresha — microdermabrasion in Miami", url: "https://www.fresha.com/lp/en/tt/microdermabrasion/in/us-miami", city: "miami" }],
+    evidence: 1,
+    evidenceNote: "Small studies show mild improvement in roughness and blotchy tone, but not wrinkles.",
+    studies: [
+      { title: "Microdermabrasion: a clinical and histopathologic study", url: pm("11442587"), kind: "Clinical study" },
+      { title: "The evaluation of aluminum oxide crystal microdermabrasion for photodamage", url: pm("11737128"), kind: "Clinical study" },
+    ],
+  },
+  erbium: {
+    resultsIn: "After healing (about 1–2 weeks), improving for months",
+    sideEffects: "Redness, swelling and crusting for about a week; risk of pigment changes",
+    prices: [{ label: "Dr. Kassir (NYC) — laser skin resurfacing", url: "https://kassir.squarespace.com/laser-resurfacing", city: "nyc" }],
+    evidence: 2,
+    evidenceNote: "A systematic review found CO2 somewhat more effective for wrinkles, and erbium gentler with fewer complications.",
+    studies: [
+      { title: "A systematic review of comparative studies of CO2 and erbium:YAG lasers in resurfacing facial rhytides (wrinkles)", url: pm("28166434"), kind: "Systematic review" },
+      { title: "Efficacy and safety of fractional CO2 laser versus fractional Er:YAG laser in the treatment of facial skin wrinkles", url: pm("27885522"), kind: "Randomized trial" },
+    ],
+  },
+  "nose-filler": {
+    resultsIn: "Right away",
+    sideEffects: "Swelling, bruising, tenderness",
+    prices: [{ label: "RealSelf — non-surgical nose job cost (national)", url: "https://www.realself.com/nonsurgical/nonsurgical-nose-job/cost" }],
+    evidence: 1,
+    evidenceNote: "Reviews describe it as usually safe but note rare serious vascular events, including blindness; no large controlled trials.",
+    studies: [
+      { title: "Complications of Nonsurgical Rhinoplasty with Hyaluronic Acid Injections: A Narrative Review", url: pm("39747417"), kind: "Review" },
+    ],
+  },
+  miradry: {
+    resultsIn: "Less sweating within weeks",
+    sideEffects: "Swelling, soreness and numbness of the underarm for days to weeks",
+    prices: [{ label: "RealSelf — miraDry cost (national)", url: "https://www.realself.com/nonsurgical/miradry/cost" }],
+    evidence: 2,
+    evidenceNote: "FDA clearance was based on a randomized, blinded trial of 120 people; other studies are small or manufacturer-linked.",
+    studies: [
+      { title: "Clinical Evaluation of a Microwave Device for Treating Axillary Hyperhidrosis", url: pmc("PMC3489040"), kind: "Clinical study" },
+      { title: "FDA 510(k) summary — miraDry (randomized trial of 120 people)", url: "https://www.accessdata.fda.gov/cdrh_docs/pdf10/k103014.pdf", kind: "Randomized trial" },
+    ],
+  },
+  tattoo: {
+    resultsIn: "Ink fades gradually over several sessions",
+    sideEffects: "Redness, swelling, blistering and scabbing; possible lightening or darkening of skin, rare scarring",
+    prices: [
+      { label: "Dermatology & Laser Group (NYC) — tattoo removal cost", url: "https://dermatologyandlasergroup.com/how-much-does-laser-tattoo-removal-cost/", city: "nyc" },
+    ],
+    evidence: 2,
+    evidenceNote: "Systematic reviews support laser removal; picosecond lasers may clear blue and green inks better, black about the same.",
+    studies: [
+      { title: "Comparing the efficacy and safety of laser treatments in tattoo removal: A systematic review", url: pm("32763326"), kind: "Systematic review" },
+      { title: "Comparative appraisal with meta-analysis of picosecond versus nanosecond lasers for hyperpigmented disorders and tattoos", url: pm("41184656"), kind: "Meta-analysis" },
+    ],
+  },
+  emface: {
+    resultsIn: "Gradually over about 3 months",
+    sideEffects: "Warmth, temporary redness, muscle twitching during treatment",
+    prices: [],
+    evidence: 1,
+    evidenceNote: "A small single-arm study (24 people, no control group) reported wrinkle reduction at 3 months.",
+    studies: [
+      { title: "Wrinkle reduction with simultaneous radiofrequency and HIFES (multicenter, single-arm study)", url: pm("37379470"), kind: "Clinical study" },
+    ],
+  },
 };
 
 export const EVIDENCE_LABELS = ["", "Limited", "Some", "Strong"];

@@ -110,7 +110,7 @@ const RAW: Raw[] = [
     goals: ["lines"], cost: { nyc: [450, 1200], miami: [300, 900] }, priceUnit: "per treatment",
     sessions: "Single visit", lasts: "About 3–4 months", downtimeDays: [0, 1], pain: 1, results: 2,
     performedBy: "Physician, PA or NP", contraindications: ["pregnancy", "autoimmune", "active-skin"],
-    notes: "Often priced per unit — ask for the total. Daxxify lasted a median of about 6 months in its trials; others about 3–4 months.",
+    notes: "Often priced per unit — ask for the total. Daxxify lasted a median of about 6 months in its trials; others about 3–4 months. Botox Cosmetic is also FDA-approved for vertical neck bands (2024).",
   },
   {
     id: "lip-filler", name: "Lip Filler", what: "Hyaluronic acid filler", approach: "ha", onset: 1, minAge: 22,
@@ -264,6 +264,63 @@ const RAW: Raw[] = [
     performedBy: "Dermatologist", contraindications: ["pregnancy", "active-skin"],
     notes: "Some settings cause temporary purple bruising for 1–2 weeks — ask which to expect.",
   },
+  // ── Added: veins, sweating, tattoos and other key options ─────────────
+  {
+    id: "sclerotherapy", name: "Sclerotherapy", what: "Injections for spider veins", approach: "vein", onset: 2,
+    summary: "A solution injected into small leg veins makes them close and fade. The most common treatment for spider veins.",
+    goals: ["veins"], cost: { nyc: [300, 800], miami: [150, 400] }, priceUnit: "per session",
+    sessions: "Usually 2–3 sessions", lasts: "Treated veins don't return, but new ones can form", downtimeDays: [0, 1], pain: 2, results: 3,
+    performedBy: "Dermatologist or vein specialist", contraindications: ["pregnancy"],
+    notes: "Larger, bulging varicose veins need a medical vein evaluation first.",
+  },
+  {
+    id: "microdermabrasion", name: "Microdermabrasion", what: "Mechanical exfoliation", approach: "skin", onset: 1,
+    summary: "A device gently sands away the outermost skin layer for smoother, brighter-looking skin.",
+    goals: ["glow", "texture"], cost: { nyc: [150, 250], miami: [75, 200] }, priceUnit: "per session",
+    sessions: "Often a series; monthly for upkeep", lasts: "Weeks", downtimeDays: [0, 0], pain: 1, results: 1,
+    performedBy: "Aesthetician or dermatology office", contraindications: ["active-skin"],
+    notes: "Studies show mild improvement in roughness and tone, not in wrinkles.",
+  },
+  {
+    id: "erbium", name: "Erbium Laser Resurfacing", what: "Er:YAG ablative laser", approach: "laser", onset: 3,
+    summary: "A resurfacing laser that removes thin layers of damaged skin to smooth wrinkles, texture and sun damage.",
+    goals: ["lines", "texture", "pigment"], cost: { nyc: [1000, 4000], miami: [1000, 3500] }, priceUnit: "full face",
+    sessions: "One deeper treatment, or a lighter series", lasts: "Long-lasting with sun protection", downtimeDays: [5, 14], pain: 4, results: 2,
+    performedBy: "Board-certified dermatologist or plastic surgeon", contraindications: ["pregnancy", "active-skin", "isotretinoin", "keloid"],
+    notes: "Gentler recovery than CO2 with somewhat smaller results in comparison studies.",
+  },
+  {
+    id: "nose-filler", name: "Non-Surgical Nose Job", what: "Filler to reshape the nose", approach: "ha", onset: 1, minAge: 22,
+    summary: "Filler smooths a bump or lifts the tip without surgery. It can't make a nose smaller.",
+    goals: ["contour"], cost: { nyc: [1000, 3000], miami: [600, 1500] }, priceUnit: "per treatment",
+    sessions: "Single visit", lasts: "About 6–18 months", downtimeDays: [0, 3], pain: 2, results: 2,
+    performedBy: "Board-certified dermatologist or plastic surgeon experienced in the nose", contraindications: ["pregnancy", "active-skin", "blood-thinners", "autoimmune"],
+    notes: "The nose isn't among the areas the FDA lists for approved fillers, and it carries a higher risk of blood-vessel blockage, including blindness.",
+  },
+  {
+    id: "miradry", name: "miraDry", what: "Microwave treatment for underarm sweat", approach: "energy", onset: 2,
+    summary: "Microwave energy destroys sweat and odor glands in the underarms. FDA-cleared for underarm sweating.",
+    goals: ["sweat"], cost: { nyc: [1500, 3000], miami: [1500, 3000] }, priceUnit: "per treatment",
+    sessions: "1–2 sessions", lasts: "Designed to be long-lasting; studies followed people about a year", downtimeDays: [1, 7], pain: 3, results: 3,
+    performedBy: "Physician-supervised clinic", contraindications: ["pregnancy"],
+    notes: "Cleared for underarms only. Rare nerve injury has been reported.",
+  },
+  {
+    id: "tattoo", name: "Laser Tattoo Removal", what: "Picosecond or Q-switched laser", approach: "laser", onset: 3,
+    summary: "Laser pulses break ink into tiny particles the body clears over weeks. Lasers are the preferred method.",
+    goals: ["tattoo"], cost: { nyc: [400, 1000], miami: [250, 500] }, priceUnit: "per session (small–medium tattoo)",
+    sessions: "Multiple, weeks apart — depends on ink and size", lasts: "Permanent once cleared", downtimeDays: [3, 14], pain: 3, results: 3,
+    performedBy: "Dermatologist or trained laser specialist", contraindications: ["pregnancy", "active-skin", "keloid"],
+    notes: "Blue, green and multicolor inks are harder to clear; picosecond lasers may help. Avoid removal creams and DIY kits.",
+  },
+  {
+    id: "emface", name: "Emface", what: "Muscle stimulation + radiofrequency", approach: "energy", onset: 3,
+    summary: "Combines electrical muscle stimulation with radiofrequency heat to firm the face and soften lines, with no needles.",
+    goals: ["lines", "lift"], cost: { nyc: [900, 1200], miami: [900, 1200] }, priceUnit: "per session (usually 4)",
+    sessions: "Usually 4, about a week apart", lasts: "Unclear — studies followed people for 3 months", downtimeDays: [0, 0], pain: 1, results: 2,
+    performedBy: "Physician-supervised clinic", contraindications: ["pregnancy"],
+    notes: "Newer device; published studies are small and linked to the manufacturer.",
+  },
 ];
 
 function tierOf(nycLow: number): Budget {
@@ -274,7 +331,7 @@ export const PROCEDURES: Procedure[] = RAW.map((p) => ({ ...p, tier: tierOf(p.co
 
 export const APPROACHES: Record<Approach, { label: string; short: string; hint: string }> = {
   topical: { label: "Prescription skincare", short: "Skincare", hint: "Daily treatment at home, prescribed by a clinician; results build over months" },
-  energy: { label: "Ultrasound & radiofrequency", short: "Energy devices", hint: "Heat under the skin triggers collagen remodeling; results build over months" },
+  energy: { label: "Energy-based devices", short: "Energy devices", hint: "Ultrasound, radiofrequency or microwave energy works under the skin; results build over weeks to months" },
   laser: { label: "Lasers & light", short: "Lasers & light", hint: "Light energy resurfaces skin or targets pigment, redness or hair" },
   biostim: { label: "Collagen-stimulating injectables", short: "Biostimulators", hint: "Injected materials that prompt your own collagen over time" },
   ha: { label: "Hyaluronic acid fillers", short: "HA fillers", hint: "Gel that adds volume or hydration right away; dissolvable" },
@@ -282,6 +339,7 @@ export const APPROACHES: Record<Approach, { label: string; short: string; hint: 
   fat: { label: "Fat reduction & toning", short: "Fat reduction", hint: "Destroy fat cells with cold or injections, or tone muscle" },
   skin: { label: "Needling, peels & facials", short: "Needling & peels", hint: "Controlled skin injury or exfoliation to renew the surface" },
   threads: { label: "Thread lifts", short: "Threads", hint: "Dissolvable threads that lift tissue" },
+  vein: { label: "Vein treatments", short: "Veins", hint: "Injections that close small visible veins" },
 };
 
 export const ONSET_LABELS = ["", "Right away", "Within days–weeks", "Gradually (months)"];
@@ -295,8 +353,11 @@ export const GOAL_LABELS: Record<string, string> = {
   redness: "Redness",
   acne: "Acne Scars",
   glow: "Overall Glow",
-  contour: "Jawline, Chin & Body",
+  contour: "Contouring: Nose, Jaw & Body",
   hair: "Hair Removal",
+  veins: "Spider Veins",
+  sweat: "Underarm Sweating",
+  tattoo: "Tattoo Removal",
 };
 
 export const PAIN_LABELS = ["", "Minimal", "Mild", "Moderate", "Strong", "Intense"];

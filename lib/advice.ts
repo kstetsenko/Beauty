@@ -13,9 +13,9 @@ export interface Note {
 const pm = (id: string) => `https://pubmed.ncbi.nlm.nih.gov/${id}/`;
 const pmc = (id: string) => `https://www.ncbi.nlm.nih.gov/pmc/articles/${id}/`;
 
-const RESURFACING = new Set(["co2", "fraxel", "halo", "moxi", "pico", "peel"]);
-const LIGHT = new Set(["co2", "fraxel", "halo", "moxi", "pico", "ipl", "laser-hair"]);
-const ENERGY = new Set(["sofwave", "ultherapy", "thermage", "morpheus8"]);
+const RESURFACING = new Set(["co2", "erbium", "fraxel", "halo", "moxi", "pico", "peel"]);
+const LIGHT = new Set(["co2", "erbium", "fraxel", "halo", "moxi", "pico", "ipl", "pdl", "laser-hair", "tattoo"]);
+const ENERGY = new Set(["sofwave", "ultherapy", "thermage", "morpheus8", "emface"]);
 
 export function notesFor(p: Procedure, a: QuizAnswers): Note[] {
   const n: Note[] = [];
@@ -30,7 +30,7 @@ export function notesFor(p: Procedure, a: QuizAnswers): Note[] {
     n.push({ text: "Medium and deeper skin tones have a higher risk of dark marks after laser. Choose a provider experienced with your skin tone; lower settings are often used.", source: { label: "Review: lasers in skin of color", url: pm("36781686") } });
 
   // Conditions
-  if (a.conditions?.includes("melasma") && (LIGHT.has(id) || id === "ipl") && id !== "laser-hair")
+  if (a.conditions?.includes("melasma") && LIGHT.has(id) && !["laser-hair", "tattoo", "pdl"].includes(id))
     n.push({ text: "With melasma, laser and light results are often temporary and can rebound darker. Topical treatment and sun protection usually come first.", source: { label: "Meta-analysis: lasers for melasma", url: pmc("PMC13128289") } });
   if (a.conditions?.includes("melasma") && id === "peel")
     n.push({ text: "Peels have evidence for melasma, but it often returns without maintenance.", source: { label: "Meta-analysis: peels for melasma", url: pm("32947652") } });

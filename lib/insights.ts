@@ -1,7 +1,7 @@
 /**
  * Evidence-based "core insights". Every dated entry links to its source.
  * Treatments whose first U.S. approval/clearance date we could not confirm
- * (e.g. HydraFacial, Halo, Moxi, PDO threads, Thermage, Sculptra, Emsculpt)
+ * (e.g. HydraFacial, Halo, Moxi, PDO threads, Thermage, Sculptra, Emsculpt, Emface)
  * are deliberately left off the timeline.
  */
 import type { Procedure } from "./types";
@@ -23,11 +23,13 @@ export const TIMELINE: Milestone[] = [
   { year: "2006", title: "Radiesse approved", detail: "A calcium-based filler that also stimulates collagen.", ids: ["radiesse"], source: { label: "FDA summary — Radiesse", url: "https://www.accessdata.fda.gov/cdrh_docs/pdf5/P050052s049b.pdf" } },
   { year: "2009", title: "Ultherapy cleared for a non-surgical brow lift", detail: "The first ultrasound device cleared for facial lifting.", ids: ["ultherapy"], source: { label: "BioSpace — Ulthera FDA clearance (2009)", url: "https://www.biospace.com/ulthera-receives-first-ever-fda-clearance-to-market-ultrasound-technology-for-facial-aesthetic-improvement" } },
   { year: "2010", title: "CoolSculpting cleared for fat reduction", detail: "First cleared for the flanks; abdomen and thighs followed.", ids: ["coolsculpting"], source: { label: "Review — cryolipolysis (PMC)", url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC4079633" } },
-  { year: "2012", title: "First picosecond aesthetic laser cleared (PicoSure)", detail: "Ultra-short pulses for pigment and tattoos; later cleared for wrinkles and acne scars.", ids: ["pico"], source: { label: "BioSpace — PicoSure FDA clearance", url: "https://www.biospace.com/cynosure-inc-receives-fda-clearance-for-picosure-and-0153" } },
+  { year: "2011", title: "miraDry cleared for underarm sweating", detail: "The first microwave device for excessive underarm sweat.", ids: ["miradry"], source: { label: "FDA 510(k) summary — miraDry", url: "https://www.accessdata.fda.gov/cdrh_docs/pdf10/k103014.pdf" } },
+  { year: "2012", title: "First picosecond aesthetic laser cleared (PicoSure)", detail: "Ultra-short pulses for pigment and tattoos; later cleared for wrinkles and acne scars.", ids: ["pico", "tattoo"], source: { label: "BioSpace — PicoSure FDA clearance", url: "https://www.biospace.com/cynosure-inc-receives-fda-clearance-for-picosure-and-0153" } },
   { year: "2015", title: "Kybella approved for under-chin fat", detail: "The first injectable drug approved to destroy fat cells.", ids: ["kybella"], source: { label: "FDA label — Kybella", url: "https://www.accessdata.fda.gov/drugsatfda_docs/label/2022/206333s005lbl.pdf" } },
   { year: "2019", title: "Sofwave first FDA-cleared", detail: "Parallel-beam ultrasound for lines and wrinkles; later cleared for more uses.", ids: ["sofwave"], source: { label: "FDA 510(k) K191421", url: "https://www.accessdata.fda.gov/scripts/cdrh/cfdocs/cfpmn/pmn.cfm?ID=K191421" } },
   { year: "2020", title: "Morpheus8 platform and body handpiece cleared", detail: "RF microneedling became widely marketed; FDA issued a safety communication on RF microneedling in 2025.", ids: ["morpheus8"], source: { label: "InMode — Morpheus8 platform announcement (2020)", url: "https://prnewswire.com/il/news-releases/inmode-introduces-the-morpheus8-platform-and-the-morpheus8-body-fractional-technology-301110212.html" } },
   { year: "2023", title: "Skinvive and the first under-eye filler approved", detail: "Skinvive for cheek smoothness; Restylane Eyelight for under-eye hollows.", ids: ["skinvive", "under-eye"], source: { label: "FDA — Skinvive approval", url: "https://www.fda.gov/medical-devices/recently-approved-devices/skinvive-juvederm-p110033s059" } },
+  { year: "2024", title: "Botox Cosmetic approved for neck bands", detail: "The first neurotoxin approved for vertical platysma bands between the jaw and neck.", ids: ["botox"], source: { label: "Healio — FDA approves Botox Cosmetic for platysma bands", url: "https://cm.healio.com/news/dermatology/20241021/fda-approves-botox-cosmetic-for-platysma-bands" } },
 ];
 
 /** Derived from our own data: recovery days and pain rating. */

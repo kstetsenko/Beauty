@@ -36,6 +36,10 @@ const AAD = {
   melasma: { label: "AAD — Melasma: diagnosis and treatment", url: "https://www.aad.org/public/diseases/a-z/melasma-treatment" },
   hairWays: { label: "AAD — 6 ways to remove unwanted hair", url: "https://www.aad.org/public/everyday-care/skin-care-basics/hair/remove-unwanted-hair" },
   unsafe: { label: "AAD — Five unsafe skin care trends to avoid", url: "https://www.aad.org/news/5-unsafe-skin-care-trends-to-avoid" },
+  legVeins: { label: "AAD — Leg veins: how dermatologists treat them", url: "https://www.aad.org/public/cosmetic/younger-looking/how-dermatologists-treat-leg-veins" },
+  sweat: { label: "AAD — Hyperhidrosis: diagnosis and treatment", url: "https://www.aad.org/public/diseases/a-z/hyperhidrosis-treatment" },
+  tattoo: { label: "AAD — Tattoo removal: lasers outshine other methods", url: "https://www.aad.org/public/cosmetic/hair-removal/laser-tattoo-removal" },
+  tattooCare: { label: "AAD — Caring for skin after tattoo removal", url: "https://www.aad.org/news/how-to-care-for-your-skin-after-tattoo-removal" },
 };
 const ASPS = {
   threads: { label: "ASPS — Thread lift", url: "https://www.plasticsurgery.org/cosmetic-procedures/thread-lift" },
@@ -76,6 +80,13 @@ export const LEARN: Record<string, Link[]> = {
   emsculpt: [AAD.fat, ASPS.fat],
   threads: [ASPS.threads],
   tretinoin: [AAD.retinoid, AAD.sunDamage],
+  sclerotherapy: [AAD.legVeins],
+  microdermabrasion: [AAD.sunDamage, { label: "ASPS — Microdermabrasion cost", url: "https://www.plasticsurgery.org/cosmetic-procedures/microdermabrasion/cost" }],
+  erbium: [AAD.firm, AAD.sunDamage],
+  "nose-filler": [AAD.fillersOverview, AAD.fillersFaq, { label: "FDA — Dermal filler do's and don'ts (approved areas)", url: "https://www.fda.gov/consumers/consumer-updates/dermal-filler-dos-and-donts-wrinkles-lips-and-more" }],
+  miradry: [AAD.sweat, { label: "FDA 510(k) summary — miraDry", url: "https://www.accessdata.fda.gov/cdrh_docs/pdf10/k103014.pdf" }],
+  tattoo: [AAD.tattoo, AAD.tattooCare],
+  emface: [AAD.firm],
 };
 
 /** Plain-language starting point for each goal, as a dermatologist would frame it. */
@@ -121,7 +132,7 @@ export const GOAL_GUIDE: Record<Goal, { intro: string; foundation: boolean; lear
     learn: [AAD.younger, AAD.retinoid],
   },
   contour: {
-    intro: "Kybella and CoolSculpting reduce small fat pockets; masseter injections slim a wide jaw muscle; fillers add definition to the chin and jawline. None of these are weight-loss treatments.",
+    intro: "Kybella and CoolSculpting reduce small fat pockets; masseter injections slim a wide jaw muscle; fillers add definition to the chin and jawline, or smooth a nose bump (higher-risk). None of these are weight-loss treatments.",
     foundation: false,
     learn: [AAD.fat, ASPS.fat],
   },
@@ -130,10 +141,25 @@ export const GOAL_GUIDE: Record<Goal, { intro: string; foundation: boolean; lear
     foundation: false,
     learn: [AAD.hairFaq, AAD.hairWays],
   },
+  veins: {
+    intro: "Sclerotherapy is the most common treatment for spider veins on the legs; lasers are another option, especially for tiny facial vessels. Larger, bulging veins need a medical vein evaluation first.",
+    foundation: false,
+    learn: [AAD.legVeins],
+  },
+  sweat: {
+    intro: "Start with clinical-strength antiperspirant. Botulinum toxin injections are FDA-approved for underarm sweating and work for several months; miraDry is a longer-lasting device option.",
+    foundation: false,
+    learn: [AAD.sweat, { label: "Randomized trial — Botox for underarm sweating (52 weeks)", url: "https://pubmed.ncbi.nlm.nih.gov/17306417/" }],
+  },
+  tattoo: {
+    intro: "Lasers are the preferred way to remove tattoos and need several sessions. Results depend on ink colors and the operator's skill. Avoid removal creams and DIY kits.",
+    foundation: false,
+    learn: [AAD.tattoo, AAD.tattooCare],
+  },
 };
 
 /** Order options from least to most involved, the way a dermatologist would build a plan. */
-export const APPROACH_ORDER = ["topical", "toxin", "ha", "skin", "biostim", "laser", "energy", "threads", "fat"] as const;
+export const APPROACH_ORDER = ["topical", "toxin", "ha", "skin", "vein", "biostim", "laser", "energy", "threads", "fat"] as const;
 
 export const SUNSCREEN: Link = AAD.sunDamage;
 export const UNSAFE_TRENDS: Link = AAD.unsafe;

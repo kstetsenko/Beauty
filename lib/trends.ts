@@ -23,4 +23,15 @@ export const TRENDS: Trend[] = [
       { label: "Case series — reactions after exosome injections", url: "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12528963/" },
     ],
   },
+  {
+    id: "profhilo",
+    name: "Profhilo",
+    status: "Not FDA-approved in the U.S.",
+    why: "A popular European hyaluronic acid skin booster. Its U.S. partner plans the clinical trials the FDA requires, so it isn't legally marketed here yet. Skinvive is the FDA-approved skin booster.",
+    goals: ["glow", "texture", "lift"],
+    links: [
+      { label: "Plastic Surgery Practice — Evolus to bring Profhilo to the U.S.", url: "https://plasticsurgerypractice.com/client-objectives/rejuvenation/injectibles/evolus-bring-profhilo-united-states-new-partnership/" },
+      { label: "FDA — Skinvive approval (the approved alternative)", url: "https://www.fda.gov/medical-devices/recently-approved-devices/skinvive-juvederm-p110033s059" },
+    ],
+  },
 ];

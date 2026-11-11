@@ -81,7 +81,7 @@ export function Insights() {
             ))}
           </div>
           <p className="text-[11px] text-muted mt-3 px-1">
-            We list only dates we could confirm; HydraFacial, Halo, Moxi, thread lifts, Thermage, Sculptra and Emsculpt are
+            We list only dates we could confirm; HydraFacial, Halo, Moxi, thread lifts, Thermage, Sculptra, Emsculpt, Emface, sclerotherapy and microdermabrasion are
             left off until verified.
           </p>
         </section>

@@ -40,6 +40,9 @@ export const SAFETY: Record<string, Safety> = {
   skinvive: FILLER,
   sculptra: FILLER,
   "under-eye": FILLER,
+  "nose-filler": FILLER,
+  erbium: LASER,
+  tattoo: LASER,
   pdl: LASER,
   botox: {
     serious: "The FDA label carries a boxed warning: the effect can spread beyond the injection site.",
