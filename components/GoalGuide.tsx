@@ -1,35 +1,43 @@
+"use client";
 import { CITY_LABELS } from "@/lib/clinics";
 import { APPROACH_ORDER, GOAL_GUIDE, SUNSCREEN } from "@/lib/learn";
 import { downtimeShort, usd } from "@/lib/match";
 import { APPROACHES, GOAL_LABELS, PROCEDURES } from "@/lib/procedures";
 import { EVIDENCE_LABELS, RESEARCH } from "@/lib/research";
 import { TRENDS } from "@/lib/trends";
+import { personalize } from "@/lib/profile";
 import type { City, Goal } from "@/lib/types";
+import { NotShown, ProfileBar, ProfileGate } from "./ProfileGate";
 import { Disclosure } from "./Disclosure";
 import { Dots } from "./ProcedureFacts";
 
 /** All options for one goal, ordered least → most involved, each linking to its page. */
-export function GoalGuide({ goal, city }: { goal: Goal; city: City }) {
+export function GoalGuide({ goal }: { goal: Goal; city?: City }) {
+  return (
+    <ProfileGate what={`see your options for ${GOAL_LABELS[goal].toLowerCase()}`}>
+      {(profile) => <GoalGuideFor goal={goal} profile={profile} />}
+    </ProfileGate>
+  );
+}
+
+function GoalGuideFor({ goal, profile }: { goal: Goal; profile: import("@/lib/profile").Profile }) {
+  const city = profile.city;
   const g = GOAL_GUIDE[goal];
-  const options = PROCEDURES.filter((p) => p.goals.includes(goal));
+  const { shown, hidden, outside } = personalize(profile, [goal]);
+  const options = shown.map((m) => m.procedure);
   const groups = APPROACH_ORDER.map((a) => ({ a, list: options.filter((p) => p.approach === a) })).filter((x) => x.list.length);
   const trends = TRENDS.filter((t) => t.goals.includes(goal));
-  const other: City = city === "nyc" ? "miami" : "nyc";
 
   return (
     <article className="animate-in space-y-5">
       <a href="/goals" className="text-muted hover:text-ink text-sm">← All goals</a>
+      <ProfileBar profile={profile} />
       <div>
         <h1 className="text-2xl font-semibold mb-2">{GOAL_LABELS[goal]}: your options</h1>
         <p className="text-sm leading-relaxed">{g.intro}</p>
       </div>
 
-      <div className="flex gap-2 text-sm">
-        <span className="rounded-full bg-ink text-white px-3.5 py-1.5">{CITY_LABELS[city]} prices</span>
-        <a href={`/goals/${goal}?city=${other}`} className="rounded-full border border-line px-3.5 py-1.5 hover:border-ink">{CITY_LABELS[other]}</a>
-      </div>
-
-      <p className="text-xs text-muted px-1">{options.length} options, from least to most involved. Tap a group to see them.</p>
+      <p className="text-xs text-muted px-1">{options.length} option{options.length === 1 ? "" : "s"} that fit your answers ({CITY_LABELS[city]} prices), from least to most involved. Tap a group to see them.</p>
 
       <div className="space-y-2.5">
         {g.foundation && (
@@ -79,6 +87,8 @@ export function GoalGuide({ goal, city }: { goal: Goal; city: City }) {
           </Disclosure>
         ))}
 
+        <NotShown hidden={hidden} outside={outside} />
+
         <Disclosure title="Learn more" hint="Dermatologist-written guides">
           <ul className="space-y-1.5">
             {g.learn.map((l) => (
@@ -88,7 +98,7 @@ export function GoalGuide({ goal, city }: { goal: Goal; city: City }) {
         </Disclosure>
       </div>
 
-      <a href="/" className="btn-main block text-center">Get my personal shortlist (1-min quiz)</a>
+      <a href="/" className="btn-main block text-center">Swipe through my matches</a>
       <p className="text-[11px] text-muted text-center">
         Educational information only — not medical advice. Prices are typical ranges, not quotes. <a href="/sources" className="underline">How we research</a>
       </p>
@@ -98,17 +108,29 @@ export function GoalGuide({ goal, city }: { goal: Goal; city: City }) {
 
 export function GoalIndex() {
   return (
-    <section className="animate-in">
-      <h1 className="text-2xl font-semibold mb-1.5">Explore by goal</h1>
-      <p className="text-sm text-muted mb-6">See every option for a concern, from daily skincare to procedures, with the research behind each.</p>
-      <div className="grid grid-cols-2 gap-2.5">
-        {(Object.keys(GOAL_LABELS) as Goal[]).map((g) => (
-          <a key={g} href={`/goals/${g}`} className="tile">
+    <ProfileGate what="explore treatments by goal">
+      {(profile) => {
+        const all = Object.keys(GOAL_LABELS) as Goal[];
+        const mine = all.filter((g) => profile.goals.includes(g));
+        const others = all.filter((g) => !profile.goals.includes(g));
+        const Tile = ({ g }: { g: Goal }) => (
+          <a href={`/goals/${g}`} className="tile">
             <span className="font-medium">{GOAL_LABELS[g]}</span>
-            <span className="block text-xs text-muted mt-0.5">{PROCEDURES.filter((p) => p.goals.includes(g)).length} options</span>
+            <span className="block text-xs text-muted mt-0.5">{(() => { const n = personalize(profile, [g]).shown.length; return `${n} option${n === 1 ? "" : "s"} for you`; })()}</span>
           </a>
-        ))}
-      </div>
-    </section>
+        );
+        return (
+          <section className="animate-in">
+            <h1 className="text-2xl font-semibold mb-1.5">Explore by goal</h1>
+            <p className="text-sm text-muted mb-4">Every option for a concern that fits your answers, with the research behind each.</p>
+            <ProfileBar profile={profile} />
+            <p className="text-sm font-medium mb-2">Your goals</p>
+            <div className="grid grid-cols-2 gap-2.5 mb-6">{mine.map((g) => <Tile key={g} g={g} />)}</div>
+            <p className="text-sm font-medium mb-2">Other goals</p>
+            <div className="grid grid-cols-2 gap-2.5">{others.map((g) => <Tile key={g} g={g} />)}</div>
+          </section>
+        );
+      }}
+    </ProfileGate>
   );
 }

@@ -6,6 +6,8 @@ import { APPROACHES, GOAL_LABELS, ONSET_LABELS, PAIN_LABELS, PROCEDURES, RESULT_
 import { EVIDENCE_LABELS, RESEARCH, priceChecked } from "@/lib/research";
 import type { City, Goal, Procedure } from "@/lib/types";
 import { Dots } from "./ProcedureFacts";
+import { personalize, type Profile } from "@/lib/profile";
+import { NotShown, ProfileBar, ProfileGate } from "./ProfileGate";
 
 const ROWS: { label: string; cell: (p: Procedure, c: City) => React.ReactNode }[] = [
   { label: "Price", cell: (p, c) => <>{usd(p.cost[c][0])}–{usd(p.cost[c][1]).replace("$", "")}<span className="block text-[11px] text-muted">{p.priceUnit}{priceChecked(p.id, c) ? "" : " · estimate"}</span></> },
@@ -28,45 +30,71 @@ const pill = (on: boolean) =>
  * only compare like with like (e.g. wrinkle options with wrinkle options).
  */
 export function CompareView() {
+  return <ProfileGate what="compare treatments">{(profile) => <CompareFor profile={profile} />}</ProfileGate>;
+}
+
+function CompareFor({ profile }: { profile: Profile }) {
   const params = useSearchParams();
   const router = useRouter();
-  const city: City = params.get("city") === "miami" ? "miami" : "nyc";
+  const city: City = profile.city;
   const rawIds = (params.get("ids") || "").split(",").filter((id) => PROCEDURES.some((p) => p.id === id));
   const first = PROCEDURES.find((p) => p.id === rawIds[0]);
   // Goal: from the link, or the only goal of the first treatment.
   const goalParam = params.get("goal");
-  const goal: Goal | null = isGoal(goalParam) ? goalParam : first && first.goals.length === 1 ? first.goals[0] : null;
-  const ids = goal ? rawIds.filter((id) => PROCEDURES.find((p) => p.id === id)!.goals.includes(goal)).slice(0, 3) : [];
+  // Only the person's own goals can be compared; for a linked treatment, the goals it shares with them.
+  const myGoals = first ? first.goals.filter((g) => profile.goals.includes(g)) : profile.goals;
+  const goal: Goal | null = isGoal(goalParam) && profile.goals.includes(goalParam) ? goalParam : myGoals.length === 1 ? myGoals[0] : null;
+  const fit = goal ? personalize(profile, [goal]) : { shown: [], hidden: [], outside: [] };
+  const allowed = new Set(fit.shown.map((m) => m.procedure.id));
+  const ids = goal ? rawIds.filter((id) => allowed.has(id)).slice(0, 3) : [];
   const dropped = goal ? rawIds.length - ids.length : 0;
   const chosen = ids.map((id) => PROCEDURES.find((p) => p.id === id)!);
-  const options = goal ? PROCEDURES.filter((p) => p.goals.includes(goal) && !ids.includes(p.id)) : [];
+  const options = fit.shown.map((m) => m.procedure).filter((p) => !ids.includes(p.id));
 
-  const go = (next: { goal?: Goal | null; ids?: string[]; city?: City }) => {
+  const go = (next: { goal?: Goal | null; ids?: string[] }) => {
     const g = next.goal === undefined ? goal : next.goal;
     const q = new URLSearchParams();
     if (g) q.set("goal", g);
     const list = next.ids ?? ids;
     if (list.length) q.set("ids", list.join(","));
-    q.set("city", next.city ?? city);
+    q.set("city", city);
     router.replace(`/compare?${q.toString()}`, { scroll: false });
   };
 
-  // Step 1: choose what you're comparing for.
+  // Step 1: choose which of your goals to compare for.
   if (!goal) {
-    const choices = first ? first.goals : (Object.keys(GOAL_LABELS) as Goal[]);
     return (
       <div className="animate-in">
         <h1 className="text-2xl font-semibold mb-1.5">Compare treatments</h1>
-        <p className="text-sm text-muted mb-5">
-          {first ? `${first.name} is used for more than one goal. Compare it for:` : "What are you comparing treatments for? You'll only see options for that goal."}
+        <p className="text-sm text-muted mb-4">
+          {first && myGoals.length === 0
+            ? `${first.name} isn't used for any of your goals. Pick one of your goals, or edit your answers.`
+            : "Which of your goals are you comparing treatments for? You'll only see options that fit your answers."}
         </p>
+        <ProfileBar profile={profile} />
         <div className="grid grid-cols-2 gap-2.5">
-          {choices.map((g) => (
-            <button key={g} type="button" onClick={() => go({ goal: g, ids: first ? [first.id] : [] })} className="tile">
-              <span className="font-medium">{GOAL_LABELS[g]}</span>
-              <span className="block text-xs text-muted mt-0.5">{PROCEDURES.filter((p) => p.goals.includes(g)).length} options</span>
-            </button>
-          ))}
+          {(myGoals.length ? myGoals : profile.goals).map((g) => {
+            const list = personalize(profile, [g]).shown;
+            if (list.length < 2) {
+              return (
+                <div key={g} className="tile opacity-60">
+                  <span className="font-medium">{GOAL_LABELS[g]}</span>
+                  <span className="block text-xs text-muted mt-0.5">
+                    {list.length === 0 ? "No options fit your answers" : "Only 1 option fits — nothing to compare"}
+                  </span>
+                  {list.length === 1 && (
+                    <a href={`/procedures/${list[0].procedure.id}?city=${city}`} className="block text-xs underline mt-1">{list[0].procedure.name} →</a>
+                  )}
+                </div>
+              );
+            }
+            return (
+              <button key={g} type="button" onClick={() => go({ goal: g, ids: first && myGoals.includes(g) ? [first.id] : [] })} className="tile">
+                <span className="font-medium">{GOAL_LABELS[g]}</span>
+                <span className="block text-xs text-muted mt-0.5">{list.length} options for you</span>
+              </button>
+            );
+          })}
         </div>
       </div>
     );
@@ -76,22 +104,15 @@ export function CompareView() {
     <div className="animate-in">
       <h1 className="text-2xl font-semibold mb-1.5">Compare: {GOAL_LABELS[goal]}</h1>
       <p className="text-sm text-muted mb-4">
-        Up to 3 treatments for the same goal. Prices for {CITY_LABELS[city]}.{" "}
-        <button type="button" onClick={() => go({ goal: null, ids: [] })} className="underline">Change goal</button>
+        Up to 3 treatments for the same goal that fit your answers. Prices for {CITY_LABELS[city]}.{" "}
+        {profile.goals.length > 1 && <button type="button" onClick={() => go({ goal: null, ids: [] })} className="underline">Change goal</button>}
       </p>
+      <ProfileBar profile={profile} />
       {dropped > 0 && (
         <p className="text-xs rounded-2xl bg-blush p-3 mb-4">
-          {dropped} treatment{dropped > 1 ? "s were" : " was"} left out because {dropped > 1 ? "they aren't" : "it isn't"} used for {GOAL_LABELS[goal].toLowerCase()}.
+          {dropped} treatment{dropped > 1 ? "s were" : " was"} left out because {dropped > 1 ? "they don't" : "it doesn't"} fit {GOAL_LABELS[goal].toLowerCase()} or your answers.
         </p>
       )}
-
-      <div className="flex gap-2 mb-3">
-        {(Object.keys(CITY_LABELS) as City[]).map((c) => (
-          <button key={c} type="button" onClick={() => go({ city: c })} aria-pressed={city === c} className={pill(city === c)}>
-            {CITY_LABELS[c]}
-          </button>
-        ))}
-      </div>
 
       <label className="block mb-5">
         <span className="sr-only">Add a treatment</span>
@@ -137,8 +158,9 @@ export function CompareView() {
           </table>
         </div>
       )}
+      <div className="mt-4"><NotShown hidden={fit.hidden} outside={fit.outside} /></div>
       <p className="text-[11px] text-muted text-center mt-3">
-        Typical ranges, not quotes or guarantees. Check each treatment&apos;s safety section for whether it suits you.{" "}
+        Typical ranges, not quotes or guarantees.{" "}
         <a href="/sources" className="underline">How we research</a>
       </p>
     </div>

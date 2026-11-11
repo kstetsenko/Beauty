@@ -1,9 +1,9 @@
 "use client";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { CITY_LABELS } from "@/lib/clinics";
-import { matchProcedures } from "@/lib/match";
+import { clearProfile, personalize, readProfileOnce, saveProfile, type Flag } from "@/lib/profile";
 import { GOAL_LABELS, PROCEDURES } from "@/lib/procedures";
-import type { AgeBand, Budget, Caution, City, Condition, Goal, Recent, SkinTone } from "@/lib/types";
+import type { AgeBand, Budget, City, Goal, Recent, SkinTone } from "@/lib/types";
 import { Chips } from "./Chips";
 import { ProcedureCard } from "./ProcedureCard";
 import { Question } from "./Question";
@@ -12,7 +12,6 @@ import { Summary } from "./Summary";
 type Step = "city" | "goals" | "about" | "safety" | "recent" | "budget" | "browse" | "done";
 const QUIZ: Step[] = ["city", "goals", "about", "safety", "recent", "budget"];
 
-type Flag = Caution | Condition | "no-downtime";
 const SAFETY: { value: Flag; label: string }[] = [
   { value: "pregnancy", label: "Pregnant or nursing" },
   { value: "no-downtime", label: "Need zero downtime" },
@@ -38,14 +37,14 @@ const TONES: { value: SkinTone; label: string }[] = [
   { value: "medium", label: "Medium — tans" },
   { value: "deep", label: "Deep brown or Black" },
 ];
-const CONDITIONS: Condition[] = ["melasma", "rosacea", "cold-sores"];
 
 const pill = (on: boolean) =>
   "rounded-full border px-4 py-2.5 text-sm transition-colors " + (on ? "border-ink bg-ink text-white" : "border-line bg-white hover:border-ink");
 
 /**
- * Six quick screens (about 45–70 seconds). Answers live in React state only:
- * nothing is stored or sent, and closing the tab discards them.
+ * Six quick screens (about 45–70 seconds). When finished, answers are saved as
+ * the person's profile in this browser tab only (cleared when the tab closes,
+ * never sent) so every other page can use the same parameters.
  */
 export function Guide() {
   const [history, setHistory] = useState<Step[]>(["city"]);
@@ -61,22 +60,25 @@ export function Guide() {
   const [index, setIndex] = useState(0);
   const [saved, setSaved] = useState<string[]>([]);
 
+  useEffect(() => {
+    const p = readProfileOnce();
+    if (!p) return;
+    setCity(p.city);
+    setGoals(p.goals);
+    setAge(p.age);
+    setTone(p.tone);
+    setFlags(p.flags);
+    setRecent(p.recent);
+    setBudget(p.budget);
+  }, []);
+
   const go = (s: Step) => setHistory((h) => [...h, s]);
   const back = () => setHistory((h) => (h.length > 1 ? h.slice(0, -1) : h));
 
   const result = useMemo(() => {
-    if (!goals.length || !budget) return { shown: [], hidden: [] };
-    return matchProcedures({
-      goals,
-      budget,
-      downtime: flags.includes("no-downtime") ? "none" : "any",
-      cautions: flags.filter((f): f is Caution => !CONDITIONS.includes(f as Condition) && f !== "no-downtime"),
-      conditions: flags.filter((f): f is Condition => CONDITIONS.includes(f as Condition)),
-      age,
-      tone,
-      recent,
-    });
-  }, [goals, budget, flags, age, tone, recent]);
+    if (!city || !goals.length || !budget || !age || !tone) return { shown: [], hidden: [], outside: [] };
+    return personalize({ city, goals, age, tone, flags, recent, budget }, goals);
+  }, [city, goals, budget, flags, age, tone, recent]);
   const all = result.shown;
   const matches = all.filter(
     (m) => onsetFilter === "all" || (onsetFilter === "now" ? m.procedure.onset === 1 : m.procedure.onset === 3),
@@ -221,6 +223,7 @@ export function Guide() {
           selected={budget}
           onPick={(v) => {
             setBudget(v);
+            if (city && age && tone) saveProfile({ city, goals, age, tone, flags, recent, budget: v });
             startBrowsing();
           }}
         />
@@ -286,6 +289,7 @@ export function Guide() {
             setHistory((h) => h.slice(0, -1));
           }}
           onRestart={() => {
+            clearProfile();
             setHistory(["city"]);
             setGoals([]);
             setAge(undefined);

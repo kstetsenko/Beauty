@@ -2,6 +2,7 @@ import { CITY_LABELS, directoryLinks } from "@/lib/clinics";
 import { GOAL_LABELS } from "@/lib/procedures";
 import type { City, Procedure } from "@/lib/types";
 import { ApproachTag, DetailSections, KeyFacts } from "./ProcedureFacts";
+import { ForYou } from "./ForYou";
 
 export function ProcedureDetail({ p, city }: { p: Procedure; city: City }) {
   const other: City = city === "nyc" ? "miami" : "nyc";
@@ -9,7 +10,7 @@ export function ProcedureDetail({ p, city }: { p: Procedure; city: City }) {
 
   return (
     <article className="animate-in">
-      <a href="/procedures" className="text-muted hover:text-ink text-sm">← All procedures</a>
+      <a href="/procedures" className="text-muted hover:text-ink text-sm">← Treatments that fit you</a>
       <div className="bg-white rounded-3xl border border-line p-6 mt-4">
         <ApproachTag p={p} />
         <h1 className="text-2xl font-semibold leading-snug">{p.name}</h1>
@@ -21,6 +22,7 @@ export function ProcedureDetail({ p, city }: { p: Procedure; city: City }) {
         </div>
         <KeyFacts p={p} city={city} />
       </div>
+      <ForYou p={p} />
       <p className="text-xs text-muted mt-5 mb-2 px-1">Tap a topic to learn more</p>
       <DetailSections p={p} city={city} />
       <section className="mt-4">

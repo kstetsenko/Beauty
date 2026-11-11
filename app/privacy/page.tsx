@@ -10,8 +10,8 @@ export default function Privacy() {
 
       <h2 className="font-semibold text-ink">What we collect</h2>
       <ul className="list-disc pl-5 space-y-1">
-        <li><strong>Quiz answers, city and ZIP/neighborhood</strong> stay in your browser for the current visit only. They are not saved or sent to us.</li>
-        <li><strong>Health-related answers</strong> (e.g. pregnancy, skin conditions, medications) are used on your device to flag cautions and are never transmitted.</li>
+        <li><strong>Quiz answers</strong> (city, goals, age range, skin tone, health notes, budget) are kept only in your current browser tab so every page can use them, and are deleted when you close the tab or tap &ldquo;Start over&rdquo;. They are never sent to us. ZIP/neighborhood is not stored.</li>
+        <li><strong>Health-related answers</strong> (e.g. pregnancy, skin conditions, medications) are used on your device only, to hide treatments that usually aren&apos;t advised, and are never transmitted.</li>
         <li><strong>Email address</strong> — only if you choose to save your guide and tick the consent box. We store your email, city, the names of the procedures in your guide, and the consent wording with a timestamp.</li>
         <li>Your browser stores that you accepted the disclaimer and whether you dismissed the install hint.</li>
       </ul>
