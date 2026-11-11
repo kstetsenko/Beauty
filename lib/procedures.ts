@@ -39,9 +39,9 @@ const RAW: Raw[] = [
     id: "morpheus8", name: "Morpheus8", what: "Radiofrequency microneedling", approach: "energy", onset: 3, minAge: 22,
     summary: "Tiny needles deliver radiofrequency heat under the skin to tighten, smooth texture and soften acne scars.",
     goals: ["texture", "acne", "lift", "contour"], cost: { nyc: [1000, 2000], miami: [1000, 2000] }, priceUnit: "per session",
-    sessions: "1–3, about 4–6 weeks apart", lasts: "1 year or more with maintenance", downtimeDays: [2, 5], pain: 4, results: 3,
+    sessions: "1–3, about 4–6 weeks apart", lasts: "1 year or more with maintenance", downtimeDays: [2, 5], pain: 4, results: 2,
     performedBy: "Dermatologist, plastic surgeon or supervised clinician",
-    contraindications: ["pregnancy", "active-skin", "keloid", "blood-thinners"],
+    contraindications: ["pregnancy", "active-skin", "keloid", "blood-thinners", "isotretinoin"],
     notes: "Ask whether numbing cream is included in the price.",
   },
   {
@@ -63,7 +63,7 @@ const RAW: Raw[] = [
   },
   {
     id: "halo", name: "Halo Laser", what: "Hybrid fractional laser", approach: "laser", onset: 2,
-    summary: "Combines two laser wavelengths to brighten tone and refine texture in fewer sessions.",
+    summary: "Combines two laser wavelengths to brighten tone and refine texture.",
     goals: ["pigment", "texture", "glow"], cost: { nyc: [1200, 2500], miami: [1200, 2200] }, priceUnit: "per session",
     sessions: "1–3", lasts: "Long-lasting with sun protection", downtimeDays: [5, 7], pain: 3, results: 2,
     performedBy: "Dermatologist or supervised clinician", contraindications: ["pregnancy", "active-skin", "keloid"],
@@ -80,9 +80,9 @@ const RAW: Raw[] = [
   {
     id: "microneedling", name: "Microneedling", what: "Collagen induction therapy", approach: "skin", onset: 3, minAge: 22,
     summary: "Fine needles make tiny controlled channels that prompt new collagen for smoother texture.",
-    goals: ["texture", "acne", "glow"], cost: { nyc: [300, 600], miami: [250, 500] }, priceUnit: "per session",
+    goals: ["texture", "acne", "glow", "lines"], cost: { nyc: [300, 600], miami: [250, 500] }, priceUnit: "per session",
     sessions: "3–6, about 4–6 weeks apart", lasts: "Long-lasting; gradual", downtimeDays: [1, 3], pain: 2, results: 2,
-    performedBy: "Dermatologist or supervised clinician", contraindications: ["active-skin", "keloid", "blood-thinners"],
+    performedBy: "Dermatologist or supervised clinician", contraindications: ["active-skin", "keloid", "blood-thinners", "isotretinoin"],
     notes: "Avoid at-home rollers for deep treatment — infection risk.",
   },
   {
@@ -90,7 +90,7 @@ const RAW: Raw[] = [
     summary: "Microneedling with platelet-rich plasma from your own blood, aimed at glow and texture.",
     goals: ["texture", "glow", "acne"], cost: { nyc: [550, 1200], miami: [200, 900] }, priceUnit: "per session",
     sessions: "3, about 4–6 weeks apart", lasts: "Gradual; maintenance yearly", downtimeDays: [1, 3], pain: 3, results: 2,
-    performedBy: "Physician-supervised clinic", contraindications: ["pregnancy", "active-skin", "blood-thinners"],
+    performedBy: "Physician-supervised clinic", contraindications: ["pregnancy", "active-skin", "blood-thinners", "isotretinoin"],
     notes: "Evidence is still growing; make sure blood is handled in a medical setting.",
   },
   {
@@ -105,17 +105,17 @@ const RAW: Raw[] = [
 
   // ── Injectables & threads (instant, product-based) ──────────────────
   {
-    id: "botox", name: "Botox / Dysport", what: "Neuromodulator injections", approach: "toxin", onset: 2,
+    id: "botox", name: "Botox / Dysport / Daxxify", what: "Neuromodulator injections (also Xeomin, Jeuveau)", approach: "toxin", onset: 2,
     summary: "Relaxes the muscles behind forehead lines, frown lines and crow's feet.",
     goals: ["lines"], cost: { nyc: [450, 1200], miami: [300, 900] }, priceUnit: "per treatment",
     sessions: "Single visit", lasts: "About 3–4 months", downtimeDays: [0, 1], pain: 1, results: 2,
     performedBy: "Physician, PA or NP", contraindications: ["pregnancy", "autoimmune", "active-skin"],
-    notes: "Often priced per unit — ask for the total.",
+    notes: "Often priced per unit — ask for the total. Daxxify lasted a median of about 6 months in its trials; others about 3–4 months.",
   },
   {
     id: "lip-filler", name: "Lip Filler", what: "Hyaluronic acid filler", approach: "ha", onset: 1, minAge: 22,
-    summary: "A gel your body naturally contains, injected to add shape, hydration and volume to the lips.",
-    goals: ["volume"], cost: { nyc: [550, 1200], miami: [600, 1000] }, priceUnit: "per syringe",
+    summary: "A gel made from hyaluronic acid — a substance naturally found in skin — injected to add shape and volume to the lips and soften lines around the mouth.",
+    goals: ["volume", "lines"], cost: { nyc: [550, 1200], miami: [600, 1000] }, priceUnit: "per syringe",
     sessions: "Single visit", lasts: "About 6–12 months", downtimeDays: [1, 3], pain: 3, results: 3,
     performedBy: "Physician, PA or NP", contraindications: ["pregnancy", "active-skin", "blood-thinners", "autoimmune"],
     notes: "Reversible with an enzyme if needed. Ask for a natural amount.",
@@ -131,8 +131,8 @@ const RAW: Raw[] = [
   },
   {
     id: "radiesse", name: "Radiesse", what: "Calcium-based filler", approach: "biostim", onset: 1, minAge: 22,
-    summary: "Adds instant structure to cheeks and jawline and also stimulates some collagen.",
-    goals: ["volume", "contour", "lift"], cost: { nyc: [900, 1400], miami: [700, 1100] }, priceUnit: "per syringe",
+    summary: "Adds instant structure to cheeks, jawline and smile lines, and also stimulates some collagen.",
+    goals: ["volume", "contour", "lift", "lines"], cost: { nyc: [900, 1400], miami: [700, 1100] }, priceUnit: "per syringe",
     sessions: "Single visit", lasts: "About 12–18 months", downtimeDays: [1, 3], pain: 3, results: 3,
     performedBy: "Board-certified dermatologist or plastic surgeon",
     contraindications: ["pregnancy", "active-skin", "blood-thinners", "autoimmune"],
@@ -148,7 +148,7 @@ const RAW: Raw[] = [
   },
   {
     id: "kybella", name: "Kybella", what: "Under-chin fat dissolving injections", approach: "fat", onset: 3,
-    summary: "Injections that permanently break down small pockets of fat under the chin.",
+    summary: "Injections that destroy fat cells in a small pocket of fat under the chin.",
     goals: ["contour"], cost: { nyc: [600, 750], miami: [500, 750] }, priceUnit: "per vial (2–4 per visit)",
     sessions: "2–4, about 4–6 weeks apart", lasts: "Long-lasting", downtimeDays: [3, 7], pain: 3, results: 2,
     performedBy: "Physician, PA or NP", contraindications: ["pregnancy", "active-skin", "blood-thinners"],
@@ -209,7 +209,7 @@ const RAW: Raw[] = [
   // ── Body & hair ─────────────────────────────────────────────────────
   {
     id: "coolsculpting", name: "CoolSculpting", what: "Fat freezing", approach: "fat", onset: 3,
-    summary: "Controlled cooling permanently reduces stubborn fat in areas like the belly, flanks or chin.",
+    summary: "Controlled cooling destroys some fat cells in areas like the belly, flanks or chin; the body clears them over about 3 months.",
     goals: ["contour"], cost: { nyc: [800, 1800], miami: [750, 1500] }, priceUnit: "per cycle (one applicator)",
     sessions: "1–3 per area", lasts: "Long-lasting if weight stays stable", downtimeDays: [0, 1], pain: 2, results: 2,
     performedBy: "Physician-supervised clinic", contraindications: ["pregnancy"],
@@ -231,6 +231,39 @@ const RAW: Raw[] = [
     performedBy: "Physician or trained laser technician", contraindications: ["pregnancy", "active-skin"],
     notes: "Ask which laser is used for your skin tone.",
   },
+  // ── Added: foundation, trending and specialist options ────────────────
+  {
+    id: "tretinoin", name: "Prescription Retinoid (Tretinoin)", what: "Prescription vitamin A cream", approach: "topical", onset: 3,
+    summary: "The best-studied at-home treatment for fine lines, rough texture and sun spots. Used nightly, results build over months.",
+    goals: ["lines", "texture", "pigment", "acne", "glow"], cost: { nyc: [30, 100], miami: [30, 100] }, priceUnit: "per 45 g tube, plus a doctor visit",
+    sessions: "Nightly at home", lasts: "As long as you keep using it", downtimeDays: [0, 0], pain: 1, results: 2,
+    performedBy: "Prescribed by a dermatologist or other clinician", contraindications: ["pregnancy"],
+    notes: "Start slowly — dryness and peeling are common at first. Pair with daily SPF 30+.",
+  },
+  {
+    id: "masseter", name: "Masseter Botox (Jaw Slimming)", what: "Neuromodulator in the jaw muscle", approach: "toxin", onset: 2,
+    summary: "Injections relax an enlarged chewing muscle so the lower face looks slimmer over several weeks.",
+    goals: ["contour"], cost: { nyc: [800, 1500], miami: [800, 1200] }, priceUnit: "per treatment (both sides)",
+    sessions: "Single visit; repeated to maintain", lasts: "Several months; needs repeat treatments", downtimeDays: [0, 1], pain: 1, results: 2,
+    performedBy: "Physician, PA or NP", contraindications: ["pregnancy", "autoimmune", "active-skin"],
+    notes: "Off-label in the U.S. (FDA-approved uses are certain face and neck lines). Usually priced by units used.",
+  },
+  {
+    id: "under-eye", name: "Under-Eye Filler", what: "Hyaluronic acid for under-eye hollows", approach: "ha", onset: 1, minAge: 22,
+    summary: "A soft filler placed under the eyes to soften hollows and shadows. Some products are FDA-approved for this area.",
+    goals: ["volume"], cost: { nyc: [1000, 2500], miami: [850, 1200] }, priceUnit: "per syringe",
+    sessions: "Single visit; sometimes a touch-up", lasts: "About 1 year (studies followed people for 12–18 months)", downtimeDays: [2, 7], pain: 2, results: 2,
+    performedBy: "Board-certified dermatologist or plastic surgeon recommended", contraindications: ["pregnancy", "active-skin", "blood-thinners", "autoimmune"],
+    notes: "A delicate area: swelling and visible lumps are more likely. Choose an experienced injector.",
+  },
+  {
+    id: "pdl", name: "Pulsed Dye Laser (Vbeam)", what: "Laser for redness and broken capillaries", approach: "laser", onset: 2,
+    summary: "A yellow-light laser that targets blood vessels to reduce persistent redness, rosacea flushing and visible capillaries.",
+    goals: ["redness"], cost: { nyc: [400, 800], miami: [400, 800] }, priceUnit: "per session",
+    sessions: "Usually several, about 4 weeks apart", lasts: "Months to years; redness can return", downtimeDays: [0, 7], pain: 2, results: 2,
+    performedBy: "Dermatologist", contraindications: ["pregnancy", "active-skin"],
+    notes: "Some settings cause temporary purple bruising for 1–2 weeks — ask which to expect.",
+  },
 ];
 
 function tierOf(nycLow: number): Budget {
@@ -240,6 +273,7 @@ function tierOf(nycLow: number): Budget {
 export const PROCEDURES: Procedure[] = RAW.map((p) => ({ ...p, tier: tierOf(p.cost.nyc[0]) }));
 
 export const APPROACHES: Record<Approach, { label: string; short: string; hint: string }> = {
+  topical: { label: "Prescription skincare", short: "Skincare", hint: "Daily treatment at home, prescribed by a clinician; results build over months" },
   energy: { label: "Ultrasound & radiofrequency", short: "Energy devices", hint: "Heat under the skin triggers collagen remodeling; results build over months" },
   laser: { label: "Lasers & light", short: "Lasers & light", hint: "Light energy resurfaces skin or targets pigment, redness or hair" },
   biostim: { label: "Collagen-stimulating injectables", short: "Biostimulators", hint: "Injected materials that prompt your own collagen over time" },

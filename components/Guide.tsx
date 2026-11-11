@@ -126,9 +126,9 @@ export function Guide() {
               go("goals");
             }}
           />
-          <a href="/procedures" className="mt-8 text-center text-sm text-muted underline">
-            Or browse all {PROCEDURES.length} procedures
-          </a>
+          <p className="mt-8 text-center text-sm text-muted">
+            Or <a href="/goals" className="underline">explore by goal</a> · <a href="/procedures" className="underline">browse all {PROCEDURES.length} treatments</a>
+          </p>
         </>
       )}
 
@@ -273,6 +273,7 @@ export function Guide() {
         <Summary
           city={city}
           budget={budget}
+          goals={goals}
           saved={all.filter((m) => saved.includes(m.procedure.id))}
           onBrowseAgain={() => {
             setIndex(0);

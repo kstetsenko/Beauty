@@ -2,6 +2,7 @@ import { CAUTIONS } from "@/lib/cautions";
 import { downtimeShort, usd } from "@/lib/match";
 import { APPROACHES, ONSET_LABELS, PAIN_LABELS, RESULT_LABELS } from "@/lib/procedures";
 import { SAFETY } from "@/lib/safety";
+import { LEARN } from "@/lib/learn";
 import { CONSULT_QUESTIONS, CHECKED, EVIDENCE_LABELS, RESEARCH, priceChecked } from "@/lib/research";
 import type { City, Procedure } from "@/lib/types";
 
@@ -99,11 +100,12 @@ export function ResearchSection({ p, city }: { p: Procedure; city: City }) {
   const prices = r.prices.filter((x) => (!x.city || x.city === city) && !seen.has(x.url) && seen.add(x.url));
   return (
     <div className="space-y-4">
-      {SAFETY[p.id] && (
+      {(LEARN[p.id]?.length || SAFETY[p.id]) && (
         <section className="bg-white rounded-3xl border border-line p-6">
-          <h2 className="font-semibold mb-3">Learn more from official sources</h2>
+          <h2 className="font-semibold mb-1">Learn more</h2>
+          <p className="text-xs text-muted mb-3">Plain-language guides from medical organizations and the FDA.</p>
           <ul className="space-y-2">
-            {SAFETY[p.id].links.map((l) => (
+            {[...(LEARN[p.id] ?? []), ...(SAFETY[p.id]?.links ?? [])].map((l) => (
               <li key={l.url}>
                 <a href={l.url} target="_blank" rel="noopener noreferrer" className="text-sm underline decoration-line underline-offset-2 hover:decoration-ink">{l.label} ↗</a>
               </li>

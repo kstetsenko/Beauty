@@ -202,6 +202,7 @@ export const RESEARCH: Record<string, Research> = {
     studies: [
       { title: "Efficacy and Safety of Botulinum Toxin Type A in the Treatment of Glabellar Lines: A Meta-Analysis of Randomized, Placebo-Controlled, Double-Blind Trials", url: pm("26313835"), kind: "Meta-analysis" },
       { title: "Phase 3 Study of OnabotulinumtoxinA Distributed Between Frontalis, Glabellar Complex, and Lateral Canthal Areas for Treatment of Upper Facial Lines", url: pm("30096106"), kind: "Randomized trial" },
+      { title: "DaxibotulinumtoxinA for Injection for the Treatment of Glabellar Lines: Results from Each of Two Multicenter, Randomized, Double-Blind, Placebo-Controlled, Phase 3 Studies (SAKURA 1 and SAKURA 2)", url: pm("31609882"), kind: "Randomized trial" },
     ],
   },
   "lip-filler": {
@@ -380,6 +381,50 @@ export const RESEARCH: Record<string, Research> = {
     studies: [
       { title: "Efficacy of lasers and light sources in long-term hair reduction: a systematic review", url: pm("35634805"), kind: "Systematic review" },
       { title: "Evidence-based review of hair removal using lasers and light sources", url: pm("16405602"), kind: "Systematic review" },
+    ],
+  },
+  tretinoin: {
+    resultsIn: "Gradually over 3–6 months of nightly use",
+    sideEffects: "Dryness, peeling, redness and sun sensitivity, mostly in the first weeks",
+    prices: [{ label: "GoodRx — tretinoin cream prices (national)", url: "https://www.goodrx.com/tretinoin" }],
+    evidence: 3,
+    evidenceNote: "A meta-analysis of randomized trials found tretinoin safe and effective for fine and coarse wrinkles from sun damage.",
+    studies: [
+      { title: "Tretinoin for Photodamaged Facial Skin: Systematic Review and Meta-Analysis of Randomized Controlled Trials", url: pm("41236273"), kind: "Meta-analysis" },
+      { title: "Long-term efficacy and safety of tretinoin emollient cream 0.05% in the treatment of photodamaged facial skin: a two-year, randomized, placebo-controlled trial", url: pm("16060712"), kind: "Randomized trial" },
+    ],
+  },
+  masseter: {
+    resultsIn: "Gradually over 2–6 weeks as the muscle relaxes",
+    sideEffects: "Tenderness, bruising; chewing can feel weaker for a while",
+    prices: [{ label: "Perfect B (Miami) — masseter Botox", url: "https://www.perfectb.com/masseter-botox-miami/", city: "miami" }],
+    evidence: 2,
+    evidenceNote: "A meta-analysis of placebo-controlled trials found short-term slimming; longer-term data are limited.",
+    studies: [
+      { title: "Efficacy of botulinum toxin for masseter muscle hypertrophy: A systematic review and meta-analysis", url: pm("42379083"), kind: "Meta-analysis" },
+      { title: "Exploring botulinum toxin's impact on masseter hypertrophy: a randomized, triple-blinded clinical trial", url: pmc("PMC11196657"), kind: "Randomized trial" },
+    ],
+  },
+  "under-eye": {
+    resultsIn: "Right away; swelling settles in 1–2 weeks",
+    sideEffects: "Swelling, bruising, tenderness; visible lumps or a bluish tint if placed too shallow",
+    prices: [{ label: "Dr. Kopelman (NYC) — under-eye filler cost", url: "https://drkopelman.com/under-eye-filler-cost-nyc/", city: "nyc" }],
+    evidence: 3,
+    evidenceNote: "Several randomized controlled trials of hyaluronic acid fillers for under-eye hollows.",
+    studies: [
+      { title: "A Prospective, Multicenter, Single-Blind, Randomized, Controlled Study of VYC-15L, a Hyaluronic Acid Filler, in Adults for Correction of Infraorbital Hollowing", url: pmc("PMC8520027"), kind: "Randomized trial" },
+      { title: "A Multicenter, Randomized, Evaluator-Blinded Study to Examine the Safety and Effectiveness of Hyaluronic Acid Filler in the Correction of Infraorbital Hollows", url: pmc("PMC11334209"), kind: "Randomized trial" },
+    ],
+  },
+  pdl: {
+    resultsIn: "Within 1–4 weeks after each session",
+    sideEffects: "Redness, swelling; temporary purple bruising with some settings",
+    prices: [],
+    evidence: 2,
+    evidenceNote: "A meta-analysis found pulsed dye laser and IPL both reduce rosacea redness; most trials are small.",
+    studies: [
+      { title: "Meta-Analysis of the Efficacy of Intense Pulsed Light and Pulsed-Dye Laser Therapy in the Management of Rosacea", url: pm("39240125"), kind: "Meta-analysis" },
+      { title: "Beyond efficacy: pulse duration is crucial for adverse events in pulsed dye laser therapy for rosacea", url: pm("42112600"), kind: "Randomized trial" },
     ],
   },
 };

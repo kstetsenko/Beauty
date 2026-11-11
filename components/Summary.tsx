@@ -2,7 +2,8 @@
 import { useState } from "react";
 import { CITY_LABELS, CLINICS, directoryLinks } from "@/lib/clinics";
 import { downtimeShort, usd, type Match } from "@/lib/match";
-import type { Budget, City } from "@/lib/types";
+import { GOAL_LABELS } from "@/lib/procedures";
+import type { Budget, City, Goal } from "@/lib/types";
 import { LeadCaptureForm } from "./LeadCaptureForm";
 import { Dots } from "./ProcedureFacts";
 
@@ -11,12 +12,14 @@ const TIER = ["", "$", "$$", "$$$"];
 export function Summary({
   city,
   budget,
+  goals = [],
   saved,
   onBrowseAgain,
   onRestart,
 }: {
   city: City;
   budget?: Budget;
+  goals?: Goal[];
   saved: Match[];
   onBrowseAgain: () => void;
   onRestart: () => void;
@@ -110,6 +113,19 @@ export function Summary({
           </div>
           {showEmail && <LeadCaptureForm city={city} procedureIds={ids} />}
         </>
+      )}
+
+      {goals.length > 0 && (
+        <div>
+          <h2 className="font-semibold mb-2">See every option for your goals</h2>
+          <div className="flex flex-wrap gap-2">
+            {goals.map((g) => (
+              <a key={g} href={`/goals/${g}?city=${city}`} className="rounded-full border border-line bg-white px-3.5 py-1.5 text-sm hover:border-ink">
+                {GOAL_LABELS[g]} →
+              </a>
+            ))}
+          </div>
+        </div>
       )}
 
       <div>

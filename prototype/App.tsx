@@ -6,10 +6,12 @@ import Terms from "@/app/terms/page";
 import { CompareView } from "@/components/CompareView";
 import { DisclaimerModal } from "@/components/DisclaimerModal";
 import { Footer } from "@/components/Footer";
+import { GoalGuide, GoalIndex } from "@/components/GoalGuide";
 import { Guide } from "@/components/Guide";
 import { ProcedureBrowser } from "@/components/ProcedureBrowser";
 import { ProcedureDetail } from "@/components/ProcedureDetail";
-import { PROCEDURES } from "@/lib/procedures";
+import { GOAL_LABELS, PROCEDURES } from "@/lib/procedures";
+import type { Goal } from "@/lib/types";
 import { fromHash, navigate, subscribe } from "./router";
 
 function Page() {
@@ -27,6 +29,10 @@ function Page() {
       const p = PROCEDURES.find((x) => x.id === r.id);
       return p ? <ProcedureDetail p={p} city={r.city} /> : <Guide />;
     }
+    case "goals":
+      return <GoalIndex />;
+    case "goal":
+      return GOAL_LABELS[r.goal] ? <GoalGuide goal={r.goal as Goal} city={r.city} /> : <GoalIndex />;
     case "compare":
       return <CompareView />;
     case "sources":
@@ -61,10 +67,11 @@ function App() {
       <header className="max-w-md w-full mx-auto px-5 pt-5">
         <div className="flex items-center justify-between gap-3">
           <a href="/" className="text-sm font-semibold tracking-tight">
-            Aesthetic Guide <span className="text-muted font-normal">NYC &amp; Miami</span>
+            Aesthetic Guide <span className="text-muted font-normal hidden sm:inline">NYC &amp; Miami</span>
           </a>
           <span className="flex gap-3 text-xs text-muted">
-            <a href="/procedures" className="hover:text-ink">All procedures</a>
+            <a href="/goals" className="hover:text-ink">Goals</a>
+              <a href="/procedures" className="hover:text-ink">All treatments</a>
             <a href="/compare" className="hover:text-ink">Compare</a>
           </span>
         </div>

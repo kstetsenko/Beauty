@@ -50,6 +50,15 @@ export default function Sources() {
       </section>
 
       <section>
+        <h2 className="font-semibold mb-1">Learning links</h2>
+        <p>
+          &ldquo;Learn more&rdquo; links go to patient guides from the American Academy of Dermatology (AAD), the American
+          Society of Plastic Surgeons (ASPS), the FDA and the CDC. We don&apos;t link to clinic marketing. Trending treatments
+          that are not FDA-approved (such as exosomes) are shown only as cautions, with the FDA&apos;s own warnings.
+        </p>
+      </section>
+
+      <section>
         <h2 className="font-semibold mb-1">Safety information</h2>
         <p>
           &ldquo;Rare but serious&rdquo; risks and &ldquo;get help right away&rdquo; signs come from FDA labels and safety

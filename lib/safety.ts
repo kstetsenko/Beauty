@@ -39,7 +39,14 @@ export const SAFETY: Record<string, Safety> = {
   radiesse: FILLER,
   skinvive: FILLER,
   sculptra: FILLER,
+  "under-eye": FILLER,
+  pdl: LASER,
   botox: {
+    serious: "The FDA label carries a boxed warning: the effect can spread beyond the injection site.",
+    getHelpIf: "Trouble swallowing, speaking or breathing, general muscle weakness, double vision or drooping eyelids — hours to weeks after injection.",
+    links: [{ label: "FDA label — Botox Cosmetic (prescribing information)", url: "https://www.accessdata.fda.gov/drugsatfda_docs/label/2018/103000s5306lbl.pdf" }],
+  },
+  masseter: {
     serious: "The FDA label carries a boxed warning: the effect can spread beyond the injection site.",
     getHelpIf: "Trouble swallowing, speaking or breathing, general muscle weakness, double vision or drooping eyelids — hours to weeks after injection.",
     links: [{ label: "FDA label — Botox Cosmetic (prescribing information)", url: "https://www.accessdata.fda.gov/drugsatfda_docs/label/2018/103000s5306lbl.pdf" }],

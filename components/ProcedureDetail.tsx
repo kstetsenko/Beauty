@@ -1,4 +1,5 @@
 import { CITY_LABELS, directoryLinks } from "@/lib/clinics";
+import { GOAL_LABELS } from "@/lib/procedures";
 import type { City, Procedure } from "@/lib/types";
 import { ApproachTag, KeyFacts, MoreFacts, ResearchSection } from "./ProcedureFacts";
 
@@ -26,6 +27,16 @@ export function ProcedureDetail({ p, city }: { p: Procedure; city: City }) {
       </a>
       <a href={`/compare?ids=${p.id}&city=${city}`} className="btn-soft block text-center mt-3 text-sm">Compare with another treatment</a>
       <div className="mt-4"><ResearchSection p={p} city={city} /></div>
+      <section className="mt-4">
+        <h2 className="font-semibold mb-2">Compare other options for</h2>
+        <div className="flex flex-wrap gap-2">
+          {p.goals.map((g) => (
+            <a key={g} href={`/goals/${g}?city=${city}`} className="rounded-full border border-line bg-white px-3.5 py-1.5 text-sm hover:border-ink">
+              {GOAL_LABELS[g]} →
+            </a>
+          ))}
+        </div>
+      </section>
       <p className="text-[11px] text-muted text-center mt-4">
         *Price ranges are not quotes. Educational information only — not medical advice. Brand names belong to their owners;
         we are not affiliated with any brand or clinic. <a href="/sources" className="underline">How we research</a>

@@ -4,6 +4,7 @@ import { CITY_LABELS } from "@/lib/clinics";
 import { downtimeShort, usd } from "@/lib/match";
 import { APPROACHES, PROCEDURES } from "@/lib/procedures";
 import type { Approach, City } from "@/lib/types";
+import { TRENDS } from "@/lib/trends";
 import { Dots } from "./ProcedureFacts";
 
 const pill = (on: boolean) =>
@@ -57,6 +58,16 @@ export function ProcedureBrowser() {
           </li>
         ))}
       </ul>
+      {group === "all" && TRENDS.map((t) => (
+        <div key={t.id} className="rounded-3xl border border-line bg-white p-5 mt-4">
+          <p className="text-[11px] font-medium uppercase tracking-wide text-muted">Trending — {t.status}</p>
+          <p className="font-semibold mt-0.5 mb-1">{t.name}</p>
+          <p className="text-sm leading-relaxed mb-2">{t.why}</p>
+          {t.links.map((l) => (
+            <a key={l.url} href={l.url} target="_blank" rel="noopener noreferrer" className="block text-sm underline">{l.label} ↗</a>
+          ))}
+        </div>
+      ))}
       <p className="text-[11px] text-muted text-center mt-3">Prices checked against published clinic prices where available — not quotes. <a href="/sources" className="underline">How we check</a></p>
     </div>
   );
