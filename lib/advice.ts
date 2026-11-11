@@ -11,7 +11,7 @@ export interface Note {
 }
 
 const pm = (id: string) => `https://pubmed.ncbi.nlm.nih.gov/${id}/`;
-const pmc = (id: string) => `https://www.ncbi.nlm.nih.gov/pmc/articles/${id}/`;
+const pmc = (id: string) => `https://pmc.ncbi.nlm.nih.gov/articles/${id}/`;
 
 const RESURFACING = new Set(["co2", "erbium", "fraxel", "halo", "moxi", "clear-brilliant", "tixel", "pico", "peel"]);
 const LIGHT = new Set(["co2", "erbium", "fraxel", "halo", "moxi", "clear-brilliant", "laser-genesis", "pico", "ipl", "pdl"]);

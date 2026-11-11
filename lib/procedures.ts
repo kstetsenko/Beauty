@@ -252,7 +252,7 @@ const RAW: Raw[] = [
   {
     id: "erbium", name: "Erbium Laser Resurfacing", what: "Er:YAG ablative laser", aka: ["Er:YAG laser"], approach: "laser", collagen: true, onset: 3,
     summary: "A resurfacing laser that removes thin layers of damaged skin to smooth wrinkles, texture and sun damage.",
-    goals: ["lines", "texture", "pigment"], cost: { nyc: [1000, 4000], miami: [1000, 3500] }, priceUnit: "full face",
+    goals: ["lines", "texture", "pigment"], cost: { nyc: [1500, 4000], miami: [1000, 3500] }, priceUnit: "full face",
     sessions: "One deeper treatment, or a lighter series", lasts: "Long-lasting with sun protection", downtimeDays: [5, 14], pain: 4, results: 2,
     performedBy: "Board-certified dermatologist or plastic surgeon", contraindications: ["pregnancy", "active-skin", "isotretinoin", "keloid"],
     notes: "Gentler recovery than CO2 with somewhat smaller results in comparison studies.",

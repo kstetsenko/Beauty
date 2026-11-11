@@ -14,7 +14,7 @@ const all = lib.map(([, s]) => s).join("\n");
 
 // ---- 1. Collect URLs (plain URLs plus the pm()/pmc() helpers in research.ts)
 const urls = new Set();
-for (const m of all.matchAll(/https?:\/\/[^\s"'`)]+/g)) if (!m[0].includes("${") && !m[0].includes("example.com") && !m[0].includes("..")) urls.add(m[0].replace(/[.,]$/, ""));
+for (const m of all.matchAll(/https?:\/\/[^\s"'`)]+/g)) if (!/\$\{|example\.com|\.\.|…/.test(m[0])) urls.add(m[0].replace(/[.,]$/, ""));
 for (const m of all.matchAll(/pm\("(\d+)"\)/g)) urls.add(`https://pubmed.ncbi.nlm.nih.gov/${m[1]}/`);
 for (const m of all.matchAll(/pmc\("(PMC\d+)"\)/g)) urls.add(`https://www.ncbi.nlm.nih.gov/pmc/articles/${m[1]}/`);
 
@@ -31,15 +31,40 @@ async function check(url) {
 }
 
 // ---- 2. Treatments to search on PubMed (names parsed from lib/procedures.ts)
-const procedures = [...readFileSync("lib/procedures.ts", "utf8").matchAll(/id: "([a-z0-9-]+)", name: "([^"]+)"/g)].map((m) => ({
+// Exact search phrases where a product name alone is ambiguous (e.g. "IPL" also means a brain region).
+const TERMS = {
+  ipl: ["intense pulsed light", "BBL photofacial"],
+  co2: ["fractional CO2 laser", "carbon dioxide laser resurfacing"],
+  botox: ["botulinum toxin", "onabotulinumtoxinA", "daxibotulinumtoxinA"],
+  masseter: ["masseter botulinum"],
+  pdl: ["pulsed dye laser"],
+  pico: ["picosecond laser"],
+  erbium: ["erbium laser resurfacing", "Er:YAG resurfacing"],
+  peel: ["chemical peel"],
+  prp: ["platelet-rich plasma microneedling"],
+  "rx-redness": ["oxymetazoline", "brimonidine gel"],
+  "melasma-cream": ["triple combination cream melasma", "hydroquinone melasma"],
+  azelaic: ["azelaic acid"],
+  tretinoin: ["tretinoin photoaging", "topical tretinoin"],
+  "lip-filler": ["lip augmentation hyaluronic acid"],
+  "cheek-filler": ["midface volume hyaluronic acid", "cheek augmentation filler"],
+  "under-eye": ["infraorbital hollow filler", "tear trough filler"],
+  "nose-filler": ["nonsurgical rhinoplasty"],
+  threads: ["thread lift", "polydioxanone thread"],
+  led: ["light-emitting diode photobiomodulation skin"],
+  "laser-genesis": ["microsecond Nd:YAG"],
+};
+// Keep results to skin / cosmetic research.
+const CONTEXT = "(skin[tiab] OR facial[tiab] OR face[tiab] OR cosmetic[tiab] OR aesthetic[tiab] OR rejuvenation[tiab] OR wrinkle*[tiab] OR scar*[tiab] OR melasma[tiab] OR rosacea[tiab] OR photoaging[tiab] OR dermatol*[tiab])";
+const procedures = [...readFileSync("lib/procedures.ts", "utf8").matchAll(/\n    id: "([a-z0-9-]+)", name: "([^"]+)"/g)].map((m) => ({
   id: m[1],
-  terms: m[2].split(" / ").map((t) => t.replace(/\(.*?\)/g, "").trim()),
+  terms: TERMS[m[1]] ?? m[2].split(" / ").map((t) => t.replace(/\(.*?\)/g, "").trim()),
 }));
 const since = new Date(Date.now() - 7 * 864e5).toISOString().slice(0, 10).replace(/-/g, "/");
 const today = new Date().toISOString().slice(0, 10).replace(/-/g, "/");
 
 async function pubmed(terms) {
-  const q = terms.map((t) => `"${t}"[Title/Abstract]`).join(" OR ");
+  const q = `(${terms.map((t) => `"${t}"[Title/Abstract]`).join(" OR ")}) AND ${CONTEXT}`;
   const base = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils";
   const s = await fetch(`${base}/esearch.fcgi?db=pubmed&retmode=json&retmax=5&datetype=edat&mindate=${since}&maxdate=${today}&term=${encodeURIComponent(q)}`, { headers: { "User-Agent": UA } });
   const ids = (await s.json()).esearchresult?.idlist ?? [];

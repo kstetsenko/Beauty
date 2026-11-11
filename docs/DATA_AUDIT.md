@@ -21,7 +21,7 @@ re-checked. Nothing in the app should be added without a source of the kind list
 | Treatment | NYC price (Published = clinic page or RealSelf) | Miami price | Studies cited | Evidence |
 |---|---|---|---|---|
 | Sofwave | Published | Estimate | 2 | Limited |
-| Ultherapy | Published | Published | 2 | Some |
+| Ultherapy | Published | Estimate | 2 | Some |
 | Thermage FLX | Published | Estimate | 2 | Limited |
 | Morpheus8 | Estimate | Estimate | 2 | Some |
 | CO2 Laser | Estimate | Estimate | 2 | Some |
@@ -33,7 +33,7 @@ re-checked. Nothing in the app should be added without a source of the kind list
 | PRP Microneedling | Published | Published | 2 | Limited |
 | Sculptra | Estimate | Estimate | 2 | Some |
 | Botox / Dysport / Daxxify | Published | Published | 3 | Strong |
-| Lip Filler | Published | Published | 2 | Strong |
+| Lip Filler | Published | Estimate | 2 | Strong |
 | Cheek & Jaw Filler | Published | Estimate | 2 | Strong |
 | Radiesse | Published | Estimate | 2 | Some |
 | Skinvive | Estimate | Estimate | 1 | Limited |
@@ -66,3 +66,6 @@ re-checked. Nothing in the app should be added without a source of the kind list
 - Not included because no reliable human evidence or primary source was found: Opus Plasma, polynucleotides (injectable).
   Aerolase (evidence is for active acne) would need a "breakouts" goal.
 - Pain/results ratings are editorial and should be reviewed by a board-certified dermatologist.
+
+## Link check history
+- 2026-11-11 (first weekly run): 3 dead price pages replaced or removed (Skinly Fraxel → new URL; Ethos Spa Miami lip filler removed → Miami estimate; Kassir erbium → Tribeca Park Dermatology). RealSelf Miami Ultherapy page now redirects to a directory → Miami estimate. Redirected links updated. RealSelf, GoodRx and AEDIT block automated checks (403/429) — verify those manually.

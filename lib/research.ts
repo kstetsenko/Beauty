@@ -41,7 +41,7 @@ export interface Research {
 }
 
 const pm = (id: string) => `https://pubmed.ncbi.nlm.nih.gov/${id}/`;
-const pmc = (id: string) => `https://www.ncbi.nlm.nih.gov/pmc/articles/${id}/`;
+const pmc = (id: string) => `https://pmc.ncbi.nlm.nih.gov/articles/${id}/`;
 
 export const RESEARCH: Record<string, Research> = {
   sofwave: {
@@ -63,8 +63,7 @@ export const RESEARCH: Record<string, Research> = {
     sideEffects: "Redness, swelling, tenderness; rarely temporary bruising or numbness",
     prices: [
       { label: "RealSelf — Ultherapy cost by city (NYC average)", url: "https://www.realself.com/nonsurgical/ultherapy/cost", city: "nyc" },
-      { label: "Manhattan practice prices quoted in AOL feature", url: "https://www.aol.com/tried-noninvasive-treatment-snatched-jawline-143500389.html", city: "nyc" },
-      { label: "RealSelf — Ultherapy in Miami", url: "https://www.realself.com/Ultherapy/cost/Florida/Miami", city: "miami" },
+      { label: "Manhattan practice prices quoted in AOL feature", url: "https://www.aol.com/articles/tried-noninvasive-treatment-snatched-jawline-143500389.html", city: "nyc" },
     ],
     evidence: 2,
     evidenceNote: "A systematic review supports modest lifting and tightening, e.g. small brow lifts measured in millimeters.",
@@ -113,8 +112,8 @@ export const RESEARCH: Record<string, Research> = {
     resultsIn: "After 1–2 sessions; best about 3 months after the series",
     sideEffects: "Redness, swelling, bronzing and flaking for several days",
     prices: [
-      { label: "Skinly Aesthetics (NYC) — Fraxel pricing", url: "https://skinlyaesthetics.com/?p=2838", city: "nyc" },
-      { label: "Dr. Debra Jaliman (NYC) — Fraxel review & cost", url: "https://www.dermatologist-nyc.com/blog/fraxel-laser-a-dermatologists-honest-review-47478", city: "nyc" },
+      { label: "Skinly Aesthetics (NYC) — Fraxel pricing", url: "https://skinlyaesthetics.com/fraxel-laser/", city: "nyc" },
+      { label: "Dr. Debra Jaliman (NYC) — Fraxel review & cost", url: "https://www.dermatologist-nyc.com/blog/laser-treatments-blogs/is-fraxel-laser-worth-it-a-dermatologists-honest-review/", city: "nyc" },
       { label: "RealSelf — Fraxel in Miami", url: "https://www.realself.com/Fraxel-Laser/cost/Florida/Miami", city: "miami" },
     ],
     evidence: 2,
@@ -149,7 +148,7 @@ export const RESEARCH: Record<string, Research> = {
     resultsIn: "Gradually over the series",
     sideEffects: "Redness, dryness, pinpoint bleeding for 1–3 days",
     prices: [
-      { label: "Skinly Aesthetics (NYC) — microneedling", url: "https://skinlyaesthetics.com/microneedling-nyc", city: "nyc" },
+      { label: "Skinly Aesthetics (NYC) — microneedling", url: "https://skinlyaesthetics.com/microneedling-nyc/", city: "nyc" },
       { label: "RealSelf — microneedling cost (national)", url: "https://www.realself.com/nonsurgical/microneedling/cost" },
     ],
     evidence: 1,
@@ -207,7 +206,6 @@ export const RESEARCH: Record<string, Research> = {
     sideEffects: "Swelling, bruising, tenderness; rare but serious blocked blood vessel",
     prices: [
       { label: "Skinly Aesthetics (NYC) — lip filler", url: "https://skinlyaesthetics.com/lip-fillers-nyc/", city: "nyc" },
-      { label: "Ethos Spa (Miami) — lip filler guide", url: "https://myethosspa.com/miami-lip-fillers-essential-guide-to-choosing-the-best-provider", city: "miami" },
       { label: "RealSelf — lip filler cost (national)", url: "https://www.realself.com/nonsurgical/lip-filler/cost" },
     ],
     evidence: 3,
@@ -235,7 +233,7 @@ export const RESEARCH: Record<string, Research> = {
     resultsIn: "Right away, improving as collagen builds",
     sideEffects: "Swelling, bruising; rare lumps; cannot be dissolved like hyaluronic acid",
     prices: [
-      { label: "Skinly Aesthetics (NYC) — Radiesse", url: "https://skinlyaesthetics.com/radiesse-nyc", city: "nyc" },
+      { label: "Skinly Aesthetics (NYC) — Radiesse", url: "https://skinlyaesthetics.com/radiesse-nyc/", city: "nyc" },
       { label: "RealSelf — Radiesse cost (national)", url: "https://www.realself.com/nonsurgical/radiesse/cost" },
     ],
     evidence: 2,
@@ -259,7 +257,7 @@ export const RESEARCH: Record<string, Research> = {
     resultsIn: "Right away; settles over a few weeks",
     sideEffects: "Bruising, swelling, dimpling, asymmetry, a thread poking through",
     prices: [
-      { label: "PFRANKMD (NYC) — thread lift", url: "https://pfrankmd.com/procedure/skin-tightening/thread-lift", city: "nyc" },
+      { label: "PFRANKMD (NYC) — thread lift", url: "https://pfrankmd.com/procedure/skin-tightening/thread-lift-nonsurgical-face-lift/", city: "nyc" },
       { label: "RealSelf — thread lift cost (national)", url: "https://www.realself.com/thread-lift/cost" },
     ],
     evidence: 1,
@@ -384,7 +382,7 @@ export const RESEARCH: Record<string, Research> = {
   erbium: {
     resultsIn: "After healing (about 1–2 weeks), improving for months",
     sideEffects: "Redness, swelling and crusting for about a week; risk of pigment changes",
-    prices: [{ label: "Dr. Kassir (NYC) — laser skin resurfacing", url: "https://kassir.squarespace.com/laser-resurfacing", city: "nyc" }],
+    prices: [{ label: "Tribeca Park Dermatology (NYC) — MicroLaser Peel (erbium) price", url: "https://triparkderm.com/treatments/microlaser-peel/", city: "nyc" }],
     evidence: 2,
     evidenceNote: "A systematic review found CO2 somewhat more effective for wrinkles, and erbium gentler with fewer complications.",
     studies: [
@@ -451,7 +449,7 @@ export const RESEARCH: Record<string, Research> = {
     resultsIn: "Gradually over a series of sessions",
     sideEffects: "Generally none; protect the eyes during treatment",
     prices: [
-      { label: "Bespoke Surgical (NYC) — light therapy pricing", url: "https://bespokesurgical.com/aesthetics/heatlite-treatment", city: "nyc" },
+      { label: "Bespoke Surgical (NYC) — light therapy pricing", url: "https://bespokesurgical.com/aesthetics/heatlite-treatment/", city: "nyc" },
       { label: "La Suite (NYC) — service menu", url: "https://lasuiteskincare.com/pages/nyc-service-menu-pricing", city: "nyc" },
     ],
     evidence: 1,

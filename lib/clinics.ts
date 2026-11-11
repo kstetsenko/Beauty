@@ -40,7 +40,7 @@ export function directoryLinks(city: City, area: string, procedureNames: string[
     byProcedure: procedureNames.map((n) => ({ short: n, href: maps(`${n.split(" / ")[0]} ${where}`) })),
     directories: [
       { short: "Board-certified dermatologists (AAD)", href: "https://find-a-derm.aad.org/" },
-      { short: "Board-certified plastic surgeons (ASPS)", href: "https://www.plasticsurgery.org/find-a-surgeon" },
+      { short: "Board-certified plastic surgeons (ASPS)", href: "https://find.plasticsurgery.org/" },
     ],
     license:
       city === "nyc"

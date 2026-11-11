@@ -20,7 +20,7 @@ export const TRENDS: Trend[] = [
     links: [
       { label: "FDA — Public safety notification on exosome products", url: "https://www.fda.gov/vaccines-blood-biologics/safety-availability-biologics/public-safety-notification-exosome-products" },
       { label: "FDA — Consumer alert on stem cells and exosomes", url: "https://www.fda.gov/vaccines-blood-biologics/consumers-biologics/consumer-alert-regenerative-medicine-products-including-stem-cells-and-exosomes" },
-      { label: "Case series — reactions after exosome injections", url: "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12528963/" },
+      { label: "Case series — reactions after exosome injections", url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC12528963/" },
     ],
   },
   {
