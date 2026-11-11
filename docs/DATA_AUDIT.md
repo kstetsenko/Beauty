@@ -25,7 +25,7 @@ re-checked. Nothing in the app should be added without a source of the kind list
 | Thermage FLX | Published | Estimate | 2 | Limited |
 | Morpheus8 | Estimate | Estimate | 2 | Some |
 | CO2 Laser | Estimate | Estimate | 2 | Some |
-| Fraxel | Published | Published | 2 | Some |
+| Fraxel | Published | Estimate | 2 | Some |
 | Halo Laser | Estimate | Estimate | 1 | Limited |
 | Moxi | Estimate | Estimate | 2 | Limited |
 | Clear + Brilliant | Published | Estimate | 2 | Limited |
@@ -69,3 +69,4 @@ re-checked. Nothing in the app should be added without a source of the kind list
 
 ## Link check history
 - 2026-11-11 (first weekly run): 3 dead price pages replaced or removed (Skinly Fraxel → new URL; Ethos Spa Miami lip filler removed → Miami estimate; Kassir erbium → Tribeca Park Dermatology). RealSelf Miami Ultherapy page now redirects to a directory → Miami estimate. Redirected links updated. RealSelf, GoodRx and AEDIT block automated checks (403/429) — verify those manually.
+- 2026-11-11 (second run): earlier dead links confirmed fixed. RealSelf Miami Fraxel page now redirects to a directory → Miami estimate. The check script now uses the current PubMed Central address. NY license lookup (op.nysed.gov) blocks automated checks — verify manually.

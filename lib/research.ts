@@ -114,7 +114,6 @@ export const RESEARCH: Record<string, Research> = {
     prices: [
       { label: "Skinly Aesthetics (NYC) — Fraxel pricing", url: "https://skinlyaesthetics.com/fraxel-laser/", city: "nyc" },
       { label: "Dr. Debra Jaliman (NYC) — Fraxel review & cost", url: "https://www.dermatologist-nyc.com/blog/laser-treatments-blogs/is-fraxel-laser-worth-it-a-dermatologists-honest-review/", city: "nyc" },
-      { label: "RealSelf — Fraxel in Miami", url: "https://www.realself.com/Fraxel-Laser/cost/Florida/Miami", city: "miami" },
     ],
     evidence: 2,
     evidenceNote: "Randomized split-face trials show improvement in acne scars.",

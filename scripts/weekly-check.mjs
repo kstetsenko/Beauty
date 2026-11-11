@@ -16,7 +16,7 @@ const all = lib.map(([, s]) => s).join("\n");
 const urls = new Set();
 for (const m of all.matchAll(/https?:\/\/[^\s"'`)]+/g)) if (!/\$\{|example\.com|\.\.|…/.test(m[0])) urls.add(m[0].replace(/[.,]$/, ""));
 for (const m of all.matchAll(/pm\("(\d+)"\)/g)) urls.add(`https://pubmed.ncbi.nlm.nih.gov/${m[1]}/`);
-for (const m of all.matchAll(/pmc\("(PMC\d+)"\)/g)) urls.add(`https://www.ncbi.nlm.nih.gov/pmc/articles/${m[1]}/`);
+for (const m of all.matchAll(/pmc\("(PMC\d+)"\)/g)) urls.add(`https://pmc.ncbi.nlm.nih.gov/articles/${m[1]}/`);
 
 async function check(url) {
   for (const method of ["HEAD", "GET"]) {
@@ -94,7 +94,7 @@ const broken = linkResults.filter((r) => !r.ok);
 const moved = linkResults.filter((r) => r.ok && r.moved);
 lines.push("", `## Source links (${urls.size} checked)`);
 if (!broken.length) lines.push("All links responded.");
-for (const r of broken) lines.push(`- ❌ ${r.status} — ${r.url}${[401, 403, 429].includes(r.status) ? " (site may block automated checks — open it manually)" : ""}`);
+for (const r of broken) lines.push(`- ❌ ${r.status} — ${r.url}${[401, 403, 429].includes(r.status) || /op\.nysed\.gov/.test(r.url) ? " (site may block automated checks — open it manually)" : ""}`);
 if (moved.length) {
   lines.push("", "Redirected (review whether the content still matches):");
   for (const r of moved) lines.push(`- ↪ ${r.url} → ${r.moved}`);
