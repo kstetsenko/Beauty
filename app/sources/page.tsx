@@ -39,6 +39,26 @@ export default function Sources() {
       </section>
 
       <section>
+        <h2 className="font-semibold mb-1">Notes based on your answers</h2>
+        <p>
+          Age, skin tone, conditions and recent treatments only change what we show when there is an official source or
+          published study behind it — for example FDA age limits for fillers and microneedling devices (22+), the Botox
+          label on repeat dosing, studies on lasers in darker skin, melasma and rosacea, and a 2017 expert consensus on
+          procedures during isotretinoin (Accutane). Each note links to its source. Where no official guidance exists (for
+          example, how long to wait between energy-device sessions), we say so instead of guessing.
+        </p>
+      </section>
+
+      <section>
+        <h2 className="font-semibold mb-1">Safety information</h2>
+        <p>
+          &ldquo;Rare but serious&rdquo; risks and &ldquo;get help right away&rdquo; signs come from FDA labels and safety
+          communications and CDC reports, linked on each procedure page. They are not a complete list — ask your provider
+          for the full risks.
+        </p>
+      </section>
+
+      <section>
         <h2 className="font-semibold mb-1">Pain, results and recovery</h2>
         <p>
           These ratings are general, typical descriptions drawn from published studies and provider information. Your

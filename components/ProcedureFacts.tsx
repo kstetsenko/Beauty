@@ -1,6 +1,7 @@
 import { CAUTIONS } from "@/lib/cautions";
 import { downtimeShort, usd } from "@/lib/match";
-import { APPROACHES, PAIN_LABELS, RESULT_LABELS } from "@/lib/procedures";
+import { APPROACHES, ONSET_LABELS, PAIN_LABELS, RESULT_LABELS } from "@/lib/procedures";
+import { SAFETY } from "@/lib/safety";
 import { CONSULT_QUESTIONS, CHECKED, EVIDENCE_LABELS, RESEARCH, priceChecked } from "@/lib/research";
 import type { City, Procedure } from "@/lib/types";
 
@@ -16,8 +17,9 @@ export function Dots({ value, max, label }: { value: number; max: number; label:
 
 export function ApproachTag({ p }: { p: Procedure }) {
   return (
-    <span className="inline-block text-[11px] font-medium rounded-full bg-blush px-2.5 py-1 mb-3">
-      {APPROACHES[p.approach].short}
+    <span className="flex flex-wrap gap-1.5 mb-3">
+      <span className="text-[11px] font-medium rounded-full bg-blush px-2.5 py-1">{APPROACHES[p.approach].label}</span>
+      <span className="text-[11px] rounded-full border border-line px-2.5 py-1">Results: {ONSET_LABELS[p.onset].toLowerCase()}</span>
     </span>
   );
 }
@@ -56,9 +58,17 @@ export function MoreFacts({ p, city }: { p: Procedure; city: City }) {
   const r = RESEARCH[p.id];
   return (
     <dl className="space-y-2.5 text-sm">
-      <div><dt className="text-[11px] text-muted">How it works</dt><dd>{APPROACHES[p.approach].label}</dd></div>
+      <div><dt className="text-[11px] text-muted">How it works</dt><dd>{APPROACHES[p.approach].label} — {APPROACHES[p.approach].hint.charAt(0).toLowerCase() + APPROACHES[p.approach].hint.slice(1)}.</dd></div>
       <div><dt className="text-[11px] text-muted">When you&apos;ll see results</dt><dd>{r.resultsIn}</dd></div>
       <div><dt className="text-[11px] text-muted">Common side effects</dt><dd>{r.sideEffects}</dd></div>
+      {SAFETY[p.id] && (
+        <div>
+          <dt className="text-[11px] text-muted">Rare but serious</dt>
+          <dd>{SAFETY[p.id].serious}</dd>
+          {SAFETY[p.id].getHelpIf && <dd className="mt-1"><strong className="font-medium">Get medical help right away if:</strong> {SAFETY[p.id].getHelpIf}</dd>}
+        </div>
+      )}
+      {p.minAge && <div><dt className="text-[11px] text-muted">Age</dt><dd>FDA-authorized for adults {p.minAge} and older.</dd></div>}
       {r.unitPrice && <div><dt className="text-[11px] text-muted">Price per unit</dt><dd>{r.unitPrice[city]}</dd></div>}
       <div>
         <dt className="text-[11px] text-muted mb-1">Research behind it</dt>
@@ -89,6 +99,18 @@ export function ResearchSection({ p, city }: { p: Procedure; city: City }) {
   const prices = r.prices.filter((x) => (!x.city || x.city === city) && !seen.has(x.url) && seen.add(x.url));
   return (
     <div className="space-y-4">
+      {SAFETY[p.id] && (
+        <section className="bg-white rounded-3xl border border-line p-6">
+          <h2 className="font-semibold mb-3">Learn more from official sources</h2>
+          <ul className="space-y-2">
+            {SAFETY[p.id].links.map((l) => (
+              <li key={l.url}>
+                <a href={l.url} target="_blank" rel="noopener noreferrer" className="text-sm underline decoration-line underline-offset-2 hover:decoration-ink">{l.label} ↗</a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
       <section className="bg-white rounded-3xl border border-line p-6">
         <h2 className="font-semibold mb-1">What the research says</h2>
         <p className="flex items-center gap-2 text-sm mb-1"><Dots value={r.evidence} max={3} label="Evidence" /> {EVIDENCE_LABELS[r.evidence]} evidence</p>

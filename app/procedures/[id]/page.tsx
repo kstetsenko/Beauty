@@ -41,8 +41,9 @@ export default async function ProcedurePage({ params, searchParams }: Props) {
         <MoreFacts p={p} city={city} />
       </div>
       <a href={maps.href} target="_blank" rel="noopener noreferrer" className="btn-main block text-center mt-4">
-        Find {p.name} in {CITY_LABELS[city]} ↗
+        Find {p.name} providers in {CITY_LABELS[city]} ↗
       </a>
+      <a href={`/compare?ids=${p.id}&city=${city}`} className="btn-soft block text-center mt-3 text-sm">Compare with another treatment</a>
       <div className="mt-4"><ResearchSection p={p} city={city} /></div>
       <p className="text-[11px] text-muted text-center mt-4">
         *Price ranges are not quotes. Educational information only — not medical advice. Brand names belong to their owners;

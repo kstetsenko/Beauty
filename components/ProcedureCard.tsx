@@ -3,7 +3,7 @@ import { useRef, useState } from "react";
 import { CAUTIONS } from "@/lib/cautions";
 import type { Match } from "@/lib/match";
 import { ApproachTag, KeyFacts, MoreFacts } from "./ProcedureFacts";
-import type { City } from "@/lib/types";
+import type { Budget, City } from "@/lib/types";
 
 /** A single procedure card. Swipe right / tap ♡ to save, swipe left / tap Skip to pass. */
 export function ProcedureCard({
@@ -14,6 +14,7 @@ export function ProcedureCard({
 }: {
   match: Match;
   city: City;
+  budget?: Budget;
   onSave: () => void;
   onSkip: () => void;
 }) {
@@ -54,9 +55,27 @@ export function ProcedureCard({
 
         {match.flagged.length > 0 && (
           <p className="text-sm mb-3">
-            <span className="text-rose" aria-hidden="true">●</span> Ask your doctor first — you mentioned{" "}
+            <span className="text-rose" aria-hidden="true">●</span> Ask your doctor first — not usually advised with{" "}
             {match.flagged.map((c) => CAUTIONS[c].short.toLowerCase()).join(", ")}.
           </p>
+        )}
+
+        {match.notes.length > 0 && (
+          <div className="rounded-2xl border border-line p-3 mb-3">
+            <p className="text-[11px] text-muted mb-1.5">Based on your answers</p>
+            <ul className="space-y-2">
+              {match.notes.map((n) => (
+                <li key={n.text} className="text-sm leading-snug">
+                  {n.text}
+                  {n.source && (
+                    <a href={n.source.url} target="_blank" rel="noopener noreferrer" className="block text-[11px] text-muted underline mt-0.5">
+                      {n.source.label} ↗
+                    </a>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
         )}
 
         <button type="button" onClick={() => setOpen(!open)} aria-expanded={open} className="text-sm underline text-muted">

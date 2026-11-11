@@ -31,7 +31,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <header className="max-w-md w-full mx-auto px-5 pt-5">
           <div className="flex items-center justify-between gap-3">
             <Link href="/" className="text-sm font-semibold tracking-tight">Aesthetic Guide <span className="text-muted font-normal">NYC & Miami</span></Link>
-            <Link href="/procedures" className="text-xs text-muted hover:text-ink">All procedures</Link>
+            <span className="flex gap-3 text-xs text-muted">
+              <Link href="/procedures" className="hover:text-ink">All procedures</Link>
+              <Link href="/compare" className="hover:text-ink">Compare</Link>
+            </span>
           </div>
         </header>
         <main className="flex-1 w-full max-w-md mx-auto px-5 py-6 flex flex-col">{children}</main>

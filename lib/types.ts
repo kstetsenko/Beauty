@@ -1,7 +1,15 @@
 export type City = "nyc" | "miami";
-export type Goal = "lift" | "lines" | "texture" | "glow" | "volume" | "pigment" | "acne" | "contour" | "body" | "hair";
-export type Approach = "collagen" | "injectable" | "surface" | "body";
-export type Prefer = "natural" | "instant" | "any";
+export type Goal = "texture" | "lines" | "lift" | "volume" | "pigment" | "redness" | "acne" | "glow" | "contour" | "hair";
+/** How the treatment works (mechanism), used to group procedures. */
+export type Approach = "energy" | "laser" | "biostim" | "ha" | "toxin" | "fat" | "skin" | "threads";
+/** When results usually show: 1 right away, 2 within days to weeks, 3 gradually over months. */
+export type Onset = 1 | 2 | 3;
+export type AgeBand = "18-21" | "22-34" | "35-49" | "50-64" | "65+";
+export type SkinTone = "light" | "medium" | "deep";
+/** Health / skin conditions that change advice (beyond hard contraindications). */
+export type Condition = "melasma" | "rosacea" | "cold-sores";
+/** Treatments had in the last 6 months. */
+export type Recent = "botox" | "filler" | "energy" | "laser" | "peel";
 export type Budget = 1 | 2 | 3;
 export type Downtime = "none" | "short" | "any";
 export type Caution = "pregnancy" | "active-skin" | "isotretinoin" | "keloid" | "autoimmune" | "blood-thinners";
@@ -18,8 +26,10 @@ export interface QuizAnswers {
   downtime: Downtime;
   /** Self-reported cautions. Kept in the browser only, used to flag cards. */
   cautions: Caution[];
-  /** Natural (own collagen) vs instant (product) results. Ranks, never filters. */
-  prefer?: Prefer;
+  age?: AgeBand;
+  tone?: SkinTone;
+  conditions?: Condition[];
+  recent?: Recent[];
 }
 
 export interface Procedure {
@@ -29,6 +39,9 @@ export interface Procedure {
   /** Plain-English "what it is" line. */
   what: string;
   approach: Approach;
+  onset: Onset;
+  /** Minimum age from FDA authorizations (e.g. fillers and microneedling devices: 22+). */
+  minAge?: number;
   summary: string;
   goals: Goal[];
   /** Budget tier, derived from the NYC low price. */
