@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { CITY_LABELS, CLINICS, NEIGHBORHOODS, directoryLinks } from "@/lib/clinics";
+import { CITY_LABELS, CLINICS, NEIGHBORHOODS, directoryLinks, mapsTerm } from "@/lib/clinics";
 import { downtimeShort, usd, type Hidden, type Match } from "@/lib/match";
 import { GOAL_LABELS } from "@/lib/procedures";
 import type { Budget, City, Goal } from "@/lib/types";
@@ -29,8 +29,8 @@ export function Summary({
 }) {
   const [area, setArea] = useState("");
   const [showEmail, setShowEmail] = useState(false);
-  const where = area.trim() || CITY_LABELS[city];
-  const links = directoryLinks(city, area, saved.map((m) => m.procedure.name));
+  const where = area.trim() || "you";
+  const links = directoryLinks(city, area, saved.map((m) => mapsTerm(m.procedure)));
   const ids = saved.map((m) => m.procedure.id);
   // Compare only like with like: saved treatments that share one of the user's goals.
   const compareGroups = goals
@@ -53,11 +53,11 @@ export function Summary({
       ) : (
         <>
           <label className="block">
-            <span className="block text-sm font-medium mb-2">Where should we look for providers?</span>
+            <span className="block text-sm font-medium mb-2">Clinics near you — or pick a neighborhood</span>
             <input
               value={area}
               onChange={(e) => setArea(e.target.value.slice(0, 60))}
-              placeholder={city === "nyc" ? "ZIP or neighborhood, e.g. SoHo" : "ZIP or neighborhood, e.g. Brickell"}
+              placeholder="Near me (or type a ZIP / neighborhood)"
               autoComplete="off"
               className="w-full rounded-full border border-line bg-white px-5 py-3 text-sm focus:outline-none focus:border-ink"
             />
@@ -84,7 +84,7 @@ export function Summary({
                   {budget && p.tier <= budget && <span>✓ Fits your {TIER[budget]} budget</span>}
                 </div>
                 <a href={links.byProcedure[i].href} target="_blank" rel="noopener noreferrer" className="btn-main block text-center mt-4 text-sm">
-                  Find {p.name} providers near {where} ↗
+                  {p.approach === "topical" ? `Find a dermatologist near ${where}` : `Find ${p.name} near ${where}`} ↗
                 </a>
                 <p className="text-[11px] text-muted text-center mt-1.5">Opens Google Maps with public ratings and reviews</p>
                 <a href={`/procedures/${p.id}?city=${city}`} className="block text-center text-sm underline mt-2">

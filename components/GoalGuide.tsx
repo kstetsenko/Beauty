@@ -98,7 +98,7 @@ function GoalGuideFor({ goal, profile }: { goal: Goal; profile: import("@/lib/pr
         </Disclosure>
       </div>
 
-      <a href="/" className="btn-main block text-center">Swipe through my matches</a>
+      <a href="/" className="btn-main block text-center">See my ranked matches</a>
       <p className="text-[11px] text-muted text-center">
         Educational information only — not medical advice. Prices are typical ranges, not quotes. <a href="/sources" className="underline">How we research</a>
       </p>

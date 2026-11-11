@@ -37,34 +37,32 @@ re-checked. Nothing in the app should be added without a source of the kind list
 | Cheek & Jaw Filler | Published | Estimate | 2 | Strong |
 | Radiesse | Published | Estimate | 2 | Some |
 | Skinvive | Estimate | Estimate | 1 | Limited |
-| Kybella | Published | Published | 2 | Strong |
 | PDO Thread Lift | Published | Estimate | 2 | Limited |
 | HydraFacial | Published | Estimate | 0 | Limited |
 | Dermaplaning | Published | Published | 1 | Limited |
 | Chemical Peel | Estimate | Published | 2 | Some |
 | IPL / BBL Photofacial | Estimate | Estimate | 2 | Some |
 | Pico Laser | Estimate | Estimate | 2 | Some |
-| CoolSculpting | Published | Published | 2 | Some |
-| Emsculpt Neo | Published | Estimate | 2 | Limited |
-| Laser Hair Removal | Published | Published | 2 | Strong |
 | Prescription Retinoid (Tretinoin) | Estimate | Estimate | 2 | Strong |
 | Masseter Botox (Jaw Slimming) | Estimate | Published | 2 | Some |
 | Under-Eye Filler | Published | Estimate | 2 | Strong |
 | Pulsed Dye Laser (Vbeam) | Estimate | Estimate | 2 | Some |
-| Sclerotherapy | Published | Published | 2 | Strong |
 | Microdermabrasion | Estimate | Published | 2 | Limited |
 | Erbium Laser Resurfacing | Published | Estimate | 2 | Some |
 | Non-Surgical Nose Job | Estimate | Estimate | 1 | Limited |
-| miraDry | Estimate | Estimate | 2 | Some |
-| Laser Tattoo Removal | Published | Estimate | 2 | Some |
 | Emface | Estimate | Estimate | 1 | Limited |
 | Laser Genesis | Estimate | Estimate | 1 | Limited |
 | Tixel | Published | Estimate | 1 | Limited |
 | LED Light Therapy | Published | Estimate | 2 | Limited |
+| Prescription Redness Cream | Estimate | Estimate | 2 | Strong |
+| Prescription Melasma Cream | Estimate | Estimate | 2 | Some |
+| Subcision | Estimate | Estimate | 2 | Some |
+| Azelaic Acid | Estimate | Estimate | 3 | Some |
 
 ## Known gaps
 - Several Miami prices (and some NYC) are estimates because clinics do not publish them.
 - HydraFacial and dermaplaning have no clinical trials; the app says so.
-- Not included because no reliable human evidence or primary source was found: Opus Plasma, Avéli, polynucleotides
-  (injectable), Aerolase for acne is pending a "breakouts" goal.
+- Scope is face beauty treatments only: hair removal, tattoo removal, fat reduction, veins and sweating were removed.
+- Not included because no reliable human evidence or primary source was found: Opus Plasma, polynucleotides (injectable).
+  Aerolase (evidence is for active acne) would need a "breakouts" goal.
 - Pain/results ratings are editorial and should be reviewed by a board-certified dermatologist.

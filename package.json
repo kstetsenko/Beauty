@@ -8,7 +8,8 @@
     "start": "next start",
     "typecheck": "tsc --noEmit",
     "prototype": "node prototype/build.mjs",
-    "data-check": "node scripts/weekly-check.mjs --no-issue"
+    "data-check": "node scripts/weekly-check.mjs --no-issue",
+    "check": "esbuild scripts/check-matrix.ts --bundle --platform=node --outfile=.check/check.js --log-level=warning --alias:@=. && node .check/check.js"
   },
   "dependencies": {
     "next": "16.4.6",

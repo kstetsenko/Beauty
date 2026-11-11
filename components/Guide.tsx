@@ -5,7 +5,7 @@ import { clearProfile, personalize, readProfileOnce, saveProfile, type Flag } fr
 import { GOAL_LABELS, PROCEDURES } from "@/lib/procedures";
 import type { AgeBand, Budget, City, Goal, Recent, SkinTone } from "@/lib/types";
 import { Chips } from "./Chips";
-import { ProcedureCard } from "./ProcedureCard";
+import { ResultsList } from "./ResultsList";
 import { Question } from "./Question";
 import { Summary } from "./Summary";
 
@@ -56,8 +56,6 @@ export function Guide() {
   const [flags, setFlags] = useState<Flag[]>([]);
   const [recent, setRecent] = useState<Recent[]>([]);
   const [budget, setBudget] = useState<Budget>();
-  const [onsetFilter, setOnsetFilter] = useState<"all" | "now" | "gradual">("all");
-  const [index, setIndex] = useState(0);
   const [saved, setSaved] = useState<string[]>([]);
 
   useEffect(() => {
@@ -80,26 +78,23 @@ export function Guide() {
     return personalize({ city, goals, age, tone, flags, recent, budget }, goals);
   }, [city, goals, budget, flags, age, tone, recent]);
   const all = result.shown;
-  const matches = all.filter(
-    (m) => onsetFilter === "all" || (onsetFilter === "now" ? m.procedure.onset === 1 : m.procedure.onset === 3),
-  );
+  const matches = all;
 
   const startBrowsing = () => {
-    setIndex(0);
     setSaved([]);
-    setOnsetFilter("all");
     go("browse");
   };
-  const next = (save: boolean) => {
-    const id = matches[index].procedure.id;
-    if (save) setSaved((s) => (s.includes(id) ? s : [...s, id]));
-    if (index + 1 >= matches.length) go("done");
-    else setIndex(index + 1);
+  const toggleSave = (id: string) => setSaved((s) => (s.includes(id) ? s.filter((x) => x !== id) : [...s, id]));
+  const finish = () => {
+    // Nothing saved: take the top three matches to the clinic step.
+    if (!saved.length) setSaved(matches.slice(0, 3).map((m) => m.procedure.id));
+    go("done");
   };
+
 
   const quizPos = QUIZ.indexOf(step);
   const progress =
-    quizPos >= 0 ? (quizPos + 1) / (QUIZ.length + 1) : step === "browse" && matches.length ? 0.86 + (0.14 * index) / matches.length : 1;
+    quizPos >= 0 ? (quizPos + 1) / (QUIZ.length + 1) : 1;
 
   return (
     <div className="flex-1 flex flex-col">
@@ -230,51 +225,20 @@ export function Guide() {
       )}
 
       {step === "browse" && city && (
-        <>
-          <div className="flex gap-2 justify-center mb-3" role="radiogroup" aria-label="When results show">
-            {([["all", "All"], ["now", "Results right away"], ["gradual", "Gradual"]] as const).map(([v, l]) => (
-              <button
-                key={v}
-                type="button"
-                role="radio"
-                aria-checked={onsetFilter === v}
-                onClick={() => {
-                  setOnsetFilter(v);
-                  setIndex(0);
-                }}
-                className={"rounded-full px-3 py-1 text-xs border " + (onsetFilter === v ? "bg-ink text-white border-ink" : "bg-white border-line")}
-              >
-                {l}
-              </button>
-            ))}
-          </div>
-          {matches.length === 0 ? (
-            <section className="animate-in text-center">
-              <h1 className="text-2xl font-semibold mb-2">No matches</h1>
-              <p className="text-sm text-muted mb-6">
-                Try another filter, a bigger budget, or allowing a little downtime.
-                {result.hidden.length > 0 && ` ${result.hidden.length} treatment${result.hidden.length > 1 ? "s were" : " was"} hidden because of your safety answers.`}
-              </p>
-              <button type="button" onClick={() => setHistory(["city", "goals", "about", "safety", "recent", "budget"])} className="btn-main">
-                Change answers
-              </button>
-            </section>
-          ) : (
-            <>
-              <p className="text-xs text-muted mb-3 text-center">
-                {index + 1} of {matches.length} · swipe or tap
-              </p>
-              <ProcedureCard
-                key={matches[index].procedure.id}
-                match={matches[index]}
-                city={city}
-                budget={budget}
-                onSave={() => next(true)}
-                onSkip={() => next(false)}
-              />
-            </>
-          )}
-        </>
+        matches.length === 0 ? (
+          <section className="animate-in text-center">
+            <h1 className="text-2xl font-semibold mb-2">No matches</h1>
+            <p className="text-sm text-muted mb-6">
+              Try a bigger budget or allowing a little downtime.
+              {result.hidden.length > 0 && ` ${result.hidden.length} treatment${result.hidden.length > 1 ? "s were" : " was"} hidden because of your safety answers.`}
+            </p>
+            <button type="button" onClick={() => setHistory(["city", "goals", "about", "safety", "recent", "budget"])} className="btn-main">
+              Change answers
+            </button>
+          </section>
+        ) : (
+          <ResultsList matches={matches} city={city} saved={saved} onToggle={toggleSave} onDone={finish} hiddenCount={result.hidden.length} />
+        )
       )}
 
       {step === "done" && city && (
@@ -284,10 +248,7 @@ export function Guide() {
           goals={goals}
           hidden={result.hidden}
           saved={all.filter((m) => saved.includes(m.procedure.id))}
-          onBrowseAgain={() => {
-            setIndex(0);
-            setHistory((h) => h.slice(0, -1));
-          }}
+          onBrowseAgain={() => setHistory((h) => h.slice(0, -1))}
           onRestart={() => {
             clearProfile();
             setHistory(["city"]);

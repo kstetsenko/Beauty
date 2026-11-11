@@ -1,4 +1,4 @@
-import { CITY_LABELS, NEIGHBORHOODS, directoryLinks } from "@/lib/clinics";
+import { CITY_LABELS, NEIGHBORHOODS, directoryLinks, mapsTerm } from "@/lib/clinics";
 import { GOAL_LABELS } from "@/lib/procedures";
 import type { City, Procedure } from "@/lib/types";
 import { ApproachTag, DetailSections, KeyFacts } from "./ProcedureFacts";
@@ -6,7 +6,7 @@ import { ForYou } from "./ForYou";
 
 export function ProcedureDetail({ p, city }: { p: Procedure; city: City }) {
   const other: City = city === "nyc" ? "miami" : "nyc";
-  const maps = directoryLinks(city, "", [p.name]).byProcedure[0];
+  const maps = directoryLinks(city, "", [mapsTerm(p)]).byProcedure[0];
 
   return (
     <article className="animate-in">
@@ -36,12 +36,12 @@ export function ProcedureDetail({ p, city }: { p: Procedure; city: City }) {
         </div>
       </section>
       <a href={maps.href} target="_blank" rel="noopener noreferrer" className="btn-main block text-center mt-5">
-        Find {p.name} providers in {CITY_LABELS[city]} ↗
+        {p.approach === "topical" ? "Find a dermatologist near me" : `Find ${p.name} near me`} ↗
       </a>
-      <p className="text-[11px] text-muted text-center mt-1.5">Opens Google Maps with public ratings and reviews. Or pick a neighborhood:</p>
+      <p className="text-[11px] text-muted text-center mt-1.5">Opens Google Maps near your location, with public ratings and reviews. Or pick a {CITY_LABELS[city]} neighborhood:</p>
       <div className="flex gap-2 overflow-x-auto -mx-5 px-5 py-1 [scrollbar-width:none]">
         {NEIGHBORHOODS[city].map((n) => (
-          <a key={n} href={directoryLinks(city, n, [p.name]).byProcedure[0].href} target="_blank" rel="noopener noreferrer"
+          <a key={n} href={directoryLinks(city, n, [mapsTerm(p)]).byProcedure[0].href} target="_blank" rel="noopener noreferrer"
             className="shrink-0 rounded-full border border-line bg-white px-3 py-1.5 text-xs hover:border-ink">
             {n} ↗
           </a>

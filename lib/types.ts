@@ -1,7 +1,7 @@
 export type City = "nyc" | "miami";
-export type Goal = "texture" | "lines" | "lift" | "volume" | "pigment" | "redness" | "acne" | "glow" | "contour" | "hair" | "veins" | "sweat" | "tattoo";
+export type Goal = "texture" | "lines" | "lift" | "volume" | "pigment" | "redness" | "acne" | "glow" | "contour";
 /** How the treatment works (mechanism), used to group procedures. */
-export type Approach = "topical" | "energy" | "laser" | "biostim" | "ha" | "toxin" | "fat" | "skin" | "threads" | "vein";
+export type Approach = "topical" | "energy" | "laser" | "biostim" | "ha" | "toxin" | "skin" | "threads";
 /** When results usually show: 1 right away, 2 within days to weeks, 3 gradually over months. */
 export type Onset = 1 | 2 | 3;
 export type AgeBand = "18-21" | "22-34" | "35-49" | "50-64" | "65+";
@@ -42,6 +42,8 @@ export interface Procedure {
   aka?: string[];
   approach: Approach;
   onset: Onset;
+  /** Works mainly by stimulating the body's own collagen (per the cited studies / mechanism). */
+  collagen?: boolean;
   /** Minimum age from FDA authorizations (e.g. fillers and microneedling devices: 22+). */
   minAge?: number;
   summary: string;

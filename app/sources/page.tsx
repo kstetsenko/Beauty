@@ -80,7 +80,7 @@ export default function Sources() {
         <p>
           This guide is for education only and is not medical advice, diagnosis or treatment. It does not endorse any
           clinic, product or provider, and we receive no payment from those listed. Brand names (such as Botox, Sofwave or
-          CoolSculpting) are trademarks of their owners and are used only to identify treatments. Always consult a
+          Clear + Brilliant) are trademarks of their owners and are used only to identify treatments. Always consult a
           board-certified dermatologist or plastic surgeon. In an emergency, call 911.
         </p>
       </section>

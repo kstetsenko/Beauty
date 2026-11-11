@@ -8,3 +8,4 @@ next-env.d.ts
 .vercel
 prototype/dist/
 data-check-report.md
+.check/

@@ -14,8 +14,8 @@ const pm = (id: string) => `https://pubmed.ncbi.nlm.nih.gov/${id}/`;
 const pmc = (id: string) => `https://www.ncbi.nlm.nih.gov/pmc/articles/${id}/`;
 
 const RESURFACING = new Set(["co2", "erbium", "fraxel", "halo", "moxi", "clear-brilliant", "tixel", "pico", "peel"]);
-const LIGHT = new Set(["co2", "erbium", "fraxel", "halo", "moxi", "clear-brilliant", "laser-genesis", "pico", "ipl", "pdl", "laser-hair", "tattoo"]);
-const ENERGY = new Set(["sofwave", "ultherapy", "thermage", "morpheus8", "emface"]);
+const LIGHT = new Set(["co2", "erbium", "fraxel", "halo", "moxi", "clear-brilliant", "laser-genesis", "pico", "ipl", "pdl"]);
+const ENERGY = new Set(["sofwave", "ultherapy", "thermage", "morpheus8", "emface", "tixel"]);
 
 export function notesFor(p: Procedure, a: QuizAnswers): Note[] {
   const n: Note[] = [];
@@ -24,23 +24,29 @@ export function notesFor(p: Procedure, a: QuizAnswers): Note[] {
   // Skin tone
   if (a.tone === "deep" && id === "ipl")
     n.push({ text: "IPL is generally advised against for deep brown or Black skin because of burn and dark-mark risk.", source: { label: "Review: PIH in skin of color", url: pmc("PMC11514325") } });
-  else if (a.tone === "deep" && id === "laser-hair")
-    n.push({ text: "For deeper skin tones, studies favor the long-pulsed Nd:YAG (1064 nm) laser. Ask which laser they use.", source: { label: "Study: Nd:YAG in skin types IV–VI", url: pm("21519944") } });
   else if (a.tone !== "light" && a.tone && LIGHT.has(id))
     n.push({ text: "Medium and deeper skin tones have a higher risk of dark marks after laser. Choose a provider experienced with your skin tone; lower settings are often used.", source: { label: "Review: lasers in skin of color", url: pm("36781686") } });
 
   // Conditions
-  if (a.conditions?.includes("melasma") && LIGHT.has(id) && !["laser-hair", "tattoo", "pdl", "laser-genesis"].includes(id))
+  if (a.conditions?.includes("melasma") && LIGHT.has(id) && !["pdl", "laser-genesis"].includes(id))
     n.push({ text: "With melasma, laser and light results are often temporary and can rebound darker. Topical treatment and sun protection usually come first.", source: { label: "Meta-analysis: lasers for melasma", url: pmc("PMC13128289") } });
   if (a.conditions?.includes("melasma") && id === "peel")
     n.push({ text: "Peels have evidence for melasma, but it often returns without maintenance.", source: { label: "Meta-analysis: peels for melasma", url: pm("32947652") } });
+  if (a.conditions?.includes("melasma") && id === "melasma-cream")
+    n.push({ text: "For melasma, dermatologists usually start with a prescription cream and strict sun protection.", source: { label: "AAD — Melasma treatment", url: "https://www.aad.org/public/diseases/a-z/melasma-treatment" } });
+  if (a.cautions.includes("pregnancy") && id === "azelaic")
+    n.push({ text: "Reviews list azelaic acid among the lower-risk options during pregnancy. Confirm with your obstetric provider.", source: { label: "Review: skin treatment in pregnancy", url: pmc("PMC9823189") } });
+  if (a.conditions?.includes("melasma") && id === "azelaic")
+    n.push({ text: "An alternative to hydroquinone for melasma, with fewer restrictions.", source: { label: "Meta-analysis: azelaic acid vs hydroquinone", url: pmc("PMC10339666") } });
+  if (a.conditions?.includes("rosacea") && id === "rx-redness")
+    n.push({ text: "Made for persistent rosacea redness; studies show improvement from the first day.", source: { label: "Pooled phase 3 trials", url: pm("30500142") } });
   if (a.conditions?.includes("rosacea") && id === "ipl")
     n.push({ text: "IPL and pulsed-dye laser both reduce rosacea redness in studies.", source: { label: "Meta-analysis: IPL & PDL for rosacea", url: pm("39240125") } });
   if (a.conditions?.includes("cold-sores") && RESURFACING.has(id))
     n.push({ text: "If you get cold sores, antiviral medicine before resurfacing is standard — mention it at your consult.", source: { label: "StatPearls (NIH): laser complications", url: "https://www.ncbi.nlm.nih.gov/sites/books/NBK532248/" } });
 
   // Accutane (2017 consensus)
-  if (a.cautions.includes("isotretinoin") && ["peel", "laser-hair", "fraxel", "halo", "moxi", "clear-brilliant"].includes(id))
+  if (a.cautions.includes("isotretinoin") && ["peel", "fraxel", "halo", "moxi", "clear-brilliant"].includes(id))
     n.push({ text: "An expert consensus found no evidence to delay this while on isotretinoin (Accutane). Still tell your provider.", source: { label: "JAMA Dermatology consensus (2017)", url: pm("28658462") } });
 
   // Recent treatments

@@ -42,7 +42,6 @@ export const SAFETY: Record<string, Safety> = {
   "under-eye": FILLER,
   "nose-filler": FILLER,
   erbium: LASER,
-  tattoo: LASER,
   pdl: LASER,
   botox: {
     serious: "The FDA label carries a boxed warning: the effect can spread beyond the injection site.",
@@ -53,19 +52,6 @@ export const SAFETY: Record<string, Safety> = {
     serious: "The FDA label carries a boxed warning: the effect can spread beyond the injection site.",
     getHelpIf: "Trouble swallowing, speaking or breathing, general muscle weakness, double vision or drooping eyelids — hours to weeks after injection.",
     links: [{ label: "FDA label — Botox Cosmetic (prescribing information)", url: "https://www.accessdata.fda.gov/drugsatfda_docs/label/2018/103000s5306lbl.pdf" }],
-  },
-  kybella: {
-    serious: "In trials, about 4% had a nerve injury causing an uneven smile and about 2% had trouble swallowing; these resolved.",
-    getHelpIf: "Trouble swallowing, or an uneven smile or facial weakness.",
-    links: [{ label: "FDA label — Kybella (prescribing information)", url: "https://www.accessdata.fda.gov/drugsatfda_docs/label/2022/206333s005lbl.pdf" }],
-  },
-  coolsculpting: {
-    serious: "Rarely the treated area grows larger 2–5 months later (paradoxical adipose hyperplasia) and may need surgery. Freeze burns and nerve damage are also possible.",
-    links: [FDA_BODY],
-  },
-  emsculpt: {
-    serious: "The FDA notes any body contouring device can cause complications.",
-    links: [FDA_BODY],
   },
   morpheus8: {
     serious: "In October 2025 the FDA warned of reports of burns, scarring, fat loss, disfigurement and nerve damage after RF microneedling.",
@@ -96,5 +82,5 @@ export const SAFETY: Record<string, Safety> = {
   "laser-genesis": LASER,
   pico: LASER,
   ipl: LASER,
-  "laser-hair": LASER,
+
 };

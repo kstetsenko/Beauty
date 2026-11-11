@@ -1,4 +1,4 @@
-import type { City, Clinic } from "./types";
+import type { City, Clinic, Procedure } from "./types";
 
 /**
  * Vetted clinic listings. This list ships EMPTY on purpose: add only clinics
@@ -33,10 +33,11 @@ export const CITY_LABELS: Record<City, string> = { nyc: "New York City", miami: 
 
 /** Where to look for a qualified provider. Users verify credentials themselves. */
 export function directoryLinks(city: City, area: string, procedureNames: string[] = []) {
-  const near = area.trim() ? `${area.trim()} ${city === "nyc" ? "New York" : "Miami"}` : city === "nyc" ? "New York, NY" : "Miami, FL";
+  // No neighborhood chosen: "near me" lets Google Maps use the person's own location.
+  const where = area.trim() ? `near ${area.trim()}, ${city === "nyc" ? "New York, NY" : "Miami, FL"}` : "near me";
   const maps = (q: string) => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`;
   return {
-    byProcedure: procedureNames.map((n) => ({ short: n, href: maps(`${n} near ${near}`) })),
+    byProcedure: procedureNames.map((n) => ({ short: n, href: maps(`${n.split(" / ")[0]} ${where}`) })),
     directories: [
       { short: "Board-certified dermatologists (AAD)", href: "https://find-a-derm.aad.org/" },
       { short: "Board-certified plastic surgeons (ASPS)", href: "https://www.plasticsurgery.org/find-a-surgeon" },
@@ -46,4 +47,9 @@ export function directoryLinks(city: City, area: string, procedureNames: string[
         ? { short: "Check a provider's NY license", href: "https://www.op.nysed.gov/verification-search" }
         : { short: "Check a provider's Florida license", href: "https://mqa-internet.doh.state.fl.us/MQASearchServices/HealthCareProviders" },
   };
+}
+
+/** What to search for on the map: prescription creams are prescribed by a dermatologist, not a "provider of" the cream. */
+export function mapsTerm(p: Procedure) {
+  return p.approach === "topical" ? "dermatologist" : p.name.split(" / ")[0];
 }

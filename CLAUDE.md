@@ -12,7 +12,8 @@ Read `README.md` for structure and commands. This repo is unrelated to any other
 - Every list/compare page must use the person's profile (`ProfileGate` + `personalize`). Unsafe treatments are hidden
   with a visible reason, never silently.
 - Compare only treatments for the same goal that fit the person.
-- No celebrity or influencer content without a legal review and first-person, primary sources.
+- Scope: face beauty treatments only (no hair/tattoo removal, body or fat treatments, surgery).
+- Skip anything that would need a lawyer (e.g. celebrity or influencer content).
 
 ## Workflow
 1. Edit data in `lib/` (see README "Editing data") or UI in `components/`.

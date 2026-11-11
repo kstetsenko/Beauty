@@ -23,28 +23,18 @@ const AAD = {
   acneScars: { label: "AAD — Acne scars: consultation and treatment", url: "https://www.aad.org/public/diseases/acne/derm-treat/scars/treatment" },
   rosaceaLasers: { label: "AAD — Lasers and lights for rosacea", url: "https://www.aad.org/public/diseases/rosacea/treatment/lasers-lights" },
   lasersTreat: { label: "AAD — Skin conditions lasers can treat", url: "https://www.aad.org/public/diseases/a-z/skin-conditions-lasers-treat" },
-  hairFaq: { label: "AAD — Laser hair removal: FAQs", url: "https://www.aad.org/public/cosmetic/hair-removal/laser-hair-removal-faqs" },
-  hairPrep: { label: "AAD — Laser hair removal: preparation", url: "https://www.aad.org/public/cosmetic/hair-removal/laser-hair-removal-preparation" },
   needling: { label: "AAD — Microneedling can fade scars and uneven tone", url: "https://www.aad.org/public/cosmetic/scars-stretch-marks/microneedling-fade-scars" },
   prp: { label: "AAD — Is PRP the secret to younger-looking skin?", url: "https://www.aad.org/public/cosmetic/younger-looking/platelet-rich-plasma-secret-to-younger-skin" },
   peelsOverview: { label: "AAD — Chemical peels: overview", url: "https://www.aad.org/public/cosmetic/younger-looking/chemical-peels-overview" },
   peelsFaq: { label: "AAD — Chemical peels: FAQs", url: "https://www.aad.org/public/cosmetic/younger-looking/chemical-peels-faqs" },
   younger: { label: "AAD — Younger-looking skin", url: "https://www.aad.org/public/cosmetic/younger-looking" },
-  fat: { label: "AAD — Non-invasive fat removal: what to expect", url: "https://www.aad.org/public/cosmetic/fat-removal/non-invasive-what-to-expect" },
   retinoid: { label: "AAD — Retinoid or retinol?", url: "https://www.aad.org/public/everyday-care/skin-care-secrets/anti-aging/retinoid-retinol" },
   wrinkles: { label: "AAD — Wrinkles", url: "https://www.aad.org/public/cosmetic/wrinkles" },
   melasma: { label: "AAD — Melasma: diagnosis and treatment", url: "https://www.aad.org/public/diseases/a-z/melasma-treatment" },
-  hairWays: { label: "AAD — 6 ways to remove unwanted hair", url: "https://www.aad.org/public/everyday-care/skin-care-basics/hair/remove-unwanted-hair" },
   unsafe: { label: "AAD — Five unsafe skin care trends to avoid", url: "https://www.aad.org/news/5-unsafe-skin-care-trends-to-avoid" },
-  legVeins: { label: "AAD — Leg veins: how dermatologists treat them", url: "https://www.aad.org/public/cosmetic/younger-looking/how-dermatologists-treat-leg-veins" },
-  sweat: { label: "AAD — Hyperhidrosis: diagnosis and treatment", url: "https://www.aad.org/public/diseases/a-z/hyperhidrosis-treatment" },
-  tattoo: { label: "AAD — Tattoo removal: lasers outshine other methods", url: "https://www.aad.org/public/cosmetic/hair-removal/laser-tattoo-removal" },
-  tattooCare: { label: "AAD — Caring for skin after tattoo removal", url: "https://www.aad.org/news/how-to-care-for-your-skin-after-tattoo-removal" },
 };
 const ASPS = {
   threads: { label: "ASPS — Thread lift", url: "https://www.plasticsurgery.org/cosmetic-procedures/thread-lift" },
-  fat: { label: "ASPS — Nonsurgical fat reduction", url: "https://www.plasticsurgery.org/cosmetic-procedures/nonsurgical-fat-reduction" },
-  fatFacts: { label: "ASPS — Facts on nonsurgical fat reduction, from CoolSculpting to Kybella", url: "https://www.plasticsurgery.org/news/articles/get-the-facts-on-nonsurgical-fat-reduction-from-coolsculpting-to-kybella" },
 };
 
 const FILLERS = [AAD.fillersOverview, AAD.fillersFaq, AAD.fillersPrep];
@@ -73,23 +63,20 @@ export const LEARN: Record<string, Link[]> = {
   pico: [AAD.lasersTreat, AAD.sunDamage],
   ipl: [AAD.rosaceaLasers, AAD.sunDamage],
   pdl: [AAD.rosaceaLasers, AAD.lasersTreat],
-  "laser-hair": [AAD.hairFaq, AAD.hairPrep, AAD.hairWays],
   microneedling: [AAD.needling, AAD.acneScars],
   prp: [AAD.prp, AAD.needling],
   peel: [AAD.peelsOverview, AAD.peelsFaq],
   hydrafacial: [AAD.younger],
-  dermaplaning: [AAD.younger, AAD.hairWays],
-  kybella: [ASPS.fatFacts, AAD.fat],
-  coolsculpting: [AAD.fat, ASPS.fat],
-  emsculpt: [AAD.fat, ASPS.fat],
+  dermaplaning: [AAD.younger],
   threads: [ASPS.threads],
   tretinoin: [AAD.retinoid, AAD.sunDamage],
-  sclerotherapy: [AAD.legVeins],
+  "rx-redness": [AAD.rosaceaLasers, { label: "AAD — Rosacea: diagnosis and treatment", url: "https://www.aad.org/public/diseases/rosacea/treatment/diagnosis-treat" }],
+  "melasma-cream": [AAD.melasma],
+  azelaic: [AAD.melasma, { label: "AAD — Rosacea: diagnosis and treatment", url: "https://www.aad.org/public/diseases/rosacea/treatment/diagnosis-treat" }],
+  subcision: [AAD.acneScars],
   microdermabrasion: [AAD.sunDamage, { label: "ASPS — Microdermabrasion cost", url: "https://www.plasticsurgery.org/cosmetic-procedures/microdermabrasion/cost" }],
   erbium: [AAD.firm, AAD.sunDamage],
   "nose-filler": [AAD.fillersOverview, AAD.fillersFaq, { label: "FDA — Dermal filler do's and don'ts (approved areas)", url: "https://www.fda.gov/consumers/consumer-updates/dermal-filler-dos-and-donts-wrinkles-lips-and-more" }],
-  miradry: [AAD.sweat, { label: "FDA 510(k) summary — miraDry", url: "https://www.accessdata.fda.gov/cdrh_docs/pdf10/k103014.pdf" }],
-  tattoo: [AAD.tattoo, AAD.tattooCare],
   emface: [AAD.firm],
 };
 
@@ -116,17 +103,17 @@ export const GOAL_GUIDE: Record<Goal, { intro: string; foundation: boolean; lear
     learn: [AAD.fillersOverview, AAD.fillersFaq],
   },
   pigment: {
-    intro: "Sun protection comes first — spots come back without it. Lasers, IPL and peels lighten sun spots. Melasma is different: it needs a dermatologist's plan and can worsen with some lasers.",
+    intro: "Sun protection comes first — spots come back without it. Lasers, IPL and peels lighten sun spots. Melasma is different: prescription creams usually come first, and some lasers can make it worse.",
     foundation: true,
     learn: [AAD.sunDamage, AAD.melasma],
   },
   redness: {
-    intro: "Pulsed dye laser and IPL reduce persistent redness and visible vessels. If you have rosacea, prescription treatments help too — see a dermatologist.",
+    intro: "Prescription creams reduce rosacea redness within hours; pulsed dye laser and IPL reduce persistent redness and visible vessels over a few sessions. A dermatologist can confirm whether it is rosacea.",
     foundation: false,
     learn: [AAD.rosaceaLasers],
   },
   acne: {
-    intro: "Get breakouts under control first. Then microneedling, RF microneedling, lasers or peels can soften scars; a retinoid helps mild scarring.",
+    intro: "Get breakouts under control first. Then subcision (for rolling scars), microneedling, RF microneedling, lasers or peels can soften scars — combinations often work best; a retinoid helps mild scarring.",
     foundation: true,
     learn: [AAD.acneScars, AAD.needling],
   },
@@ -136,34 +123,14 @@ export const GOAL_GUIDE: Record<Goal, { intro: string; foundation: boolean; lear
     learn: [AAD.younger, AAD.retinoid],
   },
   contour: {
-    intro: "Kybella and CoolSculpting reduce small fat pockets; masseter injections slim a wide jaw muscle; fillers add definition to the chin and jawline, or smooth a nose bump (higher-risk). None of these are weight-loss treatments.",
+    intro: "Masseter injections slim a wide jaw muscle; fillers add definition to the chin and jawline or smooth a nose bump (higher-risk); ultrasound and threads lift a softening jawline.",
     foundation: false,
-    learn: [AAD.fat, ASPS.fat],
-  },
-  hair: {
-    intro: "Lasers reduce hair long-term but not permanently, and work best on dark hair. Deeper skin tones need the right laser (usually Nd:YAG).",
-    foundation: false,
-    learn: [AAD.hairFaq, AAD.hairWays],
-  },
-  veins: {
-    intro: "Sclerotherapy is the most common treatment for spider veins on the legs; lasers are another option, especially for tiny facial vessels. Larger, bulging veins need a medical vein evaluation first.",
-    foundation: false,
-    learn: [AAD.legVeins],
-  },
-  sweat: {
-    intro: "Start with clinical-strength antiperspirant. Botulinum toxin injections are FDA-approved for underarm sweating and work for several months; miraDry is a longer-lasting device option.",
-    foundation: false,
-    learn: [AAD.sweat, { label: "Randomized trial — Botox for underarm sweating (52 weeks)", url: "https://pubmed.ncbi.nlm.nih.gov/17306417/" }],
-  },
-  tattoo: {
-    intro: "Lasers are the preferred way to remove tattoos and need several sessions. Results depend on ink colors and the operator's skill. Avoid removal creams and DIY kits.",
-    foundation: false,
-    learn: [AAD.tattoo, AAD.tattooCare],
+    learn: [AAD.fillersOverview, AAD.botoxOverview],
   },
 };
 
 /** Order options from least to most involved, the way a dermatologist would build a plan. */
-export const APPROACH_ORDER = ["topical", "toxin", "ha", "skin", "vein", "biostim", "laser", "energy", "threads", "fat"] as const;
+export const APPROACH_ORDER = ["topical", "toxin", "ha", "skin", "biostim", "laser", "energy", "threads"] as const;
 
 export const SUNSCREEN: Link = AAD.sunDamage;
 export const UNSAFE_TRENDS: Link = AAD.unsafe;

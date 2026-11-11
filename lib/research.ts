@@ -255,20 +255,6 @@ export const RESEARCH: Record<string, Research> = {
       { title: "Expert Consensus on Injection Technique and Area-Specific Recommendations for the Hyaluronic Acid Dermal Filler VYC-12L to Treat Fine Cutaneous Lines", url: pm("32308460"), kind: "Expert consensus" },
     ],
   },
-  kybella: {
-    resultsIn: "After 2 or more sessions, 4–6 weeks apart",
-    sideEffects: "Swelling, bruising, numbness and firmness; rare nerve injury (uneven smile) or hair loss at the site",
-    prices: [
-      { label: "AEDIT — Kybella cost per vial (NYC & Miami)", url: "https://aedit.com/procedure/kybella/cost", city: "nyc" },
-      { label: "AEDIT — Kybella cost per vial (NYC & Miami)", url: "https://aedit.com/procedure/kybella/cost", city: "miami" },
-    ],
-    evidence: 3,
-    evidenceNote: "Large phase 3 placebo-controlled trials (REFINE-1 and -2) showed fat reduction under the chin.",
-    studies: [
-      { title: "ATX-101 for reduction of submental fat: A phase III randomized controlled trial", url: pm("27430612"), kind: "Randomized trial" },
-      { title: "Efficacy and Safety of ATX-101 by Treatment Session: Pooled Analysis of Data From the Phase 3 REFINE Trials", url: pm("29401213"), kind: "Meta-analysis" },
-    ],
-  },
   threads: {
     resultsIn: "Right away; settles over a few weeks",
     sideEffects: "Bruising, swelling, dimpling, asymmetry, a thread poking through",
@@ -340,46 +326,6 @@ export const RESEARCH: Record<string, Research> = {
       { title: "Three-Year Results of Facial Photoaging in Asian Patients After Alexandrite 755 nm Picosecond Laser With Diffractive Lens Array: A Split-Face, Single-Blinded, Randomized Controlled Comparison", url: pm("33604905"), kind: "Randomized trial" },
     ],
   },
-  coolsculpting: {
-    resultsIn: "From about 1 month; full result at about 3 months",
-    sideEffects: "Numbness, redness, swelling; rare paradoxical fat growth (may be more common than the maker reports)",
-    prices: [
-      { label: "Skinney Medspa — CoolSculpting cost in NYC", url: "https://skinneymedspa.com/coolsculpting-cost-in-nyc/", city: "nyc" },
-      { label: "Skinney Medspa — CoolSculpting cost in Miami", url: "https://www.skinneymedspa.com/coolsculpting-cost-miami/", city: "miami" },
-    ],
-    evidence: 2,
-    evidenceNote: "Meta-analyses show local fat and circumference reduction, but no weight loss.",
-    studies: [
-      { title: "Effectiveness of Cryolipolysis in Body Contouring and Fat Reduction: A Systematic Review and Meta-analysis", url: pm("41607567"), kind: "Meta-analysis" },
-      { title: "Incidence of Paradoxical Adipose Hyperplasia After Cryolipolysis: A Systematic Review and Meta-Analysis", url: pm("41322038"), kind: "Meta-analysis" },
-    ],
-  },
-  emsculpt: {
-    resultsIn: "1–3 months after the last session",
-    sideEffects: "Muscle soreness, warmth, redness",
-    prices: [{ label: "Dermatology & Laser Group (NYC) — Emsculpt Neo cost", url: "https://dermatologyandlasergroup.com/cost-of-emsculpt-neo/", city: "nyc" }],
-    evidence: 1,
-    evidenceNote: "MRI studies report fat loss and muscle gain, but a review notes nearly all were by the maker's advisors.",
-    studies: [
-      { title: "Efficacy and Safety of Simultaneous Application of HIFEM and Synchronized Radiofrequency for Abdominal Fat Reduction and Muscle Toning: A Multicenter Magnetic Resonance Imaging Evaluation Study", url: pm("34001694"), kind: "Clinical study" },
-      { title: "Body Contouring With Electromagnetic Treatment Plus Radiofrequency: A Review", url: pm("39773625"), kind: "Review" },
-    ],
-  },
-  "laser-hair": {
-    resultsIn: "Hair sheds in 1–3 weeks; reduction builds over the series",
-    sideEffects: "Redness and bumps; rare burns or pigment changes",
-    prices: [
-      { label: "LaserAway — pricing", url: "https://www.laseraway.com/pricing/" },
-      { label: "Dr. Debra Jaliman (NYC) — laser hair removal", url: "https://dermatologist-nyc.com/laser-hair-removal", city: "nyc" },
-      { label: "LaserAway — laser hair removal cost in Miami", url: "https://www.laseraway.com/faqs/hair-removal/laser-hair-removal-cost-in-miami/", city: "miami" },
-    ],
-    evidence: 3,
-    evidenceNote: "Randomized trials show long-term partial reduction — not permanent removal.",
-    studies: [
-      { title: "Efficacy of lasers and light sources in long-term hair reduction: a systematic review", url: pm("35634805"), kind: "Systematic review" },
-      { title: "Evidence-based review of hair removal using lasers and light sources", url: pm("16405602"), kind: "Systematic review" },
-    ],
-  },
   tretinoin: {
     resultsIn: "Gradually over 3–6 months of nightly use",
     sideEffects: "Dryness, peeling, redness and sun sensitivity, mostly in the first weeks",
@@ -424,21 +370,6 @@ export const RESEARCH: Record<string, Research> = {
       { title: "Beyond efficacy: pulse duration is crucial for adverse events in pulsed dye laser therapy for rosacea", url: pm("42112600"), kind: "Randomized trial" },
     ],
   },
-  sclerotherapy: {
-    resultsIn: "Veins usually fade over 3–6 weeks",
-    sideEffects: "Bruising, temporary brown marks, and sometimes a mat of tiny new red vessels",
-    prices: [
-      { label: "Dr. Debra Jaliman (NYC) — vein treatment", url: "https://dermatologist-nyc.com/laser-vein-treatment", city: "nyc" },
-      { label: "Perfect B (Miami) — sclerotherapy", url: "https://www.perfectb.com/?p=24891", city: "miami" },
-      { label: "RealSelf — sclerotherapy cost (national)", url: "https://www.realself.com/nonsurgical/sclerotherapy/cost" },
-    ],
-    evidence: 3,
-    evidenceNote: "A Cochrane review found sclerosing injections clear spider veins better than placebo; brown marks are the main cosmetic side effect.",
-    studies: [
-      { title: "Treatment for telangiectasias and reticular veins", url: pm("34637138"), kind: "Systematic review" },
-      { title: "Sclerotherapy for Reticular Veins in the Lower Limbs: A Triple-Blind Randomized Clinical Trial", url: pm("28973414"), kind: "Randomized trial" },
-    ],
-  },
   microdermabrasion: {
     resultsIn: "Right away; mild",
     sideEffects: "Redness for a few hours, mild sensitivity",
@@ -469,30 +400,6 @@ export const RESEARCH: Record<string, Research> = {
     evidenceNote: "Reviews describe it as usually safe but note rare serious vascular events, including blindness; no large controlled trials.",
     studies: [
       { title: "Complications of Nonsurgical Rhinoplasty with Hyaluronic Acid Injections: A Narrative Review", url: pm("39747417"), kind: "Review" },
-    ],
-  },
-  miradry: {
-    resultsIn: "Less sweating within weeks",
-    sideEffects: "Swelling, soreness and numbness of the underarm for days to weeks",
-    prices: [{ label: "RealSelf — miraDry cost (national)", url: "https://www.realself.com/nonsurgical/miradry/cost" }],
-    evidence: 2,
-    evidenceNote: "FDA clearance was based on a randomized, blinded trial of 120 people; other studies are small or manufacturer-linked.",
-    studies: [
-      { title: "Clinical Evaluation of a Microwave Device for Treating Axillary Hyperhidrosis", url: pmc("PMC3489040"), kind: "Clinical study" },
-      { title: "FDA 510(k) summary — miraDry (randomized trial of 120 people)", url: "https://www.accessdata.fda.gov/cdrh_docs/pdf10/k103014.pdf", kind: "Randomized trial" },
-    ],
-  },
-  tattoo: {
-    resultsIn: "Ink fades gradually over several sessions",
-    sideEffects: "Redness, swelling, blistering and scabbing; possible lightening or darkening of skin, rare scarring",
-    prices: [
-      { label: "Dermatology & Laser Group (NYC) — tattoo removal cost", url: "https://dermatologyandlasergroup.com/how-much-does-laser-tattoo-removal-cost/", city: "nyc" },
-    ],
-    evidence: 2,
-    evidenceNote: "Systematic reviews support laser removal; picosecond lasers may clear blue and green inks better, black about the same.",
-    studies: [
-      { title: "Comparing the efficacy and safety of laser treatments in tattoo removal: A systematic review", url: pm("32763326"), kind: "Systematic review" },
-      { title: "Comparative appraisal with meta-analysis of picosecond versus nanosecond lasers for hyperpigmented disorders and tattoos", url: pm("41184656"), kind: "Meta-analysis" },
     ],
   },
   emface: {
@@ -552,6 +459,54 @@ export const RESEARCH: Record<string, Research> = {
     studies: [
       { title: "The Efficacy and Safety of 660 nm and 411 to 777 nm Light-Emitting Devices for Treating Wrinkles", url: pm("28195844"), kind: "Randomized trial" },
       { title: "A Controlled Trial to Determine the Efficacy of Red and Near-Infrared Light Treatment in Patient Satisfaction, Reduction of Fine Lines, Wrinkles, Skin Roughness, and Intradermal Collagen Density Increase", url: pmc("PMC3926176"), kind: "Clinical study" },
+    ],
+  },
+  "rx-redness": {
+    resultsIn: "Within hours of applying",
+    sideEffects: "Skin irritation; occasionally redness rebounds or worsens",
+    prices: [{ label: "GoodRx — Rhofade prices (national)", url: "https://www.goodrx.com/rhofade" }],
+    evidence: 3,
+    evidenceNote: "Two phase 3 randomized trials (885 people) found oxymetazoline reduced persistent rosacea redness versus placebo.",
+    studies: [
+      { title: "Topical Oxymetazoline Cream 1.0% for Persistent Facial Erythema Associated With Rosacea: Pooled Analysis of the Two Phase 3, 29-Day, Randomized, Controlled REVEAL Trials", url: pm("30500142"), kind: "Randomized trial" },
+      { title: "Pivotal Trial of the Efficacy and Safety of Oxymetazoline Cream 1.0% for the Treatment of Persistent Facial Erythema Associated With Rosacea: Findings from the Second REVEAL Trial", url: pm("29537447"), kind: "Randomized trial" },
+    ],
+  },
+  "melasma-cream": {
+    resultsIn: "Over about 8 weeks",
+    sideEffects: "Redness, dryness, peeling or irritation",
+    prices: [
+      { label: "GoodRx — Tri-Luma prices (national)", url: "https://www.goodrx.com/tri-luma" },
+      { label: "GoodRx — hydroquinone prices (national)", url: "https://www.goodrx.com/hydroquinone" },
+    ],
+    evidence: 2,
+    evidenceNote: "A Cochrane review found the triple cream more effective than hydroquinone alone, but trials were short; melasma often returns.",
+    studies: [
+      { title: "Systematic review of randomized controlled trials on interventions for melasma: an abridged Cochrane review", url: pm("24438951"), kind: "Systematic review" },
+      { title: "A randomized controlled trial of the efficacy and safety of a fixed triple combination (fluocinolone acetonide 0.01%, hydroquinone 4%, tretinoin 0.05%) compared with hydroquinone 4% cream in Asian patients with moderate to severe melasma", url: pm("18616780"), kind: "Randomized trial" },
+    ],
+  },
+  subcision: {
+    resultsIn: "Some lift right away; more over weeks as healing settles",
+    sideEffects: "Bruising, swelling and tenderness for several days; small lumps",
+    prices: [{ label: "RealSelf — subcision cost (national)", url: "https://www.realself.com/surgical/subcision/cost" }],
+    evidence: 2,
+    evidenceNote: "A network meta-analysis of 56 trials ranked CO2 laser plus subcision among the most effective acne-scar options; reviews find subcision safe and effective for rolling scars.",
+    studies: [
+      { title: "Laser, Microneedling, and Combination Therapies for Moderate to Severe Acne Atrophic Scars: A Systematic Review and Network Meta-Analysis", url: pm("42429955"), kind: "Meta-analysis" },
+      { title: "Subcision in acne scarring: A review of clinical trials", url: pm("36315903"), kind: "Review" },
+    ],
+  },
+  azelaic: {
+    resultsIn: "Gradually over 2–3 months",
+    sideEffects: "Mild stinging, itching or dryness, usually temporary",
+    prices: [{ label: "GoodRx — azelaic acid prices (national)", url: "https://www.goodrx.com/azelaic-acid" }],
+    evidence: 2,
+    evidenceNote: "A meta-analysis of randomized trials found it may reduce melasma more than hydroquinone; the 15% gel was FDA-approved for rosacea in 2002 after phase 3 trials.",
+    studies: [
+      { title: "Azelaic Acid Versus Hydroquinone for Managing Patients With Melasma: Systematic Review and Meta-Analysis of Randomized Controlled Trials", url: pmc("PMC10339666"), kind: "Meta-analysis" },
+      { title: "The efficacy and safety of minocycline, metronidazole, ivermectin, and azelaic acid in moderate-to-severe papulopustular rosacea: A systematic review and network meta-analysis", url: pmc("PMC11979399"), kind: "Meta-analysis" },
+      { title: "Treatment of Acne Vulgaris During Pregnancy and Lactation: A Narrative Review (azelaic acid among first-line options)", url: pmc("PMC9823189"), kind: "Review" },
     ],
   },
 };

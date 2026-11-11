@@ -1,6 +1,7 @@
 import { PROCEDURES } from "./procedures";
 import { belowMinAge, notesFor, type Note } from "./advice";
 import { CAUTIONS } from "./cautions";
+import { RESEARCH } from "./research";
 import type { Procedure, QuizAnswers } from "./types";
 
 const MAX_DOWNTIME = { none: 1, short: 7, any: Infinity } as const;
@@ -43,12 +44,12 @@ export function matchProcedures(a: QuizAnswers): { shown: Match[]; hidden: Hidde
     if (p.tier > a.budget || p.downtimeDays[1] > MAX_DOWNTIME[a.downtime]) continue;
     shown.push({
       procedure: p,
-      score: p.goals.filter((g) => a.goals.includes(g)).length,
+      score: p.goals.filter((g) => a.goals.includes(g)).length + conditionBoost(p, a),
       flagged: [],
       notes: notesFor(p, a),
     });
   }
-  shown.sort((x, y) => y.score - x.score || x.procedure.tier - y.procedure.tier);
+  shown.sort((x, y) => y.score - x.score || RESEARCH[y.procedure.id].evidence - RESEARCH[x.procedure.id].evidence || x.procedure.tier - y.procedure.tier);
   return { shown, hidden };
 }
 
@@ -60,4 +61,12 @@ export function downtimeShort([lo, hi]: [number, number]) {
   if (hi === 0) return "None";
   if (lo === 0 && hi === 1) return "Up to 1 day";
   return `${lo || 1}–${hi} days`;
+}
+
+/** Condition-specific first steps (AAD: melasma → prescription cream first; rosacea redness → Rx cream or vascular laser/light). */
+function conditionBoost(p: Procedure, a: QuizAnswers) {
+  let b = 0;
+  if (a.conditions?.includes("melasma") && ["melasma-cream", "azelaic"].includes(p.id)) b += 2;
+  if (a.conditions?.includes("rosacea") && ["rx-redness", "azelaic", "pdl", "ipl"].includes(p.id)) b += 1;
+  return b;
 }

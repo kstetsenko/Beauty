@@ -72,7 +72,7 @@ const ExtLink = ({ href, children }: { href: string; children: React.ReactNode }
 
 /**
  * Everything beyond the four key facts, split into tap-to-open sections so
- * people open only what they want. Used on the swipe card and the procedure page.
+ * people open only what they want. Used in the results list and on the procedure page.
  */
 export function DetailSections({ p, city, withPrice = true }: { p: Procedure; city: City; withPrice?: boolean }) {
   const r = RESEARCH[p.id];

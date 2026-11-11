@@ -12,7 +12,7 @@ type Raw = Omit<Procedure, "tier">;
 const RAW: Raw[] = [
   // ── Boosts your own collagen (natural) ─────────────────────────────
   {
-    id: "sofwave", name: "Sofwave", what: "Ultrasound skin tightening", approach: "energy", onset: 3,
+    id: "sofwave", name: "Sofwave", what: "Ultrasound skin tightening", approach: "energy", collagen: true, onset: 3,
     summary: "Ultrasound energy heats the skin's middle layer to trigger new collagen, gently lifting brows, jawline and neck.",
     goals: ["lift", "lines"], cost: { nyc: [3000, 4500], miami: [2500, 4000] }, priceUnit: "full face",
     sessions: "Usually 1", lasts: "About 1 year; results build over 3 months", downtimeDays: [0, 0], pain: 2, results: 2,
@@ -20,7 +20,7 @@ const RAW: Raw[] = [
     notes: "Known for being more comfortable than older ultrasound devices.",
   },
   {
-    id: "ultherapy", name: "Ultherapy", what: "Focused ultrasound lifting", aka: ["Ultherapy PRIME", "Microfocused ultrasound"], approach: "energy", onset: 3,
+    id: "ultherapy", name: "Ultherapy", what: "Focused ultrasound lifting", aka: ["Ultherapy PRIME", "Microfocused ultrasound"], approach: "energy", collagen: true, onset: 3,
     summary: "Focused ultrasound reaches the deep support layer under the skin to lift and tighten over time.",
     goals: ["lift", "contour"], cost: { nyc: [2700, 5000], miami: [2000, 4500] }, priceUnit: "full face",
     sessions: "Usually 1", lasts: "1–2 years; results build over 3–6 months", downtimeDays: [0, 1], pain: 4, results: 2,
@@ -28,7 +28,7 @@ const RAW: Raw[] = [
     notes: "Ask what pain relief is offered — it can be uncomfortable.",
   },
   {
-    id: "thermage", name: "Thermage FLX", what: "Radiofrequency skin tightening", aka: ["Monopolar radiofrequency"], approach: "energy", onset: 3,
+    id: "thermage", name: "Thermage FLX", what: "Radiofrequency skin tightening", aka: ["Monopolar radiofrequency"], approach: "energy", collagen: true, onset: 3,
     summary: "Radiofrequency heat tightens existing collagen and stimulates new collagen for firmer skin.",
     goals: ["lift", "texture"], cost: { nyc: [3500, 4500], miami: [3000, 4500] }, priceUnit: "full face",
     sessions: "Usually 1", lasts: "About 1–2 years", downtimeDays: [0, 0], pain: 3, results: 2,
@@ -36,7 +36,7 @@ const RAW: Raw[] = [
     notes: "Not suitable with some implanted electronic devices — tell your provider.",
   },
   {
-    id: "morpheus8", name: "Morpheus8", what: "Radiofrequency microneedling", aka: ["RF microneedling", "Vivace", "Potenza"], approach: "energy", onset: 3, minAge: 22,
+    id: "morpheus8", name: "Morpheus8", what: "Radiofrequency microneedling", aka: ["RF microneedling", "Vivace", "Potenza"], approach: "energy", collagen: true, onset: 3, minAge: 22,
     summary: "Tiny needles deliver radiofrequency heat under the skin to tighten, smooth texture and soften acne scars.",
     goals: ["texture", "acne", "lift"], cost: { nyc: [1000, 2000], miami: [1000, 2000] }, priceUnit: "per session",
     sessions: "1–3, about 4–6 weeks apart", lasts: "1 year or more with maintenance", downtimeDays: [2, 5], pain: 4, results: 2,
@@ -45,7 +45,7 @@ const RAW: Raw[] = [
     notes: "Ask whether numbing cream is included in the price.",
   },
   {
-    id: "co2", name: "CO2 Laser", what: "Ablative laser resurfacing", aka: ["Fractional CO2", "CO2RE", "UltraPulse", "ActiveFX", "DeepFX"], approach: "laser", onset: 3,
+    id: "co2", name: "CO2 Laser", what: "Ablative laser resurfacing", aka: ["Fractional CO2", "CO2RE", "UltraPulse", "ActiveFX", "DeepFX"], approach: "laser", collagen: true, onset: 3,
     summary: "The strongest laser resurfacing: removes damaged layers and triggers major collagen renewal.",
     goals: ["texture", "lines", "acne", "pigment"], cost: { nyc: [2000, 6000], miami: [2000, 5000] }, priceUnit: "full face",
     sessions: "Usually 1", lasts: "Years, with sun protection", downtimeDays: [7, 14], pain: 5, results: 3,
@@ -54,7 +54,7 @@ const RAW: Raw[] = [
     notes: "Plan 1–2 weeks off. Fully ablative laser is usually delayed while on isotretinoin (Accutane). Higher risk of pigment changes on deeper skin tones.",
   },
   {
-    id: "fraxel", name: "Fraxel", what: "Fractional laser", aka: ["Fraxel Dual", "Fraxel Restore", "1550 nm fractional laser"], approach: "laser", onset: 3,
+    id: "fraxel", name: "Fraxel", what: "Fractional laser", aka: ["Fraxel Dual", "Fraxel Restore", "1550 nm fractional laser"], approach: "laser", collagen: true, onset: 3,
     summary: "Laser treats tiny columns of skin to improve sun damage, fine lines, texture and scars.",
     goals: ["texture", "pigment", "lines", "acne"], cost: { nyc: [850, 2000], miami: [500, 1500] }, priceUnit: "per session",
     sessions: "3–5, about 4 weeks apart", lasts: "Long-lasting with sun protection", downtimeDays: [3, 7], pain: 3, results: 2,
@@ -62,7 +62,7 @@ const RAW: Raw[] = [
     notes: "Expect a few days of redness and a sandpaper feel.",
   },
   {
-    id: "halo", name: "Halo Laser", what: "Hybrid fractional laser", aka: ["Sciton Halo", "Hybrid fractional laser"], approach: "laser", onset: 2,
+    id: "halo", name: "Halo Laser", what: "Hybrid fractional laser", aka: ["Sciton Halo", "Hybrid fractional laser"], approach: "laser", collagen: true, onset: 2,
     summary: "Combines two laser wavelengths to brighten tone and refine texture.",
     goals: ["pigment", "texture", "glow"], cost: { nyc: [1200, 2500], miami: [1200, 2200] }, priceUnit: "per session",
     sessions: "1–3", lasts: "Long-lasting with sun protection", downtimeDays: [5, 7], pain: 3, results: 2,
@@ -70,7 +70,7 @@ const RAW: Raw[] = [
     notes: "Tiny dark dots flake off over about a week.",
   },
   {
-    id: "moxi", name: "Moxi", what: "Gentle 1927 nm fractional laser", aka: ["Sciton Moxi", "1927 nm thulium laser"], approach: "laser", onset: 2,
+    id: "moxi", name: "Moxi", what: "Gentle 1927 nm fractional laser", aka: ["Sciton Moxi", "1927 nm thulium laser"], approach: "laser", collagen: true, onset: 2,
     summary: "A light 'baby laser' for glow, early sun spots and pore size with almost no recovery.",
     goals: ["glow", "texture", "pigment"], cost: { nyc: [600, 900], miami: [600, 900] }, priceUnit: "per session",
     sessions: "3–4, about 4 weeks apart", lasts: "Months; often done as maintenance", downtimeDays: [0, 2], pain: 2, results: 1,
@@ -78,7 +78,7 @@ const RAW: Raw[] = [
     notes: "Popular before events — skin looks fresher in a few days.",
   },
   {
-    id: "clear-brilliant", name: "Clear + Brilliant", what: "Gentle 1440/1927 nm fractional laser", aka: ["C+B", "Clear + Brilliant Touch"], approach: "laser", onset: 2,
+    id: "clear-brilliant", name: "Clear + Brilliant", what: "Gentle 1440/1927 nm fractional laser", aka: ["C+B", "Clear + Brilliant Touch"], approach: "laser", collagen: true, onset: 2,
     summary: "A low-energy laser for pores, texture and early sun spots, often done as a series with little downtime.",
     goals: ["glow", "texture", "pigment"], cost: { nyc: [450, 500], miami: [400, 600] }, priceUnit: "per session",
     sessions: "Usually a series of 3–6, about a month apart", lasts: "Months; often done as maintenance", downtimeDays: [0, 2], pain: 2, results: 1,
@@ -86,7 +86,7 @@ const RAW: Raw[] = [
     notes: "A study of the 1440 nm laser found smaller-looking pores after 6 treatments.",
   },
   {
-    id: "microneedling", name: "Microneedling", what: "Collagen induction therapy", aka: ["SkinPen", "Collagen induction therapy"], approach: "skin", onset: 3, minAge: 22,
+    id: "microneedling", name: "Microneedling", what: "Collagen induction therapy", aka: ["SkinPen", "Collagen induction therapy"], approach: "skin", collagen: true, onset: 3, minAge: 22,
     summary: "Fine needles make tiny controlled channels that prompt new collagen for smoother texture.",
     goals: ["texture", "acne", "glow", "lines"], cost: { nyc: [300, 600], miami: [250, 500] }, priceUnit: "per session",
     sessions: "3–6, about 4–6 weeks apart", lasts: "Long-lasting; gradual", downtimeDays: [1, 3], pain: 2, results: 2,
@@ -94,7 +94,7 @@ const RAW: Raw[] = [
     notes: "Avoid at-home rollers for deep treatment — infection risk.",
   },
   {
-    id: "prp", name: "PRP Microneedling", what: "\"Vampire facial\"", aka: ["Vampire facial", "Platelet-rich plasma"], approach: "skin", onset: 3, minAge: 22,
+    id: "prp", name: "PRP Microneedling", what: "\"Vampire facial\"", aka: ["Vampire facial", "Platelet-rich plasma"], approach: "skin", collagen: true, onset: 3, minAge: 22,
     summary: "Microneedling with platelet-rich plasma from your own blood, aimed at glow and texture.",
     goals: ["texture", "glow", "acne"], cost: { nyc: [550, 1200], miami: [200, 900] }, priceUnit: "per session",
     sessions: "3, about 4–6 weeks apart", lasts: "Gradual; maintenance yearly", downtimeDays: [1, 3], pain: 3, results: 2,
@@ -102,7 +102,7 @@ const RAW: Raw[] = [
     notes: "Evidence is still growing; make sure blood is handled in a medical setting.",
   },
   {
-    id: "sculptra", name: "Sculptra", what: "Collagen-stimulating injectable", aka: ["Poly-L-lactic acid", "Biostimulator"], approach: "biostim", onset: 3, minAge: 22,
+    id: "sculptra", name: "Sculptra", what: "Collagen-stimulating injectable", aka: ["Poly-L-lactic acid", "Biostimulator"], approach: "biostim", collagen: true, onset: 3, minAge: 22,
     summary: "An injectable that prompts your body to rebuild its own collagen, restoring volume gradually and naturally.",
     goals: ["volume", "lift", "lines"], cost: { nyc: [1000, 1500], miami: [800, 1100] }, priceUnit: "per vial",
     sessions: "Usually 2–3 vials over a few months", lasts: "Up to about 2 years", downtimeDays: [1, 3], pain: 3, results: 3,
@@ -138,7 +138,7 @@ const RAW: Raw[] = [
     notes: "Rare but serious risks — choose an experienced medical injector.",
   },
   {
-    id: "radiesse", name: "Radiesse", what: "Calcium-based filler", aka: ["Calcium hydroxylapatite", "Biostimulator"], approach: "biostim", onset: 1, minAge: 22,
+    id: "radiesse", name: "Radiesse", what: "Calcium-based filler", aka: ["Calcium hydroxylapatite", "Biostimulator"], approach: "biostim", collagen: true, onset: 1, minAge: 22,
     summary: "Adds instant structure to cheeks, jawline and smile lines, and also stimulates some collagen.",
     goals: ["volume", "contour", "lift", "lines"], cost: { nyc: [900, 1400], miami: [700, 1100] }, priceUnit: "per syringe",
     sessions: "Single visit", lasts: "About 12–18 months", downtimeDays: [1, 3], pain: 3, results: 3,
@@ -153,14 +153,6 @@ const RAW: Raw[] = [
     sessions: "Single visit", lasts: "About 6 months", downtimeDays: [0, 2], pain: 2, results: 1,
     performedBy: "Physician, PA or NP", contraindications: ["pregnancy", "active-skin", "blood-thinners"],
     notes: "Subtle by design — think hydration, not shape.",
-  },
-  {
-    id: "kybella", name: "Kybella", what: "Under-chin fat dissolving injections", aka: ["Deoxycholic acid"], approach: "fat", onset: 3,
-    summary: "Injections that destroy fat cells in a small pocket of fat under the chin.",
-    goals: ["contour"], cost: { nyc: [600, 750], miami: [500, 750] }, priceUnit: "per vial (2–4 per visit)",
-    sessions: "2–4, about 4–6 weeks apart", lasts: "Long-lasting", downtimeDays: [3, 7], pain: 3, results: 2,
-    performedBy: "Physician, PA or NP", contraindications: ["pregnancy", "active-skin", "blood-thinners"],
-    notes: "Expect noticeable swelling for several days.",
   },
   {
     id: "threads", name: "PDO Thread Lift", what: "Dissolvable lifting threads", aka: ["PDO threads", "Thread lift"], approach: "threads", onset: 1,
@@ -215,33 +207,9 @@ const RAW: Raw[] = [
   },
 
   // ── Body & hair ─────────────────────────────────────────────────────
-  {
-    id: "coolsculpting", name: "CoolSculpting", what: "Fat freezing", aka: ["Cryolipolysis", "Fat freezing"], approach: "fat", onset: 3,
-    summary: "Controlled cooling destroys some fat cells in areas like the belly, flanks or chin; the body clears them over about 3 months.",
-    goals: ["contour"], cost: { nyc: [800, 1800], miami: [750, 1500] }, priceUnit: "per cycle (one applicator)",
-    sessions: "1–3 per area", lasts: "Long-lasting if weight stays stable", downtimeDays: [0, 1], pain: 2, results: 2,
-    performedBy: "Physician-supervised clinic", contraindications: ["pregnancy"],
-    notes: "Not a weight-loss treatment. Rare risk of fat enlarging instead.",
-  },
-  {
-    id: "emsculpt", name: "Emsculpt Neo", what: "Muscle toning + fat reduction", aka: ["HIFEM"], approach: "fat", onset: 3,
-    summary: "Combines muscle contractions and heat to tone muscle and reduce fat on belly, buttocks or arms.",
-    goals: ["contour"], cost: { nyc: [850, 1000], miami: [750, 1000] }, priceUnit: "per session",
-    sessions: "4, about 1 week apart", lasts: "Months; maintenance helps", downtimeDays: [0, 0], pain: 2, results: 2,
-    performedBy: "Physician-supervised clinic", contraindications: ["pregnancy"],
-    notes: "Feels like an intense workout. Not for metal implants in the area.",
-  },
-  {
-    id: "laser-hair", name: "Laser Hair Removal", what: "Laser targeting hair follicles", aka: ["Alexandrite laser", "Diode laser", "Nd:YAG laser"], approach: "laser", onset: 3,
-    summary: "Laser energy reduces hair regrowth over a series of treatments.",
-    goals: ["hair"], cost: { nyc: [100, 500], miami: [100, 450] }, priceUnit: "per area",
-    sessions: "6–8, about 4–8 weeks apart", lasts: "Long-term reduction", downtimeDays: [0, 1], pain: 2, results: 3,
-    performedBy: "Physician or trained laser technician", contraindications: ["pregnancy", "active-skin"],
-    notes: "Ask which laser is used for your skin tone.",
-  },
   // ── Added: foundation, trending and specialist options ────────────────
   {
-    id: "tretinoin", name: "Prescription Retinoid (Tretinoin)", what: "Prescription vitamin A cream", aka: ["Retin-A", "Renova", "Retinoid"], approach: "topical", onset: 3,
+    id: "tretinoin", name: "Prescription Retinoid (Tretinoin)", what: "Prescription vitamin A cream", aka: ["Retin-A", "Renova", "Retinoid"], approach: "topical", collagen: true, onset: 3,
     summary: "The best-studied at-home treatment for fine lines, rough texture and sun spots. Used nightly, results build over months.",
     goals: ["lines", "texture", "pigment", "acne", "glow"], cost: { nyc: [30, 100], miami: [30, 100] }, priceUnit: "per 45 g tube, plus a doctor visit",
     sessions: "Nightly at home", lasts: "As long as you keep using it", downtimeDays: [0, 0], pain: 1, results: 2,
@@ -272,15 +240,7 @@ const RAW: Raw[] = [
     performedBy: "Dermatologist", contraindications: ["pregnancy", "active-skin"],
     notes: "Some settings cause temporary purple bruising for 1–2 weeks — ask which to expect.",
   },
-  // ── Added: veins, sweating, tattoos and other key options ─────────────
-  {
-    id: "sclerotherapy", name: "Sclerotherapy", what: "Injections for spider veins", aka: ["Asclera", "Polidocanol injections"], approach: "vein", onset: 2,
-    summary: "A solution injected into small leg veins makes them close and fade. The most common treatment for spider veins.",
-    goals: ["veins"], cost: { nyc: [300, 800], miami: [150, 400] }, priceUnit: "per session",
-    sessions: "Usually 2–3 sessions", lasts: "Treated veins don't return, but new ones can form", downtimeDays: [0, 1], pain: 2, results: 3,
-    performedBy: "Dermatologist or vein specialist", contraindications: ["pregnancy"],
-    notes: "Larger, bulging varicose veins need a medical vein evaluation first.",
-  },
+  // ── Added: other key face options ──────────────────────────────────────
   {
     id: "microdermabrasion", name: "Microdermabrasion", what: "Mechanical exfoliation", aka: ["Diamond-tip exfoliation"], approach: "skin", onset: 1,
     summary: "A device gently sands away the outermost skin layer for smoother, brighter-looking skin.",
@@ -290,7 +250,7 @@ const RAW: Raw[] = [
     notes: "Studies show mild improvement in roughness and tone, not in wrinkles.",
   },
   {
-    id: "erbium", name: "Erbium Laser Resurfacing", what: "Er:YAG ablative laser", aka: ["Er:YAG laser"], approach: "laser", onset: 3,
+    id: "erbium", name: "Erbium Laser Resurfacing", what: "Er:YAG ablative laser", aka: ["Er:YAG laser"], approach: "laser", collagen: true, onset: 3,
     summary: "A resurfacing laser that removes thin layers of damaged skin to smooth wrinkles, texture and sun damage.",
     goals: ["lines", "texture", "pigment"], cost: { nyc: [1000, 4000], miami: [1000, 3500] }, priceUnit: "full face",
     sessions: "One deeper treatment, or a lighter series", lasts: "Long-lasting with sun protection", downtimeDays: [5, 14], pain: 4, results: 2,
@@ -306,23 +266,7 @@ const RAW: Raw[] = [
     notes: "The nose isn't among the areas the FDA lists for approved fillers, and it carries a higher risk of blood-vessel blockage, including blindness.",
   },
   {
-    id: "miradry", name: "miraDry", what: "Microwave treatment for underarm sweat", aka: ["Underarm sweat treatment"], approach: "energy", onset: 2,
-    summary: "Microwave energy destroys sweat and odor glands in the underarms. FDA-cleared for underarm sweating.",
-    goals: ["sweat"], cost: { nyc: [1500, 3000], miami: [1500, 3000] }, priceUnit: "per treatment",
-    sessions: "1–2 sessions", lasts: "Designed to be long-lasting; studies followed people about a year", downtimeDays: [1, 7], pain: 3, results: 3,
-    performedBy: "Physician-supervised clinic", contraindications: ["pregnancy"],
-    notes: "Cleared for underarms only. Rare nerve injury has been reported.",
-  },
-  {
-    id: "tattoo", name: "Laser Tattoo Removal", what: "Picosecond or Q-switched laser", aka: ["PicoWay", "PicoSure", "Q-switched laser"], approach: "laser", onset: 3,
-    summary: "Laser pulses break ink into tiny particles the body clears over weeks. Lasers are the preferred method.",
-    goals: ["tattoo"], cost: { nyc: [400, 1000], miami: [250, 500] }, priceUnit: "per session (small–medium tattoo)",
-    sessions: "Multiple, weeks apart — depends on ink and size", lasts: "Permanent once cleared", downtimeDays: [3, 14], pain: 3, results: 3,
-    performedBy: "Dermatologist or trained laser specialist", contraindications: ["pregnancy", "active-skin", "keloid"],
-    notes: "Blue, green and multicolor inks are harder to clear; picosecond lasers may help. Avoid removal creams and DIY kits.",
-  },
-  {
-    id: "emface", name: "Emface", what: "Muscle stimulation + radiofrequency", aka: ["HIFES + radiofrequency"], approach: "energy", onset: 3,
+    id: "emface", name: "Emface", what: "Muscle stimulation + radiofrequency", aka: ["HIFES + radiofrequency"], approach: "energy", collagen: true, onset: 3,
     summary: "Combines electrical muscle stimulation with radiofrequency heat to firm the face and soften lines, with no needles.",
     goals: ["lines", "lift"], cost: { nyc: [900, 1200], miami: [900, 1200] }, priceUnit: "per session (usually 4)",
     sessions: "Usually 4, about a week apart", lasts: "Unclear — studies followed people for 3 months", downtimeDays: [0, 0], pain: 1, results: 2,
@@ -339,7 +283,7 @@ const RAW: Raw[] = [
     notes: "For rosacea redness, studies comparing it with pulsed dye laser have mixed results.",
   },
   {
-    id: "tixel", name: "Tixel", what: "Heat-based fractional resurfacing (not a laser)", approach: "energy", onset: 3,
+    id: "tixel", name: "Tixel", what: "Heat-based fractional resurfacing (not a laser)", approach: "energy", collagen: true, onset: 3,
     summary: "A heated tip makes tiny controlled marks in the skin's surface to smooth texture and fine lines, with short downtime.",
     goals: ["texture", "lines"], cost: { nyc: [400, 800], miami: [400, 800] }, priceUnit: "per session",
     sessions: "Usually 2–3", lasts: "Months", downtimeDays: [1, 3], pain: 2, results: 1,
@@ -353,6 +297,39 @@ const RAW: Raw[] = [
     sessions: "A series of sessions; ongoing for upkeep", lasts: "Needs ongoing sessions", downtimeDays: [0, 0], pain: 1, results: 1,
     performedBy: "Clinic or aesthetician (at-home devices also exist)", contraindications: [],
     notes: "Results in studies are modest; it's often added to facials.",
+  },
+  // ── Added: prescription options and scar surgery ───────────────────────
+  {
+    id: "rx-redness", name: "Prescription Redness Cream", what: "Oxymetazoline (Rhofade) or brimonidine (Mirvaso)", aka: ["Rhofade", "Mirvaso", "Oxymetazoline", "Brimonidine"], approach: "topical", onset: 1,
+    summary: "A daily prescription cream that temporarily narrows facial blood vessels to reduce persistent rosacea redness, starting within hours.",
+    goals: ["redness"], cost: { nyc: [150, 870], miami: [150, 870] }, priceUnit: "per tube (with or without discount coupons)",
+    sessions: "Once a day", lasts: "Works while you use it", downtimeDays: [0, 0], pain: 1, results: 2,
+    performedBy: "Prescribed by a dermatologist or other clinician", contraindications: [],
+    notes: "Reduces background redness, not bumps. The main trials enrolled mostly lighter skin types.",
+  },
+  {
+    id: "melasma-cream", name: "Prescription Melasma Cream", what: "Triple cream (Tri-Luma) or hydroquinone", aka: ["Tri-Luma", "Hydroquinone", "Triple combination cream"], approach: "topical", onset: 3,
+    summary: "A prescription cream that fades melasma and dark patches; dermatologists usually start here before lasers.",
+    goals: ["pigment"], cost: { nyc: [25, 235], miami: [25, 235] }, priceUnit: "per tube",
+    sessions: "Daily for about 8 weeks, then as directed", lasts: "Melasma often returns; maintenance and sun protection are needed", downtimeDays: [0, 0], pain: 1, results: 2,
+    performedBy: "Prescribed by a dermatologist", contraindications: ["pregnancy"],
+    notes: "Use under a doctor's care. Hydroquinone is no longer sold over the counter in the U.S.",
+  },
+  {
+    id: "subcision", name: "Subcision", what: "Releasing tethered acne scars with a needle or cannula", approach: "skin", onset: 2,
+    summary: "A dermatologist slips a needle or blunt cannula under rolling acne scars to cut the bands pulling them down.",
+    goals: ["acne"], cost: { nyc: [400, 2600], miami: [200, 1500] }, priceUnit: "per session",
+    sessions: "Often 1–3", lasts: "Long-lasting, though some scars sink back", downtimeDays: [2, 7], pain: 3, results: 2,
+    performedBy: "Board-certified dermatologist", contraindications: ["active-skin", "keloid", "blood-thinners"],
+    notes: "Works best on rolling scars; ice-pick and boxcar scars respond less. Often combined with lasers.",
+  },
+  {
+    id: "azelaic", name: "Azelaic Acid", what: "Prescription cream or gel (Finacea)", aka: ["Finacea", "Azelex", "Azelaic acid 15%", "Azelaic acid 20%"], approach: "topical", onset: 3,
+    summary: "A gentle prescription cream or gel that fades melasma and dark spots and calms rosacea bumps and redness.",
+    goals: ["pigment", "redness"], cost: { nyc: [25, 40], miami: [25, 40] }, priceUnit: "per 50 g tube (generic, with discount coupon)",
+    sessions: "Usually twice a day", lasts: "Works while you use it", downtimeDays: [0, 0], pain: 1, results: 2,
+    performedBy: "Prescribed by a dermatologist or other clinician", contraindications: [],
+    notes: "Reviews consider it a low-risk choice during pregnancy — confirm with your obstetric provider.",
   },
 ];
 
@@ -369,10 +346,8 @@ export const APPROACHES: Record<Approach, { label: string; short: string; hint: 
   biostim: { label: "Collagen-stimulating injectables", short: "Biostimulators", hint: "Injected materials that prompt your own collagen over time" },
   ha: { label: "Hyaluronic acid fillers", short: "HA fillers", hint: "Gel that adds volume or hydration right away; dissolvable" },
   toxin: { label: "Muscle-relaxing injections", short: "Neuromodulators", hint: "Relax specific muscles to soften expression lines" },
-  fat: { label: "Fat reduction & toning", short: "Fat reduction", hint: "Destroy fat cells with cold or injections, or tone muscle" },
   skin: { label: "Needling, peels & facials", short: "Needling & peels", hint: "Controlled skin injury or exfoliation to renew the surface" },
   threads: { label: "Thread lifts", short: "Threads", hint: "Dissolvable threads that lift tissue" },
-  vein: { label: "Vein treatments", short: "Veins", hint: "Injections that close small visible veins" },
 };
 
 export const ONSET_LABELS = ["", "Right away", "Within days–weeks", "Gradually (months)"];
@@ -386,11 +361,7 @@ export const GOAL_LABELS: Record<string, string> = {
   redness: "Redness",
   acne: "Acne Scars",
   glow: "Overall Glow",
-  contour: "Contouring: Nose, Jaw & Body",
-  hair: "Hair Removal",
-  veins: "Spider Veins",
-  sweat: "Underarm Sweating",
-  tattoo: "Tattoo Removal",
+  contour: "Jawline, Chin & Nose",
 };
 
 export const PAIN_LABELS = ["", "Minimal", "Mild", "Moderate", "Strong", "Intense"];
