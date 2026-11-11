@@ -25,6 +25,8 @@ npm run data-check             # the weekly data check, without opening an issue
    - `SUBSCRIBE_WEBHOOK_URL` / `SUBSCRIBE_WEBHOOK_TOKEN` — where "Email me this guide" sign-ups go.
    - `FEEDBACK_GITHUB_REPO` + `FEEDBACK_GITHUB_TOKEN` — visitor feedback becomes GitHub issues labeled `feedback`
      (use a fine-grained token with *Issues: read & write* on this repo only). Or `FEEDBACK_WEBHOOK_URL`.
+   - `SUPABASE_URL` + `SUPABASE_SERVICE_KEY` + `REPORT_KEY` — referral tracking and the owner-only `/report` page
+     (free Supabase project; run `supabase/tracking.sql` once). See `docs/TRACKING.md`.
 3. Add your domain. HTTPS is automatic.
 
 ## Project structure
@@ -38,9 +40,10 @@ npm run data-check             # the weekly data check, without opening an issue
 | `lib/match.ts` | Matching and **safety filtering** (`safetyReasons`, `matchProcedures`) |
 | `lib/profile.ts` | The person's answers (kept in the browser tab only) and `personalize()` used by every page |
 | `lib/insights.ts`, `lib/trends.ts` | Core-insights timeline and facts; "trending but not FDA-approved" cautions |
-| `lib/clinics.ts` | Directory links, neighborhoods, and an (empty) list for hand-vetted clinics |
+| `lib/clinics.ts` | Directory links, neighborhoods, the (empty) partner clinic list, `PARTNER_NOTE` and consent wording |
+| `lib/tracking.ts`, `lib/store.ts` | Referral tracking: tap logging, UTM tags, storage (Supabase or local file) — see `docs/TRACKING.md` |
 | `components/` | UI: quiz (`Guide`), cards, procedure page, goal guides, compare, browser, feedback form |
-| `app/` | Pages and API routes (`/api/subscribe`, `/api/feedback`) |
+| `app/` | Pages and API routes (`/api/subscribe`, `/api/feedback`, `/api/track`, `/api/lead`, `/api/report`); owner-only `/report` |
 | `prototype/` | Single-file prototype build (hash router + small shims) |
 | `scripts/weekly-check.mjs` | Weekly link / PubMed / freshness check |
 | `.github/workflows/weekly-data-check.yml` | Runs the check every Monday and opens an issue |

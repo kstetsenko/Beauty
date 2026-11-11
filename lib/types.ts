@@ -81,4 +81,14 @@ export interface Clinic {
   ratingCheckedAt: string | null;
   /** Board certification you verified (e.g. "ABD dermatologist on staff"). */
   credential: string;
+  /** Paying partner (flat listing fee). Shown with a visible "Partner" label. */
+  partner: boolean;
+  /** Clinic's own online booking page, if any. */
+  bookingUrl?: string;
+  /** Public phone number as the clinic lists it, e.g. "+1 212 555 0100". */
+  phone?: string;
+  /** Where consultation requests are forwarded (never shown on the site). */
+  leadEmail?: string;
+  /** Date the listing agreement started (YYYY-MM-DD), for reports. */
+  listedSince?: string;
 }

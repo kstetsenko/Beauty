@@ -1,12 +1,14 @@
 "use client";
 import { useState } from "react";
-import { CITY_LABELS, CLINICS, NEIGHBORHOODS, directoryLinks, mapsTerm } from "@/lib/clinics";
+import { NEIGHBORHOODS, directoryLinks, mapsTerm } from "@/lib/clinics";
 import { downtimeShort, usd, type Hidden, type Match } from "@/lib/match";
 import { GOAL_LABELS } from "@/lib/procedures";
 import type { Budget, City, Goal } from "@/lib/types";
 import { LeadCaptureForm } from "./LeadCaptureForm";
 import { Disclosure } from "./Disclosure";
 import { Dots } from "./ProcedureFacts";
+import { TrackedLink } from "./TrackedLink";
+import { PartnerClinics } from "./PartnerClinics";
 
 const TIER = ["", "$", "$$", "$$$"];
 
@@ -36,7 +38,6 @@ export function Summary({
   const compareGroups = goals
     .map((g) => ({ g, list: saved.filter((m) => m.procedure.goals.includes(g)).map((m) => m.procedure.id) }))
     .filter((x) => x.list.length >= 2);
-  const clinics = CLINICS.filter((c) => c.city === city && c.offers.some((o) => ids.includes(o)));
 
   return (
     <section className="animate-in space-y-7">
@@ -83,9 +84,10 @@ export function Summary({
                   <span>Recovery: {downtimeShort(p.downtimeDays).toLowerCase()}</span>
                   {budget && p.tier <= budget && <span>✓ Fits your {TIER[budget]} budget</span>}
                 </div>
-                <a href={links.byProcedure[i].href} target="_blank" rel="noopener noreferrer" className="btn-main block text-center mt-4 text-sm">
+                <PartnerClinics city={city} treatment={p.id} area={area.trim()} />
+                <TrackedLink href={links.byProcedure[i].href} ev={{ kind: "maps", treatment: p.id, city, area: area.trim() }} className="btn-main block text-center mt-4 text-sm">
                   {p.approach === "topical" ? `Find a dermatologist near ${where}` : `Find ${p.name} near ${where}`} ↗
-                </a>
+                </TrackedLink>
                 <p className="text-[11px] text-muted text-center mt-1.5">Opens Google Maps with public ratings and reviews</p>
                 <a href={`/procedures/${p.id}?city=${city}`} className="block text-center text-sm underline mt-2">
                   Recovery, risks, research & questions to ask
@@ -93,30 +95,6 @@ export function Summary({
               </li>
             ))}
           </ul>
-
-          {clinics.length > 0 && (
-            <div>
-              <h2 className="font-semibold mb-3">Clinics we&apos;ve checked</h2>
-              <ul className="space-y-2.5">
-                {clinics.map((c) => (
-                  <li key={c.id} className="rounded-3xl bg-white border border-line p-4">
-                    <p className="font-medium">{c.name}</p>
-                    <p className="text-xs text-muted">{c.neighborhood} · {c.credential}</p>
-                    {c.rating !== null && c.ratingCheckedAt && (
-                      <p className="text-sm mt-1">
-                        {c.rating.toFixed(1)} ★{c.reviewCount !== null && ` (${c.reviewCount.toLocaleString("en-US")} Google reviews)`}
-                        <span className="text-[11px] text-muted"> · checked {c.ratingCheckedAt}</span>
-                      </p>
-                    )}
-                    <div className="flex gap-4 text-sm mt-2">
-                      <a href={c.website} target="_blank" rel="noopener noreferrer nofollow" className="underline">See prices & availability ↗</a>
-                      <a href={c.googleUrl} target="_blank" rel="noopener noreferrer nofollow" className="underline">Google reviews ↗</a>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
 
           {compareGroups.length > 0 && (
             <div className="grid gap-2">
@@ -163,11 +141,11 @@ export function Summary({
         <p className="text-xs text-muted mb-3">Look for a board-certified dermatologist or plastic surgeon, or a med spa supervised by one.</p>
         <div className="grid gap-2">
           {links.directories.map((l) => (
-            <a key={l.href} href={l.href} target="_blank" rel="noopener noreferrer" className="text-sm underline">{l.short} ↗</a>
+            <TrackedLink key={l.href} href={l.href} ev={{ kind: "directory", city }} className="text-sm underline">{l.short} ↗</TrackedLink>
           ))}
-          <a href={links.license.href} target="_blank" rel="noopener noreferrer" className="text-sm underline">{links.license.short} ↗</a>
+          <TrackedLink href={links.license.href} ev={{ kind: "license", city }} className="text-sm underline">{links.license.short} ↗</TrackedLink>
         </div>
-        <p className="text-[11px] text-muted mt-3">We don&apos;t receive payment from clinics or directories linked here.</p>
+        <p className="text-[11px] text-muted mt-3">We don&apos;t receive payment from the directories or license sites linked here.</p>
       </Disclosure>
 
       <button type="button" onClick={onRestart} className="block mx-auto text-sm text-muted underline">Start over</button>

@@ -1,27 +1,45 @@
 import type { City, Clinic, Procedure } from "./types";
 
 /**
- * Vetted clinic listings. This list ships EMPTY on purpose: add only clinics
- * you have personally checked (board certification, state license, current
- * Google rating). Never invent ratings — copy them from the public Google
- * profile and record the date you checked.
+ * Clinic listings. This list ships EMPTY on purpose. Add a clinic only after you
+ * have checked it yourself (board certification, state license) and, for partners,
+ * signed a flat-fee listing agreement (see docs/TRACKING.md). Never invent ratings:
+ * copy them from the public Google profile and record the date you checked.
  *
  * Example entry (replace every value; do not publish as-is):
  * {
- *   id: "example-soho",
+ *   id: "example-soho",                // short, lowercase; used in reports and links
  *   name: "Example Dermatology",
  *   city: "nyc",
- *   neighborhood: "SoHo",
- *   offers: ["neurotoxin", "ha-filler", "fractional-laser"],
+ *   neighborhood: "SoHo",              // use a name from NEIGHBORHOODS when possible
+ *   offers: ["botox", "morpheus8"],    // treatment ids from lib/procedures.ts
  *   website: "https://example.com",
  *   googleUrl: "https://maps.google.com/?cid=...",
- *   rating: 4.8,
- *   reviewCount: 312,
- *   ratingCheckedAt: "2026-11-01",
+ *   rating: 4.8, reviewCount: 312, ratingCheckedAt: "2026-11-01",   // or null, null, null
  *   credential: "ABD board-certified dermatologists on staff",
+ *   partner: true,
+ *   bookingUrl: "https://example.com/book",
+ *   phone: "+1 212 555 0100",
+ *   leadEmail: "frontdesk@example.com",
+ *   listedSince: "2026-12-01",
  * },
  */
 export const CLINICS: Clinic[] = [];
+
+/** Shown next to partner clinics. Keep it true: partners pay a flat listing fee, never per patient. */
+export const PARTNER_NOTE =
+  "Partner clinics pay us a flat monthly listing fee. They don't pay per patient, and they don't change which treatments we show or how we rank them. Always check a provider's credentials yourself.";
+
+/** Stored with every consultation request, word for word. */
+export const LEAD_CONSENT =
+  "I agree that Aesthetic Guide shares my name, contact details and the treatment I picked with this clinic so they can contact me about a consultation.";
+
+/** Partner clinics in a city offering any of the treatments; the chosen neighborhood first, then A–Z (never by fee). */
+export function partnersFor(city: City, treatmentIds: string[], area = "") {
+  return CLINICS.filter((c) => c.partner && c.city === city && c.offers.some((o) => treatmentIds.includes(o))).sort(
+    (a, b) => Number(b.neighborhood === area) - Number(a.neighborhood === area) || a.name.localeCompare(b.name),
+  );
+}
 
 /** Common neighborhoods for one-tap provider searches. */
 export const NEIGHBORHOODS: Record<City, string[]> = {

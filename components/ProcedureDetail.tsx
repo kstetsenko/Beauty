@@ -3,6 +3,8 @@ import { GOAL_LABELS } from "@/lib/procedures";
 import type { City, Procedure } from "@/lib/types";
 import { ApproachTag, DetailSections, KeyFacts } from "./ProcedureFacts";
 import { ForYou } from "./ForYou";
+import { TrackedLink } from "./TrackedLink";
+import { PartnerClinics } from "./PartnerClinics";
 
 export function ProcedureDetail({ p, city }: { p: Procedure; city: City }) {
   const other: City = city === "nyc" ? "miami" : "nyc";
@@ -35,22 +37,23 @@ export function ProcedureDetail({ p, city }: { p: Procedure; city: City }) {
           ))}
         </div>
       </section>
-      <a href={maps.href} target="_blank" rel="noopener noreferrer" className="btn-main block text-center mt-5">
+      <PartnerClinics city={city} treatment={p.id} />
+      <TrackedLink href={maps.href} ev={{ kind: "maps", treatment: p.id, city }} className="btn-main block text-center mt-5">
         {p.approach === "topical" ? "Find a dermatologist near me" : `Find ${p.name} near me`} ↗
-      </a>
+      </TrackedLink>
       <p className="text-[11px] text-muted text-center mt-1.5">Opens Google Maps near your location, with public ratings and reviews. Or pick a {CITY_LABELS[city]} neighborhood:</p>
       <div className="flex gap-2 overflow-x-auto -mx-5 px-5 py-1 [scrollbar-width:none]">
         {NEIGHBORHOODS[city].map((n) => (
-          <a key={n} href={directoryLinks(city, n, [mapsTerm(p)]).byProcedure[0].href} target="_blank" rel="noopener noreferrer"
+          <TrackedLink key={n} href={directoryLinks(city, n, [mapsTerm(p)]).byProcedure[0].href} ev={{ kind: "maps", treatment: p.id, city, area: n }}
             className="shrink-0 rounded-full border border-line bg-white px-3 py-1.5 text-xs hover:border-ink">
             {n} ↗
-          </a>
+          </TrackedLink>
         ))}
       </div>
       <a href={`/compare?ids=${p.id}&city=${city}`} className="btn-soft block text-center mt-3 text-sm">Compare with similar treatments</a>
       <p className="text-[11px] text-muted text-center mt-4">
         *Price ranges are not quotes. Educational information only — not medical advice. Brand names belong to their owners;
-        we are not affiliated with any brand or clinic. <a href="/sources" className="underline">How we research</a>
+        we are not affiliated with any brand, and clinics marked Partner pay only a flat listing fee. <a href="/sources" className="underline">How we research</a>
       </p>
     </article>
   );
