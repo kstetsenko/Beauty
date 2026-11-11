@@ -57,7 +57,7 @@ export function ProcedureBrowser() {
           </li>
         ))}
       </ul>
-      <p className="text-[11px] text-muted text-center mt-3">Prices are typical local estimates, not quotes.</p>
+      <p className="text-[11px] text-muted text-center mt-3">Prices checked against published clinic prices where available — not quotes. <a href="/sources" className="underline">How we check</a></p>
     </div>
   );
 }

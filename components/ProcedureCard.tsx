@@ -63,7 +63,10 @@ export function ProcedureCard({
           {open ? "Less" : "More details"}
         </button>
         {open && (
-          <div className="mt-4 animate-in"><MoreFacts p={p} /></div>
+          <div className="mt-4 animate-in">
+            <MoreFacts p={p} city={city} />
+            <a href={`/procedures/${p.id}?city=${city}`} className="inline-block mt-3 text-sm underline">Studies, price sources & questions to ask →</a>
+          </div>
         )}
       </article>
 
@@ -71,7 +74,7 @@ export function ProcedureCard({
         <button type="button" onClick={onSkip} className="btn-soft">Skip</button>
         <button type="button" onClick={onSave} className="btn-main"><span className="text-rose">♥</span> Save</button>
       </div>
-      <p className="text-[11px] text-muted text-center mt-3">*Typical local estimate, not a quote.</p>
+      <p className="text-[11px] text-muted text-center mt-3">*Typical local price range, not a quote. <a href="/sources" className="underline">How we check</a></p>
     </div>
   );
 }

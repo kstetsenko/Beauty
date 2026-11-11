@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { CITY_LABELS, directoryLinks } from "@/lib/clinics";
 import { PROCEDURES } from "@/lib/procedures";
 import type { City } from "@/lib/types";
-import { ApproachTag, KeyFacts, MoreFacts } from "@/components/ProcedureFacts";
+import { ApproachTag, KeyFacts, MoreFacts, ResearchSection } from "@/components/ProcedureFacts";
 
 export function generateStaticParams() {
   return PROCEDURES.map((p) => ({ id: p.id }));
@@ -38,12 +38,16 @@ export default async function ProcedurePage({ params, searchParams }: Props) {
           <a href={`?city=${other}`} className="rounded-full border border-line px-3.5 py-1.5 hover:border-ink">{CITY_LABELS[other]}</a>
         </div>
         <div className="mb-6"><KeyFacts p={p} city={city} /></div>
-        <MoreFacts p={p} />
+        <MoreFacts p={p} city={city} />
       </div>
       <a href={maps.href} target="_blank" rel="noopener noreferrer" className="btn-main block text-center mt-4">
         Find {p.name} in {CITY_LABELS[city]} ↗
       </a>
-      <p className="text-[11px] text-muted text-center mt-3">*Typical local estimate, not a quote. Choose a board-certified provider.</p>
+      <div className="mt-4"><ResearchSection p={p} city={city} /></div>
+      <p className="text-[11px] text-muted text-center mt-4">
+        *Price ranges are not quotes. Educational information only — not medical advice. Brand names belong to their owners;
+        we are not affiliated with any brand or clinic. <a href="/sources" className="underline">How we research</a>
+      </p>
     </article>
   );
 }
