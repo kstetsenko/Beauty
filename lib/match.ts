@@ -1,5 +1,5 @@
-import { PROCEDURES } from "./procedures";
-import { belowMinAge, notesFor, type Note } from "./advice";
+import { GOAL_LABELS, PROCEDURES } from "./procedures";
+import { LIGHT, belowMinAge, notesFor, type Note } from "./advice";
 import { CAUTIONS } from "./cautions";
 import { RESEARCH } from "./research";
 import type { Procedure, QuizAnswers } from "./types";
@@ -9,6 +9,8 @@ const MAX_DOWNTIME = { none: 1, short: 7, any: Infinity } as const;
 export interface Match {
   procedure: Procedure;
   score: number;
+  /** Plain-language reasons behind the score: what fits, and what to weigh. */
+  why: { good: string[]; watch: string[] };
   flagged: QuizAnswers["cautions"];
   notes: Note[];
 }
@@ -42,14 +44,10 @@ export function matchProcedures(a: QuizAnswers): { shown: Match[]; hidden: Hidde
       continue;
     }
     if (p.downtimeDays[1] > MAX_DOWNTIME[a.downtime]) continue;
-    shown.push({
-      procedure: p,
-      score: p.goals.filter((g) => a.goals.includes(g)).length + conditionBoost(p, a),
-      flagged: [],
-      notes: notesFor(p, a),
-    });
+    const { score, why } = rank(p, a);
+    shown.push({ procedure: p, score, why, flagged: [], notes: notesFor(p, a) });
   }
-  shown.sort((x, y) => y.score - x.score || RESEARCH[y.procedure.id].evidence - RESEARCH[x.procedure.id].evidence || x.procedure.tier - y.procedure.tier);
+  shown.sort((x, y) => y.score - x.score || x.why.watch.length - y.why.watch.length || RESEARCH[y.procedure.id].evidence - RESEARCH[x.procedure.id].evidence || x.procedure.tier - y.procedure.tier);
   return { shown, hidden };
 }
 
@@ -63,10 +61,50 @@ export function downtimeShort([lo, hi]: [number, number]) {
   return `${lo || 1}–${hi} days`;
 }
 
-/** Condition-specific first steps (AAD: melasma → prescription cream first; rosacea redness → Rx cream or vascular laser/light). */
-function conditionBoost(p: Procedure, a: QuizAnswers) {
-  let b = 0;
-  if (a.conditions?.includes("melasma") && p.id === "laser-toning") b += 2;
-  if (a.conditions?.includes("rosacea") && ["pdl", "ktp", "ipl"].includes(p.id)) b += 1;
-  return b;
+/**
+ * How results are ranked — the same rules are explained on the results page (RANK_RULES).
+ * Points: +3 per goal of yours it treats · +2 per research level (1–3) · +1 per typical-results level (1–3)
+ * · +3 if it specifically targets a condition you have · −2/−3 when your answers raise a known risk.
+ */
+export const RANK_RULES = [
+  "How many of your goals it treats (biggest factor)",
+  "Strength of the research behind it",
+  "How noticeable typical results are",
+  "Fit with your skin tone, conditions and recent treatments",
+];
+
+const RESULT_WORD = ["", "subtle", "noticeable", "dramatic"];
+
+export function rank(p: Procedure, a: QuizAnswers): { score: number; why: { good: string[]; watch: string[] } } {
+  const good: string[] = [];
+  const watch: string[] = [];
+  let score = 0;
+
+  const hit = p.goals.filter((g) => a.goals.includes(g));
+  score += 3 * hit.length;
+  if (hit.length > 1) good.push(`Treats ${hit.length} of your goals: ${hit.map((g) => GOAL_LABELS[g].toLowerCase()).join(", ")}`);
+  else if (hit.length === 1) good.push(`Treats your goal: ${GOAL_LABELS[hit[0]].toLowerCase()}`);
+
+  const ev = RESEARCH[p.id].evidence;
+  score += 2 * ev;
+  if (ev === 3) good.push("Strong research (randomized trials)");
+  else if (ev === 2) good.push("Some research");
+  else watch.push("Little research so far");
+
+  score += p.results;
+  if (p.results === 3) good.push("Dramatic results possible");
+  else if (p.results === 1) watch.push("Subtle results");
+  else good.push(`Typically ${RESULT_WORD[p.results]} results`);
+
+  const melasma = a.conditions?.includes("melasma");
+  const rosacea = a.conditions?.includes("rosacea");
+  if (melasma && p.id === "laser-toning") { score += 3; good.unshift("Used specifically for melasma"); }
+  if (melasma && p.id === "peel") { score += 1; good.push("Has evidence for melasma"); }
+  if (rosacea && ["pdl", "ktp", "ipl"].includes(p.id)) { score += 3; good.unshift("Targets rosacea redness"); }
+  if (melasma && LIGHT.has(p.id) && !["pdl", "laser-genesis"].includes(p.id)) { score -= 3; watch.unshift("Can make melasma darker"); }
+  if (a.tone && a.tone !== "light" && LIGHT.has(p.id)) { score -= a.tone === "deep" ? 3 : 2; watch.push("Higher risk of dark marks on your skin tone"); }
+  if (a.had?.includes(p.id)) watch.push("You had this recently — plan the timing");
+  if (a.recent?.includes("filler") && p.id === "ultherapy") { score -= 2; watch.push("Recent filler: a study suggests waiting about 4 weeks"); }
+
+  return { score, why: { good, watch } };
 }

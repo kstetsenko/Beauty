@@ -227,7 +227,7 @@ export function Guide() {
             </button>
           </section>
         ) : (
-          <ResultsList matches={matches} city={city} saved={saved} onToggle={toggleSave} onDone={finish} hiddenCount={result.hidden.length} />
+          <ResultsList matches={matches} goals={goals} city={city} saved={saved} onToggle={toggleSave} onDone={finish} hiddenCount={result.hidden.length} />
         )
       )}
 
