@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",
-    "prototype": "node prototype/build.mjs"
+    "prototype": "node prototype/build.mjs",
+    "data-check": "node scripts/weekly-check.mjs --no-issue"
   },
   "dependencies": {
     "next": "16.4.6",

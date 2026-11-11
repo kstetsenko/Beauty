@@ -38,6 +38,8 @@ export interface Procedure {
   name: string;
   /** Plain-English "what it is" line. */
   what: string;
+  /** Brand names and other names clinics use (searchable). Only real, verifiable product names. */
+  aka?: string[];
   approach: Approach;
   onset: Onset;
   /** Minimum age from FDA authorizations (e.g. fillers and microneedling devices: 22+). */

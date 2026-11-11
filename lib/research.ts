@@ -137,10 +137,7 @@ export const RESEARCH: Record<string, Research> = {
   moxi: {
     resultsIn: "Within about a week",
     sideEffects: "Mild redness and a sandpaper feel for a few days",
-    prices: [
-      { label: "Dr. Debra Jaliman (NYC) — Clear + Brilliant", url: "https://www.dermatologist-nyc.com/clear-brilliant/", city: "nyc" },
-      { label: "Deep Blue Med Spa (NYC) — Clear + Brilliant", url: "https://www.deepbluemedspa.com/locations/nyc/clear-brilliant/", city: "nyc" },
-    ],
+    prices: [],
     evidence: 1,
     evidenceNote: "Small studies of gentle 1927 nm lasers show improvement in sun spots and tone.",
     studies: [
@@ -506,6 +503,55 @@ export const RESEARCH: Record<string, Research> = {
     evidenceNote: "A small single-arm study (24 people, no control group) reported wrinkle reduction at 3 months.",
     studies: [
       { title: "Wrinkle reduction with simultaneous radiofrequency and HIFES (multicenter, single-arm study)", url: pm("37379470"), kind: "Clinical study" },
+    ],
+  },
+  "clear-brilliant": {
+    resultsIn: "Within about a week; builds over the series",
+    sideEffects: "Redness, mild swelling and a sandpaper feel for a few days",
+    prices: [
+      { label: "Dr. Debra Jaliman (NYC) — Clear + Brilliant", url: "https://www.dermatologist-nyc.com/clear-brilliant/", city: "nyc" },
+      { label: "Deep Blue Med Spa (NYC) — Clear + Brilliant", url: "https://www.deepbluemedspa.com/locations/nyc/clear-brilliant/", city: "nyc" },
+      { label: "RealSelf — Clear + Brilliant cost (national)", url: "https://www.realself.com/nonsurgical/clear-brilliant/cost" },
+    ],
+    evidence: 1,
+    evidenceNote: "A small study found smaller-looking pores after six low-energy 1440 nm treatments; a review summarizes improvements in tone and texture.",
+    studies: [
+      { title: "Evaluating facial pores and skin texture after low-energy nonablative fractional 1440-nm laser treatments", url: pm("23098639"), kind: "Clinical study" },
+      { title: "The 1440 nm and 1927 nm Nonablative Fractional Diode Laser: Current Trends and Future Directions", url: pm("32804450"), kind: "Review" },
+    ],
+  },
+  "laser-genesis": {
+    resultsIn: "Gradually over a series",
+    sideEffects: "Mild, short-lived redness and warmth",
+    prices: [{ label: "RealSelf — Laser Genesis cost (national)", url: "https://www.realself.com/nonsurgical/laser-genesis/cost" }],
+    evidence: 1,
+    evidenceNote: "A meta-analysis compared microsecond Nd:YAG with pulsed dye laser for rosacea redness; results varied between studies.",
+    studies: [
+      { title: "Efficacy Comparison of Pulsed Dye Laser vs. Microsecond 1064-nm Neodymium:Yttrium-Aluminum-Garnet Laser in the Treatment of Rosacea: A Meta-Analysis", url: pmc("PMC8811442"), kind: "Meta-analysis" },
+    ],
+  },
+  tixel: {
+    resultsIn: "Gradually over weeks after each session",
+    sideEffects: "Redness, a grid pattern and light flaking for a few days",
+    prices: [{ label: "VRM (NYC) — Tixel pricing", url: "https://www.vrmny.com/tixel-for-skin-rejuvenation/", city: "nyc" }],
+    evidence: 1,
+    evidenceNote: "Small clinical and histology studies; no large controlled trials yet.",
+    studies: [
+      { title: "Fractional treatment of aging skin with Tixel, a clinical and histological evaluation", url: pm("26073117"), kind: "Clinical study" },
+    ],
+  },
+  led: {
+    resultsIn: "Gradually over a series of sessions",
+    sideEffects: "Generally none; protect the eyes during treatment",
+    prices: [
+      { label: "Bespoke Surgical (NYC) — light therapy pricing", url: "https://bespokesurgical.com/aesthetics/heatlite-treatment", city: "nyc" },
+      { label: "La Suite (NYC) — service menu", url: "https://lasuiteskincare.com/pages/nyc-service-menu-pricing", city: "nyc" },
+    ],
+    evidence: 1,
+    evidenceNote: "Small randomized and controlled trials report modest improvement in fine lines; larger trials are lacking.",
+    studies: [
+      { title: "The Efficacy and Safety of 660 nm and 411 to 777 nm Light-Emitting Devices for Treating Wrinkles", url: pm("28195844"), kind: "Randomized trial" },
+      { title: "A Controlled Trial to Determine the Efficacy of Red and Near-Infrared Light Treatment in Patient Satisfaction, Reduction of Fine Lines, Wrinkles, Skin Roughness, and Intradermal Collagen Density Increase", url: pmc("PMC3926176"), kind: "Clinical study" },
     ],
   },
 };

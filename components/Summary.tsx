@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { CITY_LABELS, CLINICS, directoryLinks } from "@/lib/clinics";
+import { CITY_LABELS, CLINICS, NEIGHBORHOODS, directoryLinks } from "@/lib/clinics";
 import { downtimeShort, usd, type Hidden, type Match } from "@/lib/match";
 import { GOAL_LABELS } from "@/lib/procedures";
 import type { Budget, City, Goal } from "@/lib/types";
@@ -62,6 +62,14 @@ export function Summary({
               className="w-full rounded-full border border-line bg-white px-5 py-3 text-sm focus:outline-none focus:border-ink"
             />
           </label>
+          <div className="flex gap-2 overflow-x-auto -mx-5 px-5 pb-1 -mt-4 [scrollbar-width:none]">
+            {NEIGHBORHOODS[city].map((n) => (
+              <button key={n} type="button" onClick={() => setArea(n)} aria-pressed={area === n}
+                className={"shrink-0 rounded-full border px-3 py-1.5 text-xs " + (area === n ? "bg-ink text-white border-ink" : "bg-white border-line")}>
+                {n}
+              </button>
+            ))}
+          </div>
 
           <ul className="space-y-3">
             {saved.map(({ procedure: p }, i) => (

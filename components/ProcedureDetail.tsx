@@ -1,4 +1,4 @@
-import { CITY_LABELS, directoryLinks } from "@/lib/clinics";
+import { CITY_LABELS, NEIGHBORHOODS, directoryLinks } from "@/lib/clinics";
 import { GOAL_LABELS } from "@/lib/procedures";
 import type { City, Procedure } from "@/lib/types";
 import { ApproachTag, DetailSections, KeyFacts } from "./ProcedureFacts";
@@ -38,6 +38,15 @@ export function ProcedureDetail({ p, city }: { p: Procedure; city: City }) {
       <a href={maps.href} target="_blank" rel="noopener noreferrer" className="btn-main block text-center mt-5">
         Find {p.name} providers in {CITY_LABELS[city]} ↗
       </a>
+      <p className="text-[11px] text-muted text-center mt-1.5">Opens Google Maps with public ratings and reviews. Or pick a neighborhood:</p>
+      <div className="flex gap-2 overflow-x-auto -mx-5 px-5 py-1 [scrollbar-width:none]">
+        {NEIGHBORHOODS[city].map((n) => (
+          <a key={n} href={directoryLinks(city, n, [p.name]).byProcedure[0].href} target="_blank" rel="noopener noreferrer"
+            className="shrink-0 rounded-full border border-line bg-white px-3 py-1.5 text-xs hover:border-ink">
+            {n} ↗
+          </a>
+        ))}
+      </div>
       <a href={`/compare?ids=${p.id}&city=${city}`} className="btn-soft block text-center mt-3 text-sm">Compare with similar treatments</a>
       <p className="text-[11px] text-muted text-center mt-4">
         *Price ranges are not quotes. Educational information only — not medical advice. Brand names belong to their owners;

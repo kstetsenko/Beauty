@@ -92,6 +92,8 @@ export const SAFETY: Record<string, Safety> = {
   fraxel: LASER,
   halo: LASER,
   moxi: LASER,
+  "clear-brilliant": LASER,
+  "laser-genesis": LASER,
   pico: LASER,
   ipl: LASER,
   "laser-hair": LASER,

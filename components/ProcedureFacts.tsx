@@ -3,6 +3,7 @@ import { downtimeShort, usd } from "@/lib/match";
 import { APPROACHES, ONSET_LABELS, PAIN_LABELS, RESULT_LABELS } from "@/lib/procedures";
 import { SAFETY } from "@/lib/safety";
 import { LEARN } from "@/lib/learn";
+import { VIDEOS } from "@/lib/videos";
 import { Disclosure } from "./Disclosure";
 import { CONSULT_QUESTIONS, CHECKED, EVIDENCE_LABELS, RESEARCH, priceChecked } from "@/lib/research";
 import type { City, Procedure } from "@/lib/types";
@@ -85,6 +86,7 @@ export function DetailSections({ p, city, withPrice = true }: { p: Procedure; ci
       <Disclosure tone="plain" title="How it works" hint={APPROACHES[p.approach].label}>
         <dl className="space-y-2.5">
           <Row label="In short">{APPROACHES[p.approach].hint}.</Row>
+          {p.aka && <Row label="Also called">{p.aka.join(" · ")}</Row>}
           <Row label="Sessions">{p.sessions}</Row>
           <Row label="Who does it">{p.performedBy}</Row>
           {p.minAge && <Row label="Age">FDA-authorized for adults {p.minAge} and older.</Row>}
@@ -106,7 +108,7 @@ export function DetailSections({ p, city, withPrice = true }: { p: Procedure; ci
           {safety?.getHelpIf && (
             <Row label="Get medical help right away if">{safety.getHelpIf}</Row>
           )}
-          <Row label="Not usually advised with">{p.contraindications.map((c) => CAUTIONS[c].short).join(" · ")}</Row>
+          <Row label="Not usually advised with">{p.contraindications.length ? p.contraindications.map((c) => CAUTIONS[c].short).join(" · ") : "None listed — ask your provider"}</Row>
         </dl>
       </Disclosure>
 
@@ -159,6 +161,12 @@ export function DetailSections({ p, city, withPrice = true }: { p: Procedure; ci
       <Disclosure tone="plain" title="Learn more & videos" hint="AAD, ASPS and FDA guides">
         <ul className="space-y-2">
           {learn.map((l) => <li key={l.url}><ExtLink href={l.url}>{l.label}</ExtLink></li>)}
+          {(VIDEOS[p.id] ?? []).map((v) => (
+            <li key={v.url}>
+              <ExtLink href={v.url}>{v.title}</ExtLink>
+              <span className="block text-[11px] text-muted">Video · {v.presenter} · checked {v.checked}</span>
+            </li>
+          ))}
           <li>
             <ExtLink href={`https://www.youtube.com/results?search_query=${encodeURIComponent(p.name.split(" / ")[0] + " dermatologist explains")}`}>
               Explainer videos on YouTube

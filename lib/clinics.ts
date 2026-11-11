@@ -23,6 +23,12 @@ import type { City, Clinic } from "./types";
  */
 export const CLINICS: Clinic[] = [];
 
+/** Common neighborhoods for one-tap provider searches. */
+export const NEIGHBORHOODS: Record<City, string[]> = {
+  nyc: ["Upper East Side", "Upper West Side", "Midtown", "Flatiron", "SoHo", "Tribeca", "Financial District", "Williamsburg", "Brooklyn Heights"],
+  miami: ["Brickell", "Downtown Miami", "Miami Beach", "Coral Gables", "Design District", "Aventura", "Doral", "Key Biscayne"],
+};
+
 export const CITY_LABELS: Record<City, string> = { nyc: "New York City", miami: "Miami" };
 
 /** Where to look for a qualified provider. Users verify credentials themselves. */
