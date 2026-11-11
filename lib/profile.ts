@@ -1,6 +1,6 @@
 import { useSyncExternalStore } from "react";
 import { matchProcedures, type Hidden, type Match } from "./match";
-import { PROCEDURES } from "./procedures";
+import { GOAL_LABELS, PROCEDURES } from "./procedures";
 import type { AgeBand, Budget, Caution, City, Condition, Goal, Procedure, QuizAnswers, Recent, SkinTone } from "./types";
 
 /**
@@ -31,6 +31,8 @@ function read(): Profile | null {
     if (raw !== cachedRaw) {
       cachedRaw = raw;
       memory = raw ? (JSON.parse(raw) as Profile) : null;
+      // Drop goals that no longer exist (e.g. a tab saved before a goal was retired).
+      if (memory) memory = { ...memory, goals: (memory.goals ?? []).filter((g) => g in GOAL_LABELS) };
     }
   } catch {
     /* storage blocked: keep in-memory copy */

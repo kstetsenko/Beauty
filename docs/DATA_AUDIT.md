@@ -33,8 +33,7 @@ re-checked. Nothing in the app should be added without a source of the kind list
 | PRP Microneedling | Published | Published | 2 | Limited |
 | Sculptra | Estimate | Estimate | 2 | Some |
 | Botox / Dysport / Daxxify | Published | Published | 3 | Strong |
-| Lip Filler | Published | Estimate | 2 | Strong |
-| Cheek & Jaw Filler | Published | Estimate | 2 | Strong |
+| Cheek Filler | Published | Estimate | 2 | Strong |
 | Radiesse | Published | Estimate | 2 | Some |
 | Skinvive | Estimate | Estimate | 1 | Limited |
 | PDO Thread Lift | Published | Estimate | 2 | Limited |
@@ -44,12 +43,10 @@ re-checked. Nothing in the app should be added without a source of the kind list
 | IPL / BBL Photofacial | Estimate | Estimate | 2 | Some |
 | Pico Laser | Estimate | Estimate | 2 | Some |
 | Prescription Retinoid (Tretinoin) | Estimate | Estimate | 2 | Strong |
-| Masseter Botox (Jaw Slimming) | Estimate | Published | 2 | Some |
 | Under-Eye Filler | Published | Estimate | 2 | Strong |
 | Pulsed Dye Laser (Vbeam) | Estimate | Estimate | 2 | Some |
 | Microdermabrasion | Estimate | Published | 2 | Limited |
 | Erbium Laser Resurfacing | Published | Estimate | 2 | Some |
-| Non-Surgical Nose Job | Estimate | Estimate | 1 | Limited |
 | Emface | Estimate | Estimate | 1 | Limited |
 | Laser Genesis | Estimate | Estimate | 1 | Limited |
 | Tixel | Published | Estimate | 1 | Limited |
@@ -70,3 +67,29 @@ re-checked. Nothing in the app should be added without a source of the kind list
 ## Link check history
 - 2026-11-11 (first weekly run): 3 dead price pages replaced or removed (Skinly Fraxel → new URL; Ethos Spa Miami lip filler removed → Miami estimate; Kassir erbium → Tribeca Park Dermatology). RealSelf Miami Ultherapy page now redirects to a directory → Miami estimate. Redirected links updated. RealSelf, GoodRx and AEDIT block automated checks (403/429) — verify those manually.
 - 2026-11-11 (second run): earlier dead links confirmed fixed. RealSelf Miami Fraxel page now redirects to a directory → Miami estimate. The check script now uses the current PubMed Central address. NY license lookup (op.nysed.gov) blocks automated checks — verify manually.
+
+## Scope and goal review (2026-11-11)
+- **Removed** (reshaping, not rejuvenation): lip filler, non-surgical nose job, masseter Botox (jaw slimming).
+  The "Jawline, Chin & Nose" goal went with them; sagging along the jaw is covered by "Lifting & Firmness".
+  "Volume & Lips" is now "Lost Volume" (cheeks and under-eyes).
+- **Rule:** a treatment appears under a goal only if the studies cited for it (lib/research.ts) or its FDA
+  approval/clearance support that goal. Goals removed because the cited evidence doesn't cover them:
+
+| Treatment | Removed from | Why |
+|---|---|---|
+| Ultherapy | Jawline | Goal retired; lifting kept |
+| Thermage | Texture | Studies cover tightening and wrinkles; added Lines |
+| Morpheus8 | Lifting | Cited reviews cover acne scars and texture |
+| Microneedling | Glow | Evidence is for acne scars and photoaging (texture, lines) |
+| PRP | Texture, Glow | Evidence is only for acne scars, combined with microneedling |
+| Sculptra | Lifting | Evidence is for volume restoration and wrinkles |
+| Cheek Filler | Lifting, Jawline | Evidence is for midface volume; jaw/chin products are reshaping |
+| Radiesse | Lifting, Jawline | Evidence is for smile lines and volume |
+| HydraFacial, Dermaplaning | Texture | No clinical trials; kept only as "glow" facials |
+| Chemical Peel | Acne scars | Cited evidence covers melasma and active acne, not scars |
+| Pico laser | Acne scars | Cited studies cover wrinkles, pigment and photoaging; added Lines |
+| Tretinoin | Acne scars | Evidence is for sun-damaged skin; it treats active acne, not scars |
+| EMFACE | Lifting | The one study measured wrinkles only |
+
+- **Questions to ask a provider** are now written per treatment (lib/questions.ts), from that treatment's own
+  sessions, risks and safety notices. `npm run check` fails if a treatment has fewer than 3 or a question repeats.

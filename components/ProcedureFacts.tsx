@@ -4,8 +4,9 @@ import { APPROACHES, ONSET_LABELS, PAIN_LABELS, RESULT_LABELS } from "@/lib/proc
 import { SAFETY } from "@/lib/safety";
 import { LEARN } from "@/lib/learn";
 import { VIDEOS } from "@/lib/videos";
+import { QUESTIONS } from "@/lib/questions";
 import { Disclosure } from "./Disclosure";
-import { CONSULT_QUESTIONS, CHECKED, EVIDENCE_LABELS, RESEARCH, priceChecked } from "@/lib/research";
+import { CHECKED, EVIDENCE_LABELS, RESEARCH, priceChecked } from "@/lib/research";
 import type { City, Procedure } from "@/lib/types";
 
 export function Dots({ value, max, label }: { value: number; max: number; label: string }) {
@@ -152,11 +153,13 @@ export function DetailSections({ p, city, withPrice = true }: { p: Procedure; ci
         </Disclosure>
       )}
 
-      <Disclosure tone="plain" title="Questions to ask your provider" hint="6 questions">
-        <ol className="list-decimal pl-5 space-y-2 text-sm">
-          {CONSULT_QUESTIONS.map((q) => <li key={q}>{q}</li>)}
-        </ol>
-      </Disclosure>
+      {QUESTIONS[p.id]?.length > 0 && (
+        <Disclosure tone="plain" title="Questions to ask your provider" hint={`${QUESTIONS[p.id].length} questions about ${p.name.split(" / ")[0]}`}>
+          <ol className="list-decimal pl-5 space-y-2 text-sm">
+            {QUESTIONS[p.id].map((q) => <li key={q}>{q}</li>)}
+          </ol>
+        </Disclosure>
+      )}
 
       <Disclosure tone="plain" title="Learn more & videos" hint="AAD, ASPS and FDA guides">
         <ul className="space-y-2">

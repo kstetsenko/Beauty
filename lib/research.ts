@@ -200,20 +200,6 @@ export const RESEARCH: Record<string, Research> = {
       { title: "DaxibotulinumtoxinA for Injection for the Treatment of Glabellar Lines: Results from Each of Two Multicenter, Randomized, Double-Blind, Placebo-Controlled, Phase 3 Studies (SAKURA 1 and SAKURA 2)", url: pm("31609882"), kind: "Randomized trial" },
     ],
   },
-  "lip-filler": {
-    resultsIn: "Right away; swelling settles in about 2 weeks",
-    sideEffects: "Swelling, bruising, tenderness; rare but serious blocked blood vessel",
-    prices: [
-      { label: "Skinly Aesthetics (NYC) — lip filler", url: "https://skinlyaesthetics.com/lip-fillers-nyc/", city: "nyc" },
-      { label: "RealSelf — lip filler cost (national)", url: "https://www.realself.com/nonsurgical/lip-filler/cost" },
-    ],
-    evidence: 3,
-    evidenceNote: "Multiple randomized controlled trials of hyaluronic acid lip fillers.",
-    studies: [
-      { title: "Juvéderm Volbella with lidocaine for lip and perioral enhancement: a prospective, randomized, controlled trial", url: pm("25878932"), kind: "Randomized trial" },
-      { title: "Head-to-head comparison of 4 hyaluronic acid dermal fillers for lip augmentation: A multicenter randomized, quadruple-blind, controlled clinical trial", url: pm("36370906"), kind: "Randomized trial" },
-    ],
-  },
   "cheek-filler": {
     resultsIn: "Right away; settles in 2–4 weeks",
     sideEffects: "Swelling, bruising, tenderness; rare but serious blocked blood vessel",
@@ -334,17 +320,6 @@ export const RESEARCH: Record<string, Research> = {
       { title: "Long-term efficacy and safety of tretinoin emollient cream 0.05% in the treatment of photodamaged facial skin: a two-year, randomized, placebo-controlled trial", url: pm("16060712"), kind: "Randomized trial" },
     ],
   },
-  masseter: {
-    resultsIn: "Gradually over 2–6 weeks as the muscle relaxes",
-    sideEffects: "Tenderness, bruising; chewing can feel weaker for a while",
-    prices: [{ label: "Perfect B (Miami) — masseter Botox", url: "https://www.perfectb.com/masseter-botox-miami/", city: "miami" }],
-    evidence: 2,
-    evidenceNote: "A meta-analysis of placebo-controlled trials found short-term slimming; longer-term data are limited.",
-    studies: [
-      { title: "Efficacy of botulinum toxin for masseter muscle hypertrophy: A systematic review and meta-analysis", url: pm("42379083"), kind: "Meta-analysis" },
-      { title: "Exploring botulinum toxin's impact on masseter hypertrophy: a randomized, triple-blinded clinical trial", url: pmc("PMC11196657"), kind: "Randomized trial" },
-    ],
-  },
   "under-eye": {
     resultsIn: "Right away; swelling settles in 1–2 weeks",
     sideEffects: "Swelling, bruising, tenderness; visible lumps or a bluish tint if placed too shallow",
@@ -387,16 +362,6 @@ export const RESEARCH: Record<string, Research> = {
     studies: [
       { title: "A systematic review of comparative studies of CO2 and erbium:YAG lasers in resurfacing facial rhytides (wrinkles)", url: pm("28166434"), kind: "Systematic review" },
       { title: "Efficacy and safety of fractional CO2 laser versus fractional Er:YAG laser in the treatment of facial skin wrinkles", url: pm("27885522"), kind: "Randomized trial" },
-    ],
-  },
-  "nose-filler": {
-    resultsIn: "Right away",
-    sideEffects: "Swelling, bruising, tenderness",
-    prices: [{ label: "RealSelf — non-surgical nose job cost (national)", url: "https://www.realself.com/nonsurgical/nonsurgical-nose-job/cost" }],
-    evidence: 1,
-    evidenceNote: "Reviews describe it as usually safe but note rare serious vascular events, including blindness; no large controlled trials.",
-    studies: [
-      { title: "Complications of Nonsurgical Rhinoplasty with Hyaluronic Acid Injections: A Narrative Review", url: pm("39747417"), kind: "Review" },
     ],
   },
   emface: {
@@ -515,11 +480,3 @@ export function priceChecked(id: string, city: City) {
   return RESEARCH[id]?.prices.some((s) => s.city === city) ?? false;
 }
 
-export const CONSULT_QUESTIONS = [
-  "Who will do my treatment, and what is their license and board certification?",
-  "How many of these treatments have you done? Can I see your own before-and-after photos?",
-  "Is this the brand-name product or device? (For injectables, ask to see the box and lot number.)",
-  "What is the total price, including numbing, consultation fees and touch-ups?",
-  "How many sessions will I really need, and how long will results last for me?",
-  "What could go wrong, and how would you handle a complication?",
-];

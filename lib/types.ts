@@ -1,5 +1,5 @@
 export type City = "nyc" | "miami";
-export type Goal = "texture" | "lines" | "lift" | "volume" | "pigment" | "redness" | "acne" | "glow" | "contour";
+export type Goal = "texture" | "lines" | "lift" | "volume" | "pigment" | "redness" | "acne" | "glow";
 /** How the treatment works (mechanism), used to group procedures. */
 export type Approach = "topical" | "energy" | "laser" | "biostim" | "ha" | "toxin" | "skin" | "threads";
 /** When results usually show: 1 right away, 2 within days to weeks, 3 gradually over months. */

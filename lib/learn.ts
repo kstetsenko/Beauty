@@ -41,8 +41,6 @@ const FILLERS = [AAD.fillersOverview, AAD.fillersFaq, AAD.fillersPrep];
 
 export const LEARN: Record<string, Link[]> = {
   botox: [AAD.botoxOverview, AAD.botoxFaq],
-  masseter: [AAD.botoxOverview, AAD.botoxFaq],
-  "lip-filler": [...FILLERS, AAD.needleFree],
   "cheek-filler": FILLERS,
   "under-eye": FILLERS,
   radiesse: FILLERS,
@@ -76,7 +74,6 @@ export const LEARN: Record<string, Link[]> = {
   subcision: [AAD.acneScars],
   microdermabrasion: [AAD.sunDamage, { label: "ASPS — Microdermabrasion cost", url: "https://www.plasticsurgery.org/cosmetic-procedures/microdermabrasion/cost" }],
   erbium: [AAD.firm, AAD.sunDamage],
-  "nose-filler": [AAD.fillersOverview, AAD.fillersFaq, { label: "FDA — Dermal filler do's and don'ts (approved areas)", url: "https://www.fda.gov/consumers/consumer-updates/dermal-filler-dos-and-donts-wrinkles-lips-and-more" }],
   emface: [AAD.firm],
 };
 
@@ -121,11 +118,6 @@ export const GOAL_GUIDE: Record<Goal, { intro: string; foundation: boolean; lear
     intro: "Start with daily SPF and a retinoid. Gentle options — facials, light peels, gentle lasers or skin boosters — add glow with little or no downtime.",
     foundation: true,
     learn: [AAD.younger, AAD.retinoid],
-  },
-  contour: {
-    intro: "Masseter injections slim a wide jaw muscle; fillers add definition to the chin and jawline or smooth a nose bump (higher-risk); ultrasound and threads lift a softening jawline.",
-    foundation: false,
-    learn: [AAD.fillersOverview, AAD.botoxOverview],
   },
 };
 

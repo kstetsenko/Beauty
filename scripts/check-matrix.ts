@@ -6,6 +6,7 @@ import { LEARN } from "../lib/learn";
 import { personalize, toAnswers, type Profile } from "../lib/profile";
 import { GOAL_LABELS, PROCEDURES } from "../lib/procedures";
 import { RESEARCH } from "../lib/research";
+import { QUESTIONS } from "../lib/questions";
 import type { Goal } from "../lib/types";
 
 const base: Profile = { city: "nyc", goals: [], age: "35-49", tone: "light", flags: [], recent: [], budget: 3 };
@@ -35,6 +36,14 @@ for (const p of PROCEDURES) {
   if (!LEARN[p.id]?.length) fail(`${p.id}: no learning links`);
   if (p.cost.nyc[0] > p.cost.nyc[1] || p.cost.miami[0] > p.cost.miami[1]) fail(`${p.id}: price range reversed`);
   if (!p.goals.length) fail(`${p.id}: no goals`);
+  if ((QUESTIONS[p.id]?.length ?? 0) < 3) fail(`${p.id}: fewer than 3 provider questions`);
+}
+for (const id of Object.keys(QUESTIONS)) if (!PROCEDURES.some((p) => p.id === id)) fail(`questions for unknown treatment ${id}`);
+// Same question on many treatments = generic, not tailored.
+const seen = new Map<string, number>();
+for (const qs of Object.values(QUESTIONS)) for (const q of qs) seen.set(q, (seen.get(q) ?? 0) + 1);
+for (const [q, n] of seen) if (n > 1) fail(`question repeated on ${n} treatments: "${q.slice(0, 60)}"`);
+{
 }
 
 const goals = Object.keys(GOAL_LABELS) as Goal[];

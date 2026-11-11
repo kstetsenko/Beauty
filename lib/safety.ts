@@ -18,7 +18,6 @@ export interface Safety {
 const FDA_FILLERS: Link = { label: "FDA — Dermal fillers: what to know", url: "https://www.fda.gov/medical-devices/aesthetic-cosmetic-devices/dermal-fillers-soft-tissue-fillers" };
 const FDA_FILLER_TIPS: Link = { label: "FDA — Dermal filler do's and don'ts", url: "https://www.fda.gov/consumers/consumer-updates/dermal-filler-dos-and-donts-wrinkles-lips-and-more" };
 const FDA_LASERS: Link = { label: "FDA — Medical lasers: benefits and risks", url: "https://www.fda.gov/radiation-emitting-products/surgical-and-therapeutic-products/medical-lasers" };
-const FDA_BODY: Link = { label: "FDA — Non-invasive body contouring", url: "https://www.fda.gov/medical-devices/aesthetic-cosmetic-devices/non-invasive-body-contouring-technologies" };
 const FDA_NEEDLING: Link = { label: "FDA — Microneedling devices", url: "https://www.fda.gov/medical-devices/aesthetic-cosmetic-devices/microneedling-devices" };
 const FDA_NEEDLING_CONSUMER: Link = { label: "FDA — Microneedling: benefits, risks and safety", url: "https://www.fda.gov/consumers/consumer-updates/microneedling-devices-getting-point-benefits-risks-and-safety" };
 
@@ -34,21 +33,14 @@ const LASER: Safety = {
 };
 
 export const SAFETY: Record<string, Safety> = {
-  "lip-filler": FILLER,
   "cheek-filler": FILLER,
   radiesse: FILLER,
   skinvive: FILLER,
   sculptra: FILLER,
   "under-eye": FILLER,
-  "nose-filler": FILLER,
   erbium: LASER,
   pdl: LASER,
   botox: {
-    serious: "The FDA label carries a boxed warning: the effect can spread beyond the injection site.",
-    getHelpIf: "Trouble swallowing, speaking or breathing, general muscle weakness, double vision or drooping eyelids — hours to weeks after injection.",
-    links: [{ label: "FDA label — Botox Cosmetic (prescribing information)", url: "https://www.accessdata.fda.gov/drugsatfda_docs/label/2018/103000s5306lbl.pdf" }],
-  },
-  masseter: {
     serious: "The FDA label carries a boxed warning: the effect can spread beyond the injection site.",
     getHelpIf: "Trouble swallowing, speaking or breathing, general muscle weakness, double vision or drooping eyelids — hours to weeks after injection.",
     links: [{ label: "FDA label — Botox Cosmetic (prescribing information)", url: "https://www.accessdata.fda.gov/drugsatfda_docs/label/2018/103000s5306lbl.pdf" }],
