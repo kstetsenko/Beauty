@@ -9,11 +9,10 @@ import { RESEARCH } from "../lib/research";
 import { QUESTIONS } from "../lib/questions";
 import type { Goal } from "../lib/types";
 
-const base: Profile = { city: "nyc", goals: [], age: "35-49", tone: "light", flags: [], recent: [], budget: 3 };
+const base: Profile = { city: "nyc", goals: [], age: "35-49", tone: "light", flags: [], had: [] };
 const profiles: [string, Partial<Profile>][] = [
-  ["typical ($$$)", {}],
-  ["budget $", { budget: 1 }],
-  ["budget $$", { budget: 2 }],
+  ["typical", {}],
+  ["had Botox+filler", { had: ["botox", "cheek-filler"] }],
   ["pregnant", { flags: ["pregnancy"] }],
   ["deep skin", { tone: "deep" }],
   ["age 18-21", { age: "18-21" }],
@@ -63,7 +62,7 @@ for (const g of goals) {
     for (const h of hidden) if (!h.reasons.length) fail(`${g}/${name}: ${h.procedure.id} hidden without a reason`);
     const total = PROCEDURES.filter((p) => p.goals.includes(g)).length;
     if (shown.length + hidden.length + outside.length !== total) fail(`${g}/${name}: counts don't add up`);
-    if (name === "typical ($$$)" && shown.length < 4) fail(`${g}: only ${shown.length} options for a typical profile`);
+    if (name === "typical" && shown.length < 4) fail(`${g}: only ${shown.length} options for a typical profile`);
     row.push(String(shown.length).padStart(12));
   }
   console.log(row.join(""));

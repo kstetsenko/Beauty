@@ -10,7 +10,8 @@ export type SkinTone = "light" | "medium" | "deep";
 export type Condition = "melasma" | "rosacea" | "cold-sores";
 /** Treatments had in the last 6 months. */
 export type Recent = "botox" | "filler" | "energy" | "laser" | "peel";
-export type Budget = 1 | 2 | 3;
+/** Price tier from the NYC starting price (used only to sort by price). */
+export type Tier = 1 | 2 | 3;
 export type Downtime = "none" | "short" | "any";
 export type Caution = "pregnancy" | "active-skin" | "isotretinoin" | "keloid" | "autoimmune" | "blood-thinners";
 
@@ -22,7 +23,6 @@ export interface Location {
 
 export interface QuizAnswers {
   goals: Goal[];
-  budget: Budget;
   downtime: Downtime;
   /** Self-reported cautions. Kept in the browser only, used to flag cards. */
   cautions: Caution[];
@@ -30,6 +30,8 @@ export interface QuizAnswers {
   tone?: SkinTone;
   conditions?: Condition[];
   recent?: Recent[];
+  /** Treatment ids had in the last 6 months. */
+  had?: string[];
 }
 
 export interface Procedure {
@@ -48,8 +50,8 @@ export interface Procedure {
   minAge?: number;
   summary: string;
   goals: Goal[];
-  /** Budget tier, derived from the NYC low price. */
-  tier: Budget;
+  /** Price tier, derived from the NYC low price. */
+  tier: Tier;
   /** Typical price range per visit (or per syringe/area) in USD. Educational estimate only. */
   cost: Record<City, [number, number]>;
   priceUnit: string;

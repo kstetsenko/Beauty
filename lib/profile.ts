@@ -1,7 +1,7 @@
 import { useSyncExternalStore } from "react";
 import { matchProcedures, type Hidden, type Match } from "./match";
 import { GOAL_LABELS, PROCEDURES } from "./procedures";
-import type { AgeBand, Budget, Caution, City, Condition, Goal, Procedure, QuizAnswers, Recent, SkinTone } from "./types";
+import type { AgeBand, Caution, City, Condition, Goal, Procedure, QuizAnswers, Recent, SkinTone } from "./types";
 
 /**
  * The person's quiz answers ("parameters"). Every list in the app is filtered
@@ -15,8 +15,8 @@ export interface Profile {
   age: AgeBand;
   tone: SkinTone;
   flags: Flag[];
-  recent: Recent[];
-  budget: Budget;
+  /** Treatment ids had in the last 6 months. */
+  had: string[];
 }
 
 const KEY = "aesthetic_guide_profile";
@@ -32,7 +32,7 @@ function read(): Profile | null {
       cachedRaw = raw;
       memory = raw ? (JSON.parse(raw) as Profile) : null;
       // Drop goals that no longer exist (e.g. a tab saved before a goal was retired).
-      if (memory) memory = { ...memory, goals: (memory.goals ?? []).filter((g) => g in GOAL_LABELS) };
+      if (memory) memory = { ...memory, goals: (memory.goals ?? []).filter((g) => g in GOAL_LABELS), had: memory.had ?? [] };
     }
   } catch {
     /* storage blocked: keep in-memory copy */
@@ -75,20 +75,36 @@ export function useProfile(): Profile | null {
   );
 }
 
+const SKIN_PROCEDURES = new Set(["peel", "microneedling", "prp", "subcision", "microdermabrasion"]);
+/** Groups past treatments into the categories our timing notes use (lib/advice.ts). */
+export function recentFrom(had: string[]): Recent[] {
+  const out = new Set<Recent>();
+  for (const id of had) {
+    const p = PROCEDURES.find((x) => x.id === id);
+    if (!p) continue;
+    if (p.approach === "toxin") out.add("botox");
+    else if (p.approach === "ha" || p.approach === "biostim") out.add("filler");
+    else if (p.approach === "energy") out.add("energy");
+    else if (p.approach === "laser") out.add("laser");
+    else if (SKIN_PROCEDURES.has(p.id)) out.add("peel");
+  }
+  return [...out];
+}
+
 export function toAnswers(p: Profile, goals: Goal[] = p.goals): QuizAnswers {
   return {
     goals,
-    budget: p.budget,
     downtime: p.flags.includes("no-downtime") ? "none" : "any",
     cautions: p.flags.filter((f): f is Caution => f !== "no-downtime" && !CONDITIONS.includes(f as Condition)),
     conditions: p.flags.filter((f): f is Condition => CONDITIONS.includes(f as Condition)),
     age: p.age,
     tone: p.tone,
-    recent: p.recent,
+    recent: recentFrom(p.had ?? []),
+    had: p.had ?? [],
   };
 }
 
-/** Everything for the given goals, split into: fits you / hidden for safety / outside budget or downtime. */
+/** Everything for the given goals, split into: fits you / hidden for safety / outside your downtime. */
 export function personalize(p: Profile, goals: Goal[]): { shown: Match[]; hidden: Hidden[]; outside: Procedure[] } {
   const { shown, hidden } = matchProcedures(toAnswers(p, goals));
   const shownIds = new Set(shown.map((m) => m.procedure.id));

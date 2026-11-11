@@ -46,8 +46,8 @@ export function DisclaimerModal() {
       >
         <h2 id="dm-title" className="text-lg font-semibold mb-2">Before you start</h2>
         <p id="dm-body" className="text-sm text-muted leading-relaxed mb-5">
-          This guide is for education only. It isn&apos;t medical advice. Always see a board-certified dermatologist or plastic surgeon
-          before any procedure.
+          This guide is for education only. It isn&apos;t medical advice, and results vary. Always see a board-certified dermatologist
+          or plastic surgeon before any procedure. In an emergency, call 911.
         </p>
         <label className="flex items-start gap-3 text-sm mb-5 cursor-pointer">
           <input

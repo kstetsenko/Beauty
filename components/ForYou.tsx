@@ -14,14 +14,14 @@ export function ForYou({ p }: { p: Procedure }) {
     return (
       <a href="/" className="block rounded-2xl border border-line bg-white p-4 text-sm mt-4">
         <span className="font-medium">Is this right for you?</span>{" "}
-        <span className="text-muted">Answer 6 quick questions to check it against your skin, health notes and budget →</span>
+        <span className="text-muted">Answer 5 quick questions to check it against your skin, health notes and past treatments →</span>
       </a>
     );
   }
   const a = toAnswers(profile);
   const reasons = safetyReasons(p, a);
   const forGoals = p.goals.filter((g) => profile.goals.includes(g));
-  const outside = p.tier > a.budget || p.downtimeDays[1] > MAX_DOWNTIME[a.downtime];
+  const outside = p.downtimeDays[1] > MAX_DOWNTIME[a.downtime];
   const notes = notesFor(p, a);
 
   return (
@@ -31,7 +31,7 @@ export function ForYou({ p }: { p: Procedure }) {
         <p><strong className="font-semibold">Usually not advised for you:</strong> {reasons.join(" · ")}. A dermatologist can tell you if there are exceptions.</p>
       ) : (
         <p>
-          {outside ? "Safe with your answers, but outside your budget or downtime." : "Fits your answers."}{" "}
+          {outside ? "Safe with your answers, but more downtime than you wanted." : "Fits your answers."}{" "}
           {forGoals.length > 0
             ? `Used for your goal${forGoals.length > 1 ? "s" : ""}: ${forGoals.map((g) => GOAL_LABELS[g].toLowerCase()).join(", ")}.`
             : "It isn't used for any of your goals."}

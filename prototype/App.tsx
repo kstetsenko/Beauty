@@ -4,6 +4,7 @@ import Privacy from "@/app/privacy/page";
 import Sources from "@/app/sources/page";
 import Terms from "@/app/terms/page";
 import { CompareView } from "@/components/CompareView";
+import { ClinicFinder } from "@/components/ClinicFinder";
 import { DisclaimerModal } from "@/components/DisclaimerModal";
 import { Footer } from "@/components/Footer";
 import { GoalGuide, GoalIndex } from "@/components/GoalGuide";
@@ -36,6 +37,8 @@ function Page() {
       return GOAL_LABELS[r.goal] ? <GoalGuide goal={r.goal as Goal} city={r.city} /> : <GoalIndex />;
     case "compare":
       return <CompareView />;
+    case "clinics":
+      return <ClinicFinder key={hash} treatment={r.t} city={r.city} area={r.area} />;
     case "insights":
       return <Insights />;
     case "sources":

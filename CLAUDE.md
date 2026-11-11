@@ -9,7 +9,7 @@ Read `README.md` for structure and commands. This repo is unrelated to any other
   for prices). If you can't confirm something, leave it out or label it "Estimate" and say so to the user.
 - Not medical advice: keep disclaimers on every page; no clinic endorsements; no invented ratings.
 - Partner clinics: flat listing fee only (never per patient), always labeled "Partner" with `PARTNER_NOTE`, never
-  allowed to change treatment ranking or research. Clinic links go through `TrackedLink` (see `docs/TRACKING.md`).
+  allowed to change treatment ranking or research. Clinic links go through `TrackedLink`; every "Find a clinic" button opens `/clinics` (see `docs/TRACKING.md`).
 - Health answers stay in the browser tab (`lib/profile.ts`); never send them anywhere, including in tracking or requests.
 - Every list/compare page must use the person's profile (`ProfileGate` + `personalize`). Unsafe treatments are hidden
   with a visible reason, never silently.

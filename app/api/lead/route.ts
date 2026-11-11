@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import { insert, storageReady } from "@/lib/store";
 import { limited } from "@/lib/rateLimit";
-import { clinicById, token, treatmentId } from "@/lib/trackRules";
-import { LEAD_CONSENT } from "@/lib/clinics";
+import { areaOf, clinicById, isCity, token, treatmentId } from "@/lib/trackRules";
+import { CONNECT_CONSENT, LEAD_CONSENT } from "@/lib/clinics";
 
 const ALPHABET = "23456789ABCDEFGHJKMNPQRSTUVWXYZ";
 function reference() {
@@ -27,8 +27,12 @@ export async function POST(req: Request) {
   }
   if (typeof b.website === "string" && b.website) return NextResponse.json({ ok: true, ref: reference() }); // honeypot
 
-  const clinic = clinicById(b.clinic);
-  if (!clinic?.partner) return NextResponse.json({ error: "This clinic isn't taking requests through us." }, { status: 400 });
+  // Either a request to one partner clinic, or "connect me" (we pick a partner clinic near the person).
+  const connect = b.connect === true;
+  const clinic = connect ? undefined : clinicById(b.clinic);
+  if (!connect && !clinic?.partner) return NextResponse.json({ error: "This clinic isn't taking requests through us." }, { status: 400 });
+  const city = clinic?.city ?? (isCity(b.city) ? b.city : null);
+  if (!city) return NextResponse.json({ error: "Pick a city." }, { status: 400 });
   const str = (v: unknown, max: number) => (typeof v === "string" ? v.trim().replace(/\s+/g, " ").slice(0, max) : "");
   const name = str(b.name, 80);
   const email = str(b.email, 120);
@@ -46,14 +50,15 @@ export async function POST(req: Request) {
     await insert("leads", {
       at: new Date().toISOString(),
       ref,
-      clinic: clinic.id,
-      city: clinic.city,
+      clinic: clinic?.id ?? null,
+      city,
+      area: areaOf(city, b.area),
       treatment: treatmentId(b.treatment),
       name,
       email: emailOk ? email : null,
       phone: phoneOk ? phone : null,
       preferred_time: when || null,
-      consent_text: LEAD_CONSENT,
+      consent_text: clinic ? LEAD_CONSENT : CONNECT_CONSENT,
       tab: token(b.tab, 16),
       status: "new",
     });

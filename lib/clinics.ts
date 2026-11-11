@@ -34,6 +34,12 @@ export const PARTNER_NOTE =
 export const LEAD_CONSENT =
   "I agree that Aesthetic Guide shares my name, contact details and the treatment I picked with this clinic so they can contact me about a consultation.";
 
+/** For "connect me" requests not addressed to one clinic. */
+export const CONNECT_CONSENT =
+  "I agree that Aesthetic Guide shares my name, contact details, the treatment and the area I picked with one partner clinic near me so they can contact me about a consultation.";
+/** What we promise people who ask to be connected. The owner must keep this promise. */
+export const CONNECT_PROMISE = "We'll reply within 2 business days with a partner clinic near you, or let you know if we don't have one there yet.";
+
 /** Partner clinics in a city offering any of the treatments; the chosen neighborhood first, then A–Z (never by fee). */
 export function partnersFor(city: City, treatmentIds: string[], area = "") {
   return CLINICS.filter((c) => c.partner && c.city === city && c.offers.some((o) => treatmentIds.includes(o))).sort(

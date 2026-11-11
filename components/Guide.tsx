@@ -3,14 +3,15 @@ import { useEffect, useMemo, useState } from "react";
 import { CITY_LABELS } from "@/lib/clinics";
 import { clearProfile, personalize, readProfileOnce, saveProfile, type Flag } from "@/lib/profile";
 import { GOAL_LABELS, PROCEDURES } from "@/lib/procedures";
-import type { AgeBand, Budget, City, Goal, Recent, SkinTone } from "@/lib/types";
+import type { AgeBand, City, Goal, SkinTone } from "@/lib/types";
 import { Chips } from "./Chips";
 import { ResultsList } from "./ResultsList";
 import { Question } from "./Question";
 import { Summary } from "./Summary";
+import { PastTreatments } from "./PastTreatments";
 
-type Step = "city" | "goals" | "about" | "safety" | "recent" | "budget" | "browse" | "done";
-const QUIZ: Step[] = ["city", "goals", "about", "safety", "recent", "budget"];
+type Step = "city" | "goals" | "about" | "safety" | "recent" | "browse" | "done";
+const QUIZ: Step[] = ["city", "goals", "about", "safety", "recent"];
 
 const SAFETY: { value: Flag; label: string }[] = [
   { value: "pregnancy", label: "Pregnant or nursing" },
@@ -24,13 +25,6 @@ const SAFETY: { value: Flag; label: string }[] = [
   { value: "active-skin", label: "Rash or infection now" },
   { value: "autoimmune", label: "Autoimmune / neuromuscular condition" },
 ];
-const RECENT: { value: Recent; label: string }[] = [
-  { value: "botox", label: "Botox / Dysport" },
-  { value: "filler", label: "Filler" },
-  { value: "energy", label: "Ultherapy, Sofwave, Thermage or Morpheus8" },
-  { value: "laser", label: "Laser or IPL" },
-  { value: "peel", label: "Peel or microneedling" },
-];
 const AGES: AgeBand[] = ["18-21", "22-34", "35-49", "50-64", "65+"];
 const TONES: { value: SkinTone; label: string }[] = [
   { value: "light", label: "Light — burns easily" },
@@ -42,7 +36,7 @@ const pill = (on: boolean) =>
   "rounded-full border px-4 py-2.5 text-sm transition-colors " + (on ? "border-ink bg-ink text-white" : "border-line bg-white hover:border-ink");
 
 /**
- * Six quick screens (about 45–70 seconds). When finished, answers are saved as
+ * Five quick screens (about 45–70 seconds). When finished, answers are saved as
  * the person's profile in this browser tab only (cleared when the tab closes,
  * never sent) so every other page can use the same parameters.
  */
@@ -54,8 +48,7 @@ export function Guide() {
   const [age, setAge] = useState<AgeBand>();
   const [tone, setTone] = useState<SkinTone>();
   const [flags, setFlags] = useState<Flag[]>([]);
-  const [recent, setRecent] = useState<Recent[]>([]);
-  const [budget, setBudget] = useState<Budget>();
+  const [had, setHad] = useState<string[]>([]);
   const [saved, setSaved] = useState<string[]>([]);
 
   useEffect(() => {
@@ -66,17 +59,16 @@ export function Guide() {
     setAge(p.age);
     setTone(p.tone);
     setFlags(p.flags);
-    setRecent(p.recent);
-    setBudget(p.budget);
+    setHad(p.had ?? []);
   }, []);
 
   const go = (s: Step) => setHistory((h) => [...h, s]);
   const back = () => setHistory((h) => (h.length > 1 ? h.slice(0, -1) : h));
 
   const result = useMemo(() => {
-    if (!city || !goals.length || !budget || !age || !tone) return { shown: [], hidden: [], outside: [] };
-    return personalize({ city, goals, age, tone, flags, recent, budget }, goals);
-  }, [city, goals, budget, flags, age, tone, recent]);
+    if (!city || !goals.length || !age || !tone) return { shown: [], hidden: [], outside: [] };
+    return personalize({ city, goals, age, tone, flags, had }, goals);
+  }, [city, goals, flags, age, tone, had]);
   const all = result.shown;
   const matches = all;
 
@@ -116,7 +108,7 @@ export function Guide() {
           <Question
             key="city"
             title="Where are you?"
-            sub="About 1 minute · 6 quick questions"
+            sub="About 1 minute · 5 quick questions"
             options={(Object.keys(CITY_LABELS) as City[]).map((c) => ({ value: c, label: CITY_LABELS[c] }))}
             selected={city}
             onPick={(v) => {
@@ -198,30 +190,19 @@ export function Guide() {
       {step === "recent" && (
         <section className="animate-in">
           <h1 className="text-2xl font-semibold leading-tight mb-1.5">Any treatments in the last 6 months?</h1>
-          <p className="text-sm text-muted mb-6">Helps us flag timing to discuss with your provider.</p>
-          <Chips options={RECENT} selected={recent} onChange={setRecent} />
-          <button type="button" onClick={() => go("budget")} className="btn-main mt-6">
-            {recent.length ? "Continue" : "None — first time"}
+          <p className="text-sm text-muted mb-6">Tap all you&apos;ve had. We&apos;ll flag timing to discuss with your provider. Private — stays on your device.</p>
+          <PastTreatments selected={had} onChange={setHad} />
+          <button
+            type="button"
+            onClick={() => {
+              if (city && age && tone) saveProfile({ city, goals, age, tone, flags, had });
+              startBrowsing();
+            }}
+            className="btn-main mt-6"
+          >
+            {had.length ? "See my options" : "None — see my options"}
           </button>
         </section>
-      )}
-
-      {step === "budget" && (
-        <Question<Budget>
-          key="budget"
-          title="Budget per visit?"
-          options={[
-            { value: 1, label: "$", hint: "Under about $500" },
-            { value: 2, label: "$$", hint: "Up to about $1,500" },
-            { value: 3, label: "$$$", hint: "Open to premium options" },
-          ]}
-          selected={budget}
-          onPick={(v) => {
-            setBudget(v);
-            if (city && age && tone) saveProfile({ city, goals, age, tone, flags, recent, budget: v });
-            startBrowsing();
-          }}
-        />
       )}
 
       {step === "browse" && city && (
@@ -229,10 +210,10 @@ export function Guide() {
           <section className="animate-in text-center">
             <h1 className="text-2xl font-semibold mb-2">No matches</h1>
             <p className="text-sm text-muted mb-6">
-              Try a bigger budget or allowing a little downtime.
+              Try allowing a little downtime.
               {result.hidden.length > 0 && ` ${result.hidden.length} treatment${result.hidden.length > 1 ? "s were" : " was"} hidden because of your safety answers.`}
             </p>
-            <button type="button" onClick={() => setHistory(["city", "goals", "about", "safety", "recent", "budget"])} className="btn-main">
+            <button type="button" onClick={() => setHistory(["city", "goals", "about", "safety", "recent"])} className="btn-main">
               Change answers
             </button>
           </section>
@@ -244,7 +225,6 @@ export function Guide() {
       {step === "done" && city && (
         <Summary
           city={city}
-          budget={budget}
           goals={goals}
           hidden={result.hidden}
           saved={all.filter((m) => saved.includes(m.procedure.id))}
@@ -256,8 +236,7 @@ export function Guide() {
             setAge(undefined);
             setTone(undefined);
             setFlags([]);
-            setRecent([]);
-            setBudget(undefined);
+            setHad([]);
             setSaved([]);
           }}
         />

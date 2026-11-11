@@ -79,7 +79,7 @@ function BrowserFor({ profile }: { profile: Profile }) {
           </li>
         ))}
       </ul>
-      {list.length === 0 && <p className="text-sm text-muted text-center py-6">No treatments that fit you match &ldquo;{q}&rdquo;. It may be hidden for safety or outside your budget — see below.</p>}
+      {list.length === 0 && <p className="text-sm text-muted text-center py-6">No treatments that fit you match &ldquo;{q}&rdquo;. It may be hidden for safety or need more downtime than you wanted — see below.</p>}
       <div className="mt-4"><NotShown hidden={hidden} outside={outside} /></div>
       {group === "all" && TRENDS.map((t) => (
         <div key={t.id} className="rounded-3xl border border-line bg-white p-5 mt-4">

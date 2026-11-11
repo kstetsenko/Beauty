@@ -1,4 +1,4 @@
-import type { Approach, Budget, Procedure } from "./types";
+import type { Approach, Procedure, Tier } from "./types";
 
 /**
  * Educational reference data for popular procedures in NYC and Miami.
@@ -309,7 +309,7 @@ const RAW: Raw[] = [
   },
 ];
 
-function tierOf(nycLow: number): Budget {
+function tierOf(nycLow: number): Tier {
   return nycLow <= 350 ? 1 : nycLow <= 1000 ? 2 : 3;
 }
 

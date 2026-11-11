@@ -7,7 +7,7 @@
  * random click id. Never sent: quiz answers, health answers, typed ZIP codes,
  * IP addresses (the server does not store them).
  */
-export type TrackKind = "maps" | "site" | "call" | "book" | "directory" | "license" | "lead";
+export type TrackKind = "finder" | "maps" | "site" | "call" | "book" | "directory" | "license" | "lead";
 
 export interface TrackEvent {
   kind: TrackKind;

@@ -6,7 +6,7 @@
 create table if not exists public.clicks (
   id        bigint generated always as identity primary key,
   at        timestamptz not null default now(),
-  kind      text not null check (kind in ('maps','site','call','book','directory','license')),
+  kind      text not null check (kind in ('finder','maps','site','call','book','directory','license')),
   clinic    text,           -- partner clinic id from lib/clinics.ts, or null
   treatment text,           -- treatment id from lib/procedures.ts, or null
   city      text check (city in ('nyc','miami')),
@@ -22,8 +22,9 @@ create table if not exists public.leads (
   id             bigint generated always as identity primary key,
   at             timestamptz not null default now(),
   ref            text not null unique,   -- e.g. AG-7K2P9M, shown to the person and the clinic
-  clinic         text not null,
+  clinic         text,                   -- null = "connect me" request; you pick the partner clinic
   city           text,
+  area           text,                   -- neighborhood from our list, or null
   treatment      text,
   name           text not null,
   email          text,

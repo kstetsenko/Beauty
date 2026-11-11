@@ -1,14 +1,11 @@
-import { CITY_LABELS, NEIGHBORHOODS, directoryLinks, mapsTerm } from "@/lib/clinics";
+import { CITY_LABELS } from "@/lib/clinics";
 import { GOAL_LABELS } from "@/lib/procedures";
 import type { City, Procedure } from "@/lib/types";
 import { ApproachTag, DetailSections, KeyFacts } from "./ProcedureFacts";
 import { ForYou } from "./ForYou";
-import { TrackedLink } from "./TrackedLink";
-import { PartnerClinics } from "./PartnerClinics";
 
 export function ProcedureDetail({ p, city }: { p: Procedure; city: City }) {
   const other: City = city === "nyc" ? "miami" : "nyc";
-  const maps = directoryLinks(city, "", [mapsTerm(p)]).byProcedure[0];
 
   return (
     <article className="animate-in">
@@ -37,19 +34,10 @@ export function ProcedureDetail({ p, city }: { p: Procedure; city: City }) {
           ))}
         </div>
       </section>
-      <PartnerClinics city={city} treatment={p.id} />
-      <TrackedLink href={maps.href} ev={{ kind: "maps", treatment: p.id, city }} className="btn-main block text-center mt-5">
-        {p.approach === "topical" ? "Find a dermatologist near me" : `Find ${p.name} near me`} ↗
-      </TrackedLink>
-      <p className="text-[11px] text-muted text-center mt-1.5">Opens Google Maps near your location, with public ratings and reviews. Or pick a {CITY_LABELS[city]} neighborhood:</p>
-      <div className="flex gap-2 overflow-x-auto -mx-5 px-5 py-1 [scrollbar-width:none]">
-        {NEIGHBORHOODS[city].map((n) => (
-          <TrackedLink key={n} href={directoryLinks(city, n, [mapsTerm(p)]).byProcedure[0].href} ev={{ kind: "maps", treatment: p.id, city, area: n }}
-            className="shrink-0 rounded-full border border-line bg-white px-3 py-1.5 text-xs hover:border-ink">
-            {n} ↗
-          </TrackedLink>
-        ))}
-      </div>
+      <a href={`/clinics?t=${p.id}&city=${city}`} className="btn-main block text-center mt-5">
+        Find a clinic for {p.name.split(" / ")[0]} →
+      </a>
+      <p className="text-[11px] text-muted text-center mt-1.5">Partner clinics, a free &ldquo;connect me&rdquo; request, or search Google Maps yourself.</p>
       <a href={`/compare?ids=${p.id}&city=${city}`} className="btn-soft block text-center mt-3 text-sm">Compare with similar treatments</a>
       <p className="text-[11px] text-muted text-center mt-4">
         *Price ranges are not quotes. Educational information only — not medical advice. Brand names belong to their owners;

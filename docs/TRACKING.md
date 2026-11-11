@@ -3,15 +3,28 @@
 Goal: every customer we send to a partner clinic can be traced, at no cost, in a way that
 fits US advertising and health-referral rules.
 
+## The flow
+
+Every "Find a clinic" button opens the app's own **clinic finder** (`/clinics?t=<treatment>&city=<city>`),
+not Google Maps. There, in this order:
+1. **Partner clinics** for that treatment and area (traceable contact options below).
+2. **"Connect me with a clinic"**: the person leaves name + email/phone; you get the request with a reference
+   number and pass it to one partner clinic near them. Promise shown to them (`CONNECT_PROMISE`): a reply within
+   2 business days, or "we don't have one there yet". **You must keep that promise.**
+3. **Search on your own** (folded): Google Maps, AAD/ASPS directories, license lookup — all counted.
+
+Each finder visit is counted (treatment × city × neighborhood), so `/report` shows demand even before any
+clinic signs up. Use it when pitching clinics: "42 people looked for Morpheus8 near Brickell last month".
+
 ## What is traced (ranked by strength of proof)
 
 | # | Method | What it proves | Where you see it |
 |---|---|---|---|
-| 1 | **Consultation request** (form on a Partner clinic) | A dated lead with a reference number (e.g. `AG-7K2P9M`) that both the person and the clinic see | `/report` → per clinic, with CSV |
+| 1 | **Consultation / "connect me" request** | A dated lead with a reference number (e.g. `AG-7K2P9M`) that both the person and the clinic see | `/report` → per clinic, with CSV |
 | 2 | **Tagged website / booking links** | The visit, in the clinic's *own* Google Analytics: source `aestheticguide`, medium `referral`, campaign = treatment, plus `ag_click=<id>` that matches our log | Clinic's analytics + `/report` |
 | 3 | **Call taps** | Someone tapped the clinic's phone number from the guide (not that the call connected) | `/report` |
 | 4 | **Unique visitors** | Distinct browser tabs that tapped anything for that clinic | `/report` |
-| — | **Google Maps searches** | Not traceable to a clinic. Kept as counts of *demand* (treatment × neighborhood) to show prospective partners | `/report` → "What people searched on Maps" |
+| — | **Finder visits and Google Maps taps** | Not tied to a clinic. Counted as *demand* (treatment × neighborhood) to show prospective partners | `/report` → "What people searched for" |
 
 Later (not built yet): **referral codes**. The reference number already works as one: ask
 clinics to note it at booking. Tracked phone numbers cost money, so they are left out.
@@ -53,6 +66,11 @@ requests aren't open yet. Partner cards only appear once a partner is added (ste
 4. Until there is an email service, forward new requests to the clinic yourself from `/report`
    (or ask the clinic to check it with you weekly). A free email service (e.g. Resend's free tier)
    can be added later to send them automatically to `leadEmail`.
+
+## Weekly routine
+
+`/report` → this month → **"Connect me" requests** → pass each new one to one partner clinic near them (by email,
+with the reference number), or reply that there isn't one yet. Do this within 2 business days.
 
 ## Monthly routine
 

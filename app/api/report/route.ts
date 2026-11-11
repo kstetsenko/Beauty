@@ -40,15 +40,17 @@ export async function GET(req: Request) {
         leads: l.map((r) => ({ ref: r.ref, at: r.at, treatment: r.treatment, name: r.name, email: r.email, phone: r.phone, preferred_time: r.preferred_time, status: r.status })),
       };
     });
-    // Demand: Google Maps searches people started from the app (no clinic involved).
+    // Demand: clinic searches in the app and Google Maps taps (no clinic involved).
     const demand: Record<string, number> = {};
-    for (const r of clicks.filter((r) => r.kind === "maps")) {
+    for (const r of clicks.filter((r) => r.kind === "maps" || r.kind === "finder")) {
       const k = [r.city ?? "?", r.treatment ?? "dermatologist", r.area ?? "near me"].join(" | ");
       demand[k] = (demand[k] ?? 0) + 1;
     }
+    const connect = leads.filter((r) => !r.clinic).map((r) => ({ ref: r.ref, at: r.at, city: r.city, area: r.area, treatment: r.treatment, name: r.name, email: r.email, phone: r.phone, preferred_time: r.preferred_time, status: r.status }));
     return NextResponse.json({
       month,
-      totals: { taps: clicks.length, maps: count(clicks, (r) => r.kind === "maps"), leads: leads.length },
+      connect,
+      totals: { taps: count(clicks, (r) => r.kind !== "finder"), maps: count(clicks, (r) => r.kind === "finder" || r.kind === "maps"), leads: leads.length },
       clinics,
       demand: Object.entries(demand).sort((a, b) => b[1] - a[1]).slice(0, 50),
     });

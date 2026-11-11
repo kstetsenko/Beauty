@@ -1,8 +1,8 @@
 "use client";
 import { useState } from "react";
-import { LEAD_CONSENT } from "@/lib/clinics";
+import { CONNECT_CONSENT, CONNECT_PROMISE, LEAD_CONSENT } from "@/lib/clinics";
 import { PROCEDURES } from "@/lib/procedures";
-import type { Clinic } from "@/lib/types";
+import type { City, Clinic } from "@/lib/types";
 
 const PROTO = process.env.NEXT_PUBLIC_PROTOTYPE === "1";
 const field = "w-full rounded-full border border-line bg-white px-4 py-2.5 text-sm focus:outline-none focus:border-ink";
@@ -12,7 +12,7 @@ const field = "w-full rounded-full border border-line bg-white px-4 py-2.5 text-
  * never quiz or health answers. Returns a reference number that the person and the
  * clinic both see, so the referral can be traced.
  */
-export function LeadRequestForm({ clinic, treatment }: { clinic: Clinic; treatment: string }) {
+export function LeadRequestForm({ clinic, treatment, city, area = "" }: { clinic?: Clinic; treatment: string; city?: City; area?: string }) {
   const [f, setF] = useState({ name: "", email: "", phone: "", when: "", website: "" });
   const [consent, setConsent] = useState(false);
   const [state, setState] = useState<{ s: "idle" | "sending" | "done" | "error"; ref?: string; msg?: string }>({ s: "idle" });
@@ -30,7 +30,7 @@ export function LeadRequestForm({ clinic, treatment }: { clinic: Clinic; treatme
       const res = await fetch("/api/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...f, clinic: clinic.id, treatment, consent: true, tab }),
+        body: JSON.stringify({ ...f, clinic: clinic?.id, connect: !clinic, city: clinic?.city ?? city, area, treatment, consent: true, tab }),
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(data.error || "Something went wrong. Please try again.");
@@ -43,10 +43,10 @@ export function LeadRequestForm({ clinic, treatment }: { clinic: Clinic; treatme
   if (state.s === "done") {
     return (
       <div className="rounded-2xl bg-blush p-4 mt-3 text-sm animate-in" role="status">
-        <p className="font-medium">Request sent to {clinic.name} ✓</p>
+        <p className="font-medium">{clinic ? `Request sent to ${clinic.name} ✓` : "Request received ✓"}</p>
         <p className="mt-1">Your reference: <strong className="tracking-wide">{state.ref}</strong></p>
         <p className="text-xs text-muted mt-1">
-          {PROTO ? "Prototype — nothing was sent. " : ""}The clinic will contact you. Mention this reference when you book.
+          {PROTO ? "Prototype — nothing was sent. " : ""}{clinic ? "The clinic will contact you." : CONNECT_PROMISE} Mention this reference when you book.
         </p>
       </div>
     );
@@ -54,7 +54,7 @@ export function LeadRequestForm({ clinic, treatment }: { clinic: Clinic; treatme
 
   return (
     <form onSubmit={submit} className="mt-3 space-y-2.5 animate-in">
-      <p className="text-xs text-muted">About {tname} at {clinic.name}. Don&apos;t include health details here — discuss them with the clinic.</p>
+      <p className="text-xs text-muted">About {tname}{clinic ? ` at ${clinic.name}` : area ? ` near ${area}` : ""}. Don&apos;t include health details here — discuss them with the clinic.</p>
       <label className="block"><span className="sr-only">Your name</span>
         <input required minLength={2} maxLength={80} autoComplete="name" placeholder="Your name" value={f.name} onChange={set("name")} className={field} />
       </label>
@@ -74,7 +74,7 @@ export function LeadRequestForm({ clinic, treatment }: { clinic: Clinic; treatme
       </div>
       <label className="flex items-start gap-3 cursor-pointer">
         <input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} required className="mt-0.5 h-5 w-5 shrink-0 accent-ink" />
-        <span className="text-xs text-muted leading-normal">{LEAD_CONSENT} <a href="/privacy" className="underline">Privacy</a></span>
+        <span className="text-xs text-muted leading-normal">{clinic ? LEAD_CONSENT : CONNECT_CONSENT} <a href="/privacy" className="underline">Privacy</a></span>
       </label>
       <button type="submit" disabled={!consent || !f.name || (!f.email && !f.phone) || state.s === "sending"} className="btn-main w-full text-sm">
         {state.s === "sending" ? "Sending…" : "Send request"}

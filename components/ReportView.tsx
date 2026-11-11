@@ -3,7 +3,8 @@ import { useState } from "react";
 
 type Lead = { ref: string; at: string; treatment: string | null; name: string; email: string | null; phone: string | null; preferred_time: string | null; status: string };
 type ClinicRow = { id: string; name: string; visitors: number; website: number; calls: number; booking: number; leads: Lead[] };
-type Report = { month: string; totals: { taps: number; maps: number; leads: number }; clinics: ClinicRow[]; demand: [string, number][] };
+type Connect = Lead & { city: string | null; area: string | null };
+type Report = { month: string; connect: Connect[]; totals: { taps: number; maps: number; leads: number }; clinics: ClinicRow[]; demand: [string, number][] };
 
 const thisMonth = () => new Date().toISOString().slice(0, 7);
 const cell = (v: unknown) => {
@@ -60,7 +61,7 @@ export function ReportView() {
       {rep && (
         <>
           <div className="grid grid-cols-3 gap-2 text-center">
-            {[["Link taps", rep.totals.taps], ["Maps searches", rep.totals.maps], ["Requests", rep.totals.leads]].map(([l, v]) => (
+            {[["Link taps", rep.totals.taps], ["Clinic searches", rep.totals.maps], ["Requests", rep.totals.leads]].map(([l, v]) => (
               <div key={l} className="rounded-2xl bg-white border border-line p-3">
                 <p className="text-xl font-semibold">{v}</p>
                 <p className="text-[11px] text-muted">{l}</p>
@@ -96,9 +97,30 @@ export function ReportView() {
             ))
           )}
 
+          {rep.connect.length > 0 && (
+            <div className="rounded-3xl bg-white border border-line p-5">
+              <div className="flex items-baseline justify-between gap-3">
+                <h2 className="font-semibold min-w-0">&ldquo;Connect me&rdquo; requests ({rep.connect.length})</h2>
+                <button type="button" className="text-sm underline shrink-0"
+                  onClick={() => download(`connect-requests-${rep.month}.csv`, [
+                    ["Reference", "Date", "City", "Area", "Treatment", "Name", "Email", "Phone", "Best time", "Status"],
+                    ...rep.connect.map((l) => [l.ref, l.at.slice(0, 10), l.city, l.area, l.treatment, l.name, l.email, l.phone, l.preferred_time, l.status]),
+                  ])}>
+                  CSV
+                </button>
+              </div>
+              <p className="text-xs text-muted mt-1">Reply within 2 business days: pass each to one partner clinic near them, or tell them there isn&apos;t one yet.</p>
+              <ul className="mt-3 space-y-1.5 text-sm">
+                {rep.connect.map((l) => (
+                  <li key={l.ref} className="break-words"><strong>{l.ref}</strong> · {l.at.slice(0, 10)} · {l.treatment ?? "—"} · {l.area ?? l.city} · {l.name} · {l.email ?? l.phone}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+
           {rep.demand.length > 0 && (
             <div>
-              <h2 className="font-semibold mb-1">What people searched on Maps</h2>
+              <h2 className="font-semibold mb-1">What people searched for</h2>
               <p className="text-xs text-muted mb-2">City | treatment | neighborhood — useful when inviting new partner clinics.</p>
               <ul className="text-sm space-y-1">
                 {rep.demand.map(([k, n]) => <li key={k} className="break-words">{n} × {k}</li>)}

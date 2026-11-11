@@ -8,7 +8,10 @@ export type Route =
   | { name: "goals" }
   | { name: "goal"; goal: string; city: "nyc" | "miami" }
   | { name: "procedure"; id: string; city: "nyc" | "miami" }
-  | { name: "compare"; ids: string[]; city: "nyc" | "miami"; goal: string };
+  | { name: "compare"; ids: string[]; city: "nyc" | "miami"; goal: string }
+  | { name: "clinics"; t: string; city: "nyc" | "miami"; area: string };
+
+import { NEIGHBORHOODS } from "@/lib/clinics";
 
 const cityOf = (c: string | null) => (c === "miami" ? "miami" : "nyc");
 
@@ -19,6 +22,10 @@ export function toHash(href: string): string {
   if (parts[0] === "procedures" && parts[1]) return `p-${parts[1]}-${city}`;
   if (parts[0] === "goals" && parts[1]) return `g-${parts[1]}-${city}`;
   if (parts[0] === "goals") return "goals";
+  if (parts[0] === "clinics") {
+    const i = NEIGHBORHOODS[city].indexOf(url.searchParams.get("area") || "");
+    return `c-${url.searchParams.get("t") || ""}-${city}` + (i >= 0 ? `-a${i}` : "");
+  }
   if (parts[0] === "compare") {
     const ids = (url.searchParams.get("ids") || "").split(",").filter(Boolean);
     return `compare-${city}-${url.searchParams.get("goal") || "any"}` + ids.map((i) => `--${i}`).join("");
@@ -34,6 +41,11 @@ export function fromHash(hash: string): Route {
   const g = h.match(/^g-(.+)-(nyc|miami)$/);
   if (g) return { name: "goal", goal: g[1], city: g[2] as "nyc" | "miami" };
   if (h === "goals") return { name: "goals" };
+  const c = h.match(/^c-(.+)-(nyc|miami)(?:-a(\d+))?$/);
+  if (c) {
+    const city = c[2] as "nyc" | "miami";
+    return { name: "clinics", t: c[1], city, area: c[3] ? NEIGHBORHOODS[city][Number(c[3])] ?? "" : "" };
+  }
   if (h.startsWith("compare-")) {
     const [head, ...ids] = h.split("--");
     const [c, goal] = head.replace("compare-", "").split("-");

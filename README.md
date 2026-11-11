@@ -2,7 +2,7 @@
 
 An educational, evidence-based guide to aesthetic treatments in New York City and Miami.
 A 1-minute quiz builds a personal profile (goals, age, skin tone, health notes, recent
-treatments, budget). Every page then shows only treatments that are safe and realistic for
+treatments). Every page then shows only treatments that are safe and realistic for
 that person, with research, prices, risks and ways to find providers nearby.
 
 Built with Next.js (App Router), TypeScript and Tailwind CSS. Installable as a web app (PWA).

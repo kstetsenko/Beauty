@@ -41,7 +41,7 @@ export function matchProcedures(a: QuizAnswers): { shown: Match[]; hidden: Hidde
       hidden.push({ procedure: p, reasons });
       continue;
     }
-    if (p.tier > a.budget || p.downtimeDays[1] > MAX_DOWNTIME[a.downtime]) continue;
+    if (p.downtimeDays[1] > MAX_DOWNTIME[a.downtime]) continue;
     shown.push({
       procedure: p,
       score: p.goals.filter((g) => a.goals.includes(g)).length + conditionBoost(p, a),

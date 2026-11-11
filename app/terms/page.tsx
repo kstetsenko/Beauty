@@ -14,11 +14,26 @@ export default function Terms() {
       <h2 className="font-semibold text-ink">Prices and listings</h2>
       <p>Price ranges are rough estimates and may be out of date. Provider listings and links to third-party directories are for convenience and are not endorsements, referrals or guarantees. Clinics marked &ldquo;Partner&rdquo; pay a flat listing fee to appear; they do not pay per patient and do not affect which treatments are shown or how they are ranked. Ratings are copied from public sources on the date shown. Verify credentials and licensing yourself.</p>
 
+      <h2 className="font-semibold text-ink">Not for emergencies</h2>
+      <p>If you have signs of a serious reaction after a treatment — such as vision changes, skin turning white or dusky, trouble breathing or swallowing — call 911 or go to an emergency room.</p>
+
+      <h2 className="font-semibold text-ink">Results and safety information</h2>
+      <p>Results, recovery and risks vary from person to person, and nothing here is a promise of any result. Study summaries, FDA status and safety notices are accurate as of the date checked and can change. The quiz only hides treatments that are commonly not advised for the answers you give; it cannot assess your health.</p>
+
+      <h2 className="font-semibold text-ink">Clinics and connection requests</h2>
+      <p>We are not a medical provider and do not provide, supervise or guarantee any treatment. Clinics, including Partner clinics, are independent businesses responsible for their own services, pricing, licensing and care. When you send a consultation or &ldquo;connect me&rdquo; request, we share only what you entered with the clinic you chose or one partner clinic near you. You decide whether to book.</p>
+
+      <h2 className="font-semibold text-ink">Links and trademarks</h2>
+      <p>Links to other websites (including Google Maps, PubMed, the FDA and professional societies) are provided for information; we don&apos;t control their content. Brand names are trademarks of their owners and are used only to identify treatments; we are not affiliated with any brand.</p>
+
       <h2 className="font-semibold text-ink">Eligibility</h2>
       <p>This service is intended for adults 18 and older.</p>
 
       <h2 className="font-semibold text-ink">Limitation of liability</h2>
-      <p>To the extent permitted by law, we are not liable for decisions made or procedures undertaken based on this content.</p>
+      <p>To the extent permitted by law, we are not liable for decisions made or procedures undertaken based on this content, or for the services of any clinic.</p>
+
+      <h2 className="font-semibold text-ink">Changes and contact</h2>
+      <p>We may update these terms; the date below shows the latest version. Governing law: [State]. Contact: [Business name, address, email]. Last updated: [date].</p>
     </article>
   );
 }

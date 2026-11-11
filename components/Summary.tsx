@@ -1,20 +1,17 @@
 "use client";
 import { useState } from "react";
-import { NEIGHBORHOODS, directoryLinks, mapsTerm } from "@/lib/clinics";
+import { directoryLinks } from "@/lib/clinics";
 import { downtimeShort, usd, type Hidden, type Match } from "@/lib/match";
 import { GOAL_LABELS } from "@/lib/procedures";
-import type { Budget, City, Goal } from "@/lib/types";
+import type { City, Goal } from "@/lib/types";
 import { LeadCaptureForm } from "./LeadCaptureForm";
 import { Disclosure } from "./Disclosure";
 import { Dots } from "./ProcedureFacts";
 import { TrackedLink } from "./TrackedLink";
-import { PartnerClinics } from "./PartnerClinics";
 
-const TIER = ["", "$", "$$", "$$$"];
 
 export function Summary({
   city,
-  budget,
   goals = [],
   hidden = [],
   saved,
@@ -22,17 +19,14 @@ export function Summary({
   onRestart,
 }: {
   city: City;
-  budget?: Budget;
   goals?: Goal[];
   hidden?: Hidden[];
   saved: Match[];
   onBrowseAgain: () => void;
   onRestart: () => void;
 }) {
-  const [area, setArea] = useState("");
   const [showEmail, setShowEmail] = useState(false);
-  const where = area.trim() || "you";
-  const links = directoryLinks(city, area, saved.map((m) => mapsTerm(m.procedure)));
+  const links = directoryLinks(city, "");
   const ids = saved.map((m) => m.procedure.id);
   // Compare only like with like: saved treatments that share one of the user's goals.
   const compareGroups = goals
@@ -53,27 +47,8 @@ export function Summary({
         </div>
       ) : (
         <>
-          <label className="block">
-            <span className="block text-sm font-medium mb-2">Clinics near you — or pick a neighborhood</span>
-            <input
-              value={area}
-              onChange={(e) => setArea(e.target.value.slice(0, 60))}
-              placeholder="Near me (or type a ZIP / neighborhood)"
-              autoComplete="off"
-              className="w-full rounded-full border border-line bg-white px-5 py-3 text-sm focus:outline-none focus:border-ink"
-            />
-          </label>
-          <div className="flex gap-2 overflow-x-auto -mx-5 px-5 pb-1 -mt-4 [scrollbar-width:none]">
-            {NEIGHBORHOODS[city].map((n) => (
-              <button key={n} type="button" onClick={() => setArea(n)} aria-pressed={area === n}
-                className={"shrink-0 rounded-full border px-3 py-1.5 text-xs " + (area === n ? "bg-ink text-white border-ink" : "bg-white border-line")}>
-                {n}
-              </button>
-            ))}
-          </div>
-
           <ul className="space-y-3">
-            {saved.map(({ procedure: p }, i) => (
+            {saved.map(({ procedure: p }) => (
               <li key={p.id} className="rounded-3xl bg-white border border-line p-5">
                 <div className="flex items-baseline justify-between gap-3">
                   <a href={`/procedures/${p.id}?city=${city}`} className="font-semibold">{p.name}</a>
@@ -82,13 +57,10 @@ export function Summary({
                 <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mt-1.5 text-[11px] text-muted">
                   <span className="flex items-center gap-1.5">Pain <Dots value={p.pain} max={5} label="Pain" /></span>
                   <span>Recovery: {downtimeShort(p.downtimeDays).toLowerCase()}</span>
-                  {budget && p.tier <= budget && <span>✓ Fits your {TIER[budget]} budget</span>}
                 </div>
-                <PartnerClinics city={city} treatment={p.id} area={area.trim()} />
-                <TrackedLink href={links.byProcedure[i].href} ev={{ kind: "maps", treatment: p.id, city, area: area.trim() }} className="btn-main block text-center mt-4 text-sm">
-                  {p.approach === "topical" ? `Find a dermatologist near ${where}` : `Find ${p.name} near ${where}`} ↗
-                </TrackedLink>
-                <p className="text-[11px] text-muted text-center mt-1.5">Opens Google Maps with public ratings and reviews</p>
+                <a href={`/clinics?t=${p.id}&city=${city}`} className="btn-main block text-center mt-4 text-sm">
+                  Find a clinic for {p.name.split(" / ")[0]} →
+                </a>
                 <a href={`/procedures/${p.id}?city=${city}`} className="block text-center text-sm underline mt-2">
                   Recovery, risks, research & questions to ask
                 </a>

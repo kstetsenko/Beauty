@@ -61,7 +61,9 @@ export function notesFor(p: Procedure, a: QuizAnswers): Note[] {
   if (a.recent?.includes("energy") && ENERGY.has(id))
     n.push({ text: "There's no official repeat interval for these devices — clinics' advice varies. Ask your provider." });
   if ((a.recent?.includes("laser") || a.recent?.includes("peel")) && (RESURFACING.has(id) || id === "microneedling" || id === "morpheus8" || id === "prp"))
-    n.push({ text: "You had a laser or peel recently — tell your provider so they can plan timing." });
+    n.push({ text: "You had a laser, peel or microneedling-type treatment recently — tell your provider so they can plan timing." });
+  if (a.had?.includes(id))
+    n.push({ text: "You had this in the last 6 months. Tell your provider the date and the result, so they can plan when to repeat it." });
 
   return n;
 }

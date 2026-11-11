@@ -6,7 +6,6 @@ import type { Procedure } from "@/lib/types";
 import { Disclosure } from "./Disclosure";
 
 const TONE = { light: "Light skin", medium: "Medium skin", deep: "Deep skin" } as const;
-const TIER = ["", "$", "$$", "$$$"];
 
 /** One-line summary of the person's parameters, with a link to change them. */
 export function ProfileBar({ profile }: { profile: Profile }) {
@@ -17,7 +16,7 @@ export function ProfileBar({ profile }: { profile: Profile }) {
     TONE[profile.tone],
     cautions ? `${cautions} health note${cautions > 1 ? "s" : ""}` : null,
     profile.flags.includes("no-downtime") ? "No downtime" : null,
-    `${TIER[profile.budget]} budget`,
+    profile.had?.length ? `${profile.had.length} recent treatment${profile.had.length > 1 ? "s" : ""}` : null,
   ].filter(Boolean);
   return (
     <div className="flex items-center justify-between gap-3 rounded-2xl bg-blush px-4 py-2.5 text-xs mb-5">
@@ -33,9 +32,9 @@ export function ProfileGate({ children, what }: { children: (p: Profile) => Reac
   if (!profile) {
     return (
       <section className="animate-in text-center py-6">
-        <h1 className="text-2xl font-semibold mb-2">First, 6 quick questions</h1>
+        <h1 className="text-2xl font-semibold mb-2">First, 5 quick questions</h1>
         <p className="text-sm text-muted mb-6 leading-relaxed">
-          To {what}, we need your goals, age, skin tone, budget and any health notes — so we only show treatments that
+          To {what}, we need your goals, age, skin tone, health notes and recent treatments — so we only show treatments that
           are safe and realistic for you. It takes about a minute, and your answers stay in this browser tab.
         </p>
         <a href="/" className="btn-main block">Start the quiz</a>
@@ -64,7 +63,7 @@ export function NotShown({ hidden, outside }: { hidden: Hidden[]; outside: Proce
         </Disclosure>
       )}
       {outside.length > 0 && (
-        <Disclosure title={`Outside your budget or downtime (${outside.length})`} hint="Change your answers to include these">
+        <Disclosure title={`Outside your downtime (${outside.length})`} hint="Change your answers to include these">
           <ul className="space-y-1 text-sm">
             {outside.map((p) => <li key={p.id}>{p.name}</li>)}
           </ul>
