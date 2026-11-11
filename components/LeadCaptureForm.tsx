@@ -23,6 +23,11 @@ export function LeadCaptureForm({ city, procedureIds }: Props) {
     if (!consented || !email || status === "sending") return;
     setStatus("sending");
     setMessage("");
+    if (process.env.NEXT_PUBLIC_PROTOTYPE === "1") {
+      // Shareable prototype: there is no server, so nothing is sent.
+      setStatus("success");
+      return;
+    }
     try {
       const res = await fetch("/api/subscribe", {
         method: "POST",
@@ -39,7 +44,11 @@ export function LeadCaptureForm({ city, procedureIds }: Props) {
   };
 
   if (status === "success") {
-    return <p className="rounded-3xl bg-blush p-5 text-center text-sm font-medium animate-in">Sent ✓ Check your inbox.</p>;
+    return (
+      <p className="rounded-3xl bg-blush p-5 text-center text-sm font-medium animate-in">
+        {process.env.NEXT_PUBLIC_PROTOTYPE === "1" ? "Prototype — in the live app this would email your guide. Nothing was sent." : "Sent ✓ Check your inbox."}
+      </p>
+    );
   }
 
   return (

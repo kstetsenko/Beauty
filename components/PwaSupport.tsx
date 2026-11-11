@@ -15,6 +15,7 @@ export function PwaSupport() {
   const [hidden, setHidden] = useState(true);
 
   useEffect(() => {
+    if (process.env.NEXT_PUBLIC_PROTOTYPE === "1") return;
     if ("serviceWorker" in navigator && process.env.NODE_ENV === "production") {
       navigator.serviceWorker.register("/sw.js").catch(() => {});
     }
