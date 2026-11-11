@@ -111,6 +111,15 @@ export function ResearchSection({ p, city }: { p: Procedure; city: City }) {
               </li>
             ))}
           </ul>
+          <a
+            href={`https://www.youtube.com/results?search_query=${encodeURIComponent(p.name.split(" / ")[0] + " dermatologist explains")}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block text-sm underline mt-3"
+          >
+            Watch explainer videos on YouTube ↗
+          </a>
+          <p className="text-[11px] text-muted">A YouTube search — videos are not reviewed by us. Check the presenter is a board-certified doctor.</p>
         </section>
       )}
       <section className="bg-white rounded-3xl border border-line p-6">

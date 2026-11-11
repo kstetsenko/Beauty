@@ -8,6 +8,7 @@ import { DisclaimerModal } from "@/components/DisclaimerModal";
 import { Footer } from "@/components/Footer";
 import { GoalGuide, GoalIndex } from "@/components/GoalGuide";
 import { Guide } from "@/components/Guide";
+import { Insights } from "@/components/Insights";
 import { ProcedureBrowser } from "@/components/ProcedureBrowser";
 import { ProcedureDetail } from "@/components/ProcedureDetail";
 import { GOAL_LABELS, PROCEDURES } from "@/lib/procedures";
@@ -35,6 +36,8 @@ function Page() {
       return GOAL_LABELS[r.goal] ? <GoalGuide goal={r.goal as Goal} city={r.city} /> : <GoalIndex />;
     case "compare":
       return <CompareView />;
+    case "insights":
+      return <Insights />;
     case "sources":
       return <Sources />;
     case "privacy":

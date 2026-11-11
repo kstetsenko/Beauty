@@ -7,6 +7,7 @@ export function Footer() {
       <p className="mt-1.5 space-x-3">
         <Link href="/privacy" className="underline">Privacy</Link>
         <Link href="/terms" className="underline">Terms</Link>
+        <Link href="/insights" className="underline">Core insights</Link>
         <Link href="/sources" className="underline">How we research</Link>
       </p>
     </footer>

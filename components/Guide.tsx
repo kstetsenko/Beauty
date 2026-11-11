@@ -127,7 +127,8 @@ export function Guide() {
             }}
           />
           <p className="mt-8 text-center text-sm text-muted">
-            Or <a href="/goals" className="underline">explore by goal</a> · <a href="/procedures" className="underline">browse all {PROCEDURES.length} treatments</a>
+            Or <a href="/goals" className="underline">explore by goal</a> · <a href="/procedures" className="underline">browse all {PROCEDURES.length} treatments</a> ·{" "}
+            <a href="/insights" className="underline">core insights</a>
           </p>
         </>
       )}

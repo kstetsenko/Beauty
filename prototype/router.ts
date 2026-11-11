@@ -4,7 +4,7 @@
  * (#p-sofwave-miami) because the prototype host only passes simple hashes.
  */
 export type Route =
-  | { name: "home" | "procedures" | "sources" | "privacy" | "terms" }
+  | { name: "home" | "procedures" | "sources" | "privacy" | "terms" | "insights" }
   | { name: "goals" }
   | { name: "goal"; goal: string; city: "nyc" | "miami" }
   | { name: "procedure"; id: string; city: "nyc" | "miami" }
@@ -23,7 +23,7 @@ export function toHash(href: string): string {
     const ids = (url.searchParams.get("ids") || "").split(",").filter(Boolean);
     return `compare-${city}` + ids.map((i) => `--${i}`).join("");
   }
-  if (["procedures", "sources", "privacy", "terms"].includes(parts[0])) return parts[0];
+  if (["procedures", "sources", "privacy", "terms", "insights"].includes(parts[0])) return parts[0];
   return "home";
 }
 
@@ -38,7 +38,7 @@ export function fromHash(hash: string): Route {
     const [head, ...ids] = h.split("--");
     return { name: "compare", city: cityOf(head.replace("compare-", "")), ids };
   }
-  if (h === "procedures" || h === "sources" || h === "privacy" || h === "terms") return { name: h };
+  if (h === "procedures" || h === "sources" || h === "privacy" || h === "terms" || h === "insights") return { name: h };
   return { name: "home" };
 }
 
