@@ -110,3 +110,10 @@ re-checked. Nothing in the app should be added without a source of the kind list
   recommend procedures for acne.
 - **Quick plans** on the results list (Event in 2 weeks, First time, Best value, Long-lasting) are filters over
   existing data: recovery days, pain, onset, starting price, evidence and the "how long it lasts" text.
+
+## Clinic listings (2026-11-12)
+Five clinics listed after checking the practice's own pages (or a university / profile page for credentials):
+Spring Street Dermatology (SoHo), Tribeca Park Dermatology (Tribeca), Laser & Skin Surgery Center of New York
+(Murray Hill), Miami Skin Institute (Coral Gables), UHealth Dermatology — Miami Beach. Only treatments named on
+their pages are linked. No star ratings are copied. **Owner to spot-check before launch:** one doctor per clinic in
+the state license lookup and AAD directory, and their Google reviews. No Brickell clinic could be verified yet.

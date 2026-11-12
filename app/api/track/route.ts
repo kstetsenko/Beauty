@@ -17,7 +17,7 @@ export async function POST(req: Request) {
   } catch {
     return done;
   }
-  if (!isKind(b.kind) || b.kind === "lead") return done;
+  if (!isKind(b.kind)) return done;
   const clinic = clinicById(b.clinic);
   const city = isCity(b.city) ? b.city : clinic?.city ?? null;
   try {

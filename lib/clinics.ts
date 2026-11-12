@@ -1,55 +1,104 @@
 import type { City, Clinic, Procedure } from "./types";
 
+const maps = (q: string) => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`;
+
 /**
- * Clinic listings. This list ships EMPTY on purpose. Add a clinic only after you
- * have checked it yourself (board certification, state license) and, for partners,
- * signed a flat-fee listing agreement (see docs/TRACKING.md). Never invent ratings:
- * copy them from the public Google profile and record the date you checked.
- *
- * Example entry (replace every value; do not publish as-is):
- * {
- *   id: "example-soho",                // short, lowercase; used in reports and links
- *   name: "Example Dermatology",
- *   city: "nyc",
- *   neighborhood: "SoHo",              // use a name from NEIGHBORHOODS when possible
- *   offers: ["botox", "morpheus8"],    // treatment ids from lib/procedures.ts
- *   website: "https://example.com",
- *   googleUrl: "https://maps.google.com/?cid=...",
- *   rating: 4.8, reviewCount: 312, ratingCheckedAt: "2026-11-01",   // or null, null, null
- *   credential: "ABD board-certified dermatologists on staff",
- *   partner: true,
- *   bookingUrl: "https://example.com/book",
- *   phone: "+1 212 555 0100",
- *   leadEmail: "frontdesk@example.com",
- *   listedSince: "2026-12-01",
- * },
+ * Clinics listed in the clinic finder. Listing criteria (published on /sources):
+ * 1. Board-certified dermatologists or plastic surgeons on staff, as stated on the practice's own site
+ *    or a university directory (credentialSource).
+ * 2. The practice's own site lists the treatment (offers).
+ * 3. An address in one of our neighborhoods.
+ * Ratings are never copied: each card links to Google reviews instead. Order: chosen neighborhood first, then A–Z.
+ * Partners (partner: true) pay a flat monthly fee and are labeled; the free list stays.
+ * Re-check every listing at least every 6 months (checkedAt).
  */
-export const CLINICS: Clinic[] = [];
+export const CLINICS: Clinic[] = [
+  {
+    id: "spring-street-derm", name: "Spring Street Dermatology", city: "nyc", neighborhood: "SoHo",
+    address: "75 Spring Street, Floor 2, New York, NY 10012",
+    offers: ["botox", "cheek-filler", "smile-filler", "peel", "ipl", "microneedling", "sofwave", "pdt", "ktp"],
+    website: "https://springstderm.com/", googleUrl: maps("Spring Street Dermatology 75 Spring Street New York NY"),
+    rating: null, reviewCount: null, ratingCheckedAt: null,
+    credential: "Board-certified dermatologists", credentialSource: "https://springstderm.com/about/",
+    checkedAt: "2026-11-12", partner: false, code: "AG-SPRING",
+  },
+  {
+    id: "tribeca-park-derm", name: "Tribeca Park Dermatology", city: "nyc", neighborhood: "Tribeca",
+    offers: ["botox", "cheek-filler", "smile-filler", "clear-brilliant", "laser-toning", "erbium"],
+    website: "https://triparkderm.com/", googleUrl: maps("Tribeca Park Dermatology New York NY"),
+    rating: null, reviewCount: null, ratingCheckedAt: null,
+    credential: "Dermatologists who are Fellows of the AAD (FAAD)", credentialSource: "https://triparkderm.com/",
+    checkedAt: "2026-11-12", partner: false, code: "AG-TRIBECA",
+  },
+  {
+    id: "laser-skin-surgery-ny", name: "Laser & Skin Surgery Center of New York", city: "nyc", neighborhood: "Murray Hill",
+    address: "317 East 34th Street, New York, NY 10016",
+    offers: ["botox", "cheek-filler", "smile-filler", "microneedling", "ktp"],
+    website: "https://www.laserskinsurgery.com/", googleUrl: maps("Laser & Skin Surgery Center of New York 317 East 34th Street"),
+    rating: null, reviewCount: null, ratingCheckedAt: null,
+    credential: "Treatments performed by board-certified dermatologists", credentialSource: "https://www.laserskinsurgery.com/contact/new-york-city/",
+    checkedAt: "2026-11-12", partner: false, code: "AG-LSSC", phone: "(212) 941-5055",
+  },
+  {
+    id: "miami-skin-institute", name: "Miami Skin Institute", city: "miami", neighborhood: "Coral Gables",
+    address: "135 San Lorenzo Ave, PH 870, Coral Gables, FL 33146",
+    offers: ["botox", "cheek-filler", "smile-filler", "sculptra", "ultherapy", "fraxel", "pdl"],
+    website: "https://www.miamiskininstitute.com/", googleUrl: maps("Miami Skin Institute 135 San Lorenzo Ave Coral Gables FL"),
+    rating: null, reviewCount: null, ratingCheckedAt: null,
+    credential: "Board-certified dermatologist (founder and medical director)", credentialSource: "https://www.hauteliving.com/hautemd/doctor/dr-s-manjula-jegasothy",
+    checkedAt: "2026-11-12", partner: false, code: "AG-MSI",
+  },
+  {
+    id: "uhealth-miami-beach", name: "UHealth Dermatology — Miami Beach", city: "miami", neighborhood: "Miami Beach",
+    address: "1045 5th Street, Suite 305, Miami Beach, FL 33139",
+    offers: ["botox", "cheek-filler", "smile-filler", "peel", "microneedling", "threads"],
+    website: "https://umiamihealth.org/en/locations/uhealth-miami-beach", googleUrl: maps("UHealth Dermatology 1045 5th Street Miami Beach FL"),
+    rating: null, reviewCount: null, ratingCheckedAt: null,
+    credential: "Board-certified dermatologists (University of Miami)", credentialSource: "https://umiamihealth.org/en/treatments-and-services/dermatology/cosmetic-dermatology",
+    checkedAt: "2026-11-12", partner: false, code: "AG-UMBEACH", phone: "305-243-6704",
+  },
+];
 
 /** Shown next to partner clinics. Keep it true: partners pay a flat listing fee, never per patient. */
 export const PARTNER_NOTE =
   "Partner clinics pay us a flat monthly listing fee. They don't pay per patient, and they don't change which treatments we show or how we rank them. Always check a provider's credentials yourself.";
 
-/** Stored with every consultation request, word for word. */
-export const LEAD_CONSENT =
-  "I agree that Aesthetic Guide shares my name, contact details and the treatment I picked with this clinic so they can contact me about a consultation.";
+/** Shown under the free list. */
+export const LISTING_NOTE =
+  "Listed for free because they meet our criteria: board-certified doctors on staff and the treatment on their own website. Not an endorsement — check reviews, credentials and prices yourself.";
 
-/** For "connect me" requests not addressed to one clinic. */
-export const CONNECT_CONSENT =
-  "I agree that Aesthetic Guide shares my name, contact details, the treatment and the area I picked with one partner clinic near me so they can contact me about a consultation.";
-/** What we promise people who ask to be connected. The owner must keep this promise. */
-export const CONNECT_PROMISE = "We'll reply within 2 business days with a partner clinic near you, or let you know if we don't have one there yet.";
+const byArea = (area: string) => (a: Clinic, b: Clinic) =>
+  Number(b.neighborhood === area) - Number(a.neighborhood === area) || a.name.localeCompare(b.name);
 
-/** Partner clinics in a city offering any of the treatments; the chosen neighborhood first, then A–Z (never by fee). */
-export function partnersFor(city: City, treatmentIds: string[], area = "") {
-  return CLINICS.filter((c) => c.partner && c.city === city && c.offers.some((o) => treatmentIds.includes(o))).sort(
-    (a, b) => Number(b.neighborhood === area) - Number(a.neighborhood === area) || a.name.localeCompare(b.name),
-  );
+/** Clinics in a city offering the treatment: partners and free listings, chosen neighborhood first, then A–Z (never by fee). */
+export function clinicsFor(city: City, treatment: string, area = "") {
+  const all = CLINICS.filter((c) => c.city === city && c.offers.includes(treatment));
+  return { partners: all.filter((c) => c.partner).sort(byArea(area)), listed: all.filter((c) => !c.partner).sort(byArea(area)) };
 }
+
+/**
+ * ZIP code → neighborhood, matched on the person's device only (a typed ZIP is never sent or stored).
+ * Approximate: ZIPs that span areas are assigned to the main one.
+ */
+export const ZIPS: Record<City, Record<string, string>> = {
+  nyc: {
+    "10021": "Upper East Side", "10028": "Upper East Side", "10065": "Upper East Side", "10075": "Upper East Side", "10128": "Upper East Side", "10162": "Upper East Side",
+    "10023": "Upper West Side", "10024": "Upper West Side", "10025": "Upper West Side", "10069": "Upper West Side",
+    "10017": "Midtown", "10018": "Midtown", "10019": "Midtown", "10020": "Midtown", "10022": "Midtown", "10036": "Midtown",
+    "10016": "Murray Hill", "10010": "Flatiron", "10012": "SoHo", "10013": "Tribeca", "10007": "Tribeca",
+    "10004": "Financial District", "10005": "Financial District", "10006": "Financial District", "10038": "Financial District", "10280": "Financial District",
+    "11211": "Williamsburg", "11249": "Williamsburg", "11201": "Brooklyn Heights",
+  },
+  miami: {
+    "33129": "Brickell", "33130": "Brickell", "33131": "Brickell", "33128": "Downtown Miami", "33132": "Downtown Miami",
+    "33139": "Miami Beach", "33140": "Miami Beach", "33141": "Miami Beach", "33134": "Coral Gables", "33146": "Coral Gables",
+    "33137": "Design District", "33180": "Aventura", "33122": "Doral", "33166": "Doral", "33172": "Doral", "33178": "Doral", "33149": "Key Biscayne",
+  },
+};
 
 /** Common neighborhoods for one-tap provider searches. */
 export const NEIGHBORHOODS: Record<City, string[]> = {
-  nyc: ["Upper East Side", "Upper West Side", "Midtown", "Flatiron", "SoHo", "Tribeca", "Financial District", "Williamsburg", "Brooklyn Heights"],
+  nyc: ["Upper East Side", "Upper West Side", "Midtown", "Murray Hill", "Flatiron", "SoHo", "Tribeca", "Financial District", "Williamsburg", "Brooklyn Heights"],
   miami: ["Brickell", "Downtown Miami", "Miami Beach", "Coral Gables", "Design District", "Aventura", "Doral", "Key Biscayne"],
 };
 
@@ -59,7 +108,6 @@ export const CITY_LABELS: Record<City, string> = { nyc: "New York City", miami: 
 export function directoryLinks(city: City, area: string, procedureNames: string[] = []) {
   // No neighborhood chosen: "near me" lets Google Maps use the person's own location.
   const where = area.trim() ? `near ${area.trim()}, ${city === "nyc" ? "New York, NY" : "Miami, FL"}` : "near me";
-  const maps = (q: string) => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`;
   return {
     byProcedure: procedureNames.map((n) => ({ short: n, href: maps(`${n.split(" / ")[0]} ${where}`) })),
     directories: [

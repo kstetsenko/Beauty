@@ -20,8 +20,8 @@ export default function Terms() {
       <h2 className="font-semibold text-ink">Results and safety information</h2>
       <p>Results, recovery and risks vary from person to person, and nothing here is a promise of any result. Study summaries, FDA status and safety notices are accurate as of the date checked and can change. The quiz only hides treatments that are commonly not advised for the answers you give; it cannot assess your health.</p>
 
-      <h2 className="font-semibold text-ink">Clinics and connection requests</h2>
-      <p>We are not a medical provider and do not provide, supervise or guarantee any treatment. Clinics, including Partner clinics, are independent businesses responsible for their own services, pricing, licensing and care. When you send a consultation or &ldquo;connect me&rdquo; request, we share only what you entered with the clinic you chose or one partner clinic near you. You decide whether to book.</p>
+      <h2 className="font-semibold text-ink">Clinics</h2>
+      <p>We are not a medical provider and do not provide, supervise or guarantee any treatment. Clinics, including Partner clinics, are independent businesses responsible for their own services, pricing, licensing and care. Clinics are listed because they meet published criteria (see &ldquo;How we research&rdquo;), not as endorsements. You contact clinics directly; we don&apos;t pass your details to them.</p>
 
       <h2 className="font-semibold text-ink">Links and trademarks</h2>
       <p>Links to other websites (including Google Maps, PubMed, the FDA and professional societies) are provided for information; we don&apos;t control their content. Brand names are trademarks of their owners and are used only to identify treatments; we are not affiliated with any brand.</p>

@@ -6,7 +6,7 @@ import { appendFile, mkdir, readFile } from "node:fs/promises";
  * - A local file in .data/ (git-ignored) for development, or when TRACKING_LOCAL_FILE=1.
  * - Otherwise nothing is saved (the site still works).
  */
-export type Table = "clicks" | "leads";
+export type Table = "clicks";
 
 const url = () => process.env.SUPABASE_URL?.replace(/\/$/, "");
 const key = () => process.env.SUPABASE_SERVICE_KEY;

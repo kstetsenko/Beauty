@@ -1,34 +1,50 @@
 "use client";
 import { useEffect, useState } from "react";
-import { CITY_LABELS, CONNECT_PROMISE, NEIGHBORHOODS, PARTNER_NOTE, directoryLinks, mapsTerm, partnersFor } from "@/lib/clinics";
+import { CITY_LABELS, LISTING_NOTE, NEIGHBORHOODS, PARTNER_NOTE, ZIPS, clinicsFor, directoryLinks, mapsTerm } from "@/lib/clinics";
 import { PROCEDURES } from "@/lib/procedures";
-import type { City } from "@/lib/types";
-import { PartnerClinics } from "./PartnerClinics";
-import { LeadRequestForm } from "./LeadRequestForm";
-import { TrackedLink } from "./TrackedLink";
 import { track } from "@/lib/tracking";
+import type { City } from "@/lib/types";
+import { ClinicCard } from "./ClinicCard";
+import { TrackedLink } from "./TrackedLink";
 import { Disclosure } from "./Disclosure";
 
 /**
- * In-app clinic finder. Everything starts here (not on Google Maps) so each
- * referral is traceable: partner clinics first, then a "connect me" request
- * with a reference number, then — last — searching Google Maps yourself.
+ * In-app clinic finder. People contact clinics directly (website, booking, call, directions);
+ * we never collect their names or contact details. Every tap is counted, website and booking
+ * links are tagged, and each clinic has a booking code — so visits can be traced to the guide.
  */
 export function ClinicFinder({ treatment, city: initialCity, area: initialArea = "" }: { treatment: string; city: City; area?: string }) {
   const p = PROCEDURES.find((x) => x.id === treatment);
   const [city, setCity] = useState<City>(initialCity);
   const [area, setArea] = useState(NEIGHBORHOODS[initialCity].includes(initialArea) ? initialArea : "");
-  const [asking, setAsking] = useState(false);
-  // Count each search (treatment + city + area) so demand is visible even before partners join.
+  const [zip, setZip] = useState("");
+  const [zipNote, setZipNote] = useState("");
+
+  // Count each search (treatment + city + neighborhood) so demand is visible to the owner.
   useEffect(() => {
     if (PROCEDURES.some((x) => x.id === treatment)) track({ kind: "finder", treatment, city, area });
   }, [treatment, city, area]);
+
   if (!p) return <p className="text-sm">Pick a treatment first. <a href="/procedures" className="underline">See treatments</a></p>;
 
   const name = p.name.split(" / ")[0];
-  const partners = partnersFor(city, [p.id], area);
+  const { partners, listed } = clinicsFor(city, p.id, area);
+  const inArea = [...partners, ...listed].filter((c) => c.neighborhood === area).length;
   const links = directoryLinks(city, area, [mapsTerm(p)]);
   const other: City = city === "nyc" ? "miami" : "nyc";
+
+  // ZIP is matched to a neighborhood here on the device and never sent anywhere.
+  const onZip = (v: string) => {
+    const z = v.replace(/\D/g, "").slice(0, 5);
+    setZip(z);
+    if (z.length < 5) return setZipNote("");
+    const hit = ZIPS.nyc[z] ? { c: "nyc" as City, n: ZIPS.nyc[z] } : ZIPS.miami[z] ? { c: "miami" as City, n: ZIPS.miami[z] } : null;
+    if (hit) {
+      setCity(hit.c);
+      setArea(hit.n);
+      setZipNote(`${z} → ${hit.n}`);
+    } else setZipNote(`We don't have ${z} mapped yet — pick a neighborhood below.`);
+  };
 
   return (
     <section className="animate-in space-y-6">
@@ -36,20 +52,26 @@ export function ClinicFinder({ treatment, city: initialCity, area: initialArea =
         <a href={`/procedures/${p.id}?city=${city}`} className="text-muted hover:text-ink text-sm">← {name}</a>
         <h1 className="text-2xl font-semibold mt-3 mb-1.5">Find a clinic for {name}</h1>
         <p className="text-sm text-muted">
-          Pick an area, then contact a partner clinic or ask us to connect you. Always check a provider&apos;s credentials yourself.
+          Contact clinics directly — we don&apos;t ask for your name or details. Check credentials, reviews and prices yourself before booking.
         </p>
       </div>
 
-      <div>
-        <div className="flex gap-2 mb-3 text-sm">
+      <div className="space-y-3">
+        <div className="flex gap-2 text-sm">
           <span className="rounded-full bg-ink text-white px-3.5 py-1.5">{CITY_LABELS[city]}</span>
-          <button type="button" onClick={() => { setCity(other); setArea(""); }} className="rounded-full border border-line bg-white px-3.5 py-1.5 hover:border-ink">
+          <button type="button" onClick={() => { setCity(other); setArea(""); setZip(""); setZipNote(""); }} className="rounded-full border border-line bg-white px-3.5 py-1.5 hover:border-ink">
             {CITY_LABELS[other]}
           </button>
         </div>
+        <label className="block">
+          <span className="sr-only">ZIP code</span>
+          <input value={zip} onChange={(e) => onZip(e.target.value)} inputMode="numeric" autoComplete="postal-code" placeholder="Your ZIP code (stays on your device)"
+            className="w-full rounded-full border border-line bg-white px-5 py-3 text-sm focus:outline-none focus:border-ink" />
+        </label>
+        {zipNote && <p className="text-xs text-muted -mt-1 px-2">{zipNote}</p>}
         <div className="flex gap-2 overflow-x-auto -mx-5 px-5 pb-1 [scrollbar-width:none]">
           {NEIGHBORHOODS[city].map((n) => (
-            <button key={n} type="button" onClick={() => setArea(area === n ? "" : n)} aria-pressed={area === n}
+            <button key={n} type="button" onClick={() => { setArea(area === n ? "" : n); setZip(""); setZipNote(""); }} aria-pressed={area === n}
               className={"shrink-0 rounded-full border px-3 py-1.5 text-xs " + (area === n ? "bg-ink text-white border-ink" : "bg-white border-line")}>
               {n}
             </button>
@@ -57,21 +79,28 @@ export function ClinicFinder({ treatment, city: initialCity, area: initialArea =
         </div>
       </div>
 
-      {partners.length > 0 ? (
-        <PartnerClinics city={city} treatment={p.id} area={area} />
-      ) : (
-        <p className="rounded-2xl bg-blush p-4 text-sm">
-          We don&apos;t have a partner clinic for {name} in {area || CITY_LABELS[city]} yet.
-        </p>
+      {partners.length > 0 && (
+        <div>
+          <h2 className="font-semibold mb-2">Partner clinics</h2>
+          <ul className="space-y-2.5">{partners.map((c) => <ClinicCard key={c.id} c={c} treatment={p.id} />)}</ul>
+          <p className="text-[11px] text-muted mt-2">{PARTNER_NOTE}</p>
+        </div>
       )}
 
-      <div className="rounded-3xl bg-white border border-line p-5">
-        <h2 className="font-semibold">Ask us to connect you</h2>
-        <p className="text-sm text-muted mt-1">{CONNECT_PROMISE} Free, no obligation.</p>
-        {asking ? (
-          <LeadRequestForm treatment={p.id} city={city} area={area} />
+      <div>
+        <h2 className="font-semibold mb-1">Clinics offering {name}{area ? ` near ${area}` : ` in ${CITY_LABELS[city]}`}</h2>
+        {area && listed.length > 0 && inArea === 0 && (
+          <p className="text-xs text-muted mb-2">None listed in {area} yet — showing the rest of {CITY_LABELS[city]}.</p>
+        )}
+        {listed.length > 0 ? (
+          <>
+            <ul className="space-y-2.5 mt-2">{listed.map((c) => <ClinicCard key={c.id} c={c} treatment={p.id} />)}</ul>
+            <p className="text-[11px] text-muted mt-2">{LISTING_NOTE} <a href="/sources#clinics" className="underline">Our criteria</a></p>
+          </>
         ) : (
-          <button type="button" onClick={() => setAsking(true)} className="btn-main w-full text-sm mt-4">Connect me with a clinic</button>
+          <p className="rounded-2xl bg-blush p-4 text-sm mt-2">
+            We haven&apos;t listed a clinic for {name} in {CITY_LABELS[city]} yet. Search Google Maps below, and check the doctor&apos;s board certification.
+          </p>
         )}
       </div>
 
@@ -88,7 +117,7 @@ export function ClinicFinder({ treatment, city: initialCity, area: initialArea =
         <p className="text-[11px] text-muted mt-3">Google Maps results and ratings come from Google, not from us.</p>
       </Disclosure>
 
-      <p className="text-[11px] text-muted">{partners.length ? "" : PARTNER_NOTE + " "}Clinics are independent businesses; we don&apos;t provide or supervise care. Educational information only — not medical advice.</p>
+      <p className="text-[11px] text-muted">Clinics are independent businesses; we don&apos;t provide or supervise care. Educational information only — not medical advice.</p>
     </section>
   );
 }

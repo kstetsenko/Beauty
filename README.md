@@ -40,10 +40,10 @@ npm run data-check             # the weekly data check, without opening an issue
 | `lib/match.ts` | Matching and **safety filtering** (`safetyReasons`, `matchProcedures`) |
 | `lib/profile.ts` | The person's answers (kept in the browser tab only) and `personalize()` used by every page |
 | `lib/insights.ts`, `lib/trends.ts` | Core-insights timeline and facts; "trending but not FDA-approved" cautions |
-| `lib/clinics.ts` | Directory links, neighborhoods, the (empty) partner clinic list, `PARTNER_NOTE` and consent wording |
+| `lib/clinics.ts` | Listed clinics (with criteria, sources, booking codes), neighborhoods, ZIP → neighborhood map, `PARTNER_NOTE` |
 | `lib/tracking.ts`, `lib/store.ts` | Referral tracking: tap logging, UTM tags, storage (Supabase or local file) — see `docs/TRACKING.md` |
 | `components/` | UI: quiz (`Guide`), cards, procedure page, goal guides, compare, browser, feedback form |
-| `app/` | Pages and API routes (`/api/subscribe`, `/api/feedback`, `/api/track`, `/api/lead`, `/api/report`); owner-only `/report` |
+| `app/` | Pages and API routes (`/api/subscribe`, `/api/feedback`, `/api/track`, `/api/report`); clinic finder `/clinics`; owner-only `/report` |
 | `prototype/` | Single-file prototype build (hash router + small shims) |
 | `scripts/weekly-check.mjs` | Weekly link / PubMed / freshness check |
 | `.github/workflows/weekly-data-check.yml` | Runs the check every Monday and opens an issue |

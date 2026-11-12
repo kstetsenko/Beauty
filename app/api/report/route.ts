@@ -25,34 +25,36 @@ export async function GET(req: Request) {
   const to = new Date(Date.UTC(y, m, 1)).toISOString();
 
   try {
-    const [clicks, leads] = await Promise.all([between("clicks", from, to), between("leads", from, to)]);
-    const ids = new Set([...clicks.map((c) => c.clinic), ...leads.map((l) => l.clinic)].filter(Boolean) as string[]);
+    const clicks = await between("clicks", from, to);
+    const ids = new Set(clicks.map((c) => c.clinic).filter(Boolean) as string[]);
     const clinics = [...ids].map((id) => {
       const c = clicks.filter((r) => r.clinic === id);
-      const l = leads.filter((r) => r.clinic === id);
+      const treatments: Record<string, number> = {};
+      for (const r of c) if (r.treatment) treatments[String(r.treatment)] = (treatments[String(r.treatment)] ?? 0) + 1;
       return {
         id,
         name: CLINICS.find((x) => x.id === id)?.name ?? id,
+        code: CLINICS.find((x) => x.id === id)?.code ?? "",
         visitors: new Set(c.map((r) => r.tab).filter(Boolean)).size,
         website: count(c, (r) => r.kind === "site"),
-        calls: count(c, (r) => r.kind === "call"),
         booking: count(c, (r) => r.kind === "book"),
-        leads: l.map((r) => ({ ref: r.ref, at: r.at, treatment: r.treatment, name: r.name, email: r.email, phone: r.phone, preferred_time: r.preferred_time, status: r.status })),
+        calls: count(c, (r) => r.kind === "call"),
+        directions: count(c, (r) => r.kind === "directions"),
+        reviews: count(c, (r) => r.kind === "reviews"),
+        treatments: Object.entries(treatments).sort((x, y) => y[1] - x[1]),
       };
-    });
-    // Demand: clinic searches in the app and Google Maps taps (no clinic involved).
+    }).sort((x, y) => y.visitors - x.visitors);
+    // Demand: clinic searches in the app and Google Maps taps.
     const demand: Record<string, number> = {};
     for (const r of clicks.filter((r) => r.kind === "maps" || r.kind === "finder")) {
-      const k = [r.city ?? "?", r.treatment ?? "dermatologist", r.area ?? "near me"].join(" | ");
+      const k = [r.city ?? "?", r.treatment ?? "?", r.area ?? "any area"].join(" | ");
       demand[k] = (demand[k] ?? 0) + 1;
     }
-    const connect = leads.filter((r) => !r.clinic).map((r) => ({ ref: r.ref, at: r.at, city: r.city, area: r.area, treatment: r.treatment, name: r.name, email: r.email, phone: r.phone, preferred_time: r.preferred_time, status: r.status }));
     return NextResponse.json({
       month,
-      connect,
-      totals: { taps: count(clicks, (r) => r.kind !== "finder"), maps: count(clicks, (r) => r.kind === "finder" || r.kind === "maps"), leads: leads.length },
+      totals: { taps: count(clicks, (r) => !!r.clinic), searches: count(clicks, (r) => r.kind === "finder" || r.kind === "maps"), visitors: new Set(clicks.map((r) => r.tab).filter(Boolean)).size },
       clinics,
-      demand: Object.entries(demand).sort((a, b) => b[1] - a[1]).slice(0, 50),
+      demand: Object.entries(demand).sort((x, y) => y[1] - x[1]).slice(0, 50),
     });
   } catch {
     return NextResponse.json({ error: "Couldn't read the data. Check the Supabase settings." }, { status: 502 });

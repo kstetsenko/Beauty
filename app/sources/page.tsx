@@ -75,6 +75,19 @@ export default function Sources() {
         </p>
       </section>
 
+      <section id="clinics">
+        <h2 className="font-semibold mb-1">How clinics are listed</h2>
+        <p>
+          A clinic appears in the clinic finder only if (1) its own website or a university directory says board-certified
+          dermatologists or plastic surgeons are on staff, (2) its own website lists the treatment, and (3) it has an address in
+          one of our neighborhoods. Each card shows the source and the date we checked. We don&apos;t copy star ratings; each card
+          links to the clinic&apos;s Google reviews so you can read them yourself. Clinics appear with your chosen neighborhood
+          first, then A to Z. Clinics marked &ldquo;Partner&rdquo; pay a flat monthly fee and are labeled; paying never removes or
+          reorders the free list, and never changes which treatments we show. Being listed is not an endorsement: always check
+          the doctor&apos;s license and reviews before booking.
+        </p>
+      </section>
+
       <section>
         <h2 className="font-semibold mb-1">Important</h2>
         <p>

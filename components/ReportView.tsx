@@ -1,10 +1,8 @@
 "use client";
 import { useState } from "react";
 
-type Lead = { ref: string; at: string; treatment: string | null; name: string; email: string | null; phone: string | null; preferred_time: string | null; status: string };
-type ClinicRow = { id: string; name: string; visitors: number; website: number; calls: number; booking: number; leads: Lead[] };
-type Connect = Lead & { city: string | null; area: string | null };
-type Report = { month: string; connect: Connect[]; totals: { taps: number; maps: number; leads: number }; clinics: ClinicRow[]; demand: [string, number][] };
+type ClinicRow = { id: string; name: string; code: string; visitors: number; website: number; booking: number; calls: number; directions: number; reviews: number; treatments: [string, number][] };
+type Report = { month: string; totals: { taps: number; searches: number; visitors: number }; clinics: ClinicRow[]; demand: [string, number][] };
 
 const thisMonth = () => new Date().toISOString().slice(0, 7);
 const cell = (v: unknown) => {
@@ -41,7 +39,7 @@ export function ReportView() {
     <section className="animate-in space-y-6">
       <div>
         <h1 className="text-2xl font-semibold mb-1.5">Referral report</h1>
-        <p className="text-sm text-muted">For the owner only. Shows what this guide sent each partner clinic in a month: visitors, website, booking and call taps, and consultation requests with reference numbers.</p>
+        <p className="text-sm text-muted">For the owner only. Shows what this guide sent each clinic in a month: visitors and taps on website, booking, call, directions and reviews. No personal details are collected. Ask clinics how many people mentioned their booking code.</p>
       </div>
       <form onSubmit={load} className="grid gap-3 sm:grid-cols-[1fr_auto_auto] items-end">
         <label className="block min-w-0">
@@ -61,7 +59,7 @@ export function ReportView() {
       {rep && (
         <>
           <div className="grid grid-cols-3 gap-2 text-center">
-            {[["Link taps", rep.totals.taps], ["Clinic searches", rep.totals.maps], ["Requests", rep.totals.leads]].map(([l, v]) => (
+            {[["Visitors", rep.totals.visitors], ["Clinic searches", rep.totals.searches], ["Clinic taps", rep.totals.taps]].map(([l, v]) => (
               <div key={l} className="rounded-2xl bg-white border border-line p-3">
                 <p className="text-xl font-semibold">{v}</p>
                 <p className="text-[11px] text-muted">{l}</p>
@@ -70,7 +68,7 @@ export function ReportView() {
           </div>
 
           {rep.clinics.length === 0 ? (
-            <p className="text-sm text-muted">No partner clinic activity this month. Partners appear here once they are added in lib/clinics.ts and people tap them.</p>
+            <p className="text-sm text-muted">No clinic taps this month yet.</p>
           ) : (
             rep.clinics.map((c) => (
               <div key={c.id} className="rounded-3xl bg-white border border-line p-5">
@@ -78,44 +76,19 @@ export function ReportView() {
                   <h2 className="font-semibold min-w-0">{c.name}</h2>
                   <button type="button" className="text-sm underline shrink-0"
                     onClick={() => download(`referrals-${c.id}-${rep.month}.csv`, [
-                      ["Clinic", c.name], ["Month", rep.month], ["Visitors", c.visitors], ["Website taps", c.website], ["Booking taps", c.booking], ["Call taps", c.calls], ["Requests", c.leads.length], [],
-                      ["Reference", "Date", "Treatment", "Name", "Email", "Phone", "Best time", "Status"],
-                      ...c.leads.map((l) => [l.ref, l.at.slice(0, 10), l.treatment, l.name, l.email, l.phone, l.preferred_time, l.status]),
+                      ["Clinic", c.name], ["Booking code", c.code], ["Month", rep.month], ["Visitors", c.visitors], ["Website taps", c.website],
+                      ["Booking taps", c.booking], ["Call taps", c.calls], ["Directions taps", c.directions], ["Reviews taps", c.reviews], [],
+                      ["Treatment", "Taps"], ...c.treatments,
                     ])}>
                     CSV
                   </button>
                 </div>
-                <p className="text-sm text-muted mt-1">{c.visitors} visitors · {c.website} website · {c.booking} booking · {c.calls} call taps · {c.leads.length} requests</p>
-                {c.leads.length > 0 && (
-                  <ul className="mt-3 space-y-1.5 text-sm">
-                    {c.leads.map((l) => (
-                      <li key={l.ref} className="break-words"><strong>{l.ref}</strong> · {l.at.slice(0, 10)} · {l.treatment ?? "—"} · {l.name} · {l.email ?? l.phone}</li>
-                    ))}
-                  </ul>
-                )}
+                <p className="text-sm text-muted mt-1">
+                  {c.visitors} visitors · {c.website} website · {c.booking} booking · {c.calls} call · {c.directions} directions · {c.reviews} reviews taps · code {c.code}
+                </p>
+                {c.treatments.length > 0 && <p className="text-xs text-muted mt-1">By treatment: {c.treatments.map(([t, n]) => `${t} ${n}`).join(", ")}</p>}
               </div>
             ))
-          )}
-
-          {rep.connect.length > 0 && (
-            <div className="rounded-3xl bg-white border border-line p-5">
-              <div className="flex items-baseline justify-between gap-3">
-                <h2 className="font-semibold min-w-0">&ldquo;Connect me&rdquo; requests ({rep.connect.length})</h2>
-                <button type="button" className="text-sm underline shrink-0"
-                  onClick={() => download(`connect-requests-${rep.month}.csv`, [
-                    ["Reference", "Date", "City", "Area", "Treatment", "Name", "Email", "Phone", "Best time", "Status"],
-                    ...rep.connect.map((l) => [l.ref, l.at.slice(0, 10), l.city, l.area, l.treatment, l.name, l.email, l.phone, l.preferred_time, l.status]),
-                  ])}>
-                  CSV
-                </button>
-              </div>
-              <p className="text-xs text-muted mt-1">Reply within 2 business days: pass each to one partner clinic near them, or tell them there isn&apos;t one yet.</p>
-              <ul className="mt-3 space-y-1.5 text-sm">
-                {rep.connect.map((l) => (
-                  <li key={l.ref} className="break-words"><strong>{l.ref}</strong> · {l.at.slice(0, 10)} · {l.treatment ?? "—"} · {l.area ?? l.city} · {l.name} · {l.email ?? l.phone}</li>
-                ))}
-              </ul>
-            </div>
           )}
 
           {rep.demand.length > 0 && (

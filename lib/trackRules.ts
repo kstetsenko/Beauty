@@ -2,7 +2,7 @@ import { CLINICS, NEIGHBORHOODS } from "./clinics";
 import { PROCEDURES } from "./procedures";
 
 /** Server-side checks so only known values are ever stored (no free text from the URL or page). */
-export const KINDS = ["finder", "maps", "site", "call", "book", "directory", "license", "lead"] as const;
+export const KINDS = ["finder", "maps", "site", "call", "book", "directions", "reviews", "directory", "license"] as const;
 export const isKind = (v: unknown): v is (typeof KINDS)[number] => typeof v === "string" && (KINDS as readonly string[]).includes(v);
 export const isCity = (v: unknown): v is "nyc" | "miami" => v === "nyc" || v === "miami";
 export const clinicById = (v: unknown) => (typeof v === "string" ? CLINICS.find((c) => c.id === v) : undefined);
