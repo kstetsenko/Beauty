@@ -15,7 +15,7 @@ const RAW: Raw[] = [
     id: "sofwave", name: "Sofwave", what: "Ultrasound skin tightening", approach: "energy", collagen: true, onset: 3,
     summary: "Ultrasound energy heats the skin's middle layer to trigger new collagen, gently lifting brows, jawline and neck.",
     goals: ["lift", "lines"], cost: { nyc: [3000, 4500], miami: [2500, 4000] }, priceUnit: "full face",
-    sessions: "Usually 1", lasts: "About 1 year; results build over 3 months", downtimeDays: [0, 0], pain: 2, results: 2,
+    sessions: "Usually 1", lasts: "About 1 year; results build over 3 months", downtimeDays: [0, 0], pain: 2, results: 1,
     performedBy: "Physician-supervised clinic", contraindications: ["pregnancy", "active-skin"],
     notes: "Known for being more comfortable than older ultrasound devices.",
   },
@@ -23,7 +23,7 @@ const RAW: Raw[] = [
     id: "ultherapy", name: "Ultherapy", what: "Focused ultrasound lifting", aka: ["Ultherapy PRIME", "Microfocused ultrasound"], approach: "energy", collagen: true, onset: 3,
     summary: "Focused ultrasound reaches the deep support layer under the skin to lift and tighten over time.",
     goals: ["lift"], cost: { nyc: [2700, 5000], miami: [2000, 4500] }, priceUnit: "full face",
-    sessions: "Usually 1", lasts: "1–2 years; results build over 3–6 months", downtimeDays: [0, 1], pain: 4, results: 2,
+    sessions: "Usually 1", lasts: "1–2 years; results build over 3–6 months", downtimeDays: [0, 1], pain: 4, results: 1,
     performedBy: "Physician-supervised clinic", contraindications: ["pregnancy", "active-skin"],
     notes: "Ask what pain relief is offered — it can be uncomfortable.",
   },
@@ -31,7 +31,7 @@ const RAW: Raw[] = [
     id: "thermage", name: "Thermage FLX", what: "Radiofrequency skin tightening", aka: ["Monopolar radiofrequency"], approach: "energy", collagen: true, onset: 3,
     summary: "Radiofrequency heat tightens existing collagen and stimulates new collagen for firmer skin.",
     goals: ["lift", "lines"], cost: { nyc: [3500, 4500], miami: [3000, 4500] }, priceUnit: "full face",
-    sessions: "Usually 1", lasts: "About 1–2 years", downtimeDays: [0, 0], pain: 3, results: 2,
+    sessions: "Usually 1", lasts: "About 1–2 years", downtimeDays: [0, 0], pain: 3, results: 1,
     performedBy: "Physician-supervised clinic", contraindications: ["pregnancy", "active-skin", "implant-device"],
     notes: "Not suitable with some implanted electronic devices — tell your provider.",
   },
@@ -181,7 +181,7 @@ const RAW: Raw[] = [
     id: "emface", name: "Emface", what: "Muscle stimulation + radiofrequency", aka: ["HIFES + radiofrequency"], approach: "energy", collagen: true, onset: 3,
     summary: "Combines electrical muscle stimulation with radiofrequency heat to firm the face and soften lines, with no needles.",
     goals: ["lines"], cost: { nyc: [900, 1200], miami: [900, 1200] }, priceUnit: "per session (usually 4)",
-    sessions: "Usually 4, about a week apart", lasts: "Unclear — studies followed people for 3 months", downtimeDays: [0, 0], pain: 1, results: 2,
+    sessions: "Usually 4, about a week apart", lasts: "Unclear — studies followed people for 3 months", downtimeDays: [0, 0], pain: 1, results: 1,
     performedBy: "Physician-supervised clinic", contraindications: ["pregnancy"],
     notes: "Newer device; published studies are small and linked to the manufacturer.",
   },
@@ -328,3 +328,10 @@ export const GOAL_LABELS: Record<string, string> = {
 
 export const PAIN_LABELS = ["", "Minimal", "Mild", "Moderate", "Strong", "Intense"];
 export const RESULT_LABELS = ["", "Subtle", "Noticeable", "Dramatic"];
+/** What each "Expected results" level means. Our estimate from the studies and FDA trials for each treatment. */
+export const RESULT_MEANING = [
+  "",
+  "A small change that you may notice more than others do.",
+  "A clear improvement that others are likely to notice.",
+  "A marked change, usually with more recovery time or cost.",
+];

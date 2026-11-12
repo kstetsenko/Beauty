@@ -156,7 +156,7 @@ export function rank(p: Procedure, a: QuizAnswers): { score: number; why: { good
   else {
     score += p.results;
     if (p.results === 3) good.push("Dramatic results possible");
-    else if (p.results === 1) watch.push("Subtle results");
+    else if (p.results === 1) watch.push("Results are usually subtle");
     else good.push(`Typically ${RESULT_WORD[p.results]} results`);
   }
 

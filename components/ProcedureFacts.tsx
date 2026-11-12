@@ -1,6 +1,7 @@
 import { CAUTIONS } from "@/lib/cautions";
 import { PRICE_UNKNOWN, downtimeShort, priceFrom, priceRange, usd } from "@/lib/match";
-import { APPROACHES, ONSET_LABELS, PAIN_LABELS, RESULT_LABELS } from "@/lib/procedures";
+import { APPROACHES, ONSET_LABELS, PAIN_LABELS, PROCEDURES, RESULT_LABELS, RESULT_MEANING } from "@/lib/procedures";
+import { combosFor } from "@/lib/combos";
 import { SAFETY } from "@/lib/safety";
 import { LEARN } from "@/lib/learn";
 import { VIDEOS } from "@/lib/videos";
@@ -56,15 +57,9 @@ export function KeyFacts({ p, city }: { p: Procedure; city: City }) {
         <dd className="text-[11px] text-muted mt-1">{PAIN_LABELS[p.pain]}</dd>
       </div>
       <div className="rounded-2xl bg-sand p-3">
-        <dt className="text-[11px] text-muted mb-1.5">Results</dt>
-        {RESEARCH[p.id].evidence > 1 ? (
-          <>
-            <dd><Dots value={p.results} max={3} label="Results" /></dd>
-            <dd className="text-[11px] text-muted mt-1">{RESULT_LABELS[p.results]}</dd>
-          </>
-        ) : (
-          <dd className="text-sm font-semibold">Not well studied</dd>
-        )}
+        <dt className="text-[11px] text-muted mb-1.5">Expected results</dt>
+        <dd><Dots value={p.results} max={3} label="Expected results" /></dd>
+        <dd className="text-[11px] text-muted mt-1">{RESULT_LABELS[p.results]}{RESEARCH[p.id].evidence === 1 ? " (our estimate; limited evidence)" : ""}</dd>
       </div>
     </dl>
   );
@@ -108,6 +103,9 @@ export function DetailSections({ p, city, withPrice = true }: { p: Procedure; ci
 
       <Disclosure tone="plain" title="Results & recovery" hint={`Results ${ONSET_LABELS[p.onset].toLowerCase()}`}>
         <dl className="space-y-2.5">
+          <Row label="Expected results">
+            <span className="font-medium">{RESULT_LABELS[p.results]}{r.evidence === 1 ? " (our estimate; the evidence is limited)" : ""}.</span> {RESULT_MEANING[p.results]}
+          </Row>
           <Row label="When you'll see results">{r.resultsIn}</Row>
           <Row label="How long it lasts">{p.lasts}</Row>
           <Row label="Good to know">{p.notes}</Row>
@@ -162,6 +160,27 @@ export function DetailSections({ p, city, withPrice = true }: { p: Procedure; ci
           describe groups of people, not any one person. <a href="/sources#logic" className="underline">How we grade</a>
         </p>
       </Disclosure>
+
+      {combosFor(p.id).length > 0 && (
+        <Disclosure tone="plain" title="Often combined with" hint={combosFor(p.id).map((c) => PROCEDURES.find((x) => x.id === c.partner)?.name.split(" / ")[0]).join(", ")}>
+          <ul className="space-y-3 text-sm" aria-label="Combinations studied">
+            {combosFor(p.id).map((c) => {
+              const q = PROCEDURES.find((x) => x.id === c.partner)!;
+              return (
+                <li key={c.partner}>
+                  <a href={`/procedures/${q.id}?city=${city}`} className="font-medium underline decoration-line underline-offset-2">{q.name.split(" / ")[0]}</a>
+                  <span className="block mt-0.5">{c.text}</span>
+                  <a href={c.source.url} target="_blank" rel="noopener noreferrer" className="block text-xs text-muted underline mt-0.5">Source: {c.source.label}</a>
+                </li>
+              );
+            })}
+          </ul>
+          <p className="text-[11px] text-muted mt-3">
+            Only combinations tested in a published study are listed. Whether a combination suits you, and how far apart to
+            space the sessions, is for your provider to decide.
+          </p>
+        </Disclosure>
+      )}
 
       {withPrice && (
         <Disclosure tone="plain" title="About the price" hint={priceChecked(p.id, city) ? "From published clinic prices" : "Estimate"}>

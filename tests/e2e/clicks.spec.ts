@@ -95,3 +95,29 @@ test.describe("every button on the main pages works without errors", () => {
     expect(all).toBeGreaterThan(mine);
   });
 });
+
+test.describe("expected results, notes and combinations", () => {
+  test("cards show an expected-results tag and grammatical notes", async ({ page }) => {
+    const errors = await setup(page);
+    await page.goto("/");
+    await takeQuiz(page, { goals: ["Lines & Wrinkles"], tone: "Deep brown or Black" });
+    await expect(page.getByText(/Expected results: (subtle|noticeable|dramatic)/).first()).toBeVisible();
+    const text = await page.locator("main").innerText();
+    expect(text).not.toMatch(/(^|\n)\s*! /);
+    expect(text).toMatch(/Note: /);
+    expect(errors).toEqual([]);
+  });
+
+  test("a treatment page lists studied combinations with sources", async ({ page }) => {
+    const errors = await setup(page);
+    await page.goto("/procedures/botox?city=nyc");
+    await page.getByText("Often combined with").click();
+    const combos = page.getByRole("list", { name: "Combinations studied" });
+    await expect(combos.getByRole("link", { name: /Smile/ })).toBeVisible();
+    await expect(combos.getByRole("link", { name: /^Source:/ }).first()).toHaveAttribute("href", /ncbi\.nlm\.nih\.gov/);
+    await page.getByText("Results & recovery").click();
+    await expect(page.getByText(/Expected results/).first()).toBeVisible();
+    await expectNoOverflow(page);
+    expect(errors).toEqual([]);
+  });
+});

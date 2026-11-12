@@ -2,7 +2,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { CAUTIONS } from "@/lib/cautions";
 import { RANK_RULES, downtimeShort, priceFrom, type Match } from "@/lib/match";
-import { GOAL_LABELS, ONSET_LABELS } from "@/lib/procedures";
+import { GOAL_LABELS, ONSET_LABELS, RESULT_LABELS } from "@/lib/procedures";
 import { EVIDENCE_LABELS, RESEARCH } from "@/lib/research";
 import type { City, Goal } from "@/lib/types";
 import { filterFitsGoals } from "@/lib/relevance";
@@ -69,14 +69,15 @@ export function ResultsList({
                     <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-2 text-[11px] text-muted">
                       <span className="flex items-center gap-1.5"><Dots value={r.evidence} max={3} label="Certainty of evidence" /> {EVIDENCE_LABELS[r.evidence]} certainty</span>
                       <span>{priceFrom(p, city)}</span>
+                      <span>Expected results: {RESULT_LABELS[p.results].toLowerCase()}{r.evidence === 1 ? " (estimate)" : ""}</span>
                       <span>Recovery: {downtimeShort(p.downtimeDays).toLowerCase()}</span>
                       <span>{ONSET_LABELS[p.onset]}</span>
                       {p.collagen && filterFitsGoals("collagen", tab ? [tab] : goals) && <span>Builds collagen</span>}
                     </div>
                     {m.later && <p className="mt-2 text-xs rounded-xl bg-sand px-3 py-2">Later: {m.later}</p>}
                     <ul className="mt-2 space-y-0.5 text-xs" aria-label="Why it's ranked here">
-                      {m.why.good.slice(0, top ? 3 : 2).map((t) => <li key={t}>✓ {t}</li>)}
-                      {m.why.watch.slice(0, top ? 2 : 1).map((t) => <li key={t} className="text-muted">! {t}</li>)}
+                      {m.why.good.slice(0, top ? 3 : 2).map((t) => <li key={t}>✓ {t}.</li>)}
+                      {m.why.watch.slice(0, top ? 2 : 1).map((t) => <li key={t} className="text-muted"><span className="font-medium">Note:</span> {t}.</li>)}
                     </ul>
                   </div>
                   <button
@@ -132,7 +133,7 @@ export function ResultsList({
           {RANK_RULES.map((r) => <li key={r}>{r}</li>)}
         </ol>
         <p className="text-xs text-muted mt-2">
-          Treatments that aren&apos;t advised with your answers are hidden, not ranked. Each card shows its main reasons (✓) and anything to weigh (!).
+          Treatments that aren&apos;t advised with your answers are hidden, not ranked. Each card shows its main reasons (marked ✓) and anything to weigh (marked &ldquo;Note&rdquo;).
           Ties go to the option with fewer cautions for you, then the higher certainty of evidence, then the lower price.
         </p>
       </Disclosure>

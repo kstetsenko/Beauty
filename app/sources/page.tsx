@@ -29,9 +29,9 @@ export default function Sources() {
           to their summaries. We rate the evidence for each procedure:
         </p>
         <ul className="list-disc pl-5 mt-1 space-y-1">
-          <li><strong>Strong</strong> — several randomized controlled trials or a meta-analysis of them.</li>
-          <li><strong>Some</strong> — systematic reviews or smaller controlled studies with consistent results.</li>
-          <li><strong>Limited</strong> — few, small or uncontrolled studies, often funded by the maker, or none found.</li>
+          <li><strong>High certainty:</strong> several randomized controlled trials or a meta-analysis of them.</li>
+          <li><strong>Moderate certainty:</strong> systematic reviews or smaller controlled studies with consistent results.</li>
+          <li><strong>Low certainty:</strong> few, small or uncontrolled studies, often funded by the maker, or none found.</li>
         </ul>
         <p className="text-muted mt-1">
           This is our plain-language summary, not a formal grading. A study result describes a group of people and does not
@@ -85,6 +85,8 @@ export default function Sources() {
           <li><strong>Order:</strong> each treatment receives 3 points for every one of your goals it is used for, 2 points per level of evidence (low 1, moderate 2, high 3) and 1 to 3 points for typical results, which count only when the evidence is at least moderate. It gains 3 points when it specifically targets a condition you have (for example, laser toning for melasma) and loses 2 or 3 points when your answers raise a known risk (for example, dark marks on deeper skin tones). Ties go to the option with fewer cautions, then the higher certainty of evidence, then the lower price.</li>
           <li><strong>Recent treatments:</strong> after a one-session treatment whose results develop over months (for example, Sofwave), similar options move to a separate &ldquo;Later&rdquo; section, with the reason.</li>
           <li><strong>Certainty of evidence:</strong> graded by us from the published studies. High: supported by randomized controlled trials or pooled analyses of them. Moderate: supported by systematic reviews or several smaller studies with consistent results. Low: based on small or uncontrolled studies, often funded by the manufacturer, or on no published studies. For low-certainty treatments we make no claim about how well they work.</li>
+          <li><strong>Expected results:</strong> how big a change to expect, from the size of the improvement in the published studies. Subtle: a small change that you may notice more than others do. Noticeable: a clear improvement that others are likely to notice. Dramatic: a marked change, usually with more recovery time or cost. For low-certainty treatments this is our estimate and is labeled as such.</li>
+          <li><strong>Often combined with:</strong> shown only when a published study tested the two treatments together, with a link to that study.</li>
           <li><strong>Prices:</strong> &ldquo;From clinic prices&rdquo; when a NYC or Miami clinic page publishes one; &ldquo;Estimate&rdquo; when based on national ranges; &ldquo;Price not available at the moment&rdquo; when we found no published price.</li>
           <li><strong>Filters and plans:</strong> only shown when they fit your goals and leave at least one option.</li>
           <li><strong>Clinics:</strong> listed for free if their own pages show board-certified doctors and the treatment; your neighborhood first, then alphabetical; partners can&apos;t change this order.</li>

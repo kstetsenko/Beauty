@@ -18,3 +18,12 @@
 | **Compare** | Same goal only, up to 3; ends with "Find a clinic" for each | `components/CompareView.tsx` | e2e pages |
 | **Clinics** | Listed if own pages show board-certified doctors + the treatment; neighborhood first, then A–Z; partners can't reorder; no checked clinic → labeled Google Maps search | `lib/clinics.ts` | unit clinics, e2e clinics |
 | **Privacy** | Quiz answers stay in the tab; taps store no personal data | `lib/profile.ts`, `app/api/track` | unit api, e2e clinics |
+
+## Expected results and combinations
+
+- **Expected results** (cards, key facts, compare, treatment page): Subtle, Noticeable or Dramatic, from the size of the
+  improvement in published studies (`results` in `lib/procedures.ts`, meanings in `RESULT_MEANING`). For low-certainty
+  treatments the tag says "estimate". Low-certainty treatments are never rated Dramatic (unit test).
+- **Often combined with** (treatment page): only pairs that a published study tested together (`lib/combos.ts`), each
+  with its PubMed or PMC link. The guide does not say how far apart to space sessions.
+- **Card wording:** reasons are full sentences; cautions start with "Note:" rather than a symbol.

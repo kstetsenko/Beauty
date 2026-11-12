@@ -12,7 +12,7 @@ import { NotShown, ProfileBar, ProfileGate } from "./ProfileGate";
 const ROWS: { label: string; cell: (p: Procedure, c: City) => React.ReactNode }[] = [
   { label: "Price", cell: (p, c) => p.cost[c] ? <>{priceRange(p, c)}<span className="block text-[11px] text-muted">{p.priceUnit}{priceChecked(p.id, c) ? "" : " · estimate"}</span></> : <span className="text-[11px] text-muted">{PRICE_UNKNOWN}</span> },
   { label: "Evidence", cell: (p) => <><Dots value={RESEARCH[p.id].evidence} max={3} label="Certainty of evidence" /><span className="block text-[11px] text-muted mt-1">{EVIDENCE_LABELS[RESEARCH[p.id].evidence]} certainty</span></> },
-  { label: "Results", cell: (p) => RESEARCH[p.id].evidence > 1 ? <><Dots value={p.results} max={3} label="Results" /><span className="block text-[11px] text-muted mt-1">{RESULT_LABELS[p.results]}</span></> : <span className="text-[11px] text-muted">Not well studied</span> },
+  { label: "Expected results", cell: (p) => <><Dots value={p.results} max={3} label="Expected results" /><span className="block text-[11px] text-muted mt-1">{RESULT_LABELS[p.results]}{RESEARCH[p.id].evidence === 1 ? " (estimate)" : ""}</span></> },
   { label: "Pain", cell: (p) => <><Dots value={p.pain} max={5} label="Pain" /><span className="block text-[11px] text-muted mt-1">{PAIN_LABELS[p.pain]}</span></> },
   { label: "Recovery", cell: (p) => downtimeShort(p.downtimeDays) },
   { label: "Results show", cell: (p) => ONSET_LABELS[p.onset] },
