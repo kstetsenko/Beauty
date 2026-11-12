@@ -1,10 +1,9 @@
 import { CAUTIONS } from "@/lib/cautions";
-import { downtimeShort, usd } from "@/lib/match";
+import { PRICE_UNKNOWN, downtimeShort, priceFrom, priceRange, usd } from "@/lib/match";
 import { APPROACHES, ONSET_LABELS, PAIN_LABELS, RESULT_LABELS } from "@/lib/procedures";
 import { SAFETY } from "@/lib/safety";
 import { LEARN } from "@/lib/learn";
 import { VIDEOS } from "@/lib/videos";
-import { QUESTIONS } from "@/lib/questions";
 import { Disclosure } from "./Disclosure";
 import { CHECKED, EVIDENCE_LABELS, RESEARCH, priceChecked } from "@/lib/research";
 import type { City, Procedure } from "@/lib/types";
@@ -30,14 +29,19 @@ export function ApproachTag({ p }: { p: Procedure }) {
 
 /** The four key numbers: price, recovery, pain, results. */
 export function KeyFacts({ p, city }: { p: Procedure; city: City }) {
-  const [lo, hi] = p.cost[city];
   return (
     <dl className="grid grid-cols-2 gap-2.5">
       <div className="rounded-2xl bg-sand p-3">
         <dt className="text-[11px] text-muted">Price*</dt>
-        <dd className="font-semibold">{usd(lo)}–{usd(hi).replace("$", "")}</dd>
-        <dd className="text-[11px] text-muted">{p.priceUnit}</dd>
-        <dd className="text-[11px] text-muted mt-0.5">{priceChecked(p.id, city) ? "✓ From clinic prices" : "Estimate"}</dd>
+        <dd className="font-semibold">{priceRange(p, city)}</dd>
+        {p.cost[city] ? (
+          <>
+            <dd className="text-[11px] text-muted">{p.priceUnit}</dd>
+            <dd className="text-[11px] text-muted mt-0.5">{priceChecked(p.id, city) ? "✓ From clinic prices" : "Estimate"}</dd>
+          </>
+        ) : (
+          <dd className="text-[11px] text-muted">No published price yet — ask the clinic</dd>
+        )}
       </div>
       <div className="rounded-2xl bg-sand p-3">
         <dt className="text-[11px] text-muted">Recovery</dt>
@@ -51,8 +55,14 @@ export function KeyFacts({ p, city }: { p: Procedure; city: City }) {
       </div>
       <div className="rounded-2xl bg-sand p-3">
         <dt className="text-[11px] text-muted mb-1.5">Results</dt>
-        <dd><Dots value={p.results} max={3} label="Results" /></dd>
-        <dd className="text-[11px] text-muted mt-1">{RESULT_LABELS[p.results]}</dd>
+        {RESEARCH[p.id].evidence > 1 ? (
+          <>
+            <dd><Dots value={p.results} max={3} label="Results" /></dd>
+            <dd className="text-[11px] text-muted mt-1">{RESULT_LABELS[p.results]}</dd>
+          </>
+        ) : (
+          <dd className="text-sm font-semibold">Not well studied</dd>
+        )}
       </div>
     </dl>
   );
@@ -150,14 +160,6 @@ export function DetailSections({ p, city, withPrice = true }: { p: Procedure; ci
             </ul>
           )}
           <p className="text-[11px] text-muted mt-2">May not include numbing, consultation fees or touch-ups. A price far below others is a red flag.</p>
-        </Disclosure>
-      )}
-
-      {QUESTIONS[p.id]?.length > 0 && (
-        <Disclosure tone="plain" title="Questions to ask your provider" hint={`${QUESTIONS[p.id].length} questions about ${p.name.split(" / ")[0]}`}>
-          <ol className="list-decimal pl-5 space-y-2 text-sm">
-            {QUESTIONS[p.id].map((q) => <li key={q}>{q}</li>)}
-          </ol>
         </Disclosure>
       )}
 

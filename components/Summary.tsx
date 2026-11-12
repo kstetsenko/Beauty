@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { directoryLinks } from "@/lib/clinics";
-import { downtimeShort, usd, type Hidden, type Match } from "@/lib/match";
+import { downtimeShort, priceFrom, type Hidden, type Match } from "@/lib/match";
 import { GOAL_LABELS } from "@/lib/procedures";
 import type { City, Goal } from "@/lib/types";
 import { LeadCaptureForm } from "./LeadCaptureForm";
@@ -52,7 +52,7 @@ export function Summary({
               <li key={p.id} className="rounded-3xl bg-white border border-line p-5">
                 <div className="flex items-baseline justify-between gap-3">
                   <a href={`/procedures/${p.id}?city=${city}`} className="font-semibold">{p.name}</a>
-                  <span className="text-sm shrink-0">from {usd(p.cost[city][0])}</span>
+                  <span className="text-sm shrink-0">{priceFrom(p, city)}</span>
                 </div>
                 <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mt-1.5 text-[11px] text-muted">
                   <span className="flex items-center gap-1.5">Pain <Dots value={p.pain} max={5} label="Pain" /></span>
@@ -62,7 +62,7 @@ export function Summary({
                   Find a clinic for {p.name.split(" / ")[0]} →
                 </a>
                 <a href={`/procedures/${p.id}?city=${city}`} className="block text-center text-sm underline mt-2">
-                  Recovery, risks, research & questions to ask
+                  Recovery, risks and research
                 </a>
               </li>
             ))}

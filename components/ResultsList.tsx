@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
 import { CAUTIONS } from "@/lib/cautions";
-import { RANK_RULES, downtimeShort, usd, type Match } from "@/lib/match";
+import { RANK_RULES, downtimeShort, priceFrom, type Match } from "@/lib/match";
 import { GOAL_LABELS, ONSET_LABELS } from "@/lib/procedures";
 import { EVIDENCE_LABELS, RESEARCH } from "@/lib/research";
 import type { City, Goal } from "@/lib/types";
@@ -68,7 +68,7 @@ export function ResultsList({
                     <p className="text-xs text-muted">{p.what}</p>
                     <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-2 text-[11px] text-muted">
                       <span className="flex items-center gap-1.5"><Dots value={r.evidence} max={3} label="Evidence" /> {EVIDENCE_LABELS[r.evidence]} research</span>
-                      <span>from {usd(p.cost[city][0])}</span>
+                      <span>{priceFrom(p, city)}</span>
                       <span>Recovery: {downtimeShort(p.downtimeDays).toLowerCase()}</span>
                       <span>{ONSET_LABELS[p.onset]}</span>
                       {p.collagen && filterFitsGoals("collagen", tab ? [tab] : goals) && <span>Builds collagen</span>}

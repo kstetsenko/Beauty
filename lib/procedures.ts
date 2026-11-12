@@ -358,13 +358,29 @@ const RAW: Raw[] = [
     performedBy: "Dermatologist or supervised clinician", contraindications: ["pregnancy", "active-skin"],
     notes: "Improvement builds over months. Most studies follow one group without a comparison group, and many are linked to the maker.",
   },
+  {
+    id: "sylfirm-x", name: "Sylfirm X", what: "Pulsed radiofrequency microneedling", aka: ["Sylfirm"], approach: "energy", onset: 3,
+    summary: "A radiofrequency microneedling device that works in the deeper skin layer; small studies used it for melasma, alone or as maintenance.",
+    goals: ["pigment"], cost: { nyc: null, miami: null }, priceUnit: "per session",
+    sessions: "Often a series of sessions", lasts: "Melasma often returns; maintenance is common", downtimeDays: [0, 2], pain: 2, results: 2,
+    performedBy: "Dermatologist or supervised clinician", contraindications: ["pregnancy", "active-skin", "keloid", "blood-thinners", "isotretinoin"],
+    notes: "Studies are small. No published price in NYC or Miami yet — ask the clinic.",
+  },
+  {
+    id: "ultraclear", name: "UltraClear", what: "2910 nm fiber laser resurfacing", aka: ["2910 nm laser", "Cold fiber laser"], approach: "laser", onset: 2,
+    summary: "A newer fractional laser that removes a thin layer of skin to smooth sun damage and wrinkles.",
+    goals: ["lines", "texture"], cost: { nyc: null, miami: null }, priceUnit: "per session",
+    sessions: "In the published study, 3 sessions 6–8 weeks apart", lasts: "Unknown — the study followed people for months", downtimeDays: [5, 7], pain: 3, results: 2,
+    performedBy: "Dermatologist or supervised clinician", contraindications: ["pregnancy", "active-skin", "keloid"],
+    notes: "One small published study (22 people; 6 left the study). No published price in NYC or Miami yet — ask the clinic.",
+  },
 ];
 
 function tierOf(nycLow: number): Tier {
   return nycLow <= 350 ? 1 : nycLow <= 1000 ? 2 : 3;
 }
 
-export const PROCEDURES: Procedure[] = RAW.map((p) => ({ ...p, tier: tierOf(p.cost.nyc[0]) }));
+export const PROCEDURES: Procedure[] = RAW.map((p) => ({ ...p, tier: p.cost.nyc ? tierOf(p.cost.nyc[0]) : 3 }));
 
 export const APPROACHES: Record<Approach, { label: string; short: string; hint: string }> = {
   energy: { label: "Energy-based devices", short: "Energy devices", hint: "Ultrasound, radiofrequency, microwave or heat works in the skin; results build over weeks to months" },

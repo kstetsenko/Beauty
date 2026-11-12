@@ -13,8 +13,8 @@ export interface Note {
 const pm = (id: string) => `https://pubmed.ncbi.nlm.nih.gov/${id}/`;
 const pmc = (id: string) => `https://pmc.ncbi.nlm.nih.gov/articles/${id}/`;
 
-export const RESURFACING = new Set(["co2", "erbium", "fraxel", "halo", "moxi", "clear-brilliant", "tixel", "pico", "peel"]);
-export const LIGHT = new Set(["co2", "erbium", "fraxel", "halo", "moxi", "clear-brilliant", "laser-genesis", "pico", "ipl", "pdl", "ktp"]);
+export const RESURFACING = new Set(["ultraclear", "co2", "erbium", "fraxel", "halo", "moxi", "clear-brilliant", "tixel", "pico", "peel"]);
+export const LIGHT = new Set(["ultraclear", "co2", "erbium", "fraxel", "halo", "moxi", "clear-brilliant", "laser-genesis", "pico", "ipl", "pdl", "ktp"]);
 export const ENERGY = new Set(["sofwave", "ultherapy", "thermage", "morpheus8", "emface", "tixel"]);
 
 export function notesFor(p: Procedure, a: QuizAnswers): Note[] {

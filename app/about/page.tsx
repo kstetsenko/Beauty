@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 const STEPS = [
   { n: "1", title: "Tell us about you.", text: "Five quick questions: your goals, skin tone, health and recent treatments. About a minute. Your answers stay on your device." },
   { n: "2", title: "See what fits.", text: "Treatments ranked for you, each with the reason. Anything usually not advised for you is set aside, and we tell you why." },
-  { n: "3", title: "Choose with confidence.", text: "Local prices, recovery, research strength and questions to ask — then clinics near you." },
+  { n: "3", title: "Choose with confidence.", text: "Local prices, recovery, risks and research strength — then clinics near you." },
 ];
 
 const PRINCIPLES = [

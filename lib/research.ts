@@ -550,6 +550,27 @@ export const RESEARCH: Record<string, Research> = {
       { title: "Two-year real-world outcomes of a 1726 nm laser for the treatment of acne: Extended efficacy and safety retrospective analysis following FDA clearance", url: pm("42501798"), kind: "Clinical study" },
     ],
   },
+  "sylfirm-x": {
+    resultsIn: "Over a series of sessions",
+    sideEffects: "Redness and mild swelling for a day or two; the FDA has warned about burns and scarring with RF microneedling in general",
+    prices: [],
+    evidence: 2,
+    evidenceNote: "A systematic review of RF microneedling for melasma includes small randomized trials with this device; a split-face study used it to help prevent melasma from returning.",
+    studies: [
+      { title: "The Efficacy and Safety of Radiofrequency Microneedling for Melasma: A Systematic Review and Qualitative Evidence Synthesis", url: pmc("PMC13240677"), kind: "Systematic review" },
+      { title: "Targeting the dermis for melasma maintenance treatment", url: pmc("PMC10781782"), kind: "Clinical study" },
+    ],
+  },
+  ultraclear: {
+    resultsIn: "Over weeks, after a series",
+    sideEffects: "Redness, swelling, pinpoint bleeding and crusting for about 5–7 days; temporary dark marks were reported",
+    prices: [],
+    evidence: 1,
+    evidenceNote: "One small study (22 people, 6 dropped out) reported improvement in advanced sun damage and wrinkles; no randomized trials.",
+    studies: [
+      { title: "Full face and neck resurfacing with a novel ablative fractional 2910 nm erbium-doped fluoride glass fiber laser", url: pm("38353284"), kind: "Clinical study" },
+    ],
+  },
 };
 
 export const EVIDENCE_LABELS = ["", "Limited", "Some", "Strong"];

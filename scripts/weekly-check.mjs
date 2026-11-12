@@ -35,6 +35,8 @@ async function check(url) {
 const TERMS = {
   "smile-filler": ["nasolabial fold hyaluronic acid filler"],
   xerf: ["multifrequency monopolar radiofrequency skin"],
+  "sylfirm-x": ["radiofrequency microneedling melasma"],
+  ultraclear: ["2910 nm fiber laser"],
   aviclear: ["1726 nm laser acne"],
   bellafill: ["polymethylmethacrylate filler"],
   "tca-cross": ["CROSS trichloroacetic acid scars"],

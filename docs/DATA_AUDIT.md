@@ -95,7 +95,7 @@ re-checked. Nothing in the app should be added without a source of the kind list
 | Tretinoin | Acne scars | (Later removed: prescription creams are out of scope) |
 | EMFACE | Lifting | The one study measured wrinkles only |
 
-- **Questions to ask a provider** are now written per treatment (lib/questions.ts), from that treatment's own
+- **Questions to ask a provider** (removed 2026-11-12 at the owner's request) were written per treatment, from that treatment's own
   sessions, risks and safety notices. `npm run check` fails if a treatment has fewer than 3 or a question repeats.
 
 ## In-clinic services only; new treatments and goal (2026-11-11)

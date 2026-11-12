@@ -4,6 +4,8 @@ import { matchProcedures, rank, safetyReasons } from "@/lib/match";
 import { personalize, recentFrom, toAnswers, type Profile } from "@/lib/profile";
 import { GOAL_LABELS, PROCEDURES } from "@/lib/procedures";
 import type { Goal } from "@/lib/types";
+import { RESEARCH } from "@/lib/research";
+import { BASIS } from "@/lib/basis";
 
 const base: Profile = { city: "nyc", goals: [], age: "35-49", tone: "light", flags: [], had: [] };
 const goals = Object.keys(GOAL_LABELS) as Goal[];
@@ -59,7 +61,8 @@ describe("ranking", () => {
     const botox = PROCEDURES.find((p) => p.id === "botox")!;
     const r = rank(botox, toAnswers({ ...base, goals: ["lines"] }));
     expect(r.score).toBe(3 + 2 * 3 + botox.results);
-    expect(r.why.good[0]).toMatch(/your goal/);
+    expect(r.why.good[0]).toMatch(/FDA-approved for frown/);
+    expect(r.why.good[1]).toMatch(/your goal/);
   });
 
   it("puts laser toning first for melasma and warns on lasers that can darken it", () => {
@@ -79,5 +82,33 @@ describe("ranking", () => {
 
   it("groups recent treatments into timing categories", () => {
     expect(recentFrom(["botox", "cheek-filler", "sofwave", "fraxel", "peel", "unknown"]).sort()).toEqual(["botox", "energy", "filler", "laser", "peel"]);
+  });
+});
+
+describe("truthful reasons", () => {
+  it("never claims result size for treatments with limited research", () => {
+    for (const p of PROCEDURES) {
+      const r = rank(p, toAnswers({ ...base, goals: p.goals }));
+      if (RESEARCH[p.id].evidence === 1) {
+        expect(r.why.good.join(" "), p.id).not.toMatch(/results/i);
+        expect(r.why.watch.join(" "), p.id).toMatch(/isn't well known/);
+      }
+    }
+  });
+
+  it("explains why Sofwave is listed for lines: its FDA clearance", () => {
+    const p = PROCEDURES.find((x) => x.id === "sofwave")!;
+    expect(rank(p, toAnswers({ ...base, goals: ["lines", "volume"] })).why.good[0]).toMatch(/FDA-cleared to improve facial lines/);
+  });
+
+  it("every official basis is for a goal the treatment is listed under, with a source", () => {
+    for (const [id, list] of Object.entries(BASIS)) {
+      const p = PROCEDURES.find((x) => x.id === id)!;
+      expect(p, id).toBeTruthy();
+      for (const b of list) {
+        for (const g of b.goals) expect(p.goals, `${id} ${g}`).toContain(g);
+        expect(b.url).toMatch(/^https:\/\//);
+      }
+    }
   });
 });

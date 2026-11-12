@@ -29,7 +29,7 @@ Strict security headers are in place. A separate build produces a single-file pr
 | Treatment data | `lib/procedures.ts`, `lib/research.ts` | 39 treatments: prices per city, sessions, recovery, pain, results, contraindications; PubMed studies, evidence rating, price sources |
 | Safety and advice | `lib/safety.ts`, `lib/advice.ts`, `lib/cautions.ts` | FDA and CDC risks; personal notes by skin tone, conditions and recent treatments, each with a source; 10 health questions taken from labels |
 | Matching and ranking | `lib/match.ts`, `lib/profile.ts` | Hides unsafe options and gives the reason; transparent score (goals, research, results, fit), with ✓ reasons and ! cautions |
-| Learning | `lib/learn.ts`, `lib/questions.ts` | AAD and ASPS links; goal guides; 3–4 provider questions written for each treatment |
+| Learning | `lib/learn.ts`, `lib/basis.ts` | AAD and ASPS links; goal guides; FDA basis for each goal where one exists |
 | Clinics and tracking | `lib/clinics.ts`, `lib/tracking.ts`, `app/api/track`, `app/api/report`, `lib/store.ts` | 11 checked clinics, booking codes, ZIP → neighborhood matching on the device, tagged links, tap logging, owner-only report |
 | UI | `components/`, `app/` | Quiz, ranked results with quick plans, goal guides, compare, treatment pages, clinic finder, report page |
 | Quality | `tests/unit`, `tests/e2e`, `.github/workflows/ci.yml` | 238 unit/data tests, 204 browser tests, CI on every push |

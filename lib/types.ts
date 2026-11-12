@@ -53,7 +53,8 @@ export interface Procedure {
   /** Price tier, derived from the NYC low price. */
   tier: Tier;
   /** Typical price range per visit (or per syringe/area) in USD. Educational estimate only. */
-  cost: Record<City, [number, number]>;
+  /** Typical price range per city; null when no price is published ("Price not published — ask the clinic"). */
+  cost: Record<City, [number, number] | null>;
   priceUnit: string;
   sessions: string;
   lasts: string;

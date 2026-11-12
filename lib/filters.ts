@@ -1,4 +1,4 @@
-import type { Match } from "./match";
+import { priceLow, type Match } from "./match";
 import { RESEARCH } from "./research";
 import type { City, Goal, Procedure } from "./types";
 import { filterFitsGoals } from "./relevance";
@@ -43,7 +43,7 @@ export function passes(p: Procedure, f: Filter, city: City): boolean {
     case "event": return p.downtimeDays[1] <= 1 && p.onset <= 2;
     case "gentle": return p.pain <= 2 && p.downtimeDays[1] <= 3 && !PERMANENT.has(p.id);
     case "lasting": return LASTING.test(p.lasts);
-    case "under500": return p.cost[city][0] < 500;
+    case "under500": return priceLow(p, city) < 500;
     case "strong": return RESEARCH[p.id].evidence === 3;
     case "collagen": return !!p.collagen;
     case "now": return p.onset === 1;
@@ -62,7 +62,7 @@ export function sortMatches(list: Match[], sort: Sort, city: City) {
   const ev = (m: Match) => RESEARCH[m.procedure.id].evidence;
   const out = [...list];
   if (sort === "evidence") out.sort((a, b) => ev(b) - ev(a) || b.score - a.score);
-  if (sort === "price") out.sort((a, b) => a.procedure.cost[city][0] - b.procedure.cost[city][0]);
+  if (sort === "price") out.sort((a, b) => priceLow(a.procedure, city) - priceLow(b.procedure, city));
   if (sort === "downtime") out.sort((a, b) => a.procedure.downtimeDays[1] - b.procedure.downtimeDays[1] || ev(b) - ev(a));
   return out;
 }

@@ -1,5 +1,6 @@
 import { GOAL_LABELS, PROCEDURES } from "./procedures";
 import { LIGHT, belowMinAge, notesFor, type Note } from "./advice";
+import { basisFor } from "./basis";
 import { CAUTIONS } from "./cautions";
 import { RESEARCH } from "./research";
 import type { Procedure, QuizAnswers } from "./types";
@@ -53,6 +54,23 @@ export function matchProcedures(a: QuizAnswers): { shown: Match[]; hidden: Hidde
   return { shown, hidden };
 }
 
+export const PRICE_UNKNOWN = "Price not published — ask the clinic";
+
+/** Lowest typical price, or Infinity when no price is published (sorts last, never "under $500"). */
+export function priceLow(p: Procedure, city: "nyc" | "miami") {
+  return p.cost[city]?.[0] ?? Infinity;
+}
+/** "from $350", or the not-published message. */
+export function priceFrom(p: Procedure, city: "nyc" | "miami") {
+  const c = p.cost[city];
+  return c ? `from ${usd(c[0])}` : "Price not published";
+}
+/** "$350–600", or the not-published message. */
+export function priceRange(p: Procedure, city: "nyc" | "miami") {
+  const c = p.cost[city];
+  return c ? `${usd(c[0])}–${usd(c[1]).replace("$", "")}` : "Not published";
+}
+
 export function usd(n: number) {
   return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(n);
 }
@@ -65,7 +83,8 @@ export function downtimeShort([lo, hi]: [number, number]) {
 
 /**
  * How results are ranked — the same rules are explained on the results page (RANK_RULES).
- * Points: +3 per goal of yours it treats · +2 per research level (1–3) · +1 per typical-results level (1–3)
+ * Points: +3 per goal of yours it treats · +2 per research level (1–3) · +1 per typical-results level (1–3), counted
+ * only when research is at least "Some"
  * · +3 if it specifically targets a condition you have · −2/−3 when your answers raise a known risk.
  */
 /**
@@ -93,9 +112,9 @@ export function laterReason(p: Procedure, a: QuizAnswers): string | undefined {
 }
 
 export const RANK_RULES = [
-  "How many of your goals it treats (biggest factor)",
+  "How many of your goals it is used for (biggest factor)",
   "Strength of the research behind it",
-  "How noticeable typical results are",
+  "How noticeable typical results are — counted only when research backs it",
   "Fit with your skin tone, conditions and recent treatments",
 ];
 
@@ -108,24 +127,31 @@ export function rank(p: Procedure, a: QuizAnswers): { score: number; why: { good
 
   const hit = p.goals.filter((g) => a.goals.includes(g));
   score += 3 * hit.length;
-  if (hit.length > 1) good.push(`Treats ${hit.length} of your goals: ${hit.map((g) => GOAL_LABELS[g].toLowerCase()).join(", ")}`);
-  else if (hit.length === 1) good.push(`Treats your goal: ${GOAL_LABELS[hit[0]].toLowerCase()}`);
+  if (hit.length > 1) good.push(`Used for ${hit.length} of your goals: ${hit.map((g) => GOAL_LABELS[g].toLowerCase()).join(", ")}`);
+  else if (hit.length === 1) good.push(`Used for your goal: ${GOAL_LABELS[hit[0]].toLowerCase()}`);
+  // Official basis (FDA approval/clearance) for one of the person's goals goes first.
+  const basis = basisFor(p.id, hit);
+  if (basis) good.unshift(basis.text);
 
   const ev = RESEARCH[p.id].evidence;
   score += 2 * ev;
   if (ev === 3) good.push("Strong research (randomized trials)");
   else if (ev === 2) good.push("Some research");
-  else watch.push("Little research so far");
 
-  score += p.results;
-  if (p.results === 3) good.push("Dramatic results possible");
-  else if (p.results === 1) watch.push("Subtle results");
-  else good.push(`Typically ${RESULT_WORD[p.results]} results`);
+  // Result size only counts when there's research to back it; otherwise we say it isn't well studied.
+  if (ev === 1) watch.push("Little research, so how well it works isn't well known");
+  else {
+    score += p.results;
+    if (p.results === 3) good.push("Dramatic results possible");
+    else if (p.results === 1) watch.push("Subtle results");
+    else good.push(`Typically ${RESULT_WORD[p.results]} results`);
+  }
 
   const melasma = a.conditions?.includes("melasma");
   const rosacea = a.conditions?.includes("rosacea");
   if (melasma && p.id === "laser-toning") { score += 3; good.unshift("Used specifically for melasma"); }
   if (melasma && p.id === "peel") { score += 1; good.push("Has evidence for melasma"); }
+  if (melasma && p.id === "sylfirm-x") { score += 1; good.push("Studied for melasma"); }
   if (rosacea && ["pdl", "ktp", "ipl"].includes(p.id)) { score += 3; good.unshift("Targets rosacea redness"); }
   if (melasma && LIGHT.has(p.id) && !["pdl", "laser-genesis"].includes(p.id)) { score -= 3; watch.unshift("Can make melasma darker"); }
   if (a.tone && a.tone !== "light" && LIGHT.has(p.id)) { score -= a.tone === "deep" ? 3 : 2; watch.push("Higher risk of dark marks on your skin tone"); }

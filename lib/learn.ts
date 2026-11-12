@@ -44,6 +44,8 @@ const FILLERS = [AAD.fillersOverview, AAD.fillersFaq, AAD.fillersPrep];
 export const LEARN: Record<string, Link[]> = {
   "smile-filler": FILLERS,
   xerf: [AAD.firm],
+  "sylfirm-x": [AAD.melasma, AAD.needling],
+  ultraclear: [AAD.sunDamage, AAD.lasersTreat],
   aviclear: [AAD.acneLights, AAD.acne],
   bellafill: [AAD.fillersOverview, AAD.acneScars],
   "tca-cross": [AAD.acneScars, AAD.peelsOverview],

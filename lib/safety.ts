@@ -33,6 +33,7 @@ const LASER: Safety = {
 };
 
 export const SAFETY: Record<string, Safety> = {
+  ultraclear: LASER,
   "cheek-filler": FILLER,
   "smile-filler": FILLER,
   bellafill: FILLER,
@@ -78,3 +79,5 @@ export const SAFETY: Record<string, Safety> = {
   ipl: LASER,
 
 };
+// Same FDA RF-microneedling safety communication applies to every RF microneedling device.
+SAFETY["sylfirm-x"] = SAFETY.morpheus8;

@@ -3,7 +3,6 @@ import { describe, expect, it } from "vitest";
 import { GOAL_LABELS, PROCEDURES } from "@/lib/procedures";
 import { RESEARCH } from "@/lib/research";
 import { LEARN, GOAL_GUIDE } from "@/lib/learn";
-import { QUESTIONS } from "@/lib/questions";
 import { CAUTIONS } from "@/lib/cautions";
 import { SAFETY } from "@/lib/safety";
 
@@ -15,8 +14,9 @@ describe("treatments", () => {
   it.each(PROCEDURES.map((p) => [p.id, p] as const))("%s is complete and consistent", (_id, p) => {
     expect(p.goals.length).toBeGreaterThan(0);
     for (const g of p.goals) expect(GOAL_LABELS[g]).toBeTruthy();
-    expect(p.cost.nyc[0]).toBeLessThanOrEqual(p.cost.nyc[1]);
-    expect(p.cost.miami[0]).toBeLessThanOrEqual(p.cost.miami[1]);
+    for (const c of [p.cost.nyc, p.cost.miami]) if (c) expect(c[0]).toBeLessThanOrEqual(c[1]);
+    // A published price needs a price source; an unpublished one is shown as "Price not published".
+    if (p.cost.nyc || p.cost.miami) expect(p.priceUnit.length).toBeGreaterThan(0);
     expect(p.downtimeDays[0]).toBeLessThanOrEqual(p.downtimeDays[1]);
     expect(p.pain).toBeGreaterThanOrEqual(1);
     expect(p.pain).toBeLessThanOrEqual(5);
@@ -33,18 +33,12 @@ describe("treatments", () => {
     for (const s of [...r.studies, ...r.prices]) expect(s.url).toMatch(/^https:\/\//);
   });
 
-  it.each(ids)("%s has learning links and at least 3 tailored questions", (id) => {
+  it.each(ids)("%s has learning links", (id) => {
     expect(LEARN[id]?.length).toBeGreaterThan(0);
-    expect(QUESTIONS[id]?.length).toBeGreaterThanOrEqual(3);
   });
 
-  it("has no orphan research, learning, question or safety entries", () => {
-    for (const map of [RESEARCH, LEARN, QUESTIONS, SAFETY]) for (const k of Object.keys(map)) expect(ids).toContain(k);
-  });
-
-  it("never repeats a provider question across treatments", () => {
-    const all = Object.values(QUESTIONS).flat();
-    expect(new Set(all).size).toBe(all.length);
+  it("has no orphan research, learning or safety entries", () => {
+    for (const map of [RESEARCH, LEARN, SAFETY]) for (const k of Object.keys(map)) expect(ids).toContain(k);
   });
 
   it("has a goal guide for every goal", () => {

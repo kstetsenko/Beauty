@@ -1,7 +1,7 @@
 "use client";
 import { CITY_LABELS } from "@/lib/clinics";
 import { APPROACH_ORDER, GOAL_GUIDE, SUNSCREEN } from "@/lib/learn";
-import { downtimeShort, usd } from "@/lib/match";
+import { PRICE_UNKNOWN, downtimeShort, priceFrom, priceRange, usd } from "@/lib/match";
 import { APPROACHES, GOAL_LABELS, PROCEDURES } from "@/lib/procedures";
 import { EVIDENCE_LABELS, RESEARCH } from "@/lib/research";
 import { TRENDS } from "@/lib/trends";
@@ -65,7 +65,7 @@ function GoalGuideFor({ goal, profile }: { goal: Goal; profile: import("@/lib/pr
                       </span>
                     </span>
                     <span className="text-sm shrink-0 text-right">
-                      from {usd(p.cost[city][0])}
+                      {priceFrom(p, city)}
                       <span className="block text-muted" aria-hidden="true">›</span>
                     </span>
                   </a>

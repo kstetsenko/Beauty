@@ -76,6 +76,20 @@ export default function Sources() {
         </p>
       </section>
 
+      <section id="logic">
+        <h2 className="font-semibold mb-1">How the guide decides</h2>
+        <ul className="list-disc pl-5 space-y-1.5">
+          <li><strong>Which treatments appear for a goal:</strong> only those whose FDA approval or clearance, or the studies we cite, cover that goal. Where an FDA basis exists, it&apos;s the first reason on the card (e.g. &ldquo;FDA-cleared to improve facial lines and wrinkles&rdquo;).</li>
+          <li><strong>What&apos;s hidden:</strong> treatments a product label or guideline says aren&apos;t advised with your answers (pregnancy, age under the FDA-authorized age, allergies, implanted devices and so on). They&apos;re listed separately with the reason.</li>
+          <li><strong>Order:</strong> +3 points for each of your goals it treats; +2 per research level (Limited 1, Some 2, Strong 3); +1–3 for typical results, counted only when research is at least &ldquo;Some&rdquo;; +3 when it specifically targets a condition you have (e.g. laser toning for melasma); −2 or −3 when your answers raise a known risk (e.g. dark marks on deeper skin tones). Ties go to fewer cautions, then stronger research, then lower price.</li>
+          <li><strong>Recent treatments:</strong> after a one-session treatment whose results build for months (e.g. Sofwave), similar options move to &ldquo;Later&rdquo; with the reason.</li>
+          <li><strong>Research levels:</strong> Strong = randomized trials or meta-analyses of them; Some = systematic reviews or consistent smaller studies; Limited = small, uncontrolled or maker-linked studies, or none. For &ldquo;Limited&rdquo; treatments we don&apos;t claim how well they work.</li>
+          <li><strong>Prices:</strong> &ldquo;From clinic prices&rdquo; when a NYC or Miami clinic page publishes one; &ldquo;Estimate&rdquo; when based on national ranges; &ldquo;Price not published — ask the clinic&rdquo; when we found none.</li>
+          <li><strong>Filters and plans:</strong> only shown when they fit your goals and leave at least one option.</li>
+          <li><strong>Clinics:</strong> listed for free if their own pages show board-certified doctors and the treatment; nearest neighborhood first, then A–Z; partners can&apos;t change this order.</li>
+        </ul>
+      </section>
+
       <section>
         <h2 className="font-semibold mb-1">Health questions in the quiz</h2>
         <p>

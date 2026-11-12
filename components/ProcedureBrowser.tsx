@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { CITY_LABELS } from "@/lib/clinics";
-import { downtimeShort, usd } from "@/lib/match";
+import { downtimeShort, priceFrom } from "@/lib/match";
 import { APPROACHES, PROCEDURES } from "@/lib/procedures";
 import type { Approach, City } from "@/lib/types";
 import { TRENDS } from "@/lib/trends";
@@ -88,7 +88,7 @@ function BrowserFor({ profile }: { profile: Profile }) {
                 </span>
               </span>
               <span className="text-sm shrink-0 text-right">
-                from {usd(p.cost[city][0])}
+                {priceFrom(p, city)}
                 <span className="block text-muted" aria-hidden="true">›</span>
               </span>
             </a>

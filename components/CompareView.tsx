@@ -1,7 +1,7 @@
 "use client";
 import { useRouter, useSearchParams } from "next/navigation";
 import { CITY_LABELS } from "@/lib/clinics";
-import { downtimeShort, usd } from "@/lib/match";
+import { PRICE_UNKNOWN, downtimeShort, priceFrom, priceRange, usd } from "@/lib/match";
 import { APPROACHES, GOAL_LABELS, ONSET_LABELS, PAIN_LABELS, PROCEDURES, RESULT_LABELS } from "@/lib/procedures";
 import { EVIDENCE_LABELS, RESEARCH, priceChecked } from "@/lib/research";
 import type { City, Goal, Procedure } from "@/lib/types";
@@ -10,9 +10,9 @@ import { personalize, type Profile } from "@/lib/profile";
 import { NotShown, ProfileBar, ProfileGate } from "./ProfileGate";
 
 const ROWS: { label: string; cell: (p: Procedure, c: City) => React.ReactNode }[] = [
-  { label: "Price", cell: (p, c) => <>{usd(p.cost[c][0])}–{usd(p.cost[c][1]).replace("$", "")}<span className="block text-[11px] text-muted">{p.priceUnit}{priceChecked(p.id, c) ? "" : " · estimate"}</span></> },
+  { label: "Price", cell: (p, c) => p.cost[c] ? <>{priceRange(p, c)}<span className="block text-[11px] text-muted">{p.priceUnit}{priceChecked(p.id, c) ? "" : " · estimate"}</span></> : <span className="text-[11px] text-muted">{PRICE_UNKNOWN}</span> },
   { label: "Research", cell: (p) => <><Dots value={RESEARCH[p.id].evidence} max={3} label="Evidence" /><span className="block text-[11px] text-muted mt-1">{EVIDENCE_LABELS[RESEARCH[p.id].evidence]}</span></> },
-  { label: "Results", cell: (p) => <><Dots value={p.results} max={3} label="Results" /><span className="block text-[11px] text-muted mt-1">{RESULT_LABELS[p.results]}</span></> },
+  { label: "Results", cell: (p) => RESEARCH[p.id].evidence > 1 ? <><Dots value={p.results} max={3} label="Results" /><span className="block text-[11px] text-muted mt-1">{RESULT_LABELS[p.results]}</span></> : <span className="text-[11px] text-muted">Not well studied</span> },
   { label: "Pain", cell: (p) => <><Dots value={p.pain} max={5} label="Pain" /><span className="block text-[11px] text-muted mt-1">{PAIN_LABELS[p.pain]}</span></> },
   { label: "Recovery", cell: (p) => downtimeShort(p.downtimeDays) },
   { label: "Results show", cell: (p) => ONSET_LABELS[p.onset] },

@@ -33,7 +33,7 @@ npm run data-check             # the weekly data check, without opening an issue
 | Command | What it checks |
 |---|---|
 | `npm run typecheck` | TypeScript types across app, lib, tests |
-| `npm test` | Unit + data tests (`tests/unit`): every treatment has research, learning links and tailored questions; safety filtering for every goal × profile; ranking rules; clinic data and ordering; ZIP mapping; link tagging; API validation (no free text or personal data stored) and report authentication |
+| `npm test` | Unit + data tests (`tests/unit`): every treatment has research and learning links; safety filtering for every goal × profile; ranking rules; clinic data and ordering; ZIP mapping; link tagging; API validation (no free text or personal data stored) and report authentication |
 | `npm run check` | Goal × profile option table and clinic coverage report |
 | `npm run e2e` | Browser tests (`tests/e2e`) at 390px and 1100px: every page loads with no console errors or sideways scroll, the quiz → results → clinic flow, health questions, clinic finder privacy, removed pages 404, the offline prototype. Needs `npm run build` and `npm run prototype` first. |
 | `npm run verify` | All of the above in order |
@@ -60,6 +60,7 @@ so the same problem can't come back.
 | `scripts/weekly-check.mjs` | Weekly link / PubMed / freshness check |
 | `tests/unit`, `tests/e2e` | Unit/data tests (Vitest) and browser tests (Playwright) |
 | `.github/workflows/weekly-data-check.yml` | Runs the check every Monday and opens an issue |
+| `docs/HOW_IT_DECIDES.md` | Every rule the guide uses (goals, safety, ranking, Later, prices, filters, clinics), where it lives and which test covers it |
 | `docs/DATA_AUDIT.md` | Which facts come from which kind of source, and what is an editorial estimate |
 
 ## Editing data
