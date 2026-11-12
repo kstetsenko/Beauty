@@ -21,6 +21,8 @@ export const BASIS: Record<string, Basis[]> = {
   skinvive: [{ goals: ["glow", "texture"], text: "FDA-approved to improve cheek skin smoothness (2023)", url: "https://www.accessdata.fda.gov/cdrh_docs/pdf11/P110033S059C.pdf" }],
   bellafill: [{ goals: ["acne"], text: "FDA-approved for rolling acne scars (2014)", url: "https://www.accessdata.fda.gov/cdrh_docs/pdf2/P020012S009c.pdf" }],
   aviclear: [{ goals: ["breakouts"], text: "FDA-cleared for mild to severe acne (2022)", url: fda510k("K213461") }],
+  // Official status that doesn't cover the goals in this guide (shown under "FDA status", not as a reason to list it).
+  pdt: [{ goals: [], text: "FDA-approved for precancerous spots (actinic keratoses); use for acne or sun damage is off-label", url: "https://www.accessdata.fda.gov/drugsatfda_docs/label/2018/020965s015lbl.pdf" }],
   xerf: [{ goals: ["lift"], text: "FDA-cleared for skin tightening (2025, per the maker)", url: "https://www.businesswire.com/news/home/20250818405332/en/Cynosure-Lutronic-Announces-U.S.-Clearance-of-the-XERF-Device-Redefining-the-Future-of-Non-Invasive-Skin-Tightening" }],
 };
 

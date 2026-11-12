@@ -5,6 +5,7 @@ import { RESEARCH } from "@/lib/research";
 import { LEARN, GOAL_GUIDE } from "@/lib/learn";
 import { CAUTIONS } from "@/lib/cautions";
 import { SAFETY } from "@/lib/safety";
+import { PLAIN, STUDY_KIND } from "@/lib/plain";
 
 const ids = PROCEDURES.map((p) => p.id);
 
@@ -39,6 +40,15 @@ describe("treatments", () => {
 
   it("has no orphan research, learning or safety entries", () => {
     for (const map of [RESEARCH, LEARN, SAFETY]) for (const k of Object.keys(map)) expect(ids).toContain(k);
+  });
+
+  it.each(ids)("%s has a plain-language research summary, and every study type is explained", (id) => {
+    expect(PLAIN[id]?.works.length).toBeGreaterThan(10);
+    for (const st of RESEARCH[id].studies) expect(STUDY_KIND[st.kind], st.kind).toBeTruthy();
+  });
+
+  it("has no orphan plain summaries", () => {
+    for (const k of Object.keys(PLAIN)) expect(ids).toContain(k);
   });
 
   it("has a goal guide for every goal", () => {

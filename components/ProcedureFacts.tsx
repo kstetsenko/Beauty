@@ -4,6 +4,8 @@ import { APPROACHES, ONSET_LABELS, PAIN_LABELS, RESULT_LABELS } from "@/lib/proc
 import { SAFETY } from "@/lib/safety";
 import { LEARN } from "@/lib/learn";
 import { VIDEOS } from "@/lib/videos";
+import { LEVEL_MEANING, PLAIN, STUDY_KIND } from "@/lib/plain";
+import { BASIS } from "@/lib/basis";
 import { Disclosure } from "./Disclosure";
 import { CHECKED, EVIDENCE_LABELS, RESEARCH, priceChecked } from "@/lib/research";
 import type { City, Procedure } from "@/lib/types";
@@ -126,20 +128,40 @@ export function DetailSections({ p, city, withPrice = true }: { p: Procedure; ci
       <Disclosure
         tone="plain"
         title="What the research says"
-        hint={<span className="inline-flex items-center gap-2"><Dots value={r.evidence} max={3} label="Evidence" /> {EVIDENCE_LABELS[r.evidence]} evidence</span>}
+        hint={<span className="inline-flex items-center gap-2"><Dots value={r.evidence} max={3} label="Evidence" /> {EVIDENCE_LABELS[r.evidence]} research</span>}
       >
-        <p className="text-sm mb-3">{r.evidenceNote}</p>
+        <dl className="space-y-3">
+          <Row label="Does it work?">{PLAIN[p.id]?.works ?? r.evidenceNote}</Row>
+          {PLAIN[p.id]?.unclear && <Row label="What's still unclear">{PLAIN[p.id]!.unclear}</Row>}
+          <Row label="How sure we are">
+            <span className="font-medium">{EVIDENCE_LABELS[r.evidence]}</span> — {LEVEL_MEANING[r.evidence].replace(/^\w+: /, "")}
+            <span className="block text-[11px] text-muted mt-1">Graded by us from the studies below. <a href="/sources#logic" className="underline">How we grade</a></span>
+          </Row>
+          <Row label="FDA status">
+            {(BASIS[p.id] ?? []).length ? (
+              <span className="block space-y-1">
+                {BASIS[p.id].map((b) => <a key={b.text} href={b.url} target="_blank" rel="noopener noreferrer" className="block underline">{b.text} ↗</a>)}
+              </span>
+            ) : (
+              "We haven't confirmed its FDA status for this use."
+            )}
+          </Row>
+        </dl>
         {r.studies.length > 0 ? (
-          <ul className="space-y-3">
-            {r.studies.map((st) => (
-              <li key={st.url}>
-                <ExtLink href={st.url}>{st.title}</ExtLink>
-                <span className="block text-[11px] text-muted mt-0.5">{st.kind} · PubMed</span>
-              </li>
-            ))}
-          </ul>
+          <div className="mt-4">
+            <p className="text-xs font-medium mb-2">Studies we used ({r.studies.length})</p>
+            <ul className="space-y-2.5">
+              {r.studies.map((st) => (
+                <li key={st.url} className="text-sm">
+                  <span className="font-medium">{st.kind}</span>
+                  <span className="text-muted"> — {STUDY_KIND[st.kind]}</span>
+                  <a href={st.url} target="_blank" rel="noopener noreferrer" className="block text-[11px] text-muted underline mt-0.5 break-words">{st.title} ↗</a>
+                </li>
+              ))}
+            </ul>
+          </div>
         ) : (
-          <p className="text-sm">No published clinical studies found.</p>
+          <p className="text-sm mt-3">No published clinical studies found.</p>
         )}
         <p className="text-[11px] text-muted mt-3">
           Many studies are small or funded by the product&apos;s maker. Research describes groups of people, not you.
