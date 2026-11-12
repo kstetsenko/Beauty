@@ -12,7 +12,7 @@ import { PastTreatments } from "./PastTreatments";
 import { flagsForGoals } from "@/lib/relevance";
 
 type Step = "city" | "goals" | "about" | "safety" | "recent" | "browse" | "done";
-const QUIZ: Step[] = ["goals", "city", "about", "safety", "recent"];
+const QUIZ: Step[] = ["city", "goals", "about", "safety", "recent"];
 
 const SAFETY: { value: Flag; label: string }[] = [
   { value: "pregnancy", label: "Pregnant or nursing" },
@@ -46,7 +46,7 @@ const pill = (on: boolean) =>
  * never sent) so every other page can use the same parameters.
  */
 export function Guide() {
-  const [history, setHistory] = useState<Step[]>(["goals"]);
+  const [history, setHistory] = useState<Step[]>(["city"]);
   const step = history[history.length - 1];
   const [city, setCity] = useState<City>();
   const [goals, setGoals] = useState<Goal[]>([]);
@@ -84,7 +84,7 @@ export function Guide() {
   const toggleSave = (id: string) => setSaved((s) => (s.includes(id) ? s.filter((x) => x !== id) : [...s, id]));
   const finish = () => {
     // Nothing saved: take the top three matches to the clinic step.
-    if (!saved.length) setSaved(matches.slice(0, 3).map((m) => m.procedure.id));
+    if (!saved.length) setSaved(matches.filter((m) => !m.later).slice(0, 3).map((m) => m.procedure.id));
     go("done");
   };
 
@@ -109,21 +109,7 @@ export function Guide() {
       </div>
 
       {step === "city" && (
-        <Question
-          key="city"
-          title="Where are you?"
-          sub="We'll show local prices and clinics."
-          options={(Object.keys(CITY_LABELS) as City[]).map((c) => ({ value: c, label: CITY_LABELS[c] }))}
-          selected={city}
-          onPick={(v) => {
-            setCity(v);
-            go("about");
-          }}
-        />
-      )}
-
-      {step === "goals" && (
-        <section className="animate-in">
+        <>
           <div className="text-center mb-10 pt-2">
             <p className="text-[11px] uppercase tracking-[0.2em] text-muted mb-4">Aesthetic Guide · NYC &amp; Miami</p>
             <p className="text-[2rem] font-semibold leading-tight tracking-tight">Know before you book.</p>
@@ -134,8 +120,29 @@ export function Guide() {
               {PROCEDURES.length} treatments <span aria-hidden="true">·</span> {Object.keys(GOAL_LABELS).length} goals <span aria-hidden="true">·</span> No paid rankings
             </p>
           </div>
+          <Question
+            key="city"
+            title="Where are you?"
+            sub="About 1 minute · 5 quick questions · local prices and clinics"
+            options={(Object.keys(CITY_LABELS) as City[]).map((c) => ({ value: c, label: CITY_LABELS[c] }))}
+            selected={city}
+            onPick={(v) => {
+              setCity(v);
+              go("goals");
+            }}
+          />
+          <p className="mt-8 text-center text-sm text-muted">
+            Or <a href="/goals" className="underline">explore by goal</a> · <a href="/procedures" className="underline">browse all {PROCEDURES.length} treatments</a> ·{" "}
+            <a href="/insights" className="underline">core insights</a> ·{" "}
+            <a href="/about" className="underline">about</a>
+          </p>
+        </>
+      )}
+
+      {step === "goals" && (
+        <section className="animate-in">
           <h1 className="text-2xl font-semibold leading-tight mb-1.5">What would you like to improve?</h1>
-          <p className="text-sm text-muted mb-6">Pick up to 3 · about a minute, 5 quick questions.</p>
+          <p className="text-sm text-muted mb-6">Pick up to 3. Everything after this is about these goals.</p>
           <div className="grid grid-cols-2 gap-2.5">
             {(Object.keys(GOAL_LABELS) as Goal[]).map((g) => {
               const on = goals.includes(g);
@@ -153,14 +160,9 @@ export function Guide() {
               );
             })}
           </div>
-          <button type="button" disabled={!goals.length} onClick={() => go("city")} className="btn-main mt-6">
+          <button type="button" disabled={!goals.length} onClick={() => go("about")} className="btn-main mt-6">
             Continue
           </button>
-          <p className="mt-8 text-center text-sm text-muted">
-            Or <a href="/goals" className="underline">explore by goal</a> · <a href="/procedures" className="underline">browse all {PROCEDURES.length} treatments</a> ·{" "}
-            <a href="/insights" className="underline">core insights</a> ·{" "}
-            <a href="/about" className="underline">about</a>
-          </p>
 
         </section>
       )}
@@ -228,7 +230,7 @@ export function Guide() {
               Try allowing a little downtime.
               {result.hidden.length > 0 && ` ${result.hidden.length} treatment${result.hidden.length > 1 ? "s were" : " was"} hidden because of your safety answers.`}
             </p>
-            <button type="button" onClick={() => setHistory(["goals", "city", "about", "safety", "recent"])} className="btn-main">
+            <button type="button" onClick={() => setHistory(["city", "goals", "about", "safety", "recent"])} className="btn-main">
               Change answers
             </button>
           </section>
@@ -246,7 +248,7 @@ export function Guide() {
           onBrowseAgain={() => setHistory((h) => h.slice(0, -1))}
           onRestart={() => {
             clearProfile();
-            setHistory(["goals"]);
+            setHistory(["city"]);
             setGoals([]);
             setAge(undefined);
             setTone(undefined);

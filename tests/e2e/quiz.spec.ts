@@ -1,12 +1,15 @@
 import { test, expect } from "@playwright/test";
 import { expectNoOverflow, setup, takeQuiz } from "./helpers";
 
-test("goals come first; results are about those goals, with reasons", async ({ page }) => {
+test("city, then goals; results are about those goals, with reasons", async ({ page }) => {
   const errors = await setup(page);
   await page.goto("/");
+  await expect(page.getByRole("heading", { name: "Where are you?" })).toBeVisible();
+  await page.getByRole("button", { name: "New York City", exact: true }).click();
   await expect(page.getByRole("heading", { name: "What would you like to improve?" })).toBeVisible();
   // Can't continue without a goal.
   await expect(page.getByRole("button", { name: "Continue", exact: true })).toBeDisabled();
+  await page.locator("button[aria-label='Back']").first().click();
   await takeQuiz(page, { goals: ["Spots & Even Tone", "Redness"], tone: "Medium — tans", flags: ["Melasma"] });
 
   await expect(page.getByText(/for spots & even tone, redness that fit your answers/)).toBeVisible();
@@ -34,9 +37,9 @@ test("goals come first; results are about those goals, with reasons", async ({ p
 test("recent treatments search finds brand names", async ({ page }) => {
   await setup(page);
   await page.goto("/");
+  await page.getByRole("button", { name: "Miami", exact: true }).click();
   await page.getByRole("button", { name: "Lines & Wrinkles", exact: true }).click();
   await page.getByRole("button", { name: "Continue", exact: true }).click();
-  await page.getByRole("button", { name: "Miami", exact: true }).click();
   await page.getByRole("radio", { name: "35-49" }).click();
   await page.getByRole("radio", { name: "Light — burns easily" }).click();
   await page.getByRole("button", { name: "Continue", exact: true }).click();
@@ -57,9 +60,9 @@ test("health questions hide treatments their labels rule out", async ({ page }) 
 test("breakouts: health questions and filters stay on topic", async ({ page }) => {
   const errors = await setup(page);
   await page.goto("/");
+  await page.getByRole("button", { name: "New York City", exact: true }).click();
   await page.getByRole("button", { name: "Breakouts", exact: true }).click();
   await page.getByRole("button", { name: "Continue", exact: true }).click();
-  await page.getByRole("button", { name: "New York City", exact: true }).click();
   await page.getByRole("radio", { name: "22-34" }).click();
   await page.getByRole("radio", { name: "Light — burns easily" }).click();
   await page.getByRole("button", { name: "Continue", exact: true }).click();
@@ -74,5 +77,19 @@ test("breakouts: health questions and filters stay on topic", async ({ page }) =
   await expect(page.getByRole("button", { name: /Lasts a year or more/ })).toHaveCount(0);
   await expect(page.getByRole("button", { name: /Long-lasting/ })).toHaveCount(0);
   await expect(page.getByText("Builds collagen")).toHaveCount(0);
+  expect(errors).toEqual([]);
+});
+
+test("a recent one-session treatment moves similar options to Later, with the reason", async ({ page }) => {
+  const errors = await setup(page);
+  await page.goto("/");
+  await takeQuiz(page, { goals: ["Lifting & Firmness"], age: "50-64", had: ["Sofwave"] });
+  const later = page.getByRole("region", { name: "Later" });
+  await expect(later).toBeVisible();
+  await expect(later.getByText("Ultherapy", { exact: true })).toBeVisible();
+  await expect(later.getByText(/You had Sofwave recently/).first()).toBeVisible();
+  // The top picks are not similar tightening treatments.
+  const top = await page.locator("ol").first().locator("a.font-semibold").allTextContents();
+  for (const t of top) expect(t).not.toMatch(/Sofwave|Ultherapy|Thermage|XERF/);
   expect(errors).toEqual([]);
 });

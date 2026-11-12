@@ -43,6 +43,8 @@ const FILLERS = [AAD.fillersOverview, AAD.fillersFaq, AAD.fillersPrep];
 
 export const LEARN: Record<string, Link[]> = {
   "smile-filler": FILLERS,
+  xerf: [AAD.firm],
+  aviclear: [AAD.acneLights, AAD.acne],
   bellafill: [AAD.fillersOverview, AAD.acneScars],
   "tca-cross": [AAD.acneScars, AAD.peelsOverview],
   aerolase: [AAD.acneLights, AAD.acne],

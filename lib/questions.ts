@@ -209,4 +209,16 @@ export const QUESTIONS: Record<string, string[]> = {
     "How many sessions are in the series, and what does it cost in total?",
     "Is it safe if I have a pacemaker or other implanted device?",
   ],
+  xerf: [
+    "XERF is new and unstudied in journals. What results have you seen in your own patients after 3–6 months?",
+    "How many sessions do you recommend, and is the price for face and neck?",
+    "How does it compare with Thermage or Ultherapy for my skin?",
+    "Is it safe with any implanted electronic device I have?",
+  ],
+  aviclear: [
+    "Is my acne the inflammatory type AviClear is cleared for?",
+    "Is the price for all 3 sessions, and what if I need more?",
+    "Should I keep or change my acne medicine during the course?",
+    "What happens if my acne flares in the first weeks?",
+  ],
 };

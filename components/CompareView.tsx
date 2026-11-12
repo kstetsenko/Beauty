@@ -158,6 +158,19 @@ function CompareFor({ profile }: { profile: Profile }) {
           </table>
         </div>
       )}
+      {chosen.length > 0 && (
+        <section className="mt-5 rounded-3xl bg-blush p-5">
+          <h2 className="font-semibold">Next: find a clinic</h2>
+          <p className="text-xs text-muted mt-1 mb-3">Clinics near you that offer each option, with prices to ask about and your booking code.</p>
+          <div className="grid gap-2">
+            {chosen.map((p) => (
+              <a key={p.id} href={`/clinics?t=${p.id}&city=${city}`} className="btn-main block text-center text-sm">
+                Find a clinic for {p.name.split(" / ")[0]} →
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
       <div className="mt-4"><NotShown hidden={fit.hidden} outside={fit.outside} /></div>
       <p className="text-[11px] text-muted text-center mt-3">
         Typical ranges, not quotes or guarantees.{" "}

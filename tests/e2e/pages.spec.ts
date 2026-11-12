@@ -34,6 +34,34 @@ test("about page explains the product and leads to the quiz", async ({ page }) =
   await expect(page.getByRole("heading", { name: "Know before you book." })).toBeVisible();
   await expect(page.getByText("A guide, not a doctor.")).toBeVisible();
   await page.getByRole("link", { name: /Find what fits/ }).click();
-  await expect(page.getByRole("heading", { name: "What would you like to improve?" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Where are you?" })).toBeVisible();
   expect(errors).toEqual([]);
+});
+
+test.describe("every path has a next step", () => {
+  const next: [string, RegExp][] = [
+    ["/compare?goal=lines&ids=botox,smile-filler&city=nyc", /Find a clinic for Botox/],
+    ["/procedures/botox?city=nyc", /Find a clinic for Botox/],
+    ["/goals/lines?city=nyc", /Compare lines & wrinkles options/],
+    ["/insights", /Find what fits you/],
+    ["/about", /Find what fits/],
+  ];
+  for (const [path, cta] of next)
+    test(path, async ({ page }) => {
+      await setup(page);
+      await withProfile(page, typical);
+      await page.goto(path);
+      const link = page.getByRole("link", { name: cta }).first();
+      await expect(link).toBeVisible();
+      await link.click();
+      await expect(page).not.toHaveURL(new RegExp(path.replace(/[?]/g, "\\?") + "$"));
+    });
+
+  test("compare leads to the clinic finder", async ({ page }) => {
+    await setup(page);
+    await withProfile(page, typical);
+    await page.goto("/compare?goal=lines&ids=botox,smile-filler&city=nyc");
+    await page.getByRole("link", { name: /Find a clinic for Smile-Line Filler/ }).click();
+    await expect(page.getByRole("heading", { name: "Find a clinic for Smile-Line Filler" })).toBeVisible();
+  });
 });

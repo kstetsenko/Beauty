@@ -1,6 +1,6 @@
 "use client";
 import { notesFor } from "@/lib/advice";
-import { safetyReasons } from "@/lib/match";
+import { laterReason, safetyReasons } from "@/lib/match";
 import { GOAL_LABELS } from "@/lib/procedures";
 import { toAnswers, useProfile } from "@/lib/profile";
 import type { Procedure } from "@/lib/types";
@@ -23,6 +23,7 @@ export function ForYou({ p }: { p: Procedure }) {
   const forGoals = p.goals.filter((g) => profile.goals.includes(g));
   const outside = p.downtimeDays[1] > MAX_DOWNTIME[a.downtime];
   const notes = notesFor(p, a);
+  const later = laterReason(p, a);
 
   return (
     <section className={"rounded-2xl p-4 mt-4 text-sm " + (reasons.length ? "border border-ink bg-white" : "bg-blush")}>
@@ -37,6 +38,7 @@ export function ForYou({ p }: { p: Procedure }) {
             : "It isn't used for any of your goals."}
         </p>
       )}
+      {!reasons.length && later && <p className="mt-2 rounded-xl bg-white/70 px-3 py-2">Later: {later}</p>}
       {!reasons.length && notes.length > 0 && (
         <ul className="mt-2 space-y-1.5">
           {notes.map((n) => (

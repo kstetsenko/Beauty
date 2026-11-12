@@ -36,7 +36,7 @@ const RAW: Raw[] = [
     notes: "Not suitable with some implanted electronic devices — tell your provider.",
   },
   {
-    id: "morpheus8", name: "Morpheus8", what: "Radiofrequency microneedling", aka: ["RF microneedling", "Vivace", "Potenza"], approach: "energy", collagen: true, onset: 3, minAge: 22,
+    id: "morpheus8", name: "Morpheus8", what: "Radiofrequency microneedling", aka: ["RF microneedling", "Vivace", "Potenza", "Potenza", "Vivace", "Secret RF", "Genius RF"], approach: "energy", collagen: true, onset: 3, minAge: 22,
     summary: "Tiny needles deliver radiofrequency heat under the skin to tighten, smooth texture and soften acne scars.",
     goals: ["texture", "acne"], cost: { nyc: [1000, 2000], miami: [1000, 2000] }, priceUnit: "per session",
     sessions: "1–3, about 4–6 weeks apart", lasts: "1 year or more with maintenance", downtimeDays: [2, 5], pain: 4, results: 2,
@@ -341,6 +341,22 @@ const RAW: Raw[] = [
     sessions: "Often sold as a series", lasts: "Temporary", downtimeDays: [0, 0], pain: 1, results: 1,
     performedBy: "Licensed aesthetician", contraindications: ["pregnancy"],
     notes: "Very little independent research. Tell the provider if you have a pacemaker or other implanted electronic device.",
+  },
+  {
+    id: "xerf", name: "XERF", what: "Multi-frequency radiofrequency skin tightening", aka: ["XERF Structural Skin Tightening"], approach: "energy", onset: 3,
+    summary: "A newer needle-free radiofrequency device that heats the skin at more than one depth to tighten it. FDA-cleared in 2025.",
+    goals: ["lift"], cost: { nyc: [1250, 3000], miami: [1250, 3000] }, priceUnit: "per session (face and neck)",
+    sessions: "Ask your provider — no published protocol yet", lasts: "Unknown — no published studies yet", downtimeDays: [0, 0], pain: 2, results: 1,
+    performedBy: "Physician-supervised clinic", contraindications: ["pregnancy", "active-skin"],
+    notes: "Very new: we found no peer-reviewed studies, only the maker's announcement. Tell your provider about any implanted electronic device.",
+  },
+  {
+    id: "aviclear", name: "AviClear", what: "1726 nm laser for acne", aka: ["1726 nm laser", "Cutera AviClear"], approach: "laser", onset: 3,
+    summary: "The first laser FDA-cleared (2022) for mild to severe acne. It targets the oil glands, usually over three sessions.",
+    goals: ["breakouts"], cost: { nyc: [3000, 4000], miami: [3000, 4000] }, priceUnit: "per course of 3 sessions",
+    sessions: "Usually 3, a few weeks apart", lasts: "Studies followed people for up to 2 years", downtimeDays: [0, 1], pain: 3, results: 2,
+    performedBy: "Dermatologist or supervised clinician", contraindications: ["pregnancy", "active-skin"],
+    notes: "Improvement builds over months. Most studies follow one group without a comparison group, and many are linked to the maker.",
   },
 ];
 

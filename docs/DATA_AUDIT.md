@@ -126,3 +126,14 @@ the state license lookup and AAD directory, and their Google reviews. No Brickel
 - New quiz health questions, each from a product label: severe or lidocaine allergy (FDA filler labeling), bovine collagen
   allergy (Bellafill FDA labeling), pacemaker or implanted electronic device (Thermage labeling), porphyria or light
   sensitivity (Levulan/PDT FDA label). Sources listed on "How we research".
+
+## New treatments and connected flow (2026-11-12)
+- **Added:** AviClear (1726 nm acne laser; FDA-cleared 2022; studies in J Am Acad Dermatol / J Cosmet Dermatol, mostly
+  single-group and maker-linked; US course price $3,000–$4,000, Estimate) and XERF (multi-frequency RF tightening;
+  FDA-cleared 2025 per the maker; no peer-reviewed studies → "Limited"; US price $1,250–$3,000 per session, Estimate).
+  RF-microneedling brand names (Potenza, Vivace, Secret RF, Genius RF) added as other names for Morpheus8.
+- **Not added yet (no US price source found):** Sylfirm X (RF microneedling for melasma; small studies), UltraClear
+  (2910 nm fiber laser; one small study). Not added on purpose: Profhilo, exosomes, polynucleotides (not FDA-approved),
+  Kybella and Volux (fat / jaw reshaping, out of scope).
+- **Recent treatments:** after a single-session treatment whose results build for months (Sofwave, Ultherapy,
+  Thermage, XERF, CO2, erbium, Sculptra, Radiesse, Bellafill, threads), similar options move to "Later" with the reason.

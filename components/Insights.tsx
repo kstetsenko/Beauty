@@ -106,6 +106,7 @@ export function Insights() {
         </section>
       )}
 
+      <a href="/" className="btn-main block text-center">Find what fits you — about a minute</a>
       <p className="text-[11px] text-muted text-center">
         Educational information only — not medical advice. <a href="/sources" className="underline">How we research</a>
       </p>

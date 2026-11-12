@@ -11,9 +11,9 @@ test("shareable prototype runs the quiz and clinic finder offline", async ({ pag
   await page.goto("file://" + file);
   await page.locator("[role=dialog] input").check();
   await page.getByRole("button", { name: "I understand" }).click();
+  await page.getByRole("button", { name: "New York City", exact: true }).click();
   await page.getByRole("button", { name: "Lines & Wrinkles", exact: true }).click();
   await page.getByRole("button", { name: "Continue", exact: true }).click();
-  await page.getByRole("button", { name: "New York City", exact: true }).click();
   await page.getByRole("radio", { name: "35-49" }).click();
   await page.getByRole("radio", { name: "Light — burns easily" }).click();
   await page.getByRole("button", { name: "Continue", exact: true }).click();

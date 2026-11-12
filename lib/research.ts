@@ -527,6 +527,29 @@ export const RESEARCH: Record<string, Research> = {
       { title: "Development of Home Beauty Devices for Facial Rejuvenation: Establishment of Efficacy Evaluation System", url: pmc("PMC10929553"), kind: "Review" },
     ],
   },
+  xerf: {
+    resultsIn: "Unknown — no published studies yet",
+    sideEffects: "Not yet described in peer-reviewed studies; ask your provider",
+    prices: [{ label: "Bustle — XERF cost (US range, face and neck)", url: "https://www.bustle.com/beauty/xerf-radiofrequency-treatment-review" }],
+    evidence: 1,
+    evidenceNote: "FDA-cleared for skin tightening in 2025 (company announcement). We found no peer-reviewed studies yet.",
+    studies: [],
+  },
+  aviclear: {
+    resultsIn: "Gradually, over about 3 months after the sessions",
+    sideEffects: "Temporary redness, swelling and tenderness; acne may flare at first",
+    prices: [
+      { label: "Marie Claire — AviClear cost (US, full course)", url: "https://marieclaire.com/beauty/aviclear-laser-treatment-acne-review" },
+      { label: "RealSelf — AviClear cost range", url: "https://www.realself.com/news/aviclear-acne-laser" },
+    ],
+    evidence: 2,
+    evidenceNote: "Studies, mostly single-group and maker-linked, report fewer inflammatory acne lesions for up to 2 years; acne guidelines haven't assessed it because there's no randomized trial yet.",
+    studies: [
+      { title: "A novel 1726-nm laser system for safe and effective treatment of acne vulgaris", url: pm("36197599"), kind: "Clinical study" },
+      { title: "1726 nm Lasers for the Treatment of Acne Vulgaris", url: pm("38271552"), kind: "Review" },
+      { title: "Two-year real-world outcomes of a 1726 nm laser for the treatment of acne: Extended efficacy and safety retrospective analysis following FDA clearance", url: pm("42501798"), kind: "Clinical study" },
+    ],
+  },
 };
 
 export const EVIDENCE_LABELS = ["", "Limited", "Some", "Strong"];

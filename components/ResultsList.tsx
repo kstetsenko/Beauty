@@ -46,8 +46,11 @@ export function ResultsList({
   }, [filters, list.length]);
 
   const ranked = sort === "match" && filters.length === 0;
+  // Similar to something still settling from a recent treatment: shown last, under "Later", with the reason.
+  const now = list.filter((m) => !m.later);
+  const later = list.filter((m) => m.later);
   const bestPerGoal = (tab ? [] : goals)
-    .map((g) => ({ g, m: list.find((x) => x.procedure.goals.includes(g)) }))
+    .map((g) => ({ g, m: now.find((x) => x.procedure.goals.includes(g)) }))
     .filter((x): x is { g: Goal; m: Match } => !!x.m);
   const card = (m: Match, i: number, top = false) => {
             const p = m.procedure;
@@ -70,6 +73,7 @@ export function ResultsList({
                       <span>{ONSET_LABELS[p.onset]}</span>
                       {p.collagen && filterFitsGoals("collagen", tab ? [tab] : goals) && <span>Builds collagen</span>}
                     </div>
+                    {m.later && <p className="mt-2 text-xs rounded-xl bg-sand px-3 py-2">Later: {m.later}</p>}
                     <ul className="mt-2 space-y-0.5 text-xs" aria-label="Why it's ranked here">
                       {m.why.good.slice(0, top ? 3 : 2).map((t) => <li key={t}>✓ {t}</li>)}
                       {m.why.watch.slice(0, top ? 2 : 1).map((t) => <li key={t} className="text-muted">! {t}</li>)}
@@ -179,13 +183,20 @@ export function ResultsList({
                   </ul>
                 </div>
               )}
-              <h2 className="font-semibold mb-2">Your top {Math.min(3, list.length)}</h2>
-              <ol className="space-y-3">{list.slice(0, 3).map((m, i) => card(m, i, true))}</ol>
-              {list.length > 3 && <h2 className="font-semibold mt-6 mb-2">More options ({list.length - 3})</h2>}
-              <ol className="space-y-3">{list.slice(3).map((m, i) => card(m, i + 3))}</ol>
+              {now.length > 0 && <h2 className="font-semibold mb-2">Your top {Math.min(3, now.length)}</h2>}
+              <ol className="space-y-3">{now.slice(0, 3).map((m, i) => card(m, i, true))}</ol>
+              {now.length > 3 && <h2 className="font-semibold mt-6 mb-2">More options ({now.length - 3})</h2>}
+              <ol className="space-y-3">{now.slice(3).map((m, i) => card(m, i + 3))}</ol>
             </>
           ) : (
-            <ol className="space-y-3">{list.map((m, i) => card(m, i))}</ol>
+            <ol className="space-y-3">{now.map((m, i) => card(m, i))}</ol>
+          )}
+          {later.length > 0 && (
+            <section className="mt-6" aria-label="Later">
+              <h2 className="font-semibold">Later ({later.length})</h2>
+              <p className="text-xs text-muted mb-2">Similar to a treatment you had recently that is still settling. Revisit once its results are in.</p>
+              <ol className="space-y-3">{later.map((m, i) => card(m, now.length + i))}</ol>
+            </section>
           )}
         </>
       )}

@@ -16,7 +16,7 @@ export const CLINICS: Clinic[] = [
   {
     id: "spring-street-derm", name: "Spring Street Dermatology", city: "nyc", neighborhood: "SoHo",
     address: "75 Spring Street, Floor 2, New York, NY 10012",
-    offers: ["botox", "cheek-filler", "smile-filler", "sculptra", "prp", "peel", "ipl", "microneedling", "microdermabrasion", "fraxel", "laser-genesis", "sofwave", "pdt", "ktp"],
+    offers: ["botox", "cheek-filler", "smile-filler", "sculptra", "prp", "peel", "ipl", "microneedling", "microdermabrasion", "fraxel", "laser-genesis", "sofwave", "pdt", "ktp", "aviclear"],
     website: "https://springstderm.com/", googleUrl: maps("Spring Street Dermatology 75 Spring Street New York NY"),
     rating: null, reviewCount: null, ratingCheckedAt: null,
     credential: "Board-certified dermatologists", credentialSource: "https://springstderm.com/about/",
@@ -24,7 +24,7 @@ export const CLINICS: Clinic[] = [
   },
   {
     id: "tribeca-park-derm", name: "Tribeca Park Dermatology", city: "nyc", neighborhood: "Tribeca",
-    offers: ["botox", "cheek-filler", "smile-filler", "sculptra", "prp", "morpheus8", "halo", "moxi", "clear-brilliant", "laser-toning", "erbium", "ipl", "microneedling", "peel"],
+    offers: ["botox", "cheek-filler", "smile-filler", "sculptra", "prp", "morpheus8", "halo", "moxi", "clear-brilliant", "laser-toning", "erbium", "ipl", "microneedling", "peel", "xerf"],
     website: "https://triparkderm.com/", googleUrl: maps("Tribeca Park Dermatology New York NY"),
     rating: null, reviewCount: null, ratingCheckedAt: null,
     credential: "Dermatologists who are Fellows of the AAD (FAAD)", credentialSource: "https://triparkderm.com/",

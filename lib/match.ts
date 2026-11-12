@@ -11,6 +11,8 @@ export interface Match {
   score: number;
   /** Plain-language reasons behind the score: what fits, and what to weigh. */
   why: { good: string[]; watch: string[] };
+  /** Set when a similar treatment was had recently and is still settling: shown under "Later", with this reason. */
+  later?: string;
   flagged: QuizAnswers["cautions"];
   notes: Note[];
 }
@@ -45,7 +47,7 @@ export function matchProcedures(a: QuizAnswers): { shown: Match[]; hidden: Hidde
     }
     if (p.downtimeDays[1] > MAX_DOWNTIME[a.downtime]) continue;
     const { score, why } = rank(p, a);
-    shown.push({ procedure: p, score, why, flagged: [], notes: notesFor(p, a) });
+    shown.push({ procedure: p, score, why, flagged: [], notes: notesFor(p, a), later: laterReason(p, a) });
   }
   shown.sort((x, y) => y.score - x.score || x.why.watch.length - y.why.watch.length || RESEARCH[y.procedure.id].evidence - RESEARCH[x.procedure.id].evidence || x.procedure.tier - y.procedure.tier);
   return { shown, hidden };
@@ -66,6 +68,30 @@ export function downtimeShort([lo, hi]: [number, number]) {
  * Points: +3 per goal of yours it treats · +2 per research level (1–3) · +1 per typical-results level (1–3)
  * · +3 if it specifically targets a condition you have · −2/−3 when your answers raise a known risk.
  */
+/**
+ * Single-session treatments whose results keep building for months (see each treatment's "results in" data).
+ * After one of these, a similar treatment from the same group is usually not needed yet.
+ */
+const SETTLING_GROUPS: { label: string; ids: string[] }[] = [
+  { label: "skin-tightening", ids: ["sofwave", "ultherapy", "thermage", "xerf"] },
+  { label: "deep resurfacing", ids: ["co2", "erbium"] },
+  { label: "collagen-stimulating injectable", ids: ["sculptra", "radiesse", "bellafill"] },
+  { label: "thread lift", ids: ["threads"] },
+];
+
+export function laterReason(p: Procedure, a: QuizAnswers): string | undefined {
+  for (const g of SETTLING_GROUPS) {
+    if (!g.ids.includes(p.id)) continue;
+    const had = (a.had ?? []).find((id) => g.ids.includes(id));
+    if (!had) continue;
+    const name = PROCEDURES.find((x) => x.id === had)?.name.split(" / ")[0] ?? had;
+    return had === p.id
+      ? `You had ${name} recently. Its results keep building for months, so repeating it now is usually not needed.`
+      : `You had ${name} recently. Its results keep building for months, so another ${g.label} treatment now is usually not needed.`;
+  }
+  return undefined;
+}
+
 export const RANK_RULES = [
   "How many of your goals it treats (biggest factor)",
   "Strength of the research behind it",

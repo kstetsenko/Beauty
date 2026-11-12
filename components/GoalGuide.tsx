@@ -97,7 +97,10 @@ function GoalGuideFor({ goal, profile }: { goal: Goal; profile: import("@/lib/pr
         </Disclosure>
       </div>
 
-      <a href="/" className="btn-main block text-center">See my ranked matches</a>
+      <div className="grid gap-2">
+        <a href={`/compare?goal=${goal}&city=${city}`} className="btn-main block text-center">Compare {GOAL_LABELS[goal].toLowerCase()} options side by side</a>
+        <a href="/" className="btn-soft block text-center text-sm">Retake the quiz</a>
+      </div>
       <p className="text-[11px] text-muted text-center">
         Educational information only — not medical advice. Prices are typical ranges, not quotes. <a href="/sources" className="underline">How we research</a>
       </p>

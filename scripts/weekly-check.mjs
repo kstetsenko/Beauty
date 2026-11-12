@@ -34,6 +34,8 @@ async function check(url) {
 // Exact search phrases where a product name alone is ambiguous (e.g. "IPL" also means a brain region).
 const TERMS = {
   "smile-filler": ["nasolabial fold hyaluronic acid filler"],
+  xerf: ["multifrequency monopolar radiofrequency skin"],
+  aviclear: ["1726 nm laser acne"],
   bellafill: ["polymethylmethacrylate filler"],
   "tca-cross": ["CROSS trichloroacetic acid scars"],
   aerolase: ["650 microsecond Nd:YAG acne"],

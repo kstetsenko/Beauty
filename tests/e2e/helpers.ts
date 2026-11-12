@@ -29,9 +29,9 @@ export async function takeQuiz(
   page: Page,
   o: { goals: string[]; city?: string; age?: string; tone?: string; flags?: string[]; had?: string[] },
 ) {
+  await page.getByRole("button", { name: o.city ?? "New York City", exact: true }).click();
   for (const g of o.goals) await page.getByRole("button", { name: g, exact: true }).click();
   await page.getByRole("button", { name: "Continue", exact: true }).click();
-  await page.getByRole("button", { name: o.city ?? "New York City", exact: true }).click();
   await page.getByRole("radio", { name: o.age ?? "35-49" }).click();
   await page.getByRole("radio", { name: o.tone ?? "Light — burns easily" }).click();
   await page.getByRole("button", { name: "Continue", exact: true }).click();
