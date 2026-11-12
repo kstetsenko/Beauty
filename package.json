@@ -9,7 +9,10 @@
     "typecheck": "tsc --noEmit",
     "prototype": "node prototype/build.mjs",
     "data-check": "node scripts/weekly-check.mjs --no-issue",
-    "check": "esbuild scripts/check-matrix.ts --bundle --platform=node --outfile=.check/check.js --log-level=warning --alias:@=. && node .check/check.js"
+    "check": "esbuild scripts/check-matrix.ts --bundle --platform=node --outfile=.check/check.js --log-level=warning --alias:@=. && node .check/check.js",
+    "test": "vitest run",
+    "e2e": "playwright test",
+    "verify": "npm run typecheck && npm test && npm run check && npm run build && npm run prototype && npm run e2e"
   },
   "dependencies": {
     "next": "16.4.6",
@@ -17,6 +20,7 @@
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.63.0",
     "@types/node": "^22.0.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
@@ -24,6 +28,7 @@
     "esbuild": "^0.25.12",
     "postcss": "^8.4.49",
     "tailwindcss": "3.4.19",
-    "typescript": "^5.6.0"
+    "typescript": "^5.6.0",
+    "vitest": "^3.2.7"
   }
 }

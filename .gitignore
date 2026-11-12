@@ -10,3 +10,6 @@ prototype/dist/
 data-check-report.md
 .check/
 .data/
+undefined/
+test-results/
+playwright-report/

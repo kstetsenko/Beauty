@@ -19,11 +19,11 @@ Read `README.md` for structure and commands. This repo is unrelated to any other
 
 ## Workflow
 1. Edit data in `lib/` (see README "Editing data") or UI in `components/`.
-2. `npm run typecheck && npm run build`.
-3. Test with Playwright at 390px and 1100px: no console errors, `scrollWidth` equals viewport width.
-4. `npm run prototype`, then republish the prototype artifact (slug `3985c6c9-7b2d-403e-a693-bf04a884c274`;
+2. Add or update a test for the change (`tests/unit` for logic/data, `tests/e2e` for UI flows); every bug fix gets a test.
+3. `npm run verify` (typecheck, unit tests, check, build, prototype, browser tests at 390px and 1100px). All must pass.
+4. Republish the prototype artifact (slug `3985c6c9-7b2d-403e-a693-bf04a884c274`;
    it is shared publicly, so pass `shared_live: "public"` and the artifact title).
-5. Commit with a message that explains what changed for users, and push to `main`.
+5. Commit with a message that explains what changed for users, and push to `main`. CI runs `verify` again.
 
 ## Weekly data check
 Issues labeled `data-check` (from `.github/workflows/weekly-data-check.yml`) list broken links, new PubMed papers and
