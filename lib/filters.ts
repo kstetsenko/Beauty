@@ -1,6 +1,7 @@
 import type { Match } from "./match";
 import { RESEARCH } from "./research";
 import type { City, Goal, Procedure } from "./types";
+import { filterFitsGoals } from "./relevance";
 
 /**
  * Result-list sorting, filters and one-tap plans (pure functions, unit-tested).
@@ -66,13 +67,19 @@ export function sortMatches(list: Match[], sort: Sort, city: City) {
   return out;
 }
 
-/** Filter chips worth showing now: active ones, plus those that would still leave results. With counts. */
-export function availableFilters(matches: Match[], active: Filter[], city: City, goal: Goal | null = null) {
+/**
+ * Filter chips worth showing now: active ones, plus those that fit the person's goals (or the open goal tab)
+ * and would still leave results. With counts.
+ */
+export function availableFilters(matches: Match[], active: Filter[], city: City, goal: Goal | null = null, goals: Goal[] = []) {
+  const scope = goal ? [goal] : goals;
   return FILTERS.map(([f, label]) => ({ f, label, on: active.includes(f), count: applyFilters(matches, active.includes(f) ? active : [...active, f], city, goal).length }))
-    .filter((x) => x.on || x.count > 0);
+    .filter((x) => x.on || (x.count > 0 && filterFitsGoals(x.f, scope)));
 }
 
-/** Plans that would leave at least one result for the current goal tab. */
-export function availablePlans(matches: Match[], city: City, goal: Goal | null = null) {
-  return PLANS.map((p) => ({ ...p, count: applyFilters(matches, p.filters, city, goal).length })).filter((p) => p.count > 0);
+/** Plans that fit the goals and would leave at least one result for the current goal tab. */
+export function availablePlans(matches: Match[], city: City, goal: Goal | null = null, goals: Goal[] = []) {
+  const scope = goal ? [goal] : goals;
+  return PLANS.map((p) => ({ ...p, count: applyFilters(matches, p.filters, city, goal).length }))
+    .filter((p) => p.count > 0 && p.filters.every((f) => filterFitsGoals(f, scope)));
 }

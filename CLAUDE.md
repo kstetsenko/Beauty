@@ -16,6 +16,8 @@ Read `README.md` for structure and commands. This repo is unrelated to any other
 - Compare only treatments for the same goal that fit the person.
 - Never offer a plan, filter or tab that leads to an empty list (`lib/filters.ts` `available*`); results always start from
   the person's goals (goals are the first quiz question).
+- Every option must fit the person's goals: filters, plans and health questions are filtered by goal
+  (`lib/relevance.ts`); e.g. no collagen or long-lasting filters for breakouts.
 - Scope: face beauty treatments only (no hair/tattoo removal, body or fat treatments, surgery).
 - Skip anything that would need a lawyer (e.g. celebrity or influencer content).
 

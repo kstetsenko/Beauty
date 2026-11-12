@@ -9,6 +9,7 @@ import { ResultsList } from "./ResultsList";
 import { Question } from "./Question";
 import { Summary } from "./Summary";
 import { PastTreatments } from "./PastTreatments";
+import { flagsForGoals } from "@/lib/relevance";
 
 type Step = "city" | "goals" | "about" | "safety" | "recent" | "browse" | "done";
 const QUIZ: Step[] = ["goals", "city", "about", "safety", "recent"];
@@ -193,8 +194,8 @@ export function Guide() {
       {step === "safety" && (
         <section className="animate-in">
           <h1 className="text-2xl font-semibold leading-tight mb-1.5">Does anything apply?</h1>
-          <p className="text-sm text-muted mb-6">Tap all that apply. Private — stays on your device. We only ask about things that FDA labels or medical guidelines say change which treatments are safe; your provider will ask about your full health history.</p>
-          <Chips options={SAFETY} selected={flags} onChange={setFlags} />
+          <p className="text-sm text-muted mb-6">Tap all that apply. Private — stays on your device. Only questions that change which treatments for your goals are safe, based on FDA labels and medical guidelines; your provider will ask about your full health history.</p>
+          <Chips options={SAFETY.filter((o) => flagsForGoals(goals).has(o.value))} selected={flags} onChange={setFlags} />
           <button type="button" onClick={() => go("recent")} className="btn-main mt-6">
             {flags.length ? "Continue" : "None of these"}
           </button>

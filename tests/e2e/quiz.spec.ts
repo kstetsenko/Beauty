@@ -53,3 +53,26 @@ test("health questions hide treatments their labels rule out", async ({ page }) 
   await takeQuiz(page, { goals: ["Lifting & Firmness"], age: "50-64", flags: ["Pacemaker or implanted device"] });
   await expect(page.locator("ol li a.font-semibold", { hasText: "Thermage" })).toHaveCount(0);
 });
+
+test("breakouts: health questions and filters stay on topic", async ({ page }) => {
+  const errors = await setup(page);
+  await page.goto("/");
+  await page.getByRole("button", { name: "Breakouts", exact: true }).click();
+  await page.getByRole("button", { name: "Continue", exact: true }).click();
+  await page.getByRole("button", { name: "New York City", exact: true }).click();
+  await page.getByRole("radio", { name: "22-34" }).click();
+  await page.getByRole("radio", { name: "Light — burns easily" }).click();
+  await page.getByRole("button", { name: "Continue", exact: true }).click();
+  // Bellafill and Thermage aren't breakout treatments, so their label questions aren't asked.
+  await expect(page.getByRole("button", { name: "Allergy to cow (bovine) collagen" })).toHaveCount(0);
+  await expect(page.getByRole("button", { name: "Pacemaker or implanted device" })).toHaveCount(0);
+  await expect(page.getByRole("button", { name: "Porphyria or light sensitivity" })).toBeVisible();
+  await page.getByRole("button", { name: "None of these", exact: true }).click();
+  await page.getByRole("button", { name: "None — see my options" }).click();
+  await expect(page.getByRole("heading", { name: "Your matches" })).toBeVisible();
+  await expect(page.getByRole("button", { name: /Builds your own collagen/ })).toHaveCount(0);
+  await expect(page.getByRole("button", { name: /Lasts a year or more/ })).toHaveCount(0);
+  await expect(page.getByRole("button", { name: /Long-lasting/ })).toHaveCount(0);
+  await expect(page.getByText("Builds collagen")).toHaveCount(0);
+  expect(errors).toEqual([]);
+});

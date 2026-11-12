@@ -5,6 +5,7 @@ import { RANK_RULES, downtimeShort, usd, type Match } from "@/lib/match";
 import { GOAL_LABELS, ONSET_LABELS } from "@/lib/procedures";
 import { EVIDENCE_LABELS, RESEARCH } from "@/lib/research";
 import type { City, Goal } from "@/lib/types";
+import { filterFitsGoals } from "@/lib/relevance";
 import { SORTS, applyFilters, availableFilters, availablePlans, sortMatches, type Filter, type Sort } from "@/lib/filters";
 import { Disclosure } from "./Disclosure";
 import { ApproachTag, DetailSections, Dots } from "./ProcedureFacts";
@@ -35,8 +36,8 @@ export function ResultsList({
   const [tab, setTab] = useState<Goal | null>(null);
 
   const list = useMemo(() => sortMatches(applyFilters(matches, filters, city, tab), sort, city), [matches, filters, sort, city, tab]);
-  const plans = useMemo(() => availablePlans(matches, city, tab), [matches, city, tab]);
-  const chips = useMemo(() => availableFilters(matches, filters, city, tab), [matches, filters, city, tab]);
+  const plans = useMemo(() => availablePlans(matches, city, tab, goals), [matches, city, tab, goals]);
+  const chips = useMemo(() => availableFilters(matches, filters, city, tab, goals), [matches, filters, city, tab, goals]);
   const tabs = goals.length > 1 ? goals.map((g) => ({ g, n: matches.filter((m) => m.procedure.goals.includes(g)).length })).filter((t) => t.n > 0) : [];
 
   // Never leave the person on an empty list: if a goal tab makes the active filters empty, drop them.
@@ -67,7 +68,7 @@ export function ResultsList({
                       <span>from {usd(p.cost[city][0])}</span>
                       <span>Recovery: {downtimeShort(p.downtimeDays).toLowerCase()}</span>
                       <span>{ONSET_LABELS[p.onset]}</span>
-                      {p.collagen && <span>Builds collagen</span>}
+                      {p.collagen && filterFitsGoals("collagen", tab ? [tab] : goals) && <span>Builds collagen</span>}
                     </div>
                     <ul className="mt-2 space-y-0.5 text-xs" aria-label="Why it's ranked here">
                       {m.why.good.slice(0, top ? 3 : 2).map((t) => <li key={t}>✓ {t}</li>)}
