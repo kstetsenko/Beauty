@@ -275,7 +275,7 @@ const RAW: Raw[] = [
     performedBy: "Board-certified dermatologist", contraindications: ["active-skin", "keloid", "blood-thinners"],
     notes: "Works best on rolling scars; ice-pick and boxcar scars respond less. Often combined with lasers.",
   },
-  // ── Added: more in-clinic options (Nov 2026) ───────────────────────────
+  // ── Added: more non-surgical options (Nov 2026) ───────────────────────────
   {
     id: "smile-filler", name: "Smile-Line Filler", what: "Hyaluronic acid filler for folds and lines", aka: ["Nasolabial fold filler", "Marionette line filler", "Juvéderm Vollure", "Restylane Refyne", "Restylane Defyne"], approach: "ha", onset: 1, minAge: 22,
     summary: "A hyaluronic acid gel placed under the folds from nose to mouth (smile lines) or the lines below the mouth, softening them right away.",

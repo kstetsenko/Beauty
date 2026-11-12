@@ -1,5 +1,6 @@
 import { useEffect, useSyncExternalStore } from "react";
 import { createRoot } from "react-dom/client";
+import About from "@/app/about/page";
 import Privacy from "@/app/privacy/page";
 import Sources from "@/app/sources/page";
 import Terms from "@/app/terms/page";
@@ -47,6 +48,8 @@ function Page() {
       return <Privacy />;
     case "terms":
       return <Terms />;
+    case "about":
+      return <About />;
     default:
       // Re-mount the quiz when returning home so it starts fresh.
       return <Guide key={hash} />;

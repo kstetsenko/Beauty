@@ -111,9 +111,9 @@ export function Guide() {
         <>
           <div className="mb-8">
             <p className="text-xs uppercase tracking-wide text-muted mb-2">Aesthetic Guide · NYC &amp; Miami</p>
-            <p className="text-xl font-semibold leading-snug mb-3">Every in-clinic face treatment, ranked for your skin — with the evidence.</p>
+            <p className="text-xl font-semibold leading-snug mb-3">Find the non-surgical face treatments that fit you — with the evidence.</p>
             <ul className="space-y-1.5 text-sm">
-              <li>✓ {PROCEDURES.length} treatments, from facials to lasers and injectables, filtered for your skin tone, health and recent treatments</li>
+              <li>✓ {PROCEDURES.length} non-surgical treatments, from facials to lasers and injectables, filtered for your skin tone, health and recent treatments</li>
               <li>✓ Research strength, local prices, recovery and risks for each, with sources</li>
               <li>✓ No paid rankings: clinics can&apos;t buy a higher spot</li>
             </ul>
@@ -131,7 +131,8 @@ export function Guide() {
           />
           <p className="mt-8 text-center text-sm text-muted">
             Or <a href="/goals" className="underline">explore by goal</a> · <a href="/procedures" className="underline">browse all {PROCEDURES.length} treatments</a> ·{" "}
-            <a href="/insights" className="underline">core insights</a>
+            <a href="/insights" className="underline">core insights</a> ·{" "}
+            <a href="/about" className="underline">about</a>
           </p>
         </>
       )}

@@ -3,7 +3,7 @@ import { PROCEDURES, GOAL_LABELS } from "../../lib/procedures";
 import { expectNoOverflow, setup, typical, withProfile } from "./helpers";
 
 const pages = [
-  "/", "/goals", "/procedures", "/compare?goal=lines", "/insights", "/sources", "/privacy", "/terms", "/report",
+  "/", "/about", "/goals", "/procedures", "/compare?goal=lines", "/insights", "/sources", "/privacy", "/terms", "/report",
   ...Object.keys(GOAL_LABELS).map((g) => `/goals/${g}?city=nyc`),
   ...PROCEDURES.flatMap((p) => [`/procedures/${p.id}?city=nyc`, `/procedures/${p.id}?city=miami`]),
 ];
@@ -26,4 +26,14 @@ test("removed and out-of-scope pages return 404", async ({ page }) => {
     const res = await page.goto(gone);
     expect(res?.status(), gone).toBe(404);
   }
+});
+
+test("about page explains the product and leads to the quiz", async ({ page }) => {
+  const errors = await setup(page);
+  await page.goto("/about");
+  await expect(page.getByRole("heading", { name: "Know before you book." })).toBeVisible();
+  await expect(page.getByText("A guide, not a doctor.")).toBeVisible();
+  await page.getByRole("link", { name: /Find what fits/ }).click();
+  await expect(page.getByRole("heading", { name: "Where are you?" })).toBeVisible();
+  expect(errors).toEqual([]);
 });

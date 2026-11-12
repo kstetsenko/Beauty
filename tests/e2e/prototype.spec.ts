@@ -22,5 +22,7 @@ test("shareable prototype runs the quiz and clinic finder offline", async ({ pag
   await expect(page.getByRole("heading", { name: "Your matches" })).toBeVisible();
   await page.goto("file://" + file + "#c-botox-nyc-a4");
   await expect(page.getByRole("heading", { name: "Find a clinic for Botox" })).toBeVisible();
+  await page.goto("file://" + file + "#about");
+  await expect(page.getByRole("heading", { name: "Know before you book." })).toBeVisible();
   expect(errors).toEqual([]);
 });

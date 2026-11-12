@@ -4,7 +4,7 @@
  * (#p-sofwave-miami) because the prototype host only passes simple hashes.
  */
 export type Route =
-  | { name: "home" | "procedures" | "sources" | "privacy" | "terms" | "insights" }
+  | { name: "home" | "procedures" | "sources" | "privacy" | "terms" | "insights" | "about" }
   | { name: "goals" }
   | { name: "goal"; goal: string; city: "nyc" | "miami" }
   | { name: "procedure"; id: string; city: "nyc" | "miami" }
@@ -30,7 +30,7 @@ export function toHash(href: string): string {
     const ids = (url.searchParams.get("ids") || "").split(",").filter(Boolean);
     return `compare-${city}-${url.searchParams.get("goal") || "any"}` + ids.map((i) => `--${i}`).join("");
   }
-  if (["procedures", "sources", "privacy", "terms", "insights"].includes(parts[0])) return parts[0];
+  if (["procedures", "sources", "privacy", "terms", "insights", "about"].includes(parts[0])) return parts[0];
   return "home";
 }
 
@@ -51,7 +51,7 @@ export function fromHash(hash: string): Route {
     const [c, goal] = head.replace("compare-", "").split("-");
     return { name: "compare", city: cityOf(c), goal: goal && goal !== "any" ? goal : "", ids };
   }
-  if (h === "procedures" || h === "sources" || h === "privacy" || h === "terms" || h === "insights") return { name: h };
+  if (h === "procedures" || h === "sources" || h === "privacy" || h === "terms" || h === "insights" || h === "about") return { name: h };
   return { name: "home" };
 }
 
