@@ -14,9 +14,9 @@ const STEPS = [
 ];
 
 const PRINCIPLES = [
-  { title: "Evidence first.", text: "Every price, study and safety note links to its source. Where research is thin, we say so." },
+  { title: "Everything in one place.", text: "Prices, recovery, risks and research for each treatment — gathered from medical journals, the FDA, dermatology associations and clinic price lists." },
   { title: "Made for you.", text: "Results change with your skin tone, health and goals — not one list for everyone." },
-  { title: "Private by design.", text: "Your answers never leave your browser. No account needed." },
+  { title: "Sources you can check.", text: "Every fact links to where it came from. When research on a treatment is limited, we say so." },
   { title: "No paid rankings.", text: "Clinics can't buy a higher spot. The same ranking rules apply to everyone." },
 ];
 
@@ -29,7 +29,7 @@ export default function About() {
         <p className="text-xs uppercase tracking-[0.2em] text-muted mb-4">Aesthetic Guide · NYC &amp; Miami</p>
         <h1 className="text-4xl font-semibold leading-tight tracking-tight">Know before you book.</h1>
         <p className="text-lg text-muted leading-snug mt-4">
-          Find the non-surgical face treatments that fit you — and understand them — in New York City and Miami.
+          The non-surgical face treatments that fit you — explained simply, in one place. New York City and Miami.
         </p>
         <Link href="/" className="btn-main inline-block mt-7 px-8">Find what fits — about a minute</Link>
       </section>

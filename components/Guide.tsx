@@ -109,14 +109,15 @@ export function Guide() {
 
       {step === "city" && (
         <>
-          <div className="mb-8">
-            <p className="text-xs uppercase tracking-wide text-muted mb-2">Aesthetic Guide · NYC &amp; Miami</p>
-            <p className="text-xl font-semibold leading-snug mb-3">Find the non-surgical face treatments that fit you — with the evidence.</p>
-            <ul className="space-y-1.5 text-sm">
-              <li>✓ {PROCEDURES.length} non-surgical treatments, from facials to lasers and injectables, filtered for your skin tone, health and recent treatments</li>
-              <li>✓ Research strength, local prices, recovery and risks for each, with sources</li>
-              <li>✓ No paid rankings: clinics can&apos;t buy a higher spot</li>
-            </ul>
+          <div className="text-center mb-10 pt-2">
+            <p className="text-[11px] uppercase tracking-[0.2em] text-muted mb-4">Aesthetic Guide · NYC &amp; Miami</p>
+            <p className="text-[2rem] font-semibold leading-tight tracking-tight">Know before you book.</p>
+            <p className="text-base text-muted leading-snug mt-3">
+              The non-surgical face treatments that fit you — explained simply, in one place.
+            </p>
+            <p className="text-xs text-muted mt-5 tracking-wide">
+              {PROCEDURES.length} treatments <span aria-hidden="true">·</span> {Object.keys(GOAL_LABELS).length} goals <span aria-hidden="true">·</span> No paid rankings
+            </p>
           </div>
           <Question
             key="city"
