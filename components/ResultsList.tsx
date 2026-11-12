@@ -1,57 +1,13 @@
 "use client";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { CAUTIONS } from "@/lib/cautions";
 import { RANK_RULES, downtimeShort, usd, type Match } from "@/lib/match";
 import { GOAL_LABELS, ONSET_LABELS } from "@/lib/procedures";
 import { EVIDENCE_LABELS, RESEARCH } from "@/lib/research";
-import type { City, Goal, Procedure } from "@/lib/types";
+import type { City, Goal } from "@/lib/types";
+import { SORTS, applyFilters, availableFilters, availablePlans, sortMatches, type Filter, type Sort } from "@/lib/filters";
 import { Disclosure } from "./Disclosure";
 import { ApproachTag, DetailSections, Dots } from "./ProcedureFacts";
-
-type Sort = "match" | "evidence" | "price" | "downtime";
-type Filter = "event" | "gentle" | "lasting" | "under500" | "strong" | "collagen" | "now" | "nodowntime" | "noneedles" | "lowpain";
-
-const SORTS: [Sort, string][] = [
-  ["match", "Best match"],
-  ["evidence", "Strongest research"],
-  ["price", "Lowest price"],
-  ["downtime", "Least downtime"],
-];
-const FILTERS: [Filter, string][] = [
-  ["strong", "Strong research only"],
-  ["under500", "Starts under $500"],
-  ["lasting", "Lasts a year or more"],
-  ["collagen", "Builds your own collagen"],
-  ["now", "Results right away"],
-  ["nodowntime", "No downtime"],
-  ["lowpain", "Low pain"],
-  ["noneedles", "No needles"],
-];
-/** One-tap plans: each sets a filter combination and a sort. */
-const PLANS: { label: string; hint: string; filters: Filter[]; sort: Sort }[] = [
-  { label: "Event in 2 weeks", hint: "Shows within days, at most a day of recovery", filters: ["event"], sort: "match" },
-  { label: "First time", hint: "Low pain, short recovery, not permanent", filters: ["gentle"], sort: "evidence" },
-  { label: "Best value", hint: "Starts under $500, best research first", filters: ["under500"], sort: "evidence" },
-  { label: "Long-lasting", hint: "Results that last a year or more", filters: ["lasting"], sort: "evidence" },
-];
-const PERMANENT = new Set(["bellafill"]);
-const LASTING = /^(about 1 year|1–2 years|1 year|years|long-lasting|up to about 2 years|about 12–18 months)/i;
-const NEEDLES = new Set(["microneedling", "prp", "morpheus8", "subcision"]);
-const hasNeedles = (p: Procedure) => ["toxin", "ha", "biostim", "threads"].includes(p.approach) || NEEDLES.has(p.id);
-function passes(p: Procedure, f: Filter, city: City) {
-  switch (f) {
-    case "event": return p.downtimeDays[1] <= 1 && p.onset <= 2;
-    case "gentle": return p.pain <= 2 && p.downtimeDays[1] <= 3 && !PERMANENT.has(p.id);
-    case "lasting": return LASTING.test(p.lasts);
-    case "under500": return p.cost[city][0] < 500;
-    case "strong": return RESEARCH[p.id].evidence === 3;
-    case "collagen": return !!p.collagen;
-    case "now": return p.onset === 1;
-    case "nodowntime": return p.downtimeDays[1] === 0;
-    case "lowpain": return p.pain <= 2;
-    case "noneedles": return !hasNeedles(p);
-  }
-}
 
 const chip = (on: boolean) =>
   "shrink-0 rounded-full border px-3 py-1.5 text-xs transition-colors " + (on ? "bg-ink text-white border-ink" : "bg-white border-line hover:border-ink");
@@ -76,19 +32,20 @@ export function ResultsList({
 }) {
   const [sort, setSort] = useState<Sort>("match");
   const [filters, setFilters] = useState<Filter[]>([]);
+  const [tab, setTab] = useState<Goal | null>(null);
 
-  const list = useMemo(() => {
-    const base = matches.filter((m) => filters.every((f) => passes(m.procedure, f, city)));
-    const ev = (m: Match) => RESEARCH[m.procedure.id].evidence;
-    const sorted = [...base];
-    if (sort === "evidence") sorted.sort((a, b) => ev(b) - ev(a) || b.score - a.score);
-    if (sort === "price") sorted.sort((a, b) => a.procedure.cost[city][0] - b.procedure.cost[city][0]);
-    if (sort === "downtime") sorted.sort((a, b) => a.procedure.downtimeDays[1] - b.procedure.downtimeDays[1] || ev(b) - ev(a));
-    return sorted;
-  }, [matches, filters, sort, city]);
+  const list = useMemo(() => sortMatches(applyFilters(matches, filters, city, tab), sort, city), [matches, filters, sort, city, tab]);
+  const plans = useMemo(() => availablePlans(matches, city, tab), [matches, city, tab]);
+  const chips = useMemo(() => availableFilters(matches, filters, city, tab), [matches, filters, city, tab]);
+  const tabs = goals.length > 1 ? goals.map((g) => ({ g, n: matches.filter((m) => m.procedure.goals.includes(g)).length })).filter((t) => t.n > 0) : [];
+
+  // Never leave the person on an empty list: if a goal tab makes the active filters empty, drop them.
+  useEffect(() => {
+    if (filters.length && list.length === 0) setFilters([]);
+  }, [filters, list.length]);
 
   const ranked = sort === "match" && filters.length === 0;
-  const bestPerGoal = goals
+  const bestPerGoal = (tab ? [] : goals)
     .map((g) => ({ g, m: list.find((x) => x.procedure.goals.includes(g)) }))
     .filter((x): x is { g: Goal; m: Match } => !!x.m);
   const card = (m: Match, i: number, top = false) => {
@@ -154,8 +111,17 @@ export function ResultsList({
     <section className="animate-in pb-24">
       <h1 className="text-2xl font-semibold mb-1">Your matches</h1>
       <p className="text-sm text-muted mb-4">
-        {matches.length} treatments fit your answers{hiddenCount ? ` (${hiddenCount} hidden for safety — see the end of your list)` : ""}. Tap one for details, ♥ to save.
+        {matches.length} treatment{matches.length === 1 ? "" : "s"} for {goals.map((g) => GOAL_LABELS[g].toLowerCase()).join(", ") || "your goals"} that fit your answers
+        {hiddenCount ? ` (${hiddenCount} hidden for safety — see the end of your list)` : ""}. Tap one for details, ♥ to save.
       </p>
+      {tabs.length > 1 && (
+        <div className="flex gap-2 overflow-x-auto -mx-5 px-5 pb-3 [scrollbar-width:none]" role="tablist" aria-label="Your goals">
+          <button type="button" role="tab" aria-selected={tab === null} onClick={() => setTab(null)} className={chip(tab === null)}>All your goals ({matches.length})</button>
+          {tabs.map(({ g, n }) => (
+            <button key={g} type="button" role="tab" aria-selected={tab === g} onClick={() => setTab(g)} className={chip(tab === g)}>{GOAL_LABELS[g]} ({n})</button>
+          ))}
+        </div>
+      )}
       <Disclosure tone="plain" title={<span className="text-sm">How we rank</span>} hint="Same rules for everyone; clinics can't pay to move up">
         <ol className="list-decimal pl-5 space-y-1 text-sm">
           {RANK_RULES.map((r) => <li key={r}>{r}</li>)}
@@ -169,13 +135,13 @@ export function ResultsList({
 
       <p className="text-[11px] text-muted mb-1.5">Quick plans</p>
       <div className="grid grid-cols-2 gap-2 mb-3">
-        {PLANS.map((pl) => {
+        {plans.map((pl) => {
           const on = pl.filters.every((f) => filters.includes(f)) && filters.length === pl.filters.length && sort === pl.sort;
           return (
             <button key={pl.label} type="button" aria-pressed={on}
               onClick={() => { if (on) { setFilters([]); setSort("match"); } else { setFilters(pl.filters); setSort(pl.sort); } }}
               className={"rounded-2xl border px-3 py-2 text-left transition-colors min-w-0 " + (on ? "bg-ink text-white border-ink" : "bg-white border-line hover:border-ink")}>
-              <span className="block text-sm font-medium truncate">{pl.label}</span>
+              <span className="flex justify-between gap-2 text-sm font-medium"><span className="truncate">{pl.label}</span><span className={on ? "text-white/80" : "text-muted"}>{pl.count}</span></span>
               <span className={"block text-[11px] leading-snug " + (on ? "text-white/80" : "text-muted")}>{pl.hint}</span>
             </button>
           );
@@ -189,18 +155,15 @@ export function ResultsList({
       </div>
       <p className="text-[11px] text-muted mb-1.5 mt-1">Only show</p>
       <div className="flex gap-2 overflow-x-auto -mx-5 px-5 pb-3 [scrollbar-width:none]">
-        {FILTERS.map(([v, l]) => {
-          const on = filters.includes(v);
-          return (
-            <button key={v} type="button" aria-pressed={on} onClick={() => setFilters(on ? filters.filter((x) => x !== v) : [...filters, v])} className={chip(on)}>
-              {on ? "✓ " : ""}{l}
-            </button>
-          );
-        })}
+        {chips.map(({ f, label, on, count }) => (
+          <button key={f} type="button" aria-pressed={on} onClick={() => setFilters(on ? filters.filter((x) => x !== f) : [...filters, f])} className={chip(on)}>
+            {on ? "✓ " : ""}{label}{on ? "" : ` (${count})`}
+          </button>
+        ))}
       </div>
 
       {list.length === 0 ? (
-        <p className="text-sm text-muted text-center py-8">No matches with these filters. Turn one off to see more.</p>
+        <p className="text-sm text-muted text-center py-8">Nothing matches every filter. <button type="button" className="underline" onClick={() => { setFilters([]); setSort("match"); }}>Clear filters</button></p>
       ) : (
         <>
           {ranked ? (

@@ -34,6 +34,6 @@ test("about page explains the product and leads to the quiz", async ({ page }) =
   await expect(page.getByRole("heading", { name: "Know before you book." })).toBeVisible();
   await expect(page.getByText("A guide, not a doctor.")).toBeVisible();
   await page.getByRole("link", { name: /Find what fits/ }).click();
-  await expect(page.getByRole("heading", { name: "Where are you?" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "What would you like to improve?" })).toBeVisible();
   expect(errors).toEqual([]);
 });

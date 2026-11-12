@@ -14,6 +14,8 @@ Read `README.md` for structure and commands. This repo is unrelated to any other
 - Every list/compare page must use the person's profile (`ProfileGate` + `personalize`). Unsafe treatments are hidden
   with a visible reason, never silently.
 - Compare only treatments for the same goal that fit the person.
+- Never offer a plan, filter or tab that leads to an empty list (`lib/filters.ts` `available*`); results always start from
+  the person's goals (goals are the first quiz question).
 - Scope: face beauty treatments only (no hair/tattoo removal, body or fat treatments, surgery).
 - Skip anything that would need a lawyer (e.g. celebrity or influencer content).
 

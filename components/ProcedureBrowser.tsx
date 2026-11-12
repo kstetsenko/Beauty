@@ -23,7 +23,12 @@ function BrowserFor({ profile }: { profile: Profile }) {
   const city: City = profile.city;
   const [group, setGroup] = useState<Approach | "all">("all");
   const [q, setQ] = useState("");
-  const { shown, hidden, outside } = personalize(profile, Object.keys(GOAL_LABELS) as Goal[]);
+  // Default to the person's own goals; "All goals" widens the view.
+  const [scope, setScope] = useState<"mine" | "all">(profile.goals.length ? "mine" : "all");
+  const scopeGoals = scope === "mine" ? profile.goals : (Object.keys(GOAL_LABELS) as Goal[]);
+  const { shown, hidden, outside } = personalize(profile, scopeGoals);
+  const allCount = personalize(profile, Object.keys(GOAL_LABELS) as Goal[]).shown.length;
+  const mineCount = profile.goals.length ? personalize(profile, profile.goals).shown.length : 0;
   const fit = shown.map((m) => m.procedure).sort((a, b) => PROCEDURES.indexOf(a) - PROCEDURES.indexOf(b));
   const groups = (Object.keys(APPROACHES) as Approach[]).filter((a) => fit.some((p) => p.approach === a));
   const needle = q.trim().toLowerCase();
@@ -36,8 +41,19 @@ function BrowserFor({ profile }: { profile: Profile }) {
   return (
     <div className="animate-in">
       <h1 className="text-2xl font-semibold mb-1.5">Treatments that fit you</h1>
-      <p className="text-sm text-muted mb-4">{fit.length} of {PROCEDURES.length} treatments fit your answers. Tap one to learn more.</p>
+      <p className="text-sm text-muted mb-4">
+        {scope === "mine"
+          ? `${fit.length} treatments for ${profile.goals.map((g) => GOAL_LABELS[g].toLowerCase()).join(", ")} fit your answers.`
+          : `${fit.length} of ${PROCEDURES.length} treatments fit your answers.`}{" "}
+        Tap one to learn more.
+      </p>
       <ProfileBar profile={profile} />
+      {profile.goals.length > 0 && (
+        <div className="flex gap-2 mb-3" role="tablist" aria-label="Which goals">
+          <button type="button" role="tab" aria-selected={scope === "mine"} onClick={() => { setScope("mine"); setGroup("all"); }} className={pill(scope === "mine")}>Your goals ({mineCount})</button>
+          <button type="button" role="tab" aria-selected={scope === "all"} onClick={() => { setScope("all"); setGroup("all"); }} className={pill(scope === "all")}>All goals ({allCount})</button>
+        </div>
+      )}
       <label className="block mb-3">
         <span className="sr-only">Search treatments</span>
         <input
@@ -79,7 +95,16 @@ function BrowserFor({ profile }: { profile: Profile }) {
           </li>
         ))}
       </ul>
-      {list.length === 0 && <p className="text-sm text-muted text-center py-6">No treatments that fit you match &ldquo;{q}&rdquo;. It may be hidden for safety or need more downtime than you wanted — see below.</p>}
+      {list.length === 0 && (
+        <p className="text-sm text-muted text-center py-6">
+          No treatments that fit you match &ldquo;{q}&rdquo;{scope === "mine" ? " for your goals" : ""}.{" "}
+          {scope === "mine" ? (
+            <button type="button" className="underline" onClick={() => setScope("all")}>Search all goals</button>
+          ) : (
+            "It may be hidden for safety or need more downtime than you wanted — see below."
+          )}
+        </p>
+      )}
       <div className="mt-4"><NotShown hidden={hidden} outside={outside} /></div>
       {group === "all" && TRENDS.map((t) => (
         <div key={t.id} className="rounded-3xl border border-line bg-white p-5 mt-4">
