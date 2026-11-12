@@ -35,8 +35,9 @@ describe("matching", () => {
         expect(shown.length + hidden.length + outside.length).toBe(PROCEDURES.filter((x) => x.goals.includes(g)).length);
       });
 
-  it.each(goals)("typical profile gets at least 4 options for %s", (g) => {
-    expect(personalize({ ...base, goals: [g] }, [g]).shown.length).toBeGreaterThanOrEqual(4);
+  // Only FDA-cleared or approved treatments are listed, so some goals (e.g. redness) have 3 options.
+  it.each(goals)("typical profile gets at least 3 options for %s", (g) => {
+    expect(personalize({ ...base, goals: [g] }, [g]).shown.length).toBeGreaterThanOrEqual(3);
   });
 
   it("hides IPL for deep skin and fillers under 22", () => {
@@ -81,7 +82,7 @@ describe("ranking", () => {
   });
 
   it("groups recent treatments into timing categories", () => {
-    expect(recentFrom(["botox", "cheek-filler", "sofwave", "fraxel", "peel", "unknown"]).sort()).toEqual(["botox", "energy", "filler", "laser", "peel"]);
+    expect(recentFrom(["botox", "cheek-filler", "sofwave", "fraxel", "microneedling", "unknown"]).sort()).toEqual(["botox", "energy", "filler", "laser", "peel"]);
   });
 });
 
@@ -91,7 +92,7 @@ describe("truthful reasons", () => {
       const r = rank(p, toAnswers({ ...base, goals: p.goals }));
       if (RESEARCH[p.id].evidence === 1) {
         expect(r.why.good.join(" "), p.id).not.toMatch(/results/i);
-        expect(r.why.watch.join(" "), p.id).toMatch(/isn't well known/);
+        expect(r.why.watch.join(" "), p.id).toMatch(/not yet established/);
       }
     }
   });
@@ -110,5 +111,19 @@ describe("truthful reasons", () => {
         expect(b.url).toMatch(/^https:\/\//);
       }
     }
+  });
+});
+
+describe("conditions are linked to their sources", () => {
+  it("every hidden treatment gives a source for each reason", () => {
+    const flags = ["pregnancy", "isotretinoin", "keloid", "blood-thinners", "severe-allergy", "bovine-collagen", "implant-device", "light-sensitivity", "autoimmune", "active-skin"] as const;
+    for (const f of flags)
+      for (const g of goals) {
+        const { hidden } = personalize({ ...base, age: "18-21", tone: "deep", flags: [f], goals: [g] }, [g]);
+        for (const h of hidden) {
+          expect(h.sources.length, `${f} ${g} ${h.procedure.id}`).toBe(h.reasons.length);
+          for (const s of h.sources) expect(s.url).toMatch(/^https:\/\//);
+        }
+      }
   });
 });

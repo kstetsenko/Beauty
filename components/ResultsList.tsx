@@ -67,7 +67,7 @@ export function ResultsList({
                     <a href={`/procedures/${p.id}?city=${city}`} className="block font-semibold leading-snug">{p.name}</a>
                     <p className="text-xs text-muted">{p.what}</p>
                     <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-2 text-[11px] text-muted">
-                      <span className="flex items-center gap-1.5"><Dots value={r.evidence} max={3} label="Evidence" /> {EVIDENCE_LABELS[r.evidence]} research</span>
+                      <span className="flex items-center gap-1.5"><Dots value={r.evidence} max={3} label="Certainty of evidence" /> {EVIDENCE_LABELS[r.evidence]} certainty</span>
                       <span>{priceFrom(p, city)}</span>
                       <span>Recovery: {downtimeShort(p.downtimeDays).toLowerCase()}</span>
                       <span>{ONSET_LABELS[p.onset]}</span>
@@ -98,14 +98,14 @@ export function ResultsList({
                         {m.notes.map((n) => (
                           <li key={n.text} className="text-sm">
                             {n.text}
-                            {n.source && <a href={n.source.url} target="_blank" rel="noopener noreferrer" className="block text-[11px] text-muted underline">{n.source.label} ↗</a>}
+                            {n.source && <a href={n.source.url} target="_blank" rel="noopener noreferrer" className="block text-[11px] text-muted underline">{n.source.label}</a>}
                           </li>
                         ))}
                       </ul>
                     )}
                     {m.flagged.length > 0 && <p className="text-sm mb-3">Not usually advised with {m.flagged.map((c) => CAUTIONS[c].short).join(", ")}.</p>}
                     <DetailSections p={p} city={city} withPrice={false} />
-                    <a href={`/procedures/${p.id}?city=${city}`} className="inline-block mt-3 text-sm underline">Open full page →</a>
+                    <a href={`/procedures/${p.id}?city=${city}`} className="inline-block mt-3 text-sm underline">Open full page</a>
                   </Disclosure>
                 </div>
               </li>
@@ -133,7 +133,7 @@ export function ResultsList({
         </ol>
         <p className="text-xs text-muted mt-2">
           Treatments that aren&apos;t advised with your answers are hidden, not ranked. Each card shows its main reasons (✓) and anything to weigh (!).
-          Ties go to the option with fewer cautions for you, then stronger research, then lower price.
+          Ties go to the option with fewer cautions for you, then the higher certainty of evidence, then the lower price.
         </p>
       </Disclosure>
       <div className="mb-4" />
@@ -204,7 +204,7 @@ export function ResultsList({
       <div className="fixed bottom-0 inset-x-0 z-30 bg-sand/95 backdrop-blur border-t border-line">
         <div className="max-w-md mx-auto px-5 py-3">
           <button type="button" onClick={onDone} className="btn-main text-sm">
-            {saved.length ? `Your list (${saved.length}) — find clinics near you →` : "Find clinics for my top matches →"}
+            {saved.length ? `Your list (${saved.length}) — find clinics near you` : "Find clinics for my top matches"}
           </button>
         </div>
       </div>

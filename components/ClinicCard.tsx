@@ -30,18 +30,18 @@ export function ClinicCard({ c, treatment }: { c: Clinic; treatment: string }) {
         When you book, mention code <strong className="tracking-wide">{c.code}</strong> so they know you found them here.
       </div>
       <div className="grid grid-cols-2 gap-2 mt-3 text-sm">
-        <TrackedLink href={c.website} tag ev={{ ...ev, kind: "site" }} className="btn-soft text-center">Website ↗</TrackedLink>
+        <TrackedLink href={c.website} tag ev={{ ...ev, kind: "site" }} className="btn-soft text-center">Website</TrackedLink>
         {c.bookingUrl ? (
-          <TrackedLink href={c.bookingUrl} tag ev={{ ...ev, kind: "book" }} className="btn-soft text-center">Book online ↗</TrackedLink>
+          <TrackedLink href={c.bookingUrl} tag ev={{ ...ev, kind: "book" }} className="btn-soft text-center">Book online</TrackedLink>
         ) : c.phone ? (
           <TrackedLink href={`tel:${c.phone.replace(/[^\d+]/g, "")}`} ev={{ ...ev, kind: "call" }} className="btn-soft text-center">Call</TrackedLink>
         ) : (
-          <TrackedLink href={c.googleUrl} ev={{ ...ev, kind: "directions" }} className="btn-soft text-center">Directions ↗</TrackedLink>
+          <TrackedLink href={c.googleUrl} ev={{ ...ev, kind: "directions" }} className="btn-soft text-center">Directions</TrackedLink>
         )}
       </div>
       <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs mt-2.5">
-        <TrackedLink href={c.googleUrl} ev={{ ...ev, kind: "reviews" }} className="underline">Google reviews ↗</TrackedLink>
-        {(c.bookingUrl || c.phone) && <TrackedLink href={c.googleUrl} ev={{ ...ev, kind: "directions" }} className="underline">Directions ↗</TrackedLink>}
+        <TrackedLink href={c.googleUrl} ev={{ ...ev, kind: "reviews" }} className="underline">Google reviews</TrackedLink>
+        {(c.bookingUrl || c.phone) && <TrackedLink href={c.googleUrl} ev={{ ...ev, kind: "directions" }} className="underline">Directions</TrackedLink>}
         {c.bookingUrl && c.phone && <TrackedLink href={`tel:${c.phone.replace(/[^\d+]/g, "")}`} ev={{ ...ev, kind: "call" }} className="underline">Call {c.phone}</TrackedLink>}
       </div>
     </li>

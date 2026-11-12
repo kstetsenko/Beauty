@@ -39,7 +39,6 @@ const TERMS = {
   ultraclear: ["2910 nm fiber laser"],
   aviclear: ["1726 nm laser acne"],
   bellafill: ["polymethylmethacrylate filler"],
-  "tca-cross": ["CROSS trichloroacetic acid scars"],
   aerolase: ["650 microsecond Nd:YAG acne"],
   "laser-toning": ["low-fluence Q-switched Nd:YAG melasma"],
   pdt: ["photodynamic therapy acne", "photodynamic therapy photoaging"],
@@ -51,13 +50,10 @@ const TERMS = {
   pdl: ["pulsed dye laser"],
   pico: ["picosecond laser"],
   erbium: ["erbium laser resurfacing", "Er:YAG resurfacing"],
-  peel: ["chemical peel"],
-  prp: ["platelet-rich plasma microneedling"],
   "cheek-filler": ["midface volume hyaluronic acid", "cheek augmentation filler"],
   "under-eye": ["infraorbital hollow filler", "tear trough filler"],
   threads: ["thread lift", "polydioxanone thread"],
   led: ["light-emitting diode photobiomodulation skin"],
-  "laser-genesis": ["microsecond Nd:YAG"],
 };
 // Keep results to skin / cosmetic research.
 const CONTEXT = "(skin[tiab] OR facial[tiab] OR face[tiab] OR cosmetic[tiab] OR aesthetic[tiab] OR rejuvenation[tiab] OR wrinkle*[tiab] OR scar*[tiab] OR melasma[tiab] OR rosacea[tiab] OR photoaging[tiab] OR dermatol*[tiab])";

@@ -9,13 +9,13 @@ test("clinic finder: ZIP stays local, links are tagged, no personal-data form", 
   await expect(page.locator("main input")).toHaveCount(1);
 
   await page.getByPlaceholder(/ZIP/).fill("10012");
-  await expect(page.getByText("10012 → SoHo")).toBeVisible();
+  await expect(page.getByText("10012 is in SoHo")).toBeVisible();
   await expect(page.getByRole("list", { name: "Clinics in SoHo" }).locator("p.font-medium")).toHaveText(["Spring Street Dermatology"]);
   await expect(page.getByText("AG-SPRING")).toBeVisible();
 
   const sent: string[] = [];
   page.on("request", (r) => { if (r.url().includes("/api/track")) sent.push(r.postData() ?? ""); });
-  const [popup] = await Promise.all([context.waitForEvent("page"), page.getByRole("link", { name: "Website ↗" }).first().click()]);
+  const [popup] = await Promise.all([context.waitForEvent("page"), page.getByRole("link", { name: "Website" }).first().click()]);
   await popup.waitForLoadState();
   const url = new URL(popup.url());
   expect(url.searchParams.get("utm_source")).toBe("aestheticguide");

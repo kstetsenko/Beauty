@@ -122,27 +122,6 @@ export const RESEARCH: Record<string, Research> = {
       { title: "Combined Fractional Treatment of Acne Scars Involving Non-ablative 1,550-nm Erbium-glass Laser and Micro-needling Radiofrequency: A 16-week Prospective, Randomized Split-face Study", url: pm("28512669"), kind: "Randomized trial" },
     ],
   },
-  halo: {
-    resultsIn: "Glow in about a week; more over the following months",
-    sideEffects: "Redness, swelling, tiny dark dots that flake off",
-    prices: [{ label: "RealSelf — Halo laser cost (national)", url: "https://www.realself.com/nonsurgical/halo-laser/cost" }],
-    evidence: 1,
-    evidenceNote: "Few published studies. One comparison found CO2 more effective, but patients preferred Halo's easier recovery.",
-    studies: [
-      { title: "Hybrid fractional laser treatment for photodamaged facial skin rejuvenation 6 years following fractional CO2: Comparison of clinical outcome and patients' satisfaction", url: pm("35819131"), kind: "Clinical study" },
-    ],
-  },
-  moxi: {
-    resultsIn: "Within about a week",
-    sideEffects: "Mild redness and a sandpaper feel for a few days",
-    prices: [],
-    evidence: 1,
-    evidenceNote: "Small studies of gentle 1927 nm lasers show improvement in sun spots and tone.",
-    studies: [
-      { title: "Prospective study of efficacy and safety of non-ablative 1927 nm fractional thulium fiber laser in Asian skin photoaging", url: pmc("PMC10025463"), kind: "Clinical study" },
-      { title: "A randomized, single-blind, study evaluating a 755-nm picosecond pulsed Alexandrite laser vs. a non-ablative 1927-nm fractionated thulium laser for the treatment of facial photopigmentation and aging", url: pm("30019970"), kind: "Randomized trial" },
-    ],
-  },
   microneedling: {
     resultsIn: "Gradually over the series",
     sideEffects: "Redness, dryness, pinpoint bleeding for 1–3 days",
@@ -155,21 +134,6 @@ export const RESEARCH: Record<string, Research> = {
     studies: [
       { title: "Microneedling: Percutaneous Collagen Induction (PCI) Therapy for Management of Scars and Photoaged Skin — Scientific Evidence and Review of the Literature", url: pm("32875437"), kind: "Review" },
       { title: "Safety and efficacy of microneedling technology in the treatment of acne scars", url: pm("34596936"), kind: "Clinical study" },
-    ],
-  },
-  prp: {
-    resultsIn: "Gradually over the series",
-    sideEffects: "Redness, swelling, bruising where blood is drawn",
-    prices: [
-      { label: "Fresha — PRP facials in Manhattan", url: "https://www.fresha.com/lp/en/tt/prp-facials/in/us-new-york/manhattan", city: "nyc" },
-      { label: "Fresha — vampire facials in Miami", url: "https://www.fresha.com/lp/en/tt/vampire-facials/in/us-miami", city: "miami" },
-      { label: "RealSelf — vampire facial cost (national)", url: "https://www.realself.com/nonsurgical/vampire-facial/cost" },
-    ],
-    evidence: 1,
-    evidenceNote: "A meta-analysis favors adding PRP to microneedling for acne scars, but an overview rates the certainty as low.",
-    studies: [
-      { title: "Combined Effect of Microneedling and Platelet-Rich Plasma for the Treatment of Acne Scars: A Meta-Analysis", url: pm("35237616"), kind: "Meta-analysis" },
-      { title: "Platelet rich plasma use for treatment of acne scars: an overview of systematic reviews", url: pm("37677095"), kind: "Systematic review" },
     ],
   },
   sculptra: {
@@ -252,42 +216,6 @@ export const RESEARCH: Record<string, Research> = {
       { title: "Outcomes of polydioxanone knotless thread lifting for facial rejuvenation", url: pm("25993611"), kind: "Clinical study" },
     ],
   },
-  hydrafacial: {
-    resultsIn: "Right away",
-    sideEffects: "Mild, short-lived redness",
-    prices: [{ label: "Oasis Day Spa (NYC) — HydraFacial menu", url: "https://www.oasisdayspanyc.com/hydrafacial/", city: "nyc" }],
-    evidence: 1,
-    evidenceNote: "We found no independent clinical trials on PubMed. Benefits are short-term and cosmetic.",
-    studies: [],
-  },
-  dermaplaning: {
-    resultsIn: "Right away",
-    sideEffects: "Mild redness; rare small nicks",
-    prices: [
-      { label: "AEDIT — dermaplaning cost (NYC & Miami)", url: "https://aedit.com/procedure/dermaplaning/cost", city: "nyc" },
-      { label: "Fresha — dermaplaning in Miami", url: "https://www.fresha.com/lp/en/tt/dermaplaning/in/us-miami", city: "miami" },
-    ],
-    evidence: 1,
-    evidenceNote: "No clinical trials found. A lab study shows it removes the outer skin layer, which can make products absorb more.",
-    studies: [
-      { title: "Dermaplaning for Transdermal Drug Permeation Enhancement: A Qualitative and Quantitative Assessment", url: pm("36725790"), kind: "Lab study" },
-    ],
-  },
-  peel: {
-    resultsIn: "After peeling, about 1 week",
-    sideEffects: "Redness, peeling, sensitivity; risk of dark spots, especially on deeper skin tones",
-    prices: [
-      { label: "Minars Dermatology (Miami area) — Miami Peel", url: "https://www.minarsdermatology.com/cosmetic-laser/skin-peel-introduction/miami-peel/", city: "miami" },
-      { label: "RealSelf — VI Peel cost (national)", url: "https://www.realself.com/nonsurgical/vi-peel/cost" },
-    ],
-    evidence: 2,
-    evidenceNote: "Good evidence for melasma and acne; melasma often returns without maintenance.",
-    studies: [
-      { title: "Chemical peels for acne vulgaris: a systematic review of randomised controlled trials", url: pm("29705755"), kind: "Systematic review" },
-      { title: "Efficacy and tolerability of chemical peeling as a single agent for melasma in dark-skinned patients: A systematic review and meta-analysis of comparative trials", url: pm("32947652"), kind: "Meta-analysis" },
-      { title: "Glycolic acid peel therapy — a current review", url: pm("24399880"), kind: "Review" },
-    ],
-  },
   ipl: {
     resultsIn: "Spots darken and flake off in 1–2 weeks",
     sideEffects: "Redness, swelling, temporary darkening; burns or light spots if settings are wrong",
@@ -334,17 +262,6 @@ export const RESEARCH: Record<string, Research> = {
       { title: "Beyond efficacy: pulse duration is crucial for adverse events in pulsed dye laser therapy for rosacea", url: pm("42112600"), kind: "Randomized trial" },
     ],
   },
-  microdermabrasion: {
-    resultsIn: "Right away; mild",
-    sideEffects: "Redness for a few hours, mild sensitivity",
-    prices: [{ label: "Fresha — microdermabrasion in Miami", url: "https://www.fresha.com/lp/en/tt/microdermabrasion/in/us-miami", city: "miami" }],
-    evidence: 1,
-    evidenceNote: "Small studies show mild improvement in roughness and blotchy tone, but not wrinkles.",
-    studies: [
-      { title: "Microdermabrasion: a clinical and histopathologic study", url: pm("11442587"), kind: "Clinical study" },
-      { title: "The evaluation of aluminum oxide crystal microdermabrasion for photodamage", url: pm("11737128"), kind: "Clinical study" },
-    ],
-  },
   erbium: {
     resultsIn: "After healing (about 1–2 weeks), improving for months",
     sideEffects: "Redness, swelling and crusting for about a week; risk of pigment changes",
@@ -381,16 +298,6 @@ export const RESEARCH: Record<string, Research> = {
       { title: "The 1440 nm and 1927 nm Nonablative Fractional Diode Laser: Current Trends and Future Directions", url: pm("32804450"), kind: "Review" },
     ],
   },
-  "laser-genesis": {
-    resultsIn: "Gradually over a series",
-    sideEffects: "Mild, short-lived redness and warmth",
-    prices: [{ label: "RealSelf — Laser Genesis cost (national)", url: "https://www.realself.com/nonsurgical/laser-genesis/cost" }],
-    evidence: 1,
-    evidenceNote: "A meta-analysis compared microsecond Nd:YAG with pulsed dye laser for rosacea redness; results varied between studies.",
-    studies: [
-      { title: "Efficacy Comparison of Pulsed Dye Laser vs. Microsecond 1064-nm Neodymium:Yttrium-Aluminum-Garnet Laser in the Treatment of Rosacea: A Meta-Analysis", url: pmc("PMC8811442"), kind: "Meta-analysis" },
-    ],
-  },
   tixel: {
     resultsIn: "Gradually over weeks after each session",
     sideEffects: "Redness, a grid pattern and light flaking for a few days",
@@ -413,17 +320,6 @@ export const RESEARCH: Record<string, Research> = {
     studies: [
       { title: "The Efficacy and Safety of 660 nm and 411 to 777 nm Light-Emitting Devices for Treating Wrinkles", url: pm("28195844"), kind: "Randomized trial" },
       { title: "A Controlled Trial to Determine the Efficacy of Red and Near-Infrared Light Treatment in Patient Satisfaction, Reduction of Fine Lines, Wrinkles, Skin Roughness, and Intradermal Collagen Density Increase", url: pmc("PMC3926176"), kind: "Clinical study" },
-    ],
-  },
-  subcision: {
-    resultsIn: "Some lift right away; more over weeks as healing settles",
-    sideEffects: "Bruising, swelling and tenderness for several days; small lumps",
-    prices: [{ label: "RealSelf — subcision cost (national)", url: "https://www.realself.com/surgical/subcision/cost" }],
-    evidence: 2,
-    evidenceNote: "A network meta-analysis of 56 trials ranked CO2 laser plus subcision among the most effective acne-scar options; reviews find subcision safe and effective for rolling scars.",
-    studies: [
-      { title: "Laser, Microneedling, and Combination Therapies for Moderate to Severe Acne Atrophic Scars: A Systematic Review and Network Meta-Analysis", url: pm("42429955"), kind: "Meta-analysis" },
-      { title: "Subcision in acne scarring: A review of clinical trials", url: pm("36315903"), kind: "Review" },
     ],
   },
   "smile-filler": {
@@ -453,18 +349,6 @@ export const RESEARCH: Record<string, Research> = {
       { title: "A double-blind, randomized, multicenter, controlled trial of suspended polymethylmethacrylate microspheres for the correction of atrophic facial acne scars", url: pm("24725475"), kind: "Randomized trial" },
       { title: "Interventions for acne scars (Cochrane review)", url: pmc("PMC7069546"), kind: "Systematic review" },
       { title: "Recent Advances and Future Directions in Bellafill as a Regenerative Biomaterial: Biological Mechanisms, Clinical Applications, and Safety", url: pmc("PMC13263406"), kind: "Review" },
-    ],
-  },
-  "tca-cross": {
-    resultsIn: "Gradually over several sessions",
-    sideEffects: "Brief burning, redness and small scabs; dark marks are possible, more often on deeper skin tones",
-    prices: [{ label: "acne.org — CROSS technique cost (national)", url: "https://www.acne.org/treatment/cross-technique/cost" }],
-    evidence: 2,
-    evidenceNote: "Mostly small studies and case series; a 2026 review of 937 patients found it safe and effective. A small randomized trial found pinpoint CO2 laser more effective.",
-    studies: [
-      { title: "Evaluation of CROSS technique with 100% TCA in the management of ice pick acne scars in darker skin types", url: pm("21332915"), kind: "Clinical study" },
-      { title: "Randomized clinical trial of CO2 LASER pinpoint irradiation technique versus chemical reconstruction of skin scars (CROSS) in treating ice pick acne scars", url: pm("24131091"), kind: "Randomized trial" },
-      { title: "The Use of Chemical Reconstruction of Skin Scars (CROSS) Method With Trichloroacetic Acid (TCA) for Atrophic Scars: A Comprehensive Review", url: pm("42482854"), kind: "Review" },
     ],
   },
   aerolase: {
@@ -573,7 +457,8 @@ export const RESEARCH: Record<string, Research> = {
   },
 };
 
-export const EVIDENCE_LABELS = ["", "Limited", "Some", "Strong"];
+/** Certainty of evidence, graded by us from the cited studies (wording follows common practice in evidence reviews). */
+export const EVIDENCE_LABELS = ["", "Low", "Moderate", "High"];
 
 /** True when a clinic or RealSelf page publishes a price for this city. */
 export function priceChecked(id: string, city: City) {

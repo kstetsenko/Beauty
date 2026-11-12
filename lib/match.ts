@@ -1,7 +1,7 @@
 import { GOAL_LABELS, PROCEDURES } from "./procedures";
 import { LIGHT, belowMinAge, notesFor, type Note } from "./advice";
-import { basisFor } from "./basis";
-import { CAUTIONS } from "./cautions";
+import { basisFor, offLabelGoals } from "./basis";
+import { CAUTIONS, CAUTION_SOURCE, type Source } from "./cautions";
 import { RESEARCH } from "./research";
 import type { Procedure, QuizAnswers } from "./types";
 
@@ -21,14 +21,24 @@ export interface Match {
 export interface Hidden {
   procedure: Procedure;
   reasons: string[];
+  /** The label or guideline behind each reason, in the same order. */
+  sources: Source[];
+}
+
+const AGE_SOURCE: Source = { label: "FDA: fillers and microneedling devices are authorized for adults 22 and older", url: "https://www.fda.gov/consumers/consumer-updates/dermal-filler-dos-and-donts-wrinkles-lips-and-more" };
+const IPL_TONE_SOURCE: Source = { label: "Review: laser and light treatment in skin of color", url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC11514325/" };
+
+/** Each reason a treatment is hidden for this person, with its source. */
+export function safetyDetails(p: Procedure, a: QuizAnswers): { text: string; source: Source }[] {
+  const out = p.contraindications.filter((c) => a.cautions.includes(c)).map((c) => ({ text: CAUTIONS[c].short, source: CAUTION_SOURCE[c] }));
+  if (belowMinAge(p, a)) out.push({ text: `FDA-authorized for ages ${p.minAge} and older`, source: AGE_SOURCE });
+  if (p.id === "ipl" && a.tone === "deep") out.push({ text: "Generally not advised for deep skin tones (risk of burns and dark marks)", source: IPL_TONE_SOURCE });
+  return out;
 }
 
 /** Why a procedure is not shown to this person (empty = safe to show). */
 export function safetyReasons(p: Procedure, a: QuizAnswers): string[] {
-  const r = p.contraindications.filter((c) => a.cautions.includes(c)).map((c) => CAUTIONS[c].short);
-  if (belowMinAge(p, a)) r.push(`FDA-authorized for ages ${p.minAge}+`);
-  if (p.id === "ipl" && a.tone === "deep") r.push("Generally advised against for deep skin tones (burn and dark-mark risk)");
-  return r;
+  return safetyDetails(p, a).map((d) => d.text);
 }
 
 /**
@@ -41,9 +51,10 @@ export function matchProcedures(a: QuizAnswers): { shown: Match[]; hidden: Hidde
   const hidden: Hidden[] = [];
   const shown: Match[] = [];
   for (const p of relevant) {
-    const reasons = safetyReasons(p, a);
+    const details = safetyDetails(p, a);
+    const reasons = details.map((d) => d.text);
     if (reasons.length) {
-      hidden.push({ procedure: p, reasons });
+      hidden.push({ procedure: p, reasons, sources: details.map((d) => d.source) });
       continue;
     }
     if (p.downtimeDays[1] > MAX_DOWNTIME[a.downtime]) continue;
@@ -113,8 +124,8 @@ export function laterReason(p: Procedure, a: QuizAnswers): string | undefined {
 
 export const RANK_RULES = [
   "How many of your goals it is used for (biggest factor)",
-  "Strength of the research behind it",
-  "How noticeable typical results are — counted only when research backs it",
+  "Certainty of the evidence behind it",
+  "How noticeable typical results are, counted only when the evidence is at least moderate",
   "Fit with your skin tone, conditions and recent treatments",
 ];
 
@@ -132,14 +143,16 @@ export function rank(p: Procedure, a: QuizAnswers): { score: number; why: { good
   // Official basis (FDA approval/clearance) for one of the person's goals goes first.
   const basis = basisFor(p.id, hit);
   if (basis) good.unshift(basis.text);
+  const offLabel = offLabelGoals(p.id, hit);
+  if (offLabel.length) watch.push(`Its FDA clearance doesn't cover ${offLabel.map((g) => GOAL_LABELS[g].toLowerCase()).join(" or ")}`);
 
   const ev = RESEARCH[p.id].evidence;
   score += 2 * ev;
-  if (ev === 3) good.push("Strong research (randomized trials)");
-  else if (ev === 2) good.push("Some research");
+  if (ev === 3) good.push("High-certainty evidence from randomized trials");
+  else if (ev === 2) good.push("Moderate-certainty evidence");
 
   // Result size only counts when there's research to back it; otherwise we say it isn't well studied.
-  if (ev === 1) watch.push("Little research, so how well it works isn't well known");
+  if (ev === 1) watch.push("Low-certainty evidence: how well it works is not yet established");
   else {
     score += p.results;
     if (p.results === 3) good.push("Dramatic results possible");
@@ -150,10 +163,9 @@ export function rank(p: Procedure, a: QuizAnswers): { score: number; why: { good
   const melasma = a.conditions?.includes("melasma");
   const rosacea = a.conditions?.includes("rosacea");
   if (melasma && p.id === "laser-toning") { score += 3; good.unshift("Used specifically for melasma"); }
-  if (melasma && p.id === "peel") { score += 1; good.push("Has evidence for melasma"); }
   if (melasma && p.id === "sylfirm-x") { score += 1; good.push("Studied for melasma"); }
   if (rosacea && ["pdl", "ktp", "ipl"].includes(p.id)) { score += 3; good.unshift("Targets rosacea redness"); }
-  if (melasma && LIGHT.has(p.id) && !["pdl", "laser-genesis"].includes(p.id)) { score -= 3; watch.unshift("Can make melasma darker"); }
+  if (melasma && LIGHT.has(p.id) && !["pdl"].includes(p.id)) { score -= 3; watch.unshift("Can make melasma darker"); }
   if (a.tone && a.tone !== "light" && LIGHT.has(p.id)) { score -= a.tone === "deep" ? 3 : 2; watch.push("Higher risk of dark marks on your skin tone"); }
   if (a.had?.includes(p.id)) watch.push("You had this recently — plan the timing");
   if (a.recent?.includes("filler") && p.id === "ultherapy") { score -= 2; watch.push("Recent filler: a study suggests waiting about 4 weeks"); }

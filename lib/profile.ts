@@ -75,7 +75,7 @@ export function useProfile(): Profile | null {
   );
 }
 
-const SKIN_PROCEDURES = new Set(["peel", "microneedling", "prp", "subcision", "microdermabrasion"]);
+const SKIN_PROCEDURES = new Set(["microneedling"]);
 /** Groups past treatments into the categories our timing notes use (lib/advice.ts). */
 export function recentFrom(had: string[]): Recent[] {
   const out = new Set<Recent>();

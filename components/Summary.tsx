@@ -6,6 +6,7 @@ import { GOAL_LABELS } from "@/lib/procedures";
 import type { City, Goal } from "@/lib/types";
 import { LeadCaptureForm } from "./LeadCaptureForm";
 import { Disclosure } from "./Disclosure";
+import { HiddenReasons } from "./HiddenReasons";
 import { Dots } from "./ProcedureFacts";
 import { TrackedLink } from "./TrackedLink";
 
@@ -59,7 +60,7 @@ export function Summary({
                   <span>Recovery: {downtimeShort(p.downtimeDays).toLowerCase()}</span>
                 </div>
                 <a href={`/clinics?t=${p.id}&city=${city}`} className="btn-main block text-center mt-4 text-sm">
-                  Find a clinic for {p.name.split(" / ")[0]} →
+                  Find a clinic for {p.name.split(" / ")[0]}
                 </a>
                 <a href={`/procedures/${p.id}?city=${city}`} className="block text-center text-sm underline mt-2">
                   Recovery, risks and research
@@ -88,7 +89,7 @@ export function Summary({
           <div className="flex flex-wrap gap-2">
             {goals.map((g) => (
               <a key={g} href={`/goals/${g}?city=${city}`} className="rounded-full border border-line bg-white px-3.5 py-1.5 text-sm hover:border-ink">
-                {GOAL_LABELS[g]} →
+                {GOAL_LABELS[g]}
               </a>
             ))}
           </div>
@@ -98,10 +99,10 @@ export function Summary({
       {hidden.length > 0 && (
         <Disclosure title={`Hidden for your safety (${hidden.length})`} hint="Treatments that usually aren't advised with your answers">
           <ul className="space-y-2.5">
-            {hidden.map(({ procedure: p, reasons }) => (
+            {hidden.map(({ procedure: p, reasons, sources }) => (
               <li key={p.id} className="text-sm">
                 <a href={`/procedures/${p.id}?city=${city}`} className="font-medium underline">{p.name}</a>
-                <span className="block text-xs text-muted">Not usually advised with: {reasons.join(" · ")}</span>
+                <HiddenReasons reasons={reasons} sources={sources} />
               </li>
             ))}
           </ul>
@@ -113,9 +114,9 @@ export function Summary({
         <p className="text-xs text-muted mb-3">Look for a board-certified dermatologist or plastic surgeon, or a med spa supervised by one.</p>
         <div className="grid gap-2">
           {links.directories.map((l) => (
-            <TrackedLink key={l.href} href={l.href} ev={{ kind: "directory", city }} className="text-sm underline">{l.short} ↗</TrackedLink>
+            <TrackedLink key={l.href} href={l.href} ev={{ kind: "directory", city }} className="text-sm underline">{l.short}</TrackedLink>
           ))}
-          <TrackedLink href={links.license.href} ev={{ kind: "license", city }} className="text-sm underline">{links.license.short} ↗</TrackedLink>
+          <TrackedLink href={links.license.href} ev={{ kind: "license", city }} className="text-sm underline">{links.license.short}</TrackedLink>
         </div>
         <p className="text-[11px] text-muted mt-3">We don&apos;t receive payment from the directories or license sites linked here.</p>
       </Disclosure>

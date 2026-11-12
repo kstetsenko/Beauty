@@ -55,7 +55,7 @@ for (const g of goals) {
     for (const h of hidden) if (!h.reasons.length) fail(`${g}/${name}: ${h.procedure.id} hidden without a reason`);
     const total = PROCEDURES.filter((p) => p.goals.includes(g)).length;
     if (shown.length + hidden.length + outside.length !== total) fail(`${g}/${name}: counts don't add up`);
-    if (name === "typical" && shown.length < 4) fail(`${g}: only ${shown.length} options for a typical profile`);
+    if (name === "typical" && shown.length < 3) fail(`${g}: only ${shown.length} options for a typical profile`);
     row.push(String(shown.length).padStart(12));
   }
   console.log(row.join(""));

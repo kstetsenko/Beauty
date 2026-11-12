@@ -42,14 +42,14 @@ export function ClinicFinder({ treatment, city: initialCity, area: initialArea =
     if (hit) {
       setCity(hit.c);
       setArea(hit.n);
-      setZipNote(`${z} → ${hit.n}`);
-    } else setZipNote(`We don't have ${z} mapped yet — pick a neighborhood below.`);
+      setZipNote(`${z} is in ${hit.n}`);
+    } else setZipNote(`We don't have ${z} on our map yet. Please pick a neighborhood below.`);
   };
 
   return (
     <section className="animate-in space-y-6">
       <div>
-        <a href={`/procedures/${p.id}?city=${city}`} className="text-muted hover:text-ink text-sm">← {name}</a>
+        <a href={`/procedures/${p.id}?city=${city}`} className="text-muted hover:text-ink text-sm">Back to {name}</a>
         <h1 className="text-2xl font-semibold mt-3 mb-1.5">Find a clinic for {name}</h1>
         <p className="text-sm text-muted">
           Contact clinics directly — we don&apos;t ask for your name or details. Check credentials, reviews and prices yourself before booking.
@@ -98,7 +98,7 @@ export function ClinicFinder({ treatment, city: initialCity, area: initialArea =
               offer it, with ratings and reviews:
             </p>
             <TrackedLink href={links.byProcedure[0].href} ev={{ kind: "maps", treatment: p.id, city, area }} className="btn-main block text-center text-sm mt-3">
-              See {name} clinics near {area || "me"} on Google Maps ↗
+              See {name} clinics near {area || "me"} on Google Maps
             </TrackedLink>
             <p className="text-[11px] text-muted mt-2">
               Not checked by us — before booking, look up the doctor in the{" "}
@@ -120,12 +120,12 @@ export function ClinicFinder({ treatment, city: initialCity, area: initialArea =
       <Disclosure title="Search on your own" hint="Google Maps, board-certification directories, license lookup">
         <div className="grid gap-2.5">
           <TrackedLink href={links.byProcedure[0].href} ev={{ kind: "maps", treatment: p.id, city, area }} className="text-sm underline">
-            {name} near {area || "me"} on Google Maps ↗
+            {name} near {area || "me"} on Google Maps
           </TrackedLink>
           {links.directories.map((l) => (
-            <TrackedLink key={l.href} href={l.href} ev={{ kind: "directory", city }} className="text-sm underline">{l.short} ↗</TrackedLink>
+            <TrackedLink key={l.href} href={l.href} ev={{ kind: "directory", city }} className="text-sm underline">{l.short}</TrackedLink>
           ))}
-          <TrackedLink href={links.license.href} ev={{ kind: "license", city }} className="text-sm underline">{links.license.short} ↗</TrackedLink>
+          <TrackedLink href={links.license.href} ev={{ kind: "license", city }} className="text-sm underline">{links.license.short}</TrackedLink>
         </div>
         <p className="text-[11px] text-muted mt-3">Google Maps results and ratings come from Google, not from us.</p>
       </Disclosure>

@@ -6,6 +6,7 @@ import { LEARN, GOAL_GUIDE } from "@/lib/learn";
 import { CAUTIONS } from "@/lib/cautions";
 import { SAFETY } from "@/lib/safety";
 import { PLAIN, STUDY_KIND } from "@/lib/plain";
+import { BASIS } from "@/lib/basis";
 
 const ids = PROCEDURES.map((p) => p.id);
 
@@ -47,6 +48,11 @@ describe("treatments", () => {
     for (const st of RESEARCH[id].studies) expect(STUDY_KIND[st.kind], st.kind).toBeTruthy();
   });
 
+  it.each(ids)("%s has a confirmed FDA status with a source (only FDA-approved or cleared treatments are listed)", (id) => {
+    expect(BASIS[id]?.length, id).toBeGreaterThan(0);
+    for (const b of BASIS[id]) expect(b.url).toMatch(/^https:\/\//);
+  });
+
   it("has no orphan plain summaries", () => {
     for (const k of Object.keys(PLAIN)) expect(ids).toContain(k);
   });
@@ -56,6 +62,15 @@ describe("treatments", () => {
   });
 
   it("keeps scope: no removed or out-of-scope treatments", () => {
-    for (const gone of ["lip-filler", "nose-filler", "masseter", "tretinoin", "azelaic", "laser-hair", "coolsculpting"]) expect(ids).not.toContain(gone);
+    for (const gone of ["lip-filler", "nose-filler", "masseter", "tretinoin", "azelaic", "laser-hair", "coolsculpting", "dermaplaning", "peel", "hydrafacial", "prp"]) expect(ids).not.toContain(gone);
+  });
+});
+
+describe("plain study summary", () => {
+  it("reads as a correct English sentence", async () => {
+    const { studySummary } = await import("@/lib/plain");
+    expect(studySummary([])).toBe("We found no published clinical studies.");
+    expect(studySummary(["Clinical study"])).toBe("Based on one published study: a clinical study.");
+    expect(studySummary(["Randomized trial", "Meta-analysis", "Randomized trial"])).toBe("Based on 3 published studies: 1 meta-analysis and 2 randomized controlled trials.");
   });
 });

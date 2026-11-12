@@ -79,14 +79,15 @@ export default function Sources() {
       <section id="logic">
         <h2 className="font-semibold mb-1">How the guide decides</h2>
         <ul className="list-disc pl-5 space-y-1.5">
-          <li><strong>Which treatments appear for a goal:</strong> only those whose FDA approval or clearance, or the studies we cite, cover that goal. Where an FDA basis exists, it&apos;s the first reason on the card (e.g. &ldquo;FDA-cleared to improve facial lines and wrinkles&rdquo;).</li>
-          <li><strong>What&apos;s hidden:</strong> treatments a product label or guideline says aren&apos;t advised with your answers (pregnancy, age under the FDA-authorized age, allergies, implanted devices and so on). They&apos;re listed separately with the reason.</li>
-          <li><strong>Order:</strong> +3 points for each of your goals it treats; +2 per research level (Limited 1, Some 2, Strong 3); +1–3 for typical results, counted only when research is at least &ldquo;Some&rdquo;; +3 when it specifically targets a condition you have (e.g. laser toning for melasma); −2 or −3 when your answers raise a known risk (e.g. dark marks on deeper skin tones). Ties go to fewer cautions, then stronger research, then lower price.</li>
-          <li><strong>Recent treatments:</strong> after a one-session treatment whose results build for months (e.g. Sofwave), similar options move to &ldquo;Later&rdquo; with the reason.</li>
-          <li><strong>Research levels:</strong> Strong = randomized trials or meta-analyses of them; Some = systematic reviews or consistent smaller studies; Limited = small, uncontrolled or maker-linked studies, or none. For &ldquo;Limited&rdquo; treatments we don&apos;t claim how well they work.</li>
+          <li><strong>Which treatments are included:</strong> only treatments that use an FDA-approved product or an FDA-cleared device. We checked each one against FDA records, FDA labels or the maker&apos;s clearance announcement, and every treatment page links to that source. Techniques with no FDA-approved product, such as chemical peels and dermaplaning, are not included.</li>
+          <li><strong>Which treatments appear for a goal:</strong> those whose FDA approval or clearance, or the published studies, cover that goal. When a treatment is listed for a goal its FDA clearance doesn&apos;t cover, the card says so.</li>
+          <li><strong>What&apos;s hidden:</strong> treatments that a product label or medical guideline says are not advised with your answers, such as pregnancy, an age below the FDA-authorized age, certain allergies or an implanted device. They are listed separately, with the reason and its source.</li>
+          <li><strong>Order:</strong> each treatment receives 3 points for every one of your goals it is used for, 2 points per level of evidence (low 1, moderate 2, high 3) and 1 to 3 points for typical results, which count only when the evidence is at least moderate. It gains 3 points when it specifically targets a condition you have (for example, laser toning for melasma) and loses 2 or 3 points when your answers raise a known risk (for example, dark marks on deeper skin tones). Ties go to the option with fewer cautions, then the higher certainty of evidence, then the lower price.</li>
+          <li><strong>Recent treatments:</strong> after a one-session treatment whose results develop over months (for example, Sofwave), similar options move to a separate &ldquo;Later&rdquo; section, with the reason.</li>
+          <li><strong>Certainty of evidence:</strong> graded by us from the published studies. High: supported by randomized controlled trials or pooled analyses of them. Moderate: supported by systematic reviews or several smaller studies with consistent results. Low: based on small or uncontrolled studies, often funded by the manufacturer, or on no published studies. For low-certainty treatments we make no claim about how well they work.</li>
           <li><strong>Prices:</strong> &ldquo;From clinic prices&rdquo; when a NYC or Miami clinic page publishes one; &ldquo;Estimate&rdquo; when based on national ranges; &ldquo;Price not available at the moment&rdquo; when we found no published price.</li>
           <li><strong>Filters and plans:</strong> only shown when they fit your goals and leave at least one option.</li>
-          <li><strong>Clinics:</strong> listed for free if their own pages show board-certified doctors and the treatment; nearest neighborhood first, then A–Z; partners can&apos;t change this order.</li>
+          <li><strong>Clinics:</strong> listed for free if their own pages show board-certified doctors and the treatment; your neighborhood first, then alphabetical; partners can&apos;t change this order.</li>
         </ul>
       </section>
 
@@ -100,7 +101,7 @@ export default function Sources() {
         </p>
         <ul className="mt-2 space-y-1">
           {CAUTION_SOURCES.map((l) => (
-            <li key={l.url}><a href={l.url} target="_blank" rel="noopener noreferrer" className="underline">{l.label} ↗</a></li>
+            <li key={l.url}><a href={l.url} target="_blank" rel="noopener noreferrer" className="underline">{l.label}</a></li>
           ))}
         </ul>
       </section>

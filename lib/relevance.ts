@@ -25,10 +25,10 @@ export function filterFitsGoals(f: Filter, goals: Goal[]) {
 }
 
 const CONDITION_TARGETS: Partial<Record<Flag, (id: string) => boolean>> = {
-  melasma: (id) => LIGHT.has(id) || ["peel", "laser-toning"].includes(id),
-  rosacea: (id) => ["pdl", "ktp", "ipl", "laser-genesis"].includes(id),
+  melasma: (id) => LIGHT.has(id) || ["laser-toning", "sylfirm-x"].includes(id),
+  rosacea: (id) => ["pdl", "ktp", "ipl"].includes(id),
   "cold-sores": (id) => RESURFACING.has(id),
-  isotretinoin: (id) => ["peel", "fraxel", "halo", "moxi", "clear-brilliant"].includes(id),
+  isotretinoin: (id) => ["fraxel", "clear-brilliant"].includes(id),
 };
 
 /** Health questions that change advice or safety for at least one treatment for these goals. */

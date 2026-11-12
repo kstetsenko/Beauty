@@ -44,12 +44,12 @@ export function Insights() {
           <div className="rounded-3xl bg-white border border-line p-6 min-h-[11rem] flex flex-col">
             <p className="text-[11px] text-muted mb-2">Fact {fact + 1} of {FACTS.length}</p>
             <p className="text-lg leading-snug flex-1">{f.fact}</p>
-            <a href={f.source.url} target="_blank" rel="noopener noreferrer" className="text-[11px] text-muted underline mt-3">Source: {f.source.label} ↗</a>
+            <a href={f.source.url} target="_blank" rel="noopener noreferrer" className="text-[11px] text-muted underline mt-3">Source: {f.source.label}</a>
           </div>
           <div className="grid grid-cols-2 gap-3 mt-3">
-            <button type="button" disabled={fact === 0} onClick={() => setFact(fact - 1)} className="btn-soft">← Previous</button>
+            <button type="button" disabled={fact === 0} onClick={() => setFact(fact - 1)} className="btn-soft">Previous</button>
             <button type="button" onClick={() => setFact((fact + 1) % FACTS.length)} className="btn-main">
-              {fact + 1 === FACTS.length ? "Start again" : "Next fact →"}
+              {fact + 1 === FACTS.length ? "Start again" : "Next fact"}
             </button>
           </div>
         </section>
@@ -66,16 +66,16 @@ export function Insights() {
               <Disclosure key={m.year + m.title} tone="plain" title={<><span className="text-muted font-normal mr-2">{m.year}</span>{m.title}</>}>
                 <p className="text-sm text-muted leading-snug">{m.detail}</p>
                 <p className="text-sm mt-2 flex flex-wrap gap-x-3">
-                  {m.ids.map((id) => <a key={id} href={`/procedures/${id}`} className="underline">{nameOf(id)} →</a>)}
+                  {m.ids.map((id) => <a key={id} href={`/procedures/${id}`} className="underline">{nameOf(id)}</a>)}
                 </p>
-                <a href={m.source.url} target="_blank" rel="noopener noreferrer" className="block text-[11px] text-muted underline mt-2">Source: {m.source.label} ↗</a>
+                <a href={m.source.url} target="_blank" rel="noopener noreferrer" className="block text-[11px] text-muted underline mt-2">Source: {m.source.label}</a>
               </Disclosure>
             ))}
             {TRENDS.map((t) => (
               <Disclosure key={t.id} tone="plain" title={<><span className="text-muted font-normal mr-2">Now</span>{t.name}: {t.status.toLowerCase()}</>}>
                 <p className="text-sm text-muted leading-snug">{t.why}</p>
                 {t.links.map((l) => (
-                  <a key={l.url} href={l.url} target="_blank" rel="noopener noreferrer" className="block text-[11px] text-muted underline mt-1">{l.label} ↗</a>
+                  <a key={l.url} href={l.url} target="_blank" rel="noopener noreferrer" className="block text-[11px] text-muted underline mt-1">{l.label}</a>
                 ))}
               </Disclosure>
             ))}

@@ -9,7 +9,7 @@ export function ProcedureDetail({ p, city }: { p: Procedure; city: City }) {
 
   return (
     <article className="animate-in">
-      <a href="/procedures" className="text-muted hover:text-ink text-sm">← Treatments that fit you</a>
+      <a href="/procedures" className="text-muted hover:text-ink text-sm">Back to treatments that fit you</a>
       <div className="bg-white rounded-3xl border border-line p-6 mt-4">
         <ApproachTag p={p} />
         <h1 className="text-2xl font-semibold leading-snug">{p.name}</h1>
@@ -29,13 +29,13 @@ export function ProcedureDetail({ p, city }: { p: Procedure; city: City }) {
         <div className="flex flex-wrap gap-2">
           {p.goals.map((g) => (
             <a key={g} href={`/goals/${g}?city=${city}`} className="rounded-full border border-line bg-white px-3.5 py-1.5 text-sm hover:border-ink">
-              {GOAL_LABELS[g]} →
+              {GOAL_LABELS[g]}
             </a>
           ))}
         </div>
       </section>
       <a href={`/clinics?t=${p.id}&city=${city}`} className="btn-main block text-center mt-5">
-        Find a clinic for {p.name.split(" / ")[0]} →
+        Find a clinic for {p.name.split(" / ")[0]}
       </a>
       <p className="text-[11px] text-muted text-center mt-1.5">Clinics near you that meet our criteria, or search Google Maps yourself.</p>
       <a href={`/compare?ids=${p.id}&city=${city}`} className="btn-soft block text-center mt-3 text-sm">Compare with similar treatments</a>

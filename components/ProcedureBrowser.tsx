@@ -112,7 +112,7 @@ function BrowserFor({ profile }: { profile: Profile }) {
           <p className="font-semibold mt-0.5 mb-1">{t.name}</p>
           <p className="text-sm leading-relaxed mb-2">{t.why}</p>
           {t.links.map((l) => (
-            <a key={l.url} href={l.url} target="_blank" rel="noopener noreferrer" className="block text-sm underline">{l.label} ↗</a>
+            <a key={l.url} href={l.url} target="_blank" rel="noopener noreferrer" className="block text-sm underline">{l.label}</a>
           ))}
         </div>
       ))}

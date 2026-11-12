@@ -97,11 +97,11 @@ export function Guide() {
     <div className="flex-1 flex flex-col">
       <div className="flex items-center gap-3 mb-8 h-6">
         {history.length > 1 && step !== "done" ? (
-          <button type="button" onClick={back} aria-label="Back" className="text-muted hover:text-ink text-xl leading-none -ml-1 px-1">
-            ←
+          <button type="button" onClick={back} aria-label="Back" className="text-muted hover:text-ink text-sm -ml-1 px-1">
+            Back
           </button>
         ) : (
-          <span className="w-5" />
+          <span className="w-8" />
         )}
         <div className="flex-1 h-1 rounded-full bg-line overflow-hidden" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(progress * 100)}>
           <div className="h-full bg-rose transition-all duration-300" style={{ width: `${progress * 100}%` }} />

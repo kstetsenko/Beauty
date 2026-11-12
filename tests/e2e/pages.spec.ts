@@ -17,6 +17,8 @@ test.describe("every page loads cleanly", () => {
       expect(res?.status()).toBe(200);
       await page.waitForLoadState("networkidle");
       await expectNoOverflow(page);
+      // No arrow characters anywhere in the interface.
+      expect(await page.locator("body").innerText()).not.toMatch(/[↗→←]/);
       expect(errors).toEqual([]);
     });
 });

@@ -11,7 +11,7 @@ import { NotShown, ProfileBar, ProfileGate } from "./ProfileGate";
 import { Disclosure } from "./Disclosure";
 import { Dots } from "./ProcedureFacts";
 
-/** All options for one goal, ordered least → most involved, each linking to its page. */
+/** All options for one goal, ordered least most involved, each linking to its page. */
 export function GoalGuide({ goal }: { goal: Goal; city?: City }) {
   return (
     <ProfileGate what={`see your options for ${GOAL_LABELS[goal].toLowerCase()}`}>
@@ -30,7 +30,7 @@ function GoalGuideFor({ goal, profile }: { goal: Goal; profile: import("@/lib/pr
 
   return (
     <article className="animate-in space-y-5">
-      <a href="/goals" className="text-muted hover:text-ink text-sm">← All goals</a>
+      <a href="/goals" className="text-muted hover:text-ink text-sm">Back to all goals</a>
       <ProfileBar profile={profile} />
       <div>
         <h1 className="text-2xl font-semibold mb-2">{GOAL_LABELS[goal]}: your options</h1>
@@ -46,7 +46,7 @@ function GoalGuideFor({ goal, profile }: { goal: Goal; profile: import("@/lib/pr
               Broad-spectrum SPF 30+ every day — before and after any treatment, so results last and spots don't return.
             </p>
             <div className="flex flex-col gap-1 mt-2 text-sm">
-              <a href={SUNSCREEN.url} target="_blank" rel="noopener noreferrer" className="underline">{SUNSCREEN.label} ↗</a>
+              <a href={SUNSCREEN.url} target="_blank" rel="noopener noreferrer" className="underline">{SUNSCREEN.label}</a>
             </div>
           </Disclosure>
         )}
@@ -60,7 +60,7 @@ function GoalGuideFor({ goal, profile }: { goal: Goal; profile: import("@/lib/pr
                     <span className="min-w-0">
                       <span className="block font-medium">{p.name}</span>
                       <span className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-1 text-[11px] text-muted">
-                        <span className="flex items-center gap-1.5">Research <Dots value={RESEARCH[p.id].evidence} max={3} label="Evidence" /> {EVIDENCE_LABELS[RESEARCH[p.id].evidence]}</span>
+                        <span className="flex items-center gap-1.5">Evidence <Dots value={RESEARCH[p.id].evidence} max={3} label="Certainty of evidence" /> {EVIDENCE_LABELS[RESEARCH[p.id].evidence]} certainty</span>
                         <span>Recovery: {downtimeShort(p.downtimeDays).toLowerCase()}</span>
                       </span>
                     </span>
@@ -80,7 +80,7 @@ function GoalGuideFor({ goal, profile }: { goal: Goal; profile: import("@/lib/pr
             <p className="text-sm leading-relaxed mb-2">{t.why}</p>
             <ul className="space-y-1">
               {t.links.map((l) => (
-                <li key={l.url}><a href={l.url} target="_blank" rel="noopener noreferrer" className="text-sm underline">{l.label} ↗</a></li>
+                <li key={l.url}><a href={l.url} target="_blank" rel="noopener noreferrer" className="text-sm underline">{l.label}</a></li>
               ))}
             </ul>
           </Disclosure>
@@ -91,7 +91,7 @@ function GoalGuideFor({ goal, profile }: { goal: Goal; profile: import("@/lib/pr
         <Disclosure title="Learn more" hint="Dermatologist-written guides">
           <ul className="space-y-1.5">
             {g.learn.map((l) => (
-              <li key={l.url}><a href={l.url} target="_blank" rel="noopener noreferrer" className="text-sm underline">{l.label} ↗</a></li>
+              <li key={l.url}><a href={l.url} target="_blank" rel="noopener noreferrer" className="text-sm underline">{l.label}</a></li>
             ))}
           </ul>
         </Disclosure>

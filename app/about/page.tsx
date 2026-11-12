@@ -10,13 +10,13 @@ export const metadata: Metadata = {
 const STEPS = [
   { n: "1", title: "Tell us about you.", text: "Five quick questions: your goals, skin tone, health and recent treatments. About a minute. Your answers stay on your device." },
   { n: "2", title: "See what fits.", text: "Treatments ranked for you, each with the reason. Anything usually not advised for you is set aside, and we tell you why." },
-  { n: "3", title: "Choose with confidence.", text: "Local prices, recovery, risks and research strength — then clinics near you." },
+  { n: "3", title: "Choose with confidence.", text: "Local prices, recovery, risks and the certainty of the evidence, then clinics near you." },
 ];
 
 const PRINCIPLES = [
   { title: "Everything in one place.", text: "Prices, recovery, risks and research for each treatment — gathered from medical journals, the FDA, dermatology associations and clinic price lists." },
   { title: "Made for you.", text: "Results change with your skin tone, health and goals — not one list for everyone." },
-  { title: "Sources you can check.", text: "Every fact links to where it came from. When research on a treatment is limited, we say so." },
+  { title: "FDA-cleared only.", text: "Every treatment uses an FDA-approved product or an FDA-cleared device, and each page links to the source. When the evidence is limited, we say so." },
   { title: "No paid rankings.", text: "Clinics can't buy a higher spot. The same ranking rules apply to everyone." },
 ];
 

@@ -4,7 +4,7 @@ import { APPROACHES, ONSET_LABELS, PAIN_LABELS, RESULT_LABELS } from "@/lib/proc
 import { SAFETY } from "@/lib/safety";
 import { LEARN } from "@/lib/learn";
 import { VIDEOS } from "@/lib/videos";
-import { LEVEL_MEANING, PLAIN, STUDY_KIND } from "@/lib/plain";
+import { LEVEL_MEANING, PLAIN, studySummary } from "@/lib/plain";
 import { BASIS } from "@/lib/basis";
 import { Disclosure } from "./Disclosure";
 import { CHECKED, EVIDENCE_LABELS, RESEARCH, priceChecked } from "@/lib/research";
@@ -79,7 +79,7 @@ const Row = ({ label, children }: { label: string; children: React.ReactNode }) 
 
 const ExtLink = ({ href, children }: { href: string; children: React.ReactNode }) => (
   <a href={href} target="_blank" rel="noopener noreferrer" className="text-sm underline decoration-line underline-offset-2 hover:decoration-ink">
-    {children} ↗
+    {children}
   </a>
 );
 
@@ -128,43 +128,38 @@ export function DetailSections({ p, city, withPrice = true }: { p: Procedure; ci
       <Disclosure
         tone="plain"
         title="What the research says"
-        hint={<span className="inline-flex items-center gap-2"><Dots value={r.evidence} max={3} label="Evidence" /> {EVIDENCE_LABELS[r.evidence]} research</span>}
+        hint={<span className="inline-flex items-center gap-2"><Dots value={r.evidence} max={3} label="Certainty of evidence" /> {EVIDENCE_LABELS[r.evidence]} certainty of evidence</span>}
       >
         <dl className="space-y-3">
-          <Row label="Does it work?">{PLAIN[p.id]?.works ?? r.evidenceNote}</Row>
-          {PLAIN[p.id]?.unclear && <Row label="What's still unclear">{PLAIN[p.id]!.unclear}</Row>}
-          <Row label="How sure we are">
-            <span className="font-medium">{EVIDENCE_LABELS[r.evidence]}</span> — {LEVEL_MEANING[r.evidence].replace(/^\w+: /, "")}
-            <span className="block text-[11px] text-muted mt-1">Graded by us from the studies below. <a href="/sources#logic" className="underline">How we grade</a></span>
+          <Row label="What studies show">{PLAIN[p.id]?.works ?? r.evidenceNote}</Row>
+          {PLAIN[p.id]?.unclear && <Row label="Limitations">{PLAIN[p.id]!.unclear}</Row>}
+          <Row label="Certainty of evidence">
+            <span className="font-medium">{EVIDENCE_LABELS[r.evidence]}.</span> {LEVEL_MEANING[r.evidence]}
           </Row>
           <Row label="FDA status">
             {(BASIS[p.id] ?? []).length ? (
               <span className="block space-y-1">
-                {BASIS[p.id].map((b) => <a key={b.text} href={b.url} target="_blank" rel="noopener noreferrer" className="block underline">{b.text} ↗</a>)}
+                {BASIS[p.id].map((b) => <a key={b.text} href={b.url} target="_blank" rel="noopener noreferrer" className="block underline decoration-line underline-offset-2">{b.text}</a>)}
               </span>
             ) : (
-              "We haven't confirmed its FDA status for this use."
+              "We haven't confirmed its FDA status."
             )}
           </Row>
         </dl>
-        {r.studies.length > 0 ? (
-          <div className="mt-4">
-            <p className="text-xs font-medium mb-2">Studies we used ({r.studies.length})</p>
-            <ul className="space-y-2.5">
+        <p className="text-sm text-muted mt-4">{studySummary(r.studies.map((st) => st.kind))}</p>
+        {r.studies.length > 0 && (
+          <details className="mt-1 text-xs">
+            <summary className="cursor-pointer text-muted underline list-none [&::-webkit-details-marker]:hidden">View sources</summary>
+            <ul className="mt-2 space-y-1.5">
               {r.studies.map((st) => (
-                <li key={st.url} className="text-sm">
-                  <span className="font-medium">{st.kind}</span>
-                  <span className="text-muted"> — {STUDY_KIND[st.kind]}</span>
-                  <a href={st.url} target="_blank" rel="noopener noreferrer" className="block text-[11px] text-muted underline mt-0.5 break-words">{st.title} ↗</a>
-                </li>
+                <li key={st.url}><a href={st.url} target="_blank" rel="noopener noreferrer" className="text-muted underline break-words">{st.title}</a></li>
               ))}
             </ul>
-          </div>
-        ) : (
-          <p className="text-sm mt-3">No published clinical studies found.</p>
+          </details>
         )}
         <p className="text-[11px] text-muted mt-3">
-          Many studies are small or funded by the product&apos;s maker. Research describes groups of people, not you.
+          Certainty is graded by us from the published studies. Many studies are small or funded by the manufacturer, and results
+          describe groups of people, not any one person. <a href="/sources#logic" className="underline">How we grade</a>
         </p>
       </Disclosure>
 

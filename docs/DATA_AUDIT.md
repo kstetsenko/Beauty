@@ -137,3 +137,14 @@ the state license lookup and AAD directory, and their Google reviews. No Brickel
   Kybella and Volux (fat / jaw reshaping, out of scope).
 - **Recent treatments:** after a single-session treatment whose results build for months (Sofwave, Ultherapy,
   Thermage, XERF, CO2, erbium, Sculptra, Radiesse, Bellafill, threads), similar options move to "Later" with the reason.
+
+## FDA-only list (2026-11-12)
+- **Rule:** only treatments that use an FDA-approved product or FDA-cleared device are listed; each has an FDA status
+  with a source in `lib/basis.ts` (test-enforced). Where a goal isn't part of the clearance, cards say so.
+- **Removed:** dermaplaning (no FDA clearance; state cosmetology rules), chemical peels and TCA CROSS (FDA: no chemical
+  peel product is approved), subcision and PRP facials (no FDA approval for this use), HydraFacial (conflicting records),
+  microdermabrasion (Class I exempt, not cleared), Halo, MOXI and Laser Genesis (no clearance record found).
+- **Device cleared, use not covered:** Sylfirm X (K200185, coagulation), Aerolase (K120235; acne not confirmed),
+  Morpheus8 (soft-tissue contraction), PDT (actinic keratoses), microcurrent, PDO threads (brand-dependent).
+- Hidden treatments now cite the label or guideline behind each health question (`CAUTION_SOURCE`).
+- Evidence wording changed to certainty of evidence: high / moderate / low (graded by us from the cited studies).

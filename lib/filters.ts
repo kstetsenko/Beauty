@@ -12,12 +12,12 @@ export type Filter = "event" | "gentle" | "lasting" | "under500" | "strong" | "c
 
 export const SORTS: [Sort, string][] = [
   ["match", "Best match"],
-  ["evidence", "Strongest research"],
+  ["evidence", "Best evidence"],
   ["price", "Lowest price"],
   ["downtime", "Least downtime"],
 ];
 export const FILTERS: [Filter, string][] = [
-  ["strong", "Strong research only"],
+  ["strong", "High-certainty evidence only"],
   ["under500", "Starts under $500"],
   ["lasting", "Lasts a year or more"],
   ["collagen", "Builds your own collagen"],
@@ -28,14 +28,14 @@ export const FILTERS: [Filter, string][] = [
 ];
 export const PLANS: { label: string; hint: string; filters: Filter[]; sort: Sort }[] = [
   { label: "Event in 2 weeks", hint: "Shows within days, at most a day of recovery", filters: ["event"], sort: "match" },
-  { label: "First time", hint: "Low pain, short recovery, not permanent", filters: ["gentle"], sort: "evidence" },
-  { label: "Best value", hint: "Starts under $500, best research first", filters: ["under500"], sort: "evidence" },
+  { label: "First time", hint: "Low pain, short recovery, nothing permanent", filters: ["gentle"], sort: "evidence" },
+  { label: "Best value", hint: "Starts under $500, best evidence first", filters: ["under500"], sort: "evidence" },
   { label: "Long-lasting", hint: "Results that last a year or more", filters: ["lasting"], sort: "evidence" },
 ];
 
 const PERMANENT = new Set(["bellafill"]);
 const LASTING = /^(about 1 year|1–2 years|1 year|years|long-lasting|up to about 2 years|about 12–18 months)/i;
-const NEEDLES = new Set(["microneedling", "prp", "morpheus8", "subcision"]);
+const NEEDLES = new Set(["microneedling", "morpheus8", "sylfirm-x"]);
 const hasNeedles = (p: Procedure) => ["toxin", "ha", "biostim", "threads"].includes(p.approach) || NEEDLES.has(p.id);
 
 export function passes(p: Procedure, f: Filter, city: City): boolean {

@@ -16,7 +16,7 @@ export const CLINICS: Clinic[] = [
   {
     id: "spring-street-derm", name: "Spring Street Dermatology", city: "nyc", neighborhood: "SoHo", kind: "Dermatology practice",
     address: "75 Spring Street, Floor 2, New York, NY 10012",
-    offers: ["botox", "cheek-filler", "smile-filler", "sculptra", "prp", "peel", "ipl", "microneedling", "microdermabrasion", "fraxel", "laser-genesis", "sofwave", "pdt", "ktp", "aviclear"],
+    offers: ["botox", "cheek-filler", "smile-filler", "sculptra", "ipl", "microneedling", "fraxel", "sofwave", "pdt", "ktp", "aviclear"],
     website: "https://springstderm.com/", googleUrl: maps("Spring Street Dermatology 75 Spring Street New York NY"),
     rating: null, reviewCount: null, ratingCheckedAt: null,
     credential: "Board-certified dermatologists", credentialSource: "https://springstderm.com/about/",
@@ -24,7 +24,7 @@ export const CLINICS: Clinic[] = [
   },
   {
     id: "tribeca-park-derm", name: "Tribeca Park Dermatology", city: "nyc", neighborhood: "Tribeca", kind: "Dermatology practice",
-    offers: ["botox", "cheek-filler", "smile-filler", "sculptra", "prp", "morpheus8", "halo", "moxi", "clear-brilliant", "laser-toning", "erbium", "ipl", "microneedling", "peel", "xerf"],
+    offers: ["botox", "cheek-filler", "smile-filler", "sculptra", "morpheus8", "clear-brilliant", "laser-toning", "erbium", "ipl", "microneedling", "xerf"],
     website: "https://triparkderm.com/", googleUrl: maps("Tribeca Park Dermatology New York NY"),
     rating: null, reviewCount: null, ratingCheckedAt: null,
     credential: "Dermatologists who are Fellows of the AAD (FAAD)", credentialSource: "https://triparkderm.com/",
@@ -51,7 +51,7 @@ export const CLINICS: Clinic[] = [
   {
     id: "uhealth-miami-beach", name: "UHealth Dermatology — Miami Beach", city: "miami", neighborhood: "Miami Beach", kind: "University medical center",
     address: "1045 5th Street, Suite 305, Miami Beach, FL 33139",
-    offers: ["botox", "cheek-filler", "smile-filler", "peel", "microneedling", "threads"],
+    offers: ["botox", "cheek-filler", "smile-filler", "microneedling", "threads"],
     website: "https://umiamihealth.org/en/locations/uhealth-miami-beach", googleUrl: maps("UHealth Dermatology 1045 5th Street Miami Beach FL"),
     rating: null, reviewCount: null, ratingCheckedAt: null,
     credential: "Board-certified dermatologists (University of Miami)", credentialSource: "https://umiamihealth.org/en/treatments-and-services/dermatology/cosmetic-dermatology",
@@ -60,7 +60,7 @@ export const CLINICS: Clinic[] = [
   {
     id: "derm-laser-group", name: "The Dermatology and Laser Group", city: "nyc", neighborhood: "Upper East Side", kind: "Dermatology practice",
     address: "110 East 60th Street, Suite 606, New York, NY 10022",
-    offers: ["botox", "cheek-filler", "smile-filler", "under-eye", "sculptra", "radiesse", "skinvive", "ultherapy", "emface", "co2", "tca-cross", "hydrafacial", "prp"],
+    offers: ["botox", "cheek-filler", "smile-filler", "under-eye", "sculptra", "radiesse", "skinvive", "ultherapy", "emface", "co2"],
     website: "https://dermatologyandlasergroup.com/", googleUrl: maps("The Dermatology and Laser Group 110 East 60th Street New York"),
     rating: null, reviewCount: null, ratingCheckedAt: null,
     credential: "Board-certified dermatologist (founder)", credentialSource: "https://dermatologyandlasergroup.com/our_people/arash-akhavan/",
@@ -69,7 +69,7 @@ export const CLINICS: Clinic[] = [
   {
     id: "ny-cosmetic-skin-laser", name: "New York Cosmetic Skin & Laser Surgery Center", city: "nyc", neighborhood: "Upper East Side", kind: "Dermatology practice",
     address: "121 East 60th Street, Suite 8AB, New York, NY 10022",
-    offers: ["bellafill", "subcision", "laser-genesis", "hydrafacial"],
+    offers: ["bellafill"],
     website: "https://cosmeticlaserskinsurgery.com/", googleUrl: maps("New York Cosmetic Skin & Laser Surgery Center 121 East 60th Street"),
     rating: null, reviewCount: null, ratingCheckedAt: null,
     credential: "Double board-certified dermatologist (founder)", credentialSource: "https://cosmeticlaserskinsurgery.com/about-us/",
@@ -78,7 +78,7 @@ export const CLINICS: Clinic[] = [
   {
     id: "pfrankmd", name: "PFRANKMD", city: "nyc", neighborhood: "Upper East Side", kind: "Dermatology practice",
     address: "1049 5th Avenue, Suite 2B, New York, NY 10028",
-    offers: ["aerolase", "emface", "co2", "fraxel", "threads", "hydrafacial", "led"],
+    offers: ["aerolase", "emface", "co2", "fraxel", "threads", "led"],
     website: "https://pfrankmd.com/", googleUrl: maps("PFRANKMD 1049 5th Avenue New York"),
     rating: null, reviewCount: null, ratingCheckedAt: null,
     credential: "Board-certified dermatologist (founder)", credentialSource: "https://profiles.mountsinai.org/paul-j-frank",
@@ -96,7 +96,7 @@ export const CLINICS: Clinic[] = [
   {
     id: "michele-green-md", name: "Michele S. Green, M.D.", city: "nyc", neighborhood: "Upper East Side", kind: "Dermatology practice",
     address: "156 East 79th Street, #1B, New York, NY 10075",
-    offers: ["hydrafacial", "pdl", "subcision"],
+    offers: ["pdl"],
     website: "https://www.michelegreenmd.com/", googleUrl: maps("Michele Green MD 156 East 79th Street New York"),
     rating: null, reviewCount: null, ratingCheckedAt: null,
     credential: "Board-certified dermatologist", credentialSource: "https://www.michelegreenmd.com/contact",

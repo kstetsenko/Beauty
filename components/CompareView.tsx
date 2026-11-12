@@ -11,7 +11,7 @@ import { NotShown, ProfileBar, ProfileGate } from "./ProfileGate";
 
 const ROWS: { label: string; cell: (p: Procedure, c: City) => React.ReactNode }[] = [
   { label: "Price", cell: (p, c) => p.cost[c] ? <>{priceRange(p, c)}<span className="block text-[11px] text-muted">{p.priceUnit}{priceChecked(p.id, c) ? "" : " · estimate"}</span></> : <span className="text-[11px] text-muted">{PRICE_UNKNOWN}</span> },
-  { label: "Research", cell: (p) => <><Dots value={RESEARCH[p.id].evidence} max={3} label="Evidence" /><span className="block text-[11px] text-muted mt-1">{EVIDENCE_LABELS[RESEARCH[p.id].evidence]}</span></> },
+  { label: "Evidence", cell: (p) => <><Dots value={RESEARCH[p.id].evidence} max={3} label="Certainty of evidence" /><span className="block text-[11px] text-muted mt-1">{EVIDENCE_LABELS[RESEARCH[p.id].evidence]} certainty</span></> },
   { label: "Results", cell: (p) => RESEARCH[p.id].evidence > 1 ? <><Dots value={p.results} max={3} label="Results" /><span className="block text-[11px] text-muted mt-1">{RESULT_LABELS[p.results]}</span></> : <span className="text-[11px] text-muted">Not well studied</span> },
   { label: "Pain", cell: (p) => <><Dots value={p.pain} max={5} label="Pain" /><span className="block text-[11px] text-muted mt-1">{PAIN_LABELS[p.pain]}</span></> },
   { label: "Recovery", cell: (p) => downtimeShort(p.downtimeDays) },
@@ -83,7 +83,7 @@ function CompareFor({ profile }: { profile: Profile }) {
                     {list.length === 0 ? "No options fit your answers" : "Only 1 option fits — nothing to compare"}
                   </span>
                   {list.length === 1 && (
-                    <a href={`/procedures/${list[0].procedure.id}?city=${city}`} className="block text-xs underline mt-1">{list[0].procedure.name} →</a>
+                    <a href={`/procedures/${list[0].procedure.id}?city=${city}`} className="block text-xs underline mt-1">{list[0].procedure.name}</a>
                   )}
                 </div>
               );
@@ -165,7 +165,7 @@ function CompareFor({ profile }: { profile: Profile }) {
           <div className="grid gap-2">
             {chosen.map((p) => (
               <a key={p.id} href={`/clinics?t=${p.id}&city=${city}`} className="btn-main block text-center text-sm">
-                Find a clinic for {p.name.split(" / ")[0]} →
+                Find a clinic for {p.name.split(" / ")[0]}
               </a>
             ))}
           </div>

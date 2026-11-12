@@ -62,22 +62,6 @@ const RAW: Raw[] = [
     notes: "Expect a few days of redness and a sandpaper feel.",
   },
   {
-    id: "halo", name: "Halo Laser", what: "Hybrid fractional laser", aka: ["Sciton Halo", "Hybrid fractional laser"], approach: "laser", collagen: true, onset: 2,
-    summary: "Combines two laser wavelengths to brighten tone and refine texture.",
-    goals: ["pigment", "texture", "glow"], cost: { nyc: [1200, 2500], miami: [1200, 2200] }, priceUnit: "per session",
-    sessions: "1–3", lasts: "Long-lasting with sun protection", downtimeDays: [5, 7], pain: 3, results: 2,
-    performedBy: "Dermatologist or supervised clinician", contraindications: ["pregnancy", "active-skin", "keloid"],
-    notes: "Tiny dark dots flake off over about a week.",
-  },
-  {
-    id: "moxi", name: "Moxi", what: "Gentle 1927 nm fractional laser", aka: ["Sciton Moxi", "1927 nm thulium laser"], approach: "laser", collagen: true, onset: 2,
-    summary: "A light 'baby laser' for glow, early sun spots and pore size with almost no recovery.",
-    goals: ["glow", "texture", "pigment"], cost: { nyc: [600, 900], miami: [600, 900] }, priceUnit: "per session",
-    sessions: "3–4, about 4 weeks apart", lasts: "Months; often done as maintenance", downtimeDays: [0, 2], pain: 2, results: 1,
-    performedBy: "Dermatologist or supervised clinician", contraindications: ["pregnancy", "active-skin"],
-    notes: "Popular before events — skin looks fresher in a few days.",
-  },
-  {
     id: "clear-brilliant", name: "Clear + Brilliant", what: "Gentle 1440/1927 nm fractional laser", aka: ["C+B", "Clear + Brilliant Touch"], approach: "laser", collagen: true, onset: 2,
     summary: "A low-energy laser for pores, texture and early sun spots, often done as a series with little downtime.",
     goals: ["glow", "texture", "pigment"], cost: { nyc: [450, 500], miami: [400, 600] }, priceUnit: "per session",
@@ -92,14 +76,6 @@ const RAW: Raw[] = [
     sessions: "3–6, about 4–6 weeks apart", lasts: "Long-lasting; gradual", downtimeDays: [1, 3], pain: 2, results: 2,
     performedBy: "Dermatologist or supervised clinician", contraindications: ["active-skin", "keloid", "blood-thinners", "isotretinoin"],
     notes: "Avoid at-home rollers for deep treatment — infection risk.",
-  },
-  {
-    id: "prp", name: "PRP Microneedling", what: "\"Vampire facial\"", aka: ["Vampire facial", "Platelet-rich plasma"], approach: "skin", collagen: true, onset: 3, minAge: 22,
-    summary: "Microneedling with platelet-rich plasma from your own blood, aimed at glow and texture.",
-    goals: ["acne"], cost: { nyc: [550, 1200], miami: [200, 900] }, priceUnit: "per session",
-    sessions: "3, about 4–6 weeks apart", lasts: "Gradual; maintenance yearly", downtimeDays: [1, 3], pain: 3, results: 2,
-    performedBy: "Physician-supervised clinic", contraindications: ["pregnancy", "active-skin", "blood-thinners", "isotretinoin"],
-    notes: "Evidence is still growing; make sure blood is handled in a medical setting.",
   },
   {
     id: "sculptra", name: "Sculptra", what: "Collagen-stimulating injectable", aka: ["Poly-L-lactic acid", "Biostimulator"], approach: "biostim", collagen: true, onset: 3, minAge: 22,
@@ -158,30 +134,6 @@ const RAW: Raw[] = [
 
   // ── Resurface & brighten ────────────────────────────────────────────
   {
-    id: "hydrafacial", name: "HydraFacial", what: "Hydradermabrasion facial", aka: ["Hydradermabrasion"], approach: "skin", onset: 1,
-    summary: "Cleanses, gently exfoliates and hydrates for an instant glow with zero recovery.",
-    goals: ["glow"], cost: { nyc: [200, 330], miami: [175, 325] }, priceUnit: "per session",
-    sessions: "Single; monthly for upkeep", lasts: "Days to weeks", downtimeDays: [0, 0], pain: 1, results: 1,
-    performedBy: "Licensed aesthetician", contraindications: ["active-skin"],
-    notes: "Great before an event.",
-  },
-  {
-    id: "dermaplaning", name: "Dermaplaning", what: "Manual exfoliation", aka: ["Blade exfoliation"], approach: "skin", onset: 1,
-    summary: "A blade gently removes dead skin and peach fuzz for smooth, bright skin.",
-    goals: ["glow"], cost: { nyc: [100, 250], miami: [60, 200] }, priceUnit: "per session",
-    sessions: "Single; every 4 weeks", lasts: "About 3–4 weeks", downtimeDays: [0, 0], pain: 1, results: 1,
-    performedBy: "Licensed aesthetician", contraindications: ["active-skin"],
-    notes: "Hair does not grow back thicker.",
-  },
-  {
-    id: "peel", name: "Chemical Peel", what: "Superficial to medium acid peel", aka: ["VI Peel", "Glycolic peel", "TCA peel", "Salicylic peel"], approach: "skin", onset: 2,
-    summary: "An acid solution removes the outer layer to brighten tone, smooth texture and calm breakouts.",
-    goals: ["glow", "texture", "pigment", "breakouts"], cost: { nyc: [150, 500], miami: [150, 400] }, priceUnit: "per session",
-    sessions: "3–6, about 4 weeks apart", lasts: "Months with skincare", downtimeDays: [0, 5], pain: 2, results: 2,
-    performedBy: "Dermatologist or supervised aesthetician", contraindications: ["pregnancy", "active-skin"],
-    notes: "Deeper skin tones: choose a provider experienced with peels.",
-  },
-  {
     id: "ipl", name: "IPL / BBL Photofacial", what: "Broadband light therapy", aka: ["BBL", "BBL HERO", "Lumecca", "Photofacial"], approach: "laser", onset: 2,
     summary: "Light targets sun spots, redness and broken capillaries for a clearer, even tone. Also used for rosacea redness.",
     goals: ["pigment", "redness", "glow", "breakouts"], cost: { nyc: [400, 850], miami: [350, 750] }, priceUnit: "per session",
@@ -192,7 +144,7 @@ const RAW: Raw[] = [
   {
     id: "pico", name: "Pico Laser", what: "PicoSure / PicoWay", aka: ["PicoSure", "PicoWay", "Pico Genesis"], approach: "laser", onset: 2,
     summary: "Ultra-fast laser pulses break up pigment and refresh texture with little downtime.",
-    goals: ["pigment", "texture", "lines"], cost: { nyc: [500, 900], miami: [400, 800] }, priceUnit: "per session",
+    goals: ["pigment", "texture", "lines", "acne"], cost: { nyc: [500, 900], miami: [400, 800] }, priceUnit: "per session",
     sessions: "3–5, about 4 weeks apart", lasts: "Long-lasting with sun protection", downtimeDays: [1, 3], pain: 3, results: 2,
     performedBy: "Dermatologist or supervised clinician", contraindications: ["pregnancy", "active-skin"],
     notes: "Often chosen for melasma and stubborn spots — ask about your skin type.",
@@ -218,14 +170,6 @@ const RAW: Raw[] = [
   },
   // ── Added: other key face options ──────────────────────────────────────
   {
-    id: "microdermabrasion", name: "Microdermabrasion", what: "Mechanical exfoliation", aka: ["Diamond-tip exfoliation"], approach: "skin", onset: 1,
-    summary: "A device gently sands away the outermost skin layer for smoother, brighter-looking skin.",
-    goals: ["glow", "texture"], cost: { nyc: [150, 250], miami: [75, 200] }, priceUnit: "per session",
-    sessions: "Often a series; monthly for upkeep", lasts: "Weeks", downtimeDays: [0, 0], pain: 1, results: 1,
-    performedBy: "Aesthetician or dermatology office", contraindications: ["active-skin"],
-    notes: "Studies show mild improvement in roughness and tone, not in wrinkles.",
-  },
-  {
     id: "erbium", name: "Erbium Laser Resurfacing", what: "Er:YAG ablative laser", aka: ["Er:YAG laser"], approach: "laser", collagen: true, onset: 3,
     summary: "A resurfacing laser that removes thin layers of damaged skin to smooth wrinkles, texture and sun damage.",
     goals: ["lines", "texture", "pigment"], cost: { nyc: [1500, 4000], miami: [1000, 3500] }, priceUnit: "full face",
@@ -243,14 +187,6 @@ const RAW: Raw[] = [
   },
   // ── Added: more lasers & light devices ────────────────────────────────
   {
-    id: "laser-genesis", name: "Laser Genesis", what: "Microsecond 1064 nm Nd:YAG laser", aka: ["Cutera Laser Genesis"], approach: "laser", onset: 2,
-    summary: "A gentle, no-downtime laser that warms the skin to calm redness and refresh tone and texture.",
-    goals: ["redness", "glow"], cost: { nyc: [275, 600], miami: [275, 600] }, priceUnit: "per session",
-    sessions: "Usually 3–6, a few weeks apart", lasts: "Months; maintenance helps", downtimeDays: [0, 0], pain: 1, results: 1,
-    performedBy: "Dermatologist or supervised clinician", contraindications: ["pregnancy", "active-skin"],
-    notes: "For rosacea redness, studies comparing it with pulsed dye laser have mixed results.",
-  },
-  {
     id: "tixel", name: "Tixel", what: "Heat-based fractional resurfacing (not a laser)", approach: "energy", collagen: true, onset: 3,
     summary: "A heated tip makes tiny controlled marks in the skin's surface to smooth texture and fine lines, with short downtime.",
     goals: ["texture", "lines"], cost: { nyc: [400, 800], miami: [400, 800] }, priceUnit: "per session",
@@ -267,14 +203,6 @@ const RAW: Raw[] = [
     notes: "Results in studies are modest; it's often added to facials.",
   },
   // ── Added: prescription options and scar surgery ───────────────────────
-  {
-    id: "subcision", name: "Subcision", what: "Releasing tethered acne scars with a needle or cannula", approach: "skin", onset: 2,
-    summary: "A dermatologist slips a needle or blunt cannula under rolling acne scars to cut the bands pulling them down.",
-    goals: ["acne"], cost: { nyc: [400, 2600], miami: [200, 1500] }, priceUnit: "per session",
-    sessions: "Often 1–3", lasts: "Long-lasting, though some scars sink back", downtimeDays: [2, 7], pain: 3, results: 2,
-    performedBy: "Board-certified dermatologist", contraindications: ["active-skin", "keloid", "blood-thinners"],
-    notes: "Works best on rolling scars; ice-pick and boxcar scars respond less. Often combined with lasers.",
-  },
   // ── Added: more non-surgical options (Nov 2026) ───────────────────────────
   {
     id: "smile-filler", name: "Smile-Line Filler", what: "Hyaluronic acid filler for folds and lines", aka: ["Nasolabial fold filler", "Marionette line filler", "Juvéderm Vollure", "Restylane Refyne", "Restylane Defyne"], approach: "ha", onset: 1, minAge: 22,
@@ -293,14 +221,6 @@ const RAW: Raw[] = [
     performedBy: "Board-certified dermatologist or plastic surgeon",
     contraindications: ["pregnancy", "active-skin", "blood-thinners", "autoimmune", "keloid", "severe-allergy", "bovine-collagen"],
     notes: "Not dissolvable. A review warns that too much placed too close to the surface can leave a lasting bump.",
-  },
-  {
-    id: "tca-cross", name: "TCA CROSS", what: "Pinpoint acid for ice-pick scars", aka: ["Chemical reconstruction of skin scars", "CROSS technique"], approach: "skin", collagen: true, onset: 3,
-    summary: "A dermatologist dabs a strong acid into the bottom of narrow, deep acne scars so they fill in with new collagen over several sessions.",
-    goals: ["acne"], cost: { nyc: [750, 4000], miami: [750, 4000] }, priceUnit: "per course (depends on the number of scars)",
-    sessions: "Often several, a few weeks apart", lasts: "Long-lasting", downtimeDays: [3, 7], pain: 2, results: 2,
-    performedBy: "Board-certified dermatologist", contraindications: ["pregnancy", "active-skin", "keloid"],
-    notes: "Best for narrow ice-pick and boxcar scars. On deeper skin tones, providers often prepare the skin first to lower the risk of dark marks.",
   },
   {
     id: "aerolase", name: "Aerolase (650-µs laser)", what: "Gentle Nd:YAG laser for active acne", aka: ["Aerolase Neo Elite", "NeoClear", "650-microsecond laser"], approach: "laser", onset: 2,
@@ -369,7 +289,7 @@ const RAW: Raw[] = [
   {
     id: "ultraclear", name: "UltraClear", what: "2910 nm fiber laser resurfacing", aka: ["2910 nm laser", "Cold fiber laser"], approach: "laser", onset: 2,
     summary: "A newer fractional laser that removes a thin layer of skin to smooth sun damage and wrinkles.",
-    goals: ["lines", "texture"], cost: { nyc: null, miami: null }, priceUnit: "per session",
+    goals: ["lines", "texture", "pigment"], cost: { nyc: null, miami: null }, priceUnit: "per session",
     sessions: "In the published study, 3 sessions 6–8 weeks apart", lasts: "Unknown — the study followed people for months", downtimeDays: [5, 7], pain: 3, results: 2,
     performedBy: "Dermatologist or supervised clinician", contraindications: ["pregnancy", "active-skin", "keloid"],
     notes: "One small published study (22 people; 6 left the study). Price not available at the moment for NYC or Miami.",

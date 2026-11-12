@@ -4,6 +4,7 @@ import { useProfile, type Profile } from "@/lib/profile";
 import type { Hidden } from "@/lib/match";
 import type { Procedure } from "@/lib/types";
 import { Disclosure } from "./Disclosure";
+import { HiddenReasons } from "./HiddenReasons";
 
 const TONE = { light: "Light skin", medium: "Medium skin", deep: "Deep skin" } as const;
 
@@ -53,10 +54,10 @@ export function NotShown({ hidden, outside }: { hidden: Hidden[]; outside: Proce
       {hidden.length > 0 && (
         <Disclosure title={`Hidden for your safety (${hidden.length})`} hint="Usually not advised with your answers">
           <ul className="space-y-2">
-            {hidden.map(({ procedure: p, reasons }) => (
+            {hidden.map(({ procedure: p, reasons, sources }) => (
               <li key={p.id} className="text-sm">
                 <span className="font-medium">{p.name}</span>
-                <span className="block text-xs text-muted">Not usually advised with: {reasons.join(" · ")}</span>
+                <HiddenReasons reasons={reasons} sources={sources} />
               </li>
             ))}
           </ul>

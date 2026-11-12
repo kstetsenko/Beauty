@@ -59,22 +59,12 @@ export const SAFETY: Record<string, Safety> = {
     serious: "Infection and skin color changes are possible. Use only FDA-authorized devices, with new sterile needles for each person.",
     links: [FDA_NEEDLING, FDA_NEEDLING_CONSUMER],
   },
-  prp: {
-    serious: "The CDC traced HIV infections to PRP microneedling facials at an unlicensed spa with poor infection control. Choose a licensed medical setting only.",
-    links: [
-      { label: "CDC report — HIV linked to PRP microneedling at a spa (2024)", url: "https://www.cdc.gov/mmwr/volumes/73/wr/mm7316a3.htm" },
-      FDA_NEEDLING,
-    ],
-  },
   co2: {
     serious: "Infection (including cold-sore flare-ups), scarring and lasting color changes. Antiviral medicine is standard before resurfacing around the mouth.",
     links: [FDA_LASERS, { label: "StatPearls (NIH) — Laser complications", url: "https://www.ncbi.nlm.nih.gov/sites/books/NBK532248/" }],
   },
   fraxel: LASER,
-  halo: LASER,
-  moxi: LASER,
   "clear-brilliant": LASER,
-  "laser-genesis": LASER,
   pico: LASER,
   ipl: LASER,
 

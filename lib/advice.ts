@@ -13,8 +13,8 @@ export interface Note {
 const pm = (id: string) => `https://pubmed.ncbi.nlm.nih.gov/${id}/`;
 const pmc = (id: string) => `https://pmc.ncbi.nlm.nih.gov/articles/${id}/`;
 
-export const RESURFACING = new Set(["ultraclear", "co2", "erbium", "fraxel", "halo", "moxi", "clear-brilliant", "tixel", "pico", "peel"]);
-export const LIGHT = new Set(["ultraclear", "co2", "erbium", "fraxel", "halo", "moxi", "clear-brilliant", "laser-genesis", "pico", "ipl", "pdl", "ktp"]);
+export const RESURFACING = new Set(["ultraclear", "co2", "erbium", "fraxel", "clear-brilliant", "tixel", "pico"]);
+export const LIGHT = new Set(["ultraclear", "co2", "erbium", "fraxel", "clear-brilliant", "pico", "ipl", "pdl", "ktp"]);
 export const ENERGY = new Set(["sofwave", "ultherapy", "thermage", "morpheus8", "emface", "tixel"]);
 
 export function notesFor(p: Procedure, a: QuizAnswers): Note[] {
@@ -28,10 +28,8 @@ export function notesFor(p: Procedure, a: QuizAnswers): Note[] {
     n.push({ text: "Medium and deeper skin tones have a higher risk of dark marks after laser. Choose a provider experienced with your skin tone; lower settings are often used.", source: { label: "Review: lasers in skin of color", url: pm("36781686") } });
 
   // Conditions
-  if (a.conditions?.includes("melasma") && LIGHT.has(id) && !["pdl", "laser-genesis"].includes(id))
+  if (a.conditions?.includes("melasma") && LIGHT.has(id) && !["pdl"].includes(id))
     n.push({ text: "With melasma, laser and light results are often temporary and can rebound darker. Topical treatment and sun protection usually come first.", source: { label: "Meta-analysis: lasers for melasma", url: pmc("PMC13128289") } });
-  if (a.conditions?.includes("melasma") && id === "peel")
-    n.push({ text: "Peels have evidence for melasma, but it often returns without maintenance.", source: { label: "Meta-analysis: peels for melasma", url: pm("32947652") } });
   if (a.conditions?.includes("melasma") && id === "laser-toning")
     n.push({ text: "Used specifically for melasma. Meta-analyses find it helps, but melasma often returns, and many sessions can leave white spots.", source: { label: "Meta-analysis: low-fluence Nd:YAG for melasma", url: pm("36533794") } });
   if (a.conditions?.includes("rosacea") && id === "ipl")
@@ -40,7 +38,7 @@ export function notesFor(p: Procedure, a: QuizAnswers): Note[] {
     n.push({ text: "If you get cold sores, antiviral medicine before resurfacing is standard — mention it at your consult.", source: { label: "StatPearls (NIH): laser complications", url: "https://www.ncbi.nlm.nih.gov/sites/books/NBK532248/" } });
 
   // Accutane (2017 consensus)
-  if (a.cautions.includes("isotretinoin") && ["peel", "fraxel", "halo", "moxi", "clear-brilliant"].includes(id))
+  if (a.cautions.includes("isotretinoin") && ["fraxel", "clear-brilliant"].includes(id))
     n.push({ text: "An expert consensus found no evidence to delay this while on isotretinoin (Accutane). Still tell your provider.", source: { label: "JAMA Dermatology consensus (2017)", url: pm("28658462") } });
 
   // Recent treatments
