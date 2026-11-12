@@ -19,11 +19,14 @@
 | **Clinics** | Listed if own pages show board-certified doctors + the treatment; neighborhood first, then A–Z; partners can't reorder; no checked clinic → labeled Google Maps search | `lib/clinics.ts` | unit clinics, e2e clinics |
 | **Privacy** | Quiz answers stay in the tab; taps store no personal data | `lib/profile.ts`, `app/api/track` | unit api, e2e clinics |
 
-## Expected results and combinations
+## Expected results and wording
 
 - **Expected results** (cards, key facts, compare, treatment page): Subtle, Noticeable or Dramatic, from the size of the
   improvement in published studies (`results` in `lib/procedures.ts`, meanings in `RESULT_MEANING`). For low-certainty
   treatments the tag says "estimate". Low-certainty treatments are never rated Dramatic (unit test).
-- **Often combined with** (treatment page): only pairs that a published study tested together (`lib/combos.ts`), each
-  with its PubMed or PMC link. The guide does not say how far apart to space sessions.
+- **No instructions, no medical advice.** The guide describes treatments and reports what labels and studies say,
+  attributed to the source ("A review reports…"). It never tells a person how to prepare, what to stop, when to book or
+  which treatments to combine. Each treatment page says: "Your provider will give you before-treatment and aftercare
+  instructions. Always consult them about your own situation." `tests/unit/wording.test.ts` fails on directive phrases.
+- **Combinations:** not shown (removed so the guide doesn't read as a treatment plan).
 - **Card wording:** reasons are full sentences; cautions start with "Note:" rather than a symbol.

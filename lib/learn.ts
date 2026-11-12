@@ -78,50 +78,41 @@ export const LEARN: Record<string, Link[]> = {
 };
 
 /** Plain-language starting point for each goal, as a dermatologist would frame it. */
-export const GOAL_GUIDE: Record<Goal, { intro: string; foundation: boolean; learn: Link[] }> = {
+export const GOAL_GUIDE: Record<Goal, { intro: string; learn: Link[] }> = {
   lines: {
-    intro: "Lines that appear when you move (frown, forehead, crow's feet) respond to neuromodulators. Folds and lines at rest may need filler, resurfacing or collagen-building treatments. Daily SPF 30+ protects any result.",
-    foundation: true,
+    intro: "Lines that appear when you move (frown, forehead, crow's feet) are treated with neuromodulators such as Botox. Folds and lines at rest are treated with filler, resurfacing or collagen-building treatments.",
     learn: [AAD.wrinkles, AAD.sunDamage],
   },
   lift: {
-    intro: "Ultrasound and radiofrequency tighten gradually, with the best results around 6 months. Laser resurfacing tightens more but needs downtime. Ask a board-certified dermatologist or plastic surgeon whether non-surgical options can give the result you expect.",
-    foundation: false,
+    intro: "Ultrasound and radiofrequency tighten gradually, with the best results around 6 months. Laser resurfacing tightens more but needs downtime. A board-certified dermatologist or plastic surgeon can tell you whether a non-surgical option can give the result you expect.",
     learn: [AAD.firm],
   },
   texture: {
-    intro: "Resurfacing — lasers, peels and microneedling — renews the skin's surface. Gentle options need several sessions; stronger ones need downtime.",
-    foundation: true,
+    intro: "Resurfacing lasers and microneedling renew the skin's surface. Gentle options need several sessions; stronger ones need downtime.",
     learn: [AAD.sunDamage, AAD.younger],
   },
   volume: {
     intro: "Hyaluronic acid fillers add volume right away and can be dissolved. Collagen-stimulating injectables (Sculptra, Radiesse) build gradually and last longer.",
-    foundation: false,
     learn: [AAD.fillersOverview, AAD.fillersFaq],
   },
   pigment: {
-    intro: "Sun protection comes first — spots come back without it. Lasers, IPL and peels lighten sun spots. Melasma is different: a dermatologist usually starts with sun protection and medical treatment, and some lasers can make it worse; low-energy laser toning and peels are used with care.",
-    foundation: true,
+    intro: "Lasers and IPL lighten sun spots. Melasma behaves differently: dermatologists usually start with medical treatment, and studies show some lasers can make it worse.",
     learn: [AAD.sunDamage, AAD.melasma],
   },
   redness: {
-    intro: "Pulsed dye laser, KTP laser and IPL reduce persistent redness and visible vessels over a few sessions. A dermatologist can confirm whether it is rosacea and whether you also need medical treatment.",
-    foundation: false,
+    intro: "Pulsed dye laser, KTP laser and IPL reduce persistent redness and visible vessels over a few sessions. A dermatologist can confirm whether it is rosacea.",
     learn: [AAD.rosaceaLasers],
   },
   acne: {
-    intro: "Get breakouts under control first. Then subcision (for rolling scars), microneedling, RF microneedling, lasers or peels can soften scars — combinations often work best. TCA CROSS suits narrow ice-pick scars.",
-    foundation: true,
+    intro: "Microneedling, RF microneedling, lasers and Bellafill (for rolling scars) can soften acne scars. Most need several sessions.",
     learn: [AAD.acneScars, AAD.needling],
   },
   glow: {
-    intro: "Gentle options — facials, light peels, gentle lasers or skin boosters — add glow with little or no downtime. Many facials have little research, and we say so on each one.",
-    foundation: true,
+    intro: "Gentle lasers, LED and skin boosters such as SkinVive add glow with little or no downtime. Some have little research, and we say so on each one.",
     learn: [AAD.younger, AAD.sunDamage],
   },
   breakouts: {
-    intro: "Acne is first treated with medicine by a dermatologist. In-office options — peels, PDT and lasers such as Aerolase — can help alongside it. The AAD's acne guideline found the evidence too limited to formally recommend these procedures, and they rarely clear acne on their own.",
-    foundation: false,
+    intro: "Acne is first treated with medicine by a dermatologist. In-office options such as AviClear, PDT and Aerolase are used alongside it. The AAD's acne guideline found the evidence too limited to formally recommend these procedures, and they rarely clear acne on their own.",
     learn: [AAD.acneLights, AAD.acne, { label: "AAD — Updated guidelines for acne management", url: "https://www.aad.org/news/updated-guidelines-acne-management" }],
   },
 };
@@ -129,5 +120,4 @@ export const GOAL_GUIDE: Record<Goal, { intro: string; foundation: boolean; lear
 /** Order options from least to most involved, the way a dermatologist would build a plan. */
 export const APPROACH_ORDER = ["toxin", "ha", "skin", "biostim", "laser", "energy", "threads"] as const;
 
-export const SUNSCREEN: Link = AAD.sunDamage;
 export const UNSAFE_TRENDS: Link = AAD.unsafe;

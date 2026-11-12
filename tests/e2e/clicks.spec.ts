@@ -96,7 +96,7 @@ test.describe("every button on the main pages works without errors", () => {
   });
 });
 
-test.describe("expected results, notes and combinations", () => {
+test.describe("expected results, notes and provider wording", () => {
   test("cards show an expected-results tag and grammatical notes", async ({ page }) => {
     const errors = await setup(page);
     await page.goto("/");
@@ -108,14 +108,12 @@ test.describe("expected results, notes and combinations", () => {
     expect(errors).toEqual([]);
   });
 
-  test("a treatment page lists studied combinations with sources", async ({ page }) => {
+  test("a treatment page defers instructions to the provider and shows expected results", async ({ page }) => {
     const errors = await setup(page);
     await page.goto("/procedures/botox?city=nyc");
-    await page.getByText("Often combined with").click();
-    const combos = page.getByRole("list", { name: "Combinations studied" });
-    await expect(combos.getByRole("link", { name: /Smile/ })).toBeVisible();
-    await expect(combos.getByRole("link", { name: /^Source:/ }).first()).toHaveAttribute("href", /ncbi\.nlm\.nih\.gov/);
+    await expect(page.getByText("Often combined with")).toHaveCount(0);
     await page.getByText("Results & recovery").click();
+    await expect(page.getByText(/Your provider will give you before-treatment and aftercare instructions/)).toBeVisible();
     await expect(page.getByText(/Expected results/).first()).toBeVisible();
     await expectNoOverflow(page);
     expect(errors).toEqual([]);

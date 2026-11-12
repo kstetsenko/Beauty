@@ -413,7 +413,7 @@ export const RESEARCH: Record<string, Research> = {
   },
   xerf: {
     resultsIn: "Unknown — no published studies yet",
-    sideEffects: "Not yet described in peer-reviewed studies; ask your provider",
+    sideEffects: "Not yet described in peer-reviewed studies",
     prices: [{ label: "Bustle — XERF cost (US range, face and neck)", url: "https://www.bustle.com/beauty/xerf-radiofrequency-treatment-review" }],
     evidence: 1,
     evidenceNote: "FDA-cleared for skin tightening in 2025 (company announcement). We found no peer-reviewed studies yet.",

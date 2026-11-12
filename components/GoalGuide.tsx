@@ -1,6 +1,6 @@
 "use client";
 import { CITY_LABELS } from "@/lib/clinics";
-import { APPROACH_ORDER, GOAL_GUIDE, SUNSCREEN } from "@/lib/learn";
+import { APPROACH_ORDER, GOAL_GUIDE } from "@/lib/learn";
 import { PRICE_UNKNOWN, downtimeShort, priceFrom, priceRange, usd } from "@/lib/match";
 import { APPROACHES, GOAL_LABELS, PROCEDURES } from "@/lib/procedures";
 import { EVIDENCE_LABELS, RESEARCH } from "@/lib/research";
@@ -40,16 +40,6 @@ function GoalGuideFor({ goal, profile }: { goal: Goal; profile: import("@/lib/pr
       <p className="text-xs text-muted px-1">{options.length} option{options.length === 1 ? "" : "s"} that fit your answers ({CITY_LABELS[city]} prices), from least to most involved. Tap a group to see them.</p>
 
       <div className="space-y-2.5">
-        {g.foundation && (
-          <Disclosure tone="soft" title="Start here: daily basics" hint="What dermatologists recommend first">
-            <p className="text-sm leading-relaxed">
-              Broad-spectrum SPF 30+ every day — before and after any treatment, so results last and spots don't return.
-            </p>
-            <div className="flex flex-col gap-1 mt-2 text-sm">
-              <a href={SUNSCREEN.url} target="_blank" rel="noopener noreferrer" className="underline">{SUNSCREEN.label}</a>
-            </div>
-          </Disclosure>
-        )}
 
         {groups.map(({ a, list }) => (
           <Disclosure key={a} title={APPROACHES[a].label} hint={`${list.length} option${list.length > 1 ? "s" : ""} · ${APPROACHES[a].hint}`}>

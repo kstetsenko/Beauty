@@ -46,7 +46,7 @@ export interface Fact {
 }
 
 export const FACTS: Fact[] = [
-  { fact: "Daily broad-spectrum SPF 30+ is the dermatologist's first step for wrinkles and spots — and keeps procedure results from fading.", source: { label: "AAD — How dermatologists treat sun-damaged skin", url: "https://www.aad.org/public/everyday-care/sun-protection/sun-damage-skin/wrinkles-sun-damage-can-be-treated" } },
+  { fact: "According to the AAD, dermatologists treating sun-damaged skin start with daily broad-spectrum sunscreen.", source: { label: "AAD — How dermatologists treat sun-damaged skin", url: "https://www.aad.org/public/everyday-care/sun-protection/sun-damage-skin/wrinkles-sun-damage-can-be-treated" } },
   { fact: "Most fillers are temporary: hyaluronic acid lasts months to about a year; poly-L-lactic acid up to a few years.", source: { label: "AAD — Fillers: FAQs", url: "https://www.aad.org/public/cosmetic/wrinkles/fillers-faqs" } },
   { fact: "Botulinum toxin results usually appear in 3–7 days and last about 3–4 months.", source: { label: "AAD — Botulinum toxin: overview", url: "https://www.aad.org/public/cosmetic/wrinkles/botulinum-toxin-overview" } },
   { fact: "Ultrasound and radiofrequency tightening is gradual — the best results typically appear around 6 months.", source: { label: "AAD — Many ways to firm sagging skin", url: "https://www.aad.org/public/cosmetic/younger-looking/firm-sagging-skin" } },

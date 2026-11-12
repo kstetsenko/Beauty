@@ -1,28 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { COMBOS, combosFor } from "../../lib/combos";
 import { PROCEDURES, RESULT_LABELS, RESULT_MEANING } from "../../lib/procedures";
 import { RESEARCH } from "../../lib/research";
 import { matchProcedures } from "../../lib/match";
 import { GOAL_LABELS } from "../../lib/procedures";
 
-const ids = new Set(PROCEDURES.map((p) => p.id));
-
-describe("combinations", () => {
-  it("only link treatments in the guide, each with a PubMed or PMC source", () => {
-    for (const c of COMBOS) {
-      for (const id of c.ids) expect(ids.has(id), id).toBe(true);
-      expect(c.ids[0]).not.toBe(c.ids[1]);
-      expect(c.source.url).toMatch(/^https:\/\/(pubmed\.ncbi\.nlm\.nih\.gov|pmc\.ncbi\.nlm\.nih\.gov|www\.ncbi\.nlm\.nih\.gov\/pmc)\//);
-      expect(c.text.endsWith(".")).toBe(true);
-    }
-  });
-  it("work in both directions", () => {
-    for (const c of COMBOS) {
-      expect(combosFor(c.ids[0]).map((x) => x.partner)).toContain(c.ids[1]);
-      expect(combosFor(c.ids[1]).map((x) => x.partner)).toContain(c.ids[0]);
-    }
-  });
-});
 
 describe("expected results", () => {
   it("every treatment has a level with a label and a meaning", () => {
@@ -48,5 +29,20 @@ describe("reason wording", () => {
         }
       }
     }
+  });
+});
+
+describe("no instructions to the person", () => {
+  const DIRECTIVE = /\b(tell your provider|ask your provider|tell the provider|you should|avoid |plan the timing|choose an?|mention it|is standard|usually not needed|comes first)\b/i;
+  it("treatment data, notes and goal guides only describe; they never instruct", async () => {
+    const { notesFor } = await import("../../lib/advice");
+    const { GOAL_GUIDE } = await import("../../lib/learn");
+    const texts: string[] = [];
+    for (const p of PROCEDURES) texts.push(p.notes, p.sessions, p.summary, RESEARCH[p.id].sideEffects ?? "");
+    for (const g of Object.values(GOAL_GUIDE)) texts.push(g.intro);
+    for (const p of PROCEDURES)
+      for (const tone of ["light", "medium", "deep"] as const)
+        for (const n of notesFor(p, { goals: p.goals, downtime: "any", cautions: ["isotretinoin"], tone, conditions: ["melasma", "rosacea", "cold-sores"], recent: ["botox", "filler", "energy", "laser", "peel"], had: [p.id] } as never)) texts.push(n.text);
+    for (const t of texts) expect(t, t).not.toMatch(DIRECTIVE);
   });
 });

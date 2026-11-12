@@ -116,8 +116,8 @@ export function laterReason(p: Procedure, a: QuizAnswers): string | undefined {
     if (!had) continue;
     const name = PROCEDURES.find((x) => x.id === had)?.name.split(" / ")[0] ?? had;
     return had === p.id
-      ? `You had ${name} recently. Its results keep building for months, so repeating it now is usually not needed.`
-      : `You had ${name} recently. Its results keep building for months, so another ${g.label} treatment now is usually not needed.`;
+      ? `You had ${name} recently. Its results keep building for months, and it is listed here for later.`
+      : `You had ${name} recently. Its results keep building for months, so other ${g.label} treatments are listed here for later.`;
   }
   return undefined;
 }
@@ -167,8 +167,8 @@ export function rank(p: Procedure, a: QuizAnswers): { score: number; why: { good
   if (rosacea && ["pdl", "ktp", "ipl"].includes(p.id)) { score += 3; good.unshift("Targets rosacea redness"); }
   if (melasma && LIGHT.has(p.id) && !["pdl"].includes(p.id)) { score -= 3; watch.unshift("Can make melasma darker"); }
   if (a.tone && a.tone !== "light" && LIGHT.has(p.id)) { score -= a.tone === "deep" ? 3 : 2; watch.push("Higher risk of dark marks on your skin tone"); }
-  if (a.had?.includes(p.id)) watch.push("You had this recently — plan the timing");
-  if (a.recent?.includes("filler") && p.id === "ultherapy") { score -= 2; watch.push("Recent filler: a study suggests waiting about 4 weeks"); }
+  if (a.had?.includes(p.id)) watch.push("You noted this treatment in the last 6 months");
+  if (a.recent?.includes("filler") && p.id === "ultherapy") { score -= 2; watch.push("A small study found that ultrasound within 2 weeks of filler reduced the filler"); }
 
   return { score, why: { good, watch } };
 }

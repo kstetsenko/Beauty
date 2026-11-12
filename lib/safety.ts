@@ -1,7 +1,7 @@
 /**
  * Rare-but-serious risks, warning signs and "learn more" links, taken from FDA
  * labels and safety notices or CDC reports. Only procedures with an official
- * source are listed; everything else falls back to "ask your provider".
+ * source are listed; everything else shows only common side effects.
  */
 
 export interface Link {

@@ -47,7 +47,7 @@ test("recent treatments search finds brand names", async ({ page }) => {
   await page.getByPlaceholder(/Search, e.g/).fill("dysport");
   await page.getByRole("button", { name: "Botox", exact: true }).click();
   await page.getByRole("button", { name: "See my options" }).click();
-  await expect(page.getByText(/You had this recently/).first()).toBeVisible();
+  await expect(page.getByText(/You noted this treatment in the last 6 months/).first()).toBeVisible();
 });
 
 test("health questions hide treatments their labels rule out", async ({ page }) => {

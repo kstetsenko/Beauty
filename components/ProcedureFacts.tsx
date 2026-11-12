@@ -1,7 +1,6 @@
 import { CAUTIONS } from "@/lib/cautions";
 import { PRICE_UNKNOWN, downtimeShort, priceFrom, priceRange, usd } from "@/lib/match";
-import { APPROACHES, ONSET_LABELS, PAIN_LABELS, PROCEDURES, RESULT_LABELS, RESULT_MEANING } from "@/lib/procedures";
-import { combosFor } from "@/lib/combos";
+import { APPROACHES, ONSET_LABELS, PAIN_LABELS, RESULT_LABELS, RESULT_MEANING } from "@/lib/procedures";
 import { SAFETY } from "@/lib/safety";
 import { LEARN } from "@/lib/learn";
 import { VIDEOS } from "@/lib/videos";
@@ -107,6 +106,7 @@ export function DetailSections({ p, city, withPrice = true }: { p: Procedure; ci
             <span className="font-medium">{RESULT_LABELS[p.results]}{r.evidence === 1 ? " (our estimate; the evidence is limited)" : ""}.</span> {RESULT_MEANING[p.results]}
           </Row>
           <Row label="When you'll see results">{r.resultsIn}</Row>
+          <Row label="Before your treatment">Your provider will give you before-treatment and aftercare instructions. Always consult them about your own situation.</Row>
           <Row label="How long it lasts">{p.lasts}</Row>
           <Row label="Good to know">{p.notes}</Row>
         </dl>
@@ -117,9 +117,9 @@ export function DetailSections({ p, city, withPrice = true }: { p: Procedure; ci
           <Row label="Common">{r.sideEffects}</Row>
           {safety && <Row label="Rare but serious">{safety.serious}</Row>}
           {safety?.getHelpIf && (
-            <Row label="Get medical help right away if">{safety.getHelpIf}</Row>
+            <Row label="Signs the FDA says need urgent medical care">{safety.getHelpIf}</Row>
           )}
-          <Row label="Not usually advised with">{p.contraindications.length ? p.contraindications.map((c) => CAUTIONS[c].short).join(" · ") : "None listed — ask your provider"}</Row>
+          <Row label="Not usually advised with">{p.contraindications.length ? p.contraindications.map((c) => CAUTIONS[c].short).join(" · ") : "None listed in the sources we checked"}</Row>
         </dl>
       </Disclosure>
 
@@ -161,26 +161,6 @@ export function DetailSections({ p, city, withPrice = true }: { p: Procedure; ci
         </p>
       </Disclosure>
 
-      {combosFor(p.id).length > 0 && (
-        <Disclosure tone="plain" title="Often combined with" hint={combosFor(p.id).map((c) => PROCEDURES.find((x) => x.id === c.partner)?.name.split(" / ")[0]).join(", ")}>
-          <ul className="space-y-3 text-sm" aria-label="Combinations studied">
-            {combosFor(p.id).map((c) => {
-              const q = PROCEDURES.find((x) => x.id === c.partner)!;
-              return (
-                <li key={c.partner}>
-                  <a href={`/procedures/${q.id}?city=${city}`} className="font-medium underline decoration-line underline-offset-2">{q.name.split(" / ")[0]}</a>
-                  <span className="block mt-0.5">{c.text}</span>
-                  <a href={c.source.url} target="_blank" rel="noopener noreferrer" className="block text-xs text-muted underline mt-0.5">Source: {c.source.label}</a>
-                </li>
-              );
-            })}
-          </ul>
-          <p className="text-[11px] text-muted mt-3">
-            Only combinations tested in a published study are listed. Whether a combination suits you, and how far apart to
-            space the sessions, is for your provider to decide.
-          </p>
-        </Disclosure>
-      )}
 
       {withPrice && (
         <Disclosure tone="plain" title="About the price" hint={priceChecked(p.id, city) ? "From published clinic prices" : "Estimate"}>

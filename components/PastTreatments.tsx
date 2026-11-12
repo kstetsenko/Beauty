@@ -59,7 +59,7 @@ export function PastTreatments({ selected, onChange }: { selected: string[]; onC
         );
       })}
       {term && !PROCEDURES.some((p) => hit(p.id)) && (
-        <p className="text-sm text-muted">Not in our list. You can skip this — just tell your provider about it.</p>
+        <p className="text-sm text-muted">Not in our list. You can skip this.</p>
       )}
     </div>
   );

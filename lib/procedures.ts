@@ -25,7 +25,7 @@ const RAW: Raw[] = [
     goals: ["lift"], cost: { nyc: [2700, 5000], miami: [2000, 4500] }, priceUnit: "full face",
     sessions: "Usually 1", lasts: "1–2 years; results build over 3–6 months", downtimeDays: [0, 1], pain: 4, results: 1,
     performedBy: "Physician-supervised clinic", contraindications: ["pregnancy", "active-skin"],
-    notes: "Ask what pain relief is offered — it can be uncomfortable.",
+    notes: "It can be uncomfortable; clinics differ in the pain relief they offer.",
   },
   {
     id: "thermage", name: "Thermage FLX", what: "Radiofrequency skin tightening", aka: ["Monopolar radiofrequency"], approach: "energy", collagen: true, onset: 3,
@@ -33,7 +33,7 @@ const RAW: Raw[] = [
     goals: ["lift", "lines"], cost: { nyc: [3500, 4500], miami: [3000, 4500] }, priceUnit: "full face",
     sessions: "Usually 1", lasts: "About 1–2 years", downtimeDays: [0, 0], pain: 3, results: 1,
     performedBy: "Physician-supervised clinic", contraindications: ["pregnancy", "active-skin", "implant-device"],
-    notes: "Not suitable with some implanted electronic devices — tell your provider.",
+    notes: "Its label lists some implanted electronic devices as a reason it is not used.",
   },
   {
     id: "morpheus8", name: "Morpheus8", what: "Radiofrequency microneedling", aka: ["RF microneedling", "Vivace", "Potenza", "Potenza", "Vivace", "Secret RF", "Genius RF"], approach: "energy", collagen: true, onset: 3, minAge: 22,
@@ -51,7 +51,7 @@ const RAW: Raw[] = [
     sessions: "Usually 1", lasts: "Years, with sun protection", downtimeDays: [7, 14], pain: 5, results: 3,
     performedBy: "Board-certified dermatologist or plastic surgeon",
     contraindications: ["pregnancy", "active-skin", "isotretinoin", "keloid"],
-    notes: "Plan 1–2 weeks off. Fully ablative laser is usually delayed while on isotretinoin (Accutane). Higher risk of pigment changes on deeper skin tones.",
+    notes: "Recovery usually takes 1–2 weeks. A 2017 expert consensus advised against fully ablative laser during isotretinoin (Accutane) use. Studies report a higher risk of pigment changes on deeper skin tones.",
   },
   {
     id: "fraxel", name: "Fraxel", what: "Fractional laser", aka: ["Fraxel Dual", "Fraxel Restore", "1550 nm fractional laser"], approach: "laser", collagen: true, onset: 3,
@@ -75,7 +75,7 @@ const RAW: Raw[] = [
     goals: ["texture", "acne", "lines"], cost: { nyc: [300, 600], miami: [250, 500] }, priceUnit: "per session",
     sessions: "3–6, about 4–6 weeks apart", lasts: "Long-lasting; gradual", downtimeDays: [1, 3], pain: 2, results: 2,
     performedBy: "Dermatologist or supervised clinician", contraindications: ["active-skin", "keloid", "blood-thinners", "isotretinoin"],
-    notes: "Avoid at-home rollers for deep treatment — infection risk.",
+    notes: "The AAD lists at-home microneedling among the skin care trends dermatologists worry about most.",
   },
   {
     id: "sculptra", name: "Sculptra", what: "Collagen-stimulating injectable", aka: ["Poly-L-lactic acid", "Biostimulator"], approach: "biostim", collagen: true, onset: 3, minAge: 22,
@@ -103,7 +103,7 @@ const RAW: Raw[] = [
     sessions: "Single visit", lasts: "About 12–18 months", downtimeDays: [1, 3], pain: 2, results: 3,
     performedBy: "Board-certified dermatologist or plastic surgeon recommended",
     contraindications: ["pregnancy", "active-skin", "blood-thinners", "autoimmune", "severe-allergy"],
-    notes: "Rare but serious risks — choose an experienced medical injector.",
+    notes: "Has rare but serious risks, listed under Side effects & safety.",
   },
   {
     id: "radiesse", name: "Radiesse", what: "Calcium-based filler", aka: ["Calcium hydroxylapatite", "Biostimulator"], approach: "biostim", collagen: true, onset: 1, minAge: 22,
@@ -147,7 +147,7 @@ const RAW: Raw[] = [
     goals: ["pigment", "texture", "lines", "acne"], cost: { nyc: [500, 900], miami: [400, 800] }, priceUnit: "per session",
     sessions: "3–5, about 4 weeks apart", lasts: "Long-lasting with sun protection", downtimeDays: [1, 3], pain: 3, results: 2,
     performedBy: "Dermatologist or supervised clinician", contraindications: ["pregnancy", "active-skin"],
-    notes: "Often chosen for melasma and stubborn spots — ask about your skin type.",
+    notes: "Used for pigmented spots; its FDA clearance also covers acne scars and wrinkles.",
   },
 
   // ── Body & hair ─────────────────────────────────────────────────────
@@ -158,7 +158,7 @@ const RAW: Raw[] = [
     goals: ["volume"], cost: { nyc: [1000, 2500], miami: [850, 1200] }, priceUnit: "per syringe",
     sessions: "Single visit; sometimes a touch-up", lasts: "About 1 year (studies followed people for 12–18 months)", downtimeDays: [2, 7], pain: 2, results: 2,
     performedBy: "Board-certified dermatologist or plastic surgeon recommended", contraindications: ["pregnancy", "active-skin", "blood-thinners", "autoimmune", "severe-allergy"],
-    notes: "A delicate area: swelling and visible lumps are more likely. Choose an experienced injector.",
+    notes: "A delicate area: swelling and visible lumps are more likely than elsewhere on the face.",
   },
   {
     id: "pdl", name: "Pulsed Dye Laser (Vbeam)", what: "Laser for redness and broken capillaries", aka: ["Vbeam Perfecta", "Pulsed dye laser"], approach: "laser", onset: 2,
@@ -166,7 +166,7 @@ const RAW: Raw[] = [
     goals: ["redness", "breakouts"], cost: { nyc: [400, 800], miami: [400, 800] }, priceUnit: "per session",
     sessions: "Usually several, about 4 weeks apart", lasts: "Months to years; redness can return", downtimeDays: [0, 7], pain: 2, results: 2,
     performedBy: "Dermatologist", contraindications: ["pregnancy", "active-skin"],
-    notes: "Some settings cause temporary purple bruising for 1–2 weeks — ask which to expect.",
+    notes: "Some settings cause temporary purple bruising for 1–2 weeks.",
   },
   // ── Added: other key face options ──────────────────────────────────────
   {
@@ -228,7 +228,7 @@ const RAW: Raw[] = [
     goals: ["breakouts"], cost: { nyc: [250, 500], miami: [250, 500] }, priceUnit: "per session",
     sessions: "About 4–6, every 2 weeks", lasts: "Varies; maintenance is common", downtimeDays: [0, 0], pain: 1, results: 2,
     performedBy: "Dermatologist or supervised clinician", contraindications: ["pregnancy", "active-skin"],
-    notes: "Studies included people with skin of color. Studies are small; ask how it fits with any acne medicine you use.",
+    notes: "Studies included people with skin of color. Studies are small.",
   },
   {
     id: "laser-toning", name: "Laser Toning (Q-switched Nd:YAG)", what: "Low-energy laser for melasma and uneven tone", aka: ["Q-switched Nd:YAG", "Spectra laser", "Hollywood Spectra"], approach: "laser", onset: 2,
@@ -244,7 +244,7 @@ const RAW: Raw[] = [
     goals: ["breakouts", "texture", "lines"], cost: { nyc: [100, 400], miami: [100, 400] }, priceUnit: "per session",
     sessions: "Often 2–4, a few weeks apart", lasts: "Months; acne often needs repeat sessions", downtimeDays: [1, 7], pain: 2, results: 2,
     performedBy: "Dermatologist", contraindications: ["pregnancy", "active-skin", "light-sensitivity"],
-    notes: "FDA-approved for precancerous spots (actinic keratoses); use for acne or cosmetic sun damage is off-label. Expect redness and peeling, and strict sun avoidance right after.",
+    notes: "FDA-approved for precancerous spots (actinic keratoses); use for acne or cosmetic sun damage is off-label. It usually causes redness and peeling, and the label describes a period of strict light avoidance afterwards.",
   },
   {
     id: "ktp", name: "KTP Laser (Excel V)", what: "Green-light laser for broken capillaries and redness", aka: ["Excel V", "Excel V+", "532 nm KTP laser"], approach: "laser", onset: 2,
@@ -260,15 +260,15 @@ const RAW: Raw[] = [
     goals: ["glow"], cost: { nyc: [100, 180], miami: [95, 185] }, priceUnit: "per session",
     sessions: "Often sold as a series", lasts: "Temporary", downtimeDays: [0, 0], pain: 1, results: 1,
     performedBy: "Licensed aesthetician", contraindications: ["pregnancy"],
-    notes: "Very little independent research. Tell the provider if you have a pacemaker or other implanted electronic device.",
+    notes: "Very little independent research.",
   },
   {
     id: "xerf", name: "XERF", what: "Multi-frequency radiofrequency skin tightening", aka: ["XERF Structural Skin Tightening"], approach: "energy", onset: 3,
     summary: "A newer needle-free radiofrequency device that heats the skin at more than one depth to tighten it. FDA-cleared in 2025.",
     goals: ["lift"], cost: { nyc: [1250, 3000], miami: [1250, 3000] }, priceUnit: "per session (face and neck)",
-    sessions: "Ask your provider — no published protocol yet", lasts: "Unknown — no published studies yet", downtimeDays: [0, 0], pain: 2, results: 1,
+    sessions: "No published protocol yet", lasts: "Unknown — no published studies yet", downtimeDays: [0, 0], pain: 2, results: 1,
     performedBy: "Physician-supervised clinic", contraindications: ["pregnancy", "active-skin"],
-    notes: "Very new: we found no peer-reviewed studies, only the maker's announcement. Tell your provider about any implanted electronic device.",
+    notes: "Very new: we found no peer-reviewed studies, only the maker's announcement.",
   },
   {
     id: "aviclear", name: "AviClear", what: "1726 nm laser for acne", aka: ["1726 nm laser", "Cutera AviClear"], approach: "laser", onset: 3,
