@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { CITY_LABELS, LISTING_NOTE, NEIGHBORHOODS, PARTNER_NOTE, ZIPS, clinicsFor, directoryLinks, mapsTerm } from "@/lib/clinics";
+import { CITY_LABELS, LISTING_NOTE, NEIGHBORHOODS, PARTNER_NOTE, ZIPS, clinicsFor, directoryLinks, mapsTerm, splitByArea } from "@/lib/clinics";
 import { PROCEDURES } from "@/lib/procedures";
 import { track } from "@/lib/tracking";
 import type { City } from "@/lib/types";
@@ -29,7 +29,7 @@ export function ClinicFinder({ treatment, city: initialCity, area: initialArea =
 
   const name = p.name.split(" / ")[0];
   const { partners, listed } = clinicsFor(city, p.id, area);
-  const inArea = [...partners, ...listed].filter((c) => c.neighborhood === area).length;
+  const { here, elsewhere } = splitByArea(listed, area);
   const links = directoryLinks(city, area, [mapsTerm(p)]);
   const other: City = city === "nyc" ? "miami" : "nyc";
 
@@ -88,20 +88,14 @@ export function ClinicFinder({ treatment, city: initialCity, area: initialArea =
       )}
 
       <div>
-        <h2 className="font-semibold mb-1">Clinics offering {name}{area ? ` near ${area}` : ` in ${CITY_LABELS[city]}`}</h2>
-        {area && listed.length > 0 && inArea === 0 && (
-          <p className="text-xs text-muted mb-2">None listed in {area} yet — showing the rest of {CITY_LABELS[city]}.</p>
-        )}
-        {listed.length > 0 ? (
-          <>
-            <ul className="space-y-2.5 mt-2">{listed.map((c) => <ClinicCard key={c.id} c={c} treatment={p.id} />)}</ul>
-            <p className="text-[11px] text-muted mt-2">{LISTING_NOTE} <a href="/sources#clinics" className="underline">Our criteria</a></p>
-          </>
+        <h2 className="font-semibold mb-1">{area ? `In ${area}` : `Clinics offering ${name} in ${CITY_LABELS[city]}`}</h2>
+        {here.length > 0 ? (
+          <ul className="space-y-2.5 mt-2" aria-label={area ? `Clinics in ${area}` : "Clinics"}>{here.map((c) => <ClinicCard key={c.id} c={c} treatment={p.id} />)}</ul>
         ) : (
           <div className="rounded-3xl bg-white border border-line p-4 mt-2">
             <p className="text-sm">
-              We haven&apos;t checked a clinic for {name} in {CITY_LABELS[city]} yet. Google Maps lists clinics that offer it, with
-              ratings and reviews:
+              We haven&apos;t checked a clinic for {name} {area ? `in ${area}` : `in ${CITY_LABELS[city]}`} yet. Google Maps lists clinics that
+              offer it, with ratings and reviews:
             </p>
             <TrackedLink href={links.byProcedure[0].href} ev={{ kind: "maps", treatment: p.id, city, area }} className="btn-main block text-center text-sm mt-3">
               See {name} clinics near {area || "me"} on Google Maps ↗
@@ -113,6 +107,14 @@ export function ClinicFinder({ treatment, city: initialCity, area: initialArea =
             </p>
           </div>
         )}
+        {elsewhere.length > 0 && (
+          <div className="mt-4">
+            <Disclosure title={`Elsewhere in ${CITY_LABELS[city]} (${elsewhere.length})`} hint="Checked clinics in other neighborhoods">
+              <ul className="space-y-2.5" aria-label={`Elsewhere in ${CITY_LABELS[city]}`}>{elsewhere.map((c) => <ClinicCard key={c.id} c={c} treatment={p.id} />)}</ul>
+            </Disclosure>
+          </div>
+        )}
+        {listed.length > 0 && <p className="text-[11px] text-muted mt-2">{LISTING_NOTE} <a href="/sources#clinics" className="underline">Our criteria</a></p>}
       </div>
 
       <Disclosure title="Search on your own" hint="Google Maps, board-certification directories, license lookup">

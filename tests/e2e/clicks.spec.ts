@@ -86,8 +86,10 @@ test.describe("every button on the main pages works without errors", () => {
     await setup(page);
     await withProfile(page, { ...typical, goals: ["redness"] });
     await page.goto("/procedures");
+    await expect(page.getByText(/treatments for redness fit your answers/)).toBeVisible();
     const mine = await page.locator("main ul li a").count();
     await page.getByRole("tab", { name: /All goals/ }).click();
+    await expect(page.getByText(/of \d+ treatments fit your answers/)).toBeVisible();
     const all = await page.locator("main ul li a").count();
     expect(mine).toBeGreaterThan(0);
     expect(all).toBeGreaterThan(mine);

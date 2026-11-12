@@ -53,7 +53,7 @@ export interface Procedure {
   /** Price tier, derived from the NYC low price. */
   tier: Tier;
   /** Typical price range per visit (or per syringe/area) in USD. Educational estimate only. */
-  /** Typical price range per city; null when no price is published ("Price not published — ask the clinic"). */
+  /** Typical price range per city; null when no price source was found ("Price not available at the moment"). */
   cost: Record<City, [number, number] | null>;
   priceUnit: string;
   sessions: string;
@@ -73,6 +73,8 @@ export interface Clinic {
   name: string;
   city: City;
   neighborhood: string;
+  /** What kind of place it is, shown on the card. */
+  kind: "Dermatology practice" | "University medical center" | "Plastic surgery practice" | "Medical spa";
   address?: string;
   /** Treatment ids the clinic's own website lists. */
   offers: string[];

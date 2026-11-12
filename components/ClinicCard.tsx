@@ -13,7 +13,8 @@ export function ClinicCard({ c, treatment }: { c: Clinic; treatment: string }) {
         <p className="font-medium min-w-0">{c.name}</p>
         {c.partner && <span className="shrink-0 rounded-full border border-line px-2 py-0.5 text-[10px] uppercase tracking-wide text-muted">Partner</span>}
       </div>
-      <p className="text-xs text-muted">{c.neighborhood}{c.address ? ` · ${c.address}` : ""}</p>
+      <p className="text-xs text-muted">{c.kind} · {c.neighborhood}</p>
+      {c.address && <p className="text-xs text-muted">{c.address}</p>}
       <p className="text-xs mt-1.5">
         ✓ {c.credential}{" "}
         <a href={c.credentialSource} target="_blank" rel="noopener noreferrer" className="text-muted underline">source</a>

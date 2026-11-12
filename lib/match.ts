@@ -54,21 +54,21 @@ export function matchProcedures(a: QuizAnswers): { shown: Match[]; hidden: Hidde
   return { shown, hidden };
 }
 
-export const PRICE_UNKNOWN = "Price not published — ask the clinic";
+export const PRICE_UNKNOWN = "Price not available at the moment";
 
 /** Lowest typical price, or Infinity when no price is published (sorts last, never "under $500"). */
 export function priceLow(p: Procedure, city: "nyc" | "miami") {
   return p.cost[city]?.[0] ?? Infinity;
 }
-/** "from $350", or the not-published message. */
+/** "from $350", or "Price not available". */
 export function priceFrom(p: Procedure, city: "nyc" | "miami") {
   const c = p.cost[city];
-  return c ? `from ${usd(c[0])}` : "Price not published";
+  return c ? `from ${usd(c[0])}` : "Price not available";
 }
-/** "$350–600", or the not-published message. */
+/** "$350–600", or "Not available". */
 export function priceRange(p: Procedure, city: "nyc" | "miami") {
   const c = p.cost[city];
-  return c ? `${usd(c[0])}–${usd(c[1]).replace("$", "")}` : "Not published";
+  return c ? `${usd(c[0])}–${usd(c[1]).replace("$", "")}` : "Not available";
 }
 
 export function usd(n: number) {

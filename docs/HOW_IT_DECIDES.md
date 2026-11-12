@@ -12,7 +12,7 @@
 | **Ranking** | +3 per goal treated; +2 per research level; +1–3 results only if research ≥ "Some"; condition boosts and risk penalties; ties: fewer cautions → stronger research → lower price | `lib/match.ts` `rank` | unit match |
 | **Reasons on each card** | FDA basis first (if any), goals treated, research level, results (only if studied), cautions | `lib/match.ts`, `lib/basis.ts` | unit match |
 | **Research level** | Strong = RCTs/meta-analyses; Some = systematic reviews or consistent smaller studies; Limited = small/uncontrolled/maker-linked or none | `lib/research.ts` | unit data |
-| **Prices** | Clinic page → "From clinic prices"; national range → "Estimate"; none → "Price not published — ask the clinic" (sorts last, never "under $500") | `lib/match.ts` `priceFrom/priceLow` | unit data |
+| **Prices** | Clinic page → "From clinic prices"; national range → "Estimate"; none → "Price not available at the moment" (sorts last, never "under $500") | `lib/match.ts` `priceFrom/priceLow` | unit data |
 | **Plans and filters** | Shown only if they fit your goals and leave ≥1 option | `lib/filters.ts`, `lib/relevance.ts` | unit filters, e2e clicks |
 | **Compare** | Same goal only, up to 3; ends with "Find a clinic" for each | `components/CompareView.tsx` | e2e pages |
 | **Clinics** | Listed if own pages show board-certified doctors + the treatment; neighborhood first, then A–Z; partners can't reorder; no checked clinic → labeled Google Maps search | `lib/clinics.ts` | unit clinics, e2e clinics |

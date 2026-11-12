@@ -364,7 +364,7 @@ const RAW: Raw[] = [
     goals: ["pigment"], cost: { nyc: null, miami: null }, priceUnit: "per session",
     sessions: "Often a series of sessions", lasts: "Melasma often returns; maintenance is common", downtimeDays: [0, 2], pain: 2, results: 2,
     performedBy: "Dermatologist or supervised clinician", contraindications: ["pregnancy", "active-skin", "keloid", "blood-thinners", "isotretinoin"],
-    notes: "Studies are small. No published price in NYC or Miami yet — ask the clinic.",
+    notes: "Studies are small. Price not available at the moment for NYC or Miami.",
   },
   {
     id: "ultraclear", name: "UltraClear", what: "2910 nm fiber laser resurfacing", aka: ["2910 nm laser", "Cold fiber laser"], approach: "laser", onset: 2,
@@ -372,7 +372,7 @@ const RAW: Raw[] = [
     goals: ["lines", "texture"], cost: { nyc: null, miami: null }, priceUnit: "per session",
     sessions: "In the published study, 3 sessions 6–8 weeks apart", lasts: "Unknown — the study followed people for months", downtimeDays: [5, 7], pain: 3, results: 2,
     performedBy: "Dermatologist or supervised clinician", contraindications: ["pregnancy", "active-skin", "keloid"],
-    notes: "One small published study (22 people; 6 left the study). No published price in NYC or Miami yet — ask the clinic.",
+    notes: "One small published study (22 people; 6 left the study). Price not available at the moment for NYC or Miami.",
   },
 ];
 

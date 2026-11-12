@@ -40,7 +40,7 @@ export function KeyFacts({ p, city }: { p: Procedure; city: City }) {
             <dd className="text-[11px] text-muted mt-0.5">{priceChecked(p.id, city) ? "✓ From clinic prices" : "Estimate"}</dd>
           </>
         ) : (
-          <dd className="text-[11px] text-muted">No published price yet — ask the clinic</dd>
+          <dd className="text-[11px] text-muted">Not available at the moment</dd>
         )}
       </div>
       <div className="rounded-2xl bg-sand p-3">
