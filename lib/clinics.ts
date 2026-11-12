@@ -16,7 +16,7 @@ export const CLINICS: Clinic[] = [
   {
     id: "spring-street-derm", name: "Spring Street Dermatology", city: "nyc", neighborhood: "SoHo",
     address: "75 Spring Street, Floor 2, New York, NY 10012",
-    offers: ["botox", "cheek-filler", "smile-filler", "peel", "ipl", "microneedling", "sofwave", "pdt", "ktp"],
+    offers: ["botox", "cheek-filler", "smile-filler", "sculptra", "prp", "peel", "ipl", "microneedling", "microdermabrasion", "fraxel", "laser-genesis", "sofwave", "pdt", "ktp"],
     website: "https://springstderm.com/", googleUrl: maps("Spring Street Dermatology 75 Spring Street New York NY"),
     rating: null, reviewCount: null, ratingCheckedAt: null,
     credential: "Board-certified dermatologists", credentialSource: "https://springstderm.com/about/",
@@ -24,7 +24,7 @@ export const CLINICS: Clinic[] = [
   },
   {
     id: "tribeca-park-derm", name: "Tribeca Park Dermatology", city: "nyc", neighborhood: "Tribeca",
-    offers: ["botox", "cheek-filler", "smile-filler", "clear-brilliant", "laser-toning", "erbium"],
+    offers: ["botox", "cheek-filler", "smile-filler", "sculptra", "prp", "morpheus8", "halo", "moxi", "clear-brilliant", "laser-toning", "erbium", "ipl", "microneedling", "peel"],
     website: "https://triparkderm.com/", googleUrl: maps("Tribeca Park Dermatology New York NY"),
     rating: null, reviewCount: null, ratingCheckedAt: null,
     credential: "Dermatologists who are Fellows of the AAD (FAAD)", credentialSource: "https://triparkderm.com/",
@@ -33,7 +33,7 @@ export const CLINICS: Clinic[] = [
   {
     id: "laser-skin-surgery-ny", name: "Laser & Skin Surgery Center of New York", city: "nyc", neighborhood: "Murray Hill",
     address: "317 East 34th Street, New York, NY 10016",
-    offers: ["botox", "cheek-filler", "smile-filler", "microneedling", "ktp"],
+    offers: ["botox", "cheek-filler", "smile-filler", "sculptra", "radiesse", "sofwave", "thermage", "ultherapy", "fraxel", "pdl", "pico", "clear-brilliant", "erbium", "microneedling", "ktp"],
     website: "https://www.laserskinsurgery.com/", googleUrl: maps("Laser & Skin Surgery Center of New York 317 East 34th Street"),
     rating: null, reviewCount: null, ratingCheckedAt: null,
     credential: "Treatments performed by board-certified dermatologists", credentialSource: "https://www.laserskinsurgery.com/contact/new-york-city/",
@@ -42,7 +42,7 @@ export const CLINICS: Clinic[] = [
   {
     id: "miami-skin-institute", name: "Miami Skin Institute", city: "miami", neighborhood: "Coral Gables",
     address: "135 San Lorenzo Ave, PH 870, Coral Gables, FL 33146",
-    offers: ["botox", "cheek-filler", "smile-filler", "sculptra", "ultherapy", "fraxel", "pdl"],
+    offers: ["botox", "cheek-filler", "smile-filler", "sculptra", "radiesse", "ultherapy", "fraxel", "clear-brilliant", "pdl"],
     website: "https://www.miamiskininstitute.com/", googleUrl: maps("Miami Skin Institute 135 San Lorenzo Ave Coral Gables FL"),
     rating: null, reviewCount: null, ratingCheckedAt: null,
     credential: "Board-certified dermatologist (founder and medical director)", credentialSource: "https://www.hauteliving.com/hautemd/doctor/dr-s-manjula-jegasothy",
@@ -56,6 +56,60 @@ export const CLINICS: Clinic[] = [
     rating: null, reviewCount: null, ratingCheckedAt: null,
     credential: "Board-certified dermatologists (University of Miami)", credentialSource: "https://umiamihealth.org/en/treatments-and-services/dermatology/cosmetic-dermatology",
     checkedAt: "2026-11-12", partner: false, code: "AG-UMBEACH", phone: "305-243-6704",
+  },
+  {
+    id: "derm-laser-group", name: "The Dermatology and Laser Group", city: "nyc", neighborhood: "Upper East Side",
+    address: "110 East 60th Street, Suite 606, New York, NY 10022",
+    offers: ["botox", "cheek-filler", "smile-filler", "under-eye", "sculptra", "radiesse", "skinvive", "ultherapy", "emface", "co2", "tca-cross", "hydrafacial", "prp"],
+    website: "https://dermatologyandlasergroup.com/", googleUrl: maps("The Dermatology and Laser Group 110 East 60th Street New York"),
+    rating: null, reviewCount: null, ratingCheckedAt: null,
+    credential: "Board-certified dermatologist (founder)", credentialSource: "https://dermatologyandlasergroup.com/our_people/arash-akhavan/",
+    checkedAt: "2026-11-12", partner: false, code: "AG-DLG", phone: "212-444-8204",
+  },
+  {
+    id: "ny-cosmetic-skin-laser", name: "New York Cosmetic Skin & Laser Surgery Center", city: "nyc", neighborhood: "Upper East Side",
+    address: "121 East 60th Street, Suite 8AB, New York, NY 10022",
+    offers: ["bellafill", "subcision", "laser-genesis", "hydrafacial"],
+    website: "https://cosmeticlaserskinsurgery.com/", googleUrl: maps("New York Cosmetic Skin & Laser Surgery Center 121 East 60th Street"),
+    rating: null, reviewCount: null, ratingCheckedAt: null,
+    credential: "Double board-certified dermatologist (founder)", credentialSource: "https://cosmeticlaserskinsurgery.com/about-us/",
+    checkedAt: "2026-11-12", partner: false, code: "AG-NYCSL", phone: "(212) 285-1110",
+  },
+  {
+    id: "pfrankmd", name: "PFRANKMD", city: "nyc", neighborhood: "Upper East Side",
+    address: "1049 5th Avenue, Suite 2B, New York, NY 10028",
+    offers: ["aerolase", "emface", "co2", "fraxel", "threads", "hydrafacial", "led"],
+    website: "https://pfrankmd.com/", googleUrl: maps("PFRANKMD 1049 5th Avenue New York"),
+    rating: null, reviewCount: null, ratingCheckedAt: null,
+    credential: "Board-certified dermatologist (founder)", credentialSource: "https://profiles.mountsinai.org/paul-j-frank",
+    checkedAt: "2026-11-12", partner: false, code: "AG-PFRANK", phone: "(212) 327-2919",
+  },
+  {
+    id: "marmur-medical", name: "Marmur Medical", city: "nyc", neighborhood: "Upper East Side",
+    address: "12 East 87th Street, Suite 1A, New York, NY 10128",
+    offers: ["tixel", "laser-toning"],
+    website: "https://marmurmedical.com/", googleUrl: maps("Marmur Medical 12 East 87th Street New York"),
+    rating: null, reviewCount: null, ratingCheckedAt: null,
+    credential: "Board-certified dermatologist (founder)", credentialSource: "https://profiles.mountsinai.org/ellen-s-marmur",
+    checkedAt: "2026-11-12", partner: false, code: "AG-MARMUR", phone: "(212) 996-6900",
+  },
+  {
+    id: "michele-green-md", name: "Michele S. Green, M.D.", city: "nyc", neighborhood: "Upper East Side",
+    address: "156 East 79th Street, #1B, New York, NY 10075",
+    offers: ["hydrafacial", "pdl", "subcision"],
+    website: "https://www.michelegreenmd.com/", googleUrl: maps("Michele Green MD 156 East 79th Street New York"),
+    rating: null, reviewCount: null, ratingCheckedAt: null,
+    credential: "Board-certified dermatologist", credentialSource: "https://www.michelegreenmd.com/contact",
+    checkedAt: "2026-11-12", partner: false, code: "AG-GREEN", phone: "212-535-3088",
+  },
+  {
+    id: "riverchase-miami", name: "Riverchase Dermatology — Miami", city: "miami", neighborhood: "Coconut Grove",
+    address: "3659 S Miami Ave, Suite 6008 (Mercy Professional Building), Miami, FL 33133",
+    offers: ["morpheus8", "botox"],
+    website: "https://www.riverchasedermatology.com/location/miami/", googleUrl: maps("Riverchase Dermatology 3659 S Miami Ave Miami FL"),
+    rating: null, reviewCount: null, ratingCheckedAt: null,
+    credential: "Board-certified dermatologists", credentialSource: "https://www.riverchasedermatology.com/location/miami/",
+    checkedAt: "2026-11-12", partner: false, code: "AG-RIVER", phone: "(305) 856-6555",
   },
 ];
 
@@ -90,7 +144,7 @@ export const ZIPS: Record<City, Record<string, string>> = {
     "11211": "Williamsburg", "11249": "Williamsburg", "11201": "Brooklyn Heights",
   },
   miami: {
-    "33129": "Brickell", "33130": "Brickell", "33131": "Brickell", "33128": "Downtown Miami", "33132": "Downtown Miami",
+    "33129": "Brickell", "33130": "Brickell", "33131": "Brickell", "33133": "Coconut Grove", "33128": "Downtown Miami", "33132": "Downtown Miami",
     "33139": "Miami Beach", "33140": "Miami Beach", "33141": "Miami Beach", "33134": "Coral Gables", "33146": "Coral Gables",
     "33137": "Design District", "33180": "Aventura", "33122": "Doral", "33166": "Doral", "33172": "Doral", "33178": "Doral", "33149": "Key Biscayne",
   },
@@ -99,7 +153,7 @@ export const ZIPS: Record<City, Record<string, string>> = {
 /** Common neighborhoods for one-tap provider searches. */
 export const NEIGHBORHOODS: Record<City, string[]> = {
   nyc: ["Upper East Side", "Upper West Side", "Midtown", "Murray Hill", "Flatiron", "SoHo", "Tribeca", "Financial District", "Williamsburg", "Brooklyn Heights"],
-  miami: ["Brickell", "Downtown Miami", "Miami Beach", "Coral Gables", "Design District", "Aventura", "Doral", "Key Biscayne"],
+  miami: ["Brickell", "Downtown Miami", "Coconut Grove", "Miami Beach", "Coral Gables", "Design District", "Aventura", "Doral", "Key Biscayne"],
 };
 
 export const CITY_LABELS: Record<City, string> = { nyc: "New York City", miami: "Miami" };

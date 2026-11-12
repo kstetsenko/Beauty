@@ -117,3 +117,12 @@ Spring Street Dermatology (SoHo), Tribeca Park Dermatology (Tribeca), Laser & Sk
 (Murray Hill), Miami Skin Institute (Coral Gables), UHealth Dermatology — Miami Beach. Only treatments named on
 their pages are linked. No star ratings are copied. **Owner to spot-check before launch:** one doctor per clinic in
 the state license lookup and AAD directory, and their Google reviews. No Brickell clinic could be verified yet.
+
+## Clinic coverage and health questions (2026-11-12)
+- Added 6 clinics (5 NYC, 1 Miami), each with address, credential source and only treatments named on their own
+  pages. NYC: 37/39 treatments have a checked clinic (not yet: dermaplaning, microcurrent). Miami: 13/39.
+  Where no checked clinic exists, the clinic finder shows a labeled "not checked by us" Google Maps search instead of an
+  empty state. `npm run check` prints the current coverage.
+- New quiz health questions, each from a product label: severe or lidocaine allergy (FDA filler labeling), bovine collagen
+  allergy (Bellafill FDA labeling), pacemaker or implanted electronic device (Thermage labeling), porphyria or light
+  sensitivity (Levulan/PDT FDA label). Sources listed on "How we research".

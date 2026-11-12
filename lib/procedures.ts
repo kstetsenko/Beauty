@@ -32,7 +32,7 @@ const RAW: Raw[] = [
     summary: "Radiofrequency heat tightens existing collagen and stimulates new collagen for firmer skin.",
     goals: ["lift", "lines"], cost: { nyc: [3500, 4500], miami: [3000, 4500] }, priceUnit: "full face",
     sessions: "Usually 1", lasts: "About 1–2 years", downtimeDays: [0, 0], pain: 3, results: 2,
-    performedBy: "Physician-supervised clinic", contraindications: ["pregnancy", "active-skin"],
+    performedBy: "Physician-supervised clinic", contraindications: ["pregnancy", "active-skin", "implant-device"],
     notes: "Not suitable with some implanted electronic devices — tell your provider.",
   },
   {
@@ -126,7 +126,7 @@ const RAW: Raw[] = [
     goals: ["volume"], cost: { nyc: [800, 1500], miami: [750, 1200] }, priceUnit: "per syringe",
     sessions: "Single visit", lasts: "About 12–18 months", downtimeDays: [1, 3], pain: 2, results: 3,
     performedBy: "Board-certified dermatologist or plastic surgeon recommended",
-    contraindications: ["pregnancy", "active-skin", "blood-thinners", "autoimmune"],
+    contraindications: ["pregnancy", "active-skin", "blood-thinners", "autoimmune", "severe-allergy"],
     notes: "Rare but serious risks — choose an experienced medical injector.",
   },
   {
@@ -143,7 +143,7 @@ const RAW: Raw[] = [
     summary: "Micro-droplets of hyaluronic acid under the skin for a smoother, dewy glow — no added volume.",
     goals: ["glow", "texture"], cost: { nyc: [700, 1200], miami: [600, 1000] }, priceUnit: "per treatment",
     sessions: "Single visit", lasts: "About 6 months", downtimeDays: [0, 2], pain: 2, results: 1,
-    performedBy: "Physician, PA or NP", contraindications: ["pregnancy", "active-skin", "blood-thinners"],
+    performedBy: "Physician, PA or NP", contraindications: ["pregnancy", "active-skin", "blood-thinners", "severe-allergy"],
     notes: "Subtle by design — think hydration, not shape.",
   },
   {
@@ -205,7 +205,7 @@ const RAW: Raw[] = [
     summary: "A soft filler placed under the eyes to soften hollows and shadows. Some products are FDA-approved for this area.",
     goals: ["volume"], cost: { nyc: [1000, 2500], miami: [850, 1200] }, priceUnit: "per syringe",
     sessions: "Single visit; sometimes a touch-up", lasts: "About 1 year (studies followed people for 12–18 months)", downtimeDays: [2, 7], pain: 2, results: 2,
-    performedBy: "Board-certified dermatologist or plastic surgeon recommended", contraindications: ["pregnancy", "active-skin", "blood-thinners", "autoimmune"],
+    performedBy: "Board-certified dermatologist or plastic surgeon recommended", contraindications: ["pregnancy", "active-skin", "blood-thinners", "autoimmune", "severe-allergy"],
     notes: "A delicate area: swelling and visible lumps are more likely. Choose an experienced injector.",
   },
   {
@@ -282,7 +282,7 @@ const RAW: Raw[] = [
     goals: ["lines", "volume"], cost: { nyc: [800, 1500], miami: [700, 1500] }, priceUnit: "per syringe",
     sessions: "Single visit", lasts: "About 6–12 months (trials followed people for 6–12 months)", downtimeDays: [1, 3], pain: 2, results: 2,
     performedBy: "Board-certified dermatologist or plastic surgeon recommended",
-    contraindications: ["pregnancy", "active-skin", "blood-thinners", "autoimmune"],
+    contraindications: ["pregnancy", "active-skin", "blood-thinners", "autoimmune", "severe-allergy"],
     notes: "Dissolvable with an enzyme if needed. Most trials compare one filler brand with another, and results are similar.",
   },
   {
@@ -291,7 +291,7 @@ const RAW: Raw[] = [
     goals: ["acne", "lines"], cost: { nyc: [1050, 3300], miami: [1050, 3300] }, priceUnit: "per treatment (often several syringes)",
     sessions: "Usually 1–2 visits", lasts: "Long-lasting; the main acne-scar trial followed people for 12 months", downtimeDays: [1, 3], pain: 2, results: 2,
     performedBy: "Board-certified dermatologist or plastic surgeon",
-    contraindications: ["pregnancy", "active-skin", "blood-thinners", "autoimmune", "keloid"],
+    contraindications: ["pregnancy", "active-skin", "blood-thinners", "autoimmune", "keloid", "severe-allergy", "bovine-collagen"],
     notes: "Not dissolvable. A review warns that too much placed too close to the surface can leave a lasting bump.",
   },
   {
@@ -323,7 +323,7 @@ const RAW: Raw[] = [
     summary: "A light-sensitizing solution is applied to the skin, then activated with blue or red light to calm acne and improve sun-damaged skin.",
     goals: ["breakouts", "texture", "lines"], cost: { nyc: [100, 400], miami: [100, 400] }, priceUnit: "per session",
     sessions: "Often 2–4, a few weeks apart", lasts: "Months; acne often needs repeat sessions", downtimeDays: [1, 7], pain: 2, results: 2,
-    performedBy: "Dermatologist", contraindications: ["pregnancy", "active-skin"],
+    performedBy: "Dermatologist", contraindications: ["pregnancy", "active-skin", "light-sensitivity"],
     notes: "FDA-approved for precancerous spots (actinic keratoses); use for acne or cosmetic sun damage is off-label. Expect redness and peeling, and strict sun avoidance right after.",
   },
   {

@@ -7,6 +7,7 @@ import { personalize, toAnswers, type Profile } from "../lib/profile";
 import { GOAL_LABELS, PROCEDURES } from "../lib/procedures";
 import { RESEARCH } from "../lib/research";
 import { QUESTIONS } from "../lib/questions";
+import { CLINICS } from "../lib/clinics";
 import type { Goal } from "../lib/types";
 
 const base: Profile = { city: "nyc", goals: [], age: "35-49", tone: "light", flags: [], had: [] };
@@ -21,6 +22,7 @@ const profiles: [string, Partial<Profile>][] = [
   ["on Accutane", { flags: ["isotretinoin"] }],
   ["blood thinners + keloids", { flags: ["blood-thinners", "keloid"] }],
   ["zero downtime", { flags: ["no-downtime"] }],
+  ["allergy+implant+light", { flags: ["severe-allergy", "bovine-collagen", "implant-device", "light-sensitivity"] }],
 ];
 
 let failures = 0;
@@ -67,5 +69,11 @@ for (const g of goals) {
   }
   console.log(row.join(""));
 }
+// Clinic coverage (report only): treatments with no checked clinic fall back to a Google Maps search.
+for (const city of ["nyc", "miami"] as const) {
+  const miss = PROCEDURES.filter((p) => !CLINICS.some((c) => c.city === city && c.offers.includes(p.id))).map((p) => p.id);
+  console.log(`Clinic coverage ${city}: ${PROCEDURES.length - miss.length}/${PROCEDURES.length}${miss.length ? " — Google Maps fallback for: " + miss.join(", ") : ""}`);
+}
+for (const c of CLINICS) for (const o of c.offers) if (!PROCEDURES.some((p) => p.id === o)) fail(`clinic ${c.id} lists unknown treatment ${o}`);
 console.log(failures ? `\n${failures} problem(s) found.` : "\nAll checks passed.");
 process.exit(failures ? 1 : 0);

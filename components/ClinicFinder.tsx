@@ -98,9 +98,20 @@ export function ClinicFinder({ treatment, city: initialCity, area: initialArea =
             <p className="text-[11px] text-muted mt-2">{LISTING_NOTE} <a href="/sources#clinics" className="underline">Our criteria</a></p>
           </>
         ) : (
-          <p className="rounded-2xl bg-blush p-4 text-sm mt-2">
-            We haven&apos;t listed a clinic for {name} in {CITY_LABELS[city]} yet. Search Google Maps below, and check the doctor&apos;s board certification.
-          </p>
+          <div className="rounded-3xl bg-white border border-line p-4 mt-2">
+            <p className="text-sm">
+              We haven&apos;t checked a clinic for {name} in {CITY_LABELS[city]} yet. Google Maps lists clinics that offer it, with
+              ratings and reviews:
+            </p>
+            <TrackedLink href={links.byProcedure[0].href} ev={{ kind: "maps", treatment: p.id, city, area }} className="btn-main block text-center text-sm mt-3">
+              See {name} clinics near {area || "me"} on Google Maps ↗
+            </TrackedLink>
+            <p className="text-[11px] text-muted mt-2">
+              Not checked by us — before booking, look up the doctor in the{" "}
+              <a href={links.directories[0].href} target="_blank" rel="noopener noreferrer" className="underline">AAD</a> or{" "}
+              <a href={links.directories[1].href} target="_blank" rel="noopener noreferrer" className="underline">ASPS</a> directory.
+            </p>
+          </div>
         )}
       </div>
 

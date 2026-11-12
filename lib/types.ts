@@ -13,7 +13,7 @@ export type Recent = "botox" | "filler" | "energy" | "laser" | "peel";
 /** Price tier from the NYC starting price (used only to sort by price). */
 export type Tier = 1 | 2 | 3;
 export type Downtime = "none" | "short" | "any";
-export type Caution = "pregnancy" | "active-skin" | "isotretinoin" | "keloid" | "autoimmune" | "blood-thinners";
+export type Caution = "pregnancy" | "active-skin" | "isotretinoin" | "keloid" | "autoimmune" | "blood-thinners" | "severe-allergy" | "bovine-collagen" | "implant-device" | "light-sensitivity";
 
 export interface Location {
   city: City;

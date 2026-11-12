@@ -1,3 +1,4 @@
+import { CAUTION_SOURCES } from "@/lib/cautions";
 import type { Metadata } from "next";
 import { CHECKED } from "@/lib/research";
 
@@ -73,6 +74,21 @@ export default function Sources() {
           These ratings are general, typical descriptions drawn from published studies and provider information. Your
           experience depends on the provider, settings, numbing and your own skin.
         </p>
+      </section>
+
+      <section>
+        <h2 className="font-semibold mb-1">Health questions in the quiz</h2>
+        <p>
+          The quiz only asks about conditions that a product label or medical guideline says change whether a treatment is
+          advised — for example pregnancy, isotretinoin, keloids, bleeding disorders, severe or lidocaine allergies (filler
+          labels), bovine collagen allergy (Bellafill), implanted electronic devices (radiofrequency devices such as Thermage) and
+          porphyria or light sensitivity (photodynamic therapy). It is not a full medical history; your provider will ask more.
+        </p>
+        <ul className="mt-2 space-y-1">
+          {CAUTION_SOURCES.map((l) => (
+            <li key={l.url}><a href={l.url} target="_blank" rel="noopener noreferrer" className="underline">{l.label} ↗</a></li>
+          ))}
+        </ul>
       </section>
 
       <section id="clinics">
