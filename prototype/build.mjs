@@ -20,6 +20,7 @@ const js = await build({
   define: {
     "process.env.NODE_ENV": '"production"',
     "process.env.NEXT_PUBLIC_PROTOTYPE": '"1"',
+    "process.env.NEXT_PUBLIC_RATINGS": '""',
   },
   external: ["next"],
   logLevel: "warning",

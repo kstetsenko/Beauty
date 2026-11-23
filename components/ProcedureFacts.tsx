@@ -51,7 +51,7 @@ export function KeyFacts({ p, city }: { p: Procedure; city: City }) {
       <div className="rounded-2xl bg-sand p-3">
         <dt className="text-[11px] text-muted">Recovery</dt>
         <dd className="font-semibold">{downtimeShort(p.downtimeDays)}</dd>
-        <dd className="text-[11px] text-muted">Lasts {lastsShort(p.lasts)}</dd>
+        <dd className="text-[11px] text-muted">How long it lasts: {lastsShort(p.lasts)}</dd>
       </div>
       <div className="rounded-2xl bg-sand p-3">
         <dt className="text-[11px] text-muted mb-1.5">Pain</dt>
@@ -204,6 +204,6 @@ export function DetailSections({ p, city, withPrice = true }: { p: Procedure; ci
 }
 
 function lastsShort(s: string) {
-  const t = s.split(";")[0].replace(/^Up to about /i, "up to ~").replace(/^About /i, "~");
+  const t = s.split(";")[0].split(" — ")[0].replace(/^Up to about /i, "up to ~").replace(/^About /i, "~");
   return t.charAt(0).toLowerCase() + t.slice(1);
 }
