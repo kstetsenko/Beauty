@@ -6,11 +6,13 @@ import { APPROACHES, GOAL_LABELS, ONSET_LABELS, PAIN_LABELS, PROCEDURES, RESULT_
 import { EVIDENCE_LABELS, RESEARCH, priceChecked } from "@/lib/research";
 import type { City, Goal, Procedure } from "@/lib/types";
 import { Dots } from "./ProcedureFacts";
+import { courseCost, yearlyCost } from "@/lib/cost";
 import { personalize, type Profile } from "@/lib/profile";
 import { NotShown, ProfileBar, ProfileGate } from "./ProfileGate";
 
 const ROWS: { label: string; cell: (p: Procedure, c: City) => React.ReactNode }[] = [
   { label: "Price", cell: (p, c) => p.cost[c] ? <>{priceRange(p, c)}<span className="block text-[11px] text-muted">{p.priceUnit}{priceChecked(p.id, c) ? "" : " · estimate"}</span></> : <span className="text-[11px] text-muted">{PRICE_UNKNOWN}</span> },
+  { label: "Full course or a year", cell: (p, c) => courseCost(p, c) ? <>{courseCost(p, c)}<span className="block text-[11px] text-muted">full course · estimate</span></> : yearlyCost(p, c) ? <>{yearlyCost(p, c)}<span className="block text-[11px] text-muted">a year, if repeated · estimate</span></> : <span className="text-[11px] text-muted">Not calculated (see Sessions and Lasts)</span> },
   { label: "Evidence", cell: (p) => <><Dots value={RESEARCH[p.id].evidence} max={3} label="Certainty of evidence" /><span className="block text-[11px] text-muted mt-1">{EVIDENCE_LABELS[RESEARCH[p.id].evidence]} certainty</span></> },
   { label: "Expected results", cell: (p) => <><Dots value={p.results} max={3} label="Expected results" /><span className="block text-[11px] text-muted mt-1">{RESULT_LABELS[p.results]}{RESEARCH[p.id].evidence === 1 ? " (estimate)" : ""}</span></> },
   { label: "Pain", cell: (p) => <><Dots value={p.pain} max={5} label="Pain" /><span className="block text-[11px] text-muted mt-1">{PAIN_LABELS[p.pain]}</span></> },

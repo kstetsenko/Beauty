@@ -5,7 +5,7 @@ export async function setup(page: Page) {
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
   page.on("console", (m) => m.type() === "error" && errors.push(m.text()));
-  await page.addInitScript(() => localStorage.setItem("disclaimer_acknowledged_v2", new Date().toISOString()));
+  await page.addInitScript(() => localStorage.setItem("disclaimer_acknowledged_v3", new Date().toISOString()));
   // Never hit real clinic, Google or research sites from tests.
   await page.context().route(/^https?:\/\/(?!localhost)/, (r) => r.fulfill({ status: 200, body: "ok" }));
   return errors;

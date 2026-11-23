@@ -4,11 +4,12 @@
  * (#p-sofwave-miami) because the prototype host only passes simple hashes.
  */
 export type Route =
-  | { name: "home" | "procedures" | "sources" | "privacy" | "terms" | "insights" | "about" }
+  | { name: "home" | "procedures" | "sources" | "privacy" | "terms" | "insights" | "about" | "accessibility" }
   | { name: "goals" }
   | { name: "goal"; goal: string; city: "nyc" | "miami" }
   | { name: "procedure"; id: string; city: "nyc" | "miami" }
   | { name: "compare"; ids: string[]; city: "nyc" | "miami"; goal: string }
+  | { name: "list"; ids: string[]; city: "nyc" | "miami" }
   | { name: "clinics"; t: string; city: "nyc" | "miami"; area: string };
 
 import { NEIGHBORHOODS } from "@/lib/clinics";
@@ -26,11 +27,12 @@ export function toHash(href: string): string {
     const i = NEIGHBORHOODS[city].indexOf(url.searchParams.get("area") || "");
     return `c-${url.searchParams.get("t") || ""}-${city}` + (i >= 0 ? `-a${i}` : "");
   }
+  if (parts[0] === "list") return `list-${city}` + (url.searchParams.get("ids") || "").split(",").filter(Boolean).map((i) => `--${i}`).join("");
   if (parts[0] === "compare") {
     const ids = (url.searchParams.get("ids") || "").split(",").filter(Boolean);
     return `compare-${city}-${url.searchParams.get("goal") || "any"}` + ids.map((i) => `--${i}`).join("");
   }
-  if (["procedures", "sources", "privacy", "terms", "insights", "about"].includes(parts[0])) return parts[0];
+  if (["procedures", "sources", "privacy", "terms", "insights", "about", "accessibility"].includes(parts[0])) return parts[0];
   return "home";
 }
 
@@ -46,12 +48,16 @@ export function fromHash(hash: string): Route {
     const city = c[2] as "nyc" | "miami";
     return { name: "clinics", t: c[1], city, area: c[3] ? NEIGHBORHOODS[city][Number(c[3])] ?? "" : "" };
   }
+  if (h.startsWith("list-")) {
+    const [head, ...ids] = h.split("--");
+    return { name: "list", city: cityOf(head.replace("list-", "")), ids };
+  }
   if (h.startsWith("compare-")) {
     const [head, ...ids] = h.split("--");
     const [c, goal] = head.replace("compare-", "").split("-");
     return { name: "compare", city: cityOf(c), goal: goal && goal !== "any" ? goal : "", ids };
   }
-  if (h === "procedures" || h === "sources" || h === "privacy" || h === "terms" || h === "insights" || h === "about") return { name: h };
+  if (h === "procedures" || h === "sources" || h === "privacy" || h === "terms" || h === "insights" || h === "about" || h === "accessibility") return { name: h };
   return { name: "home" };
 }
 

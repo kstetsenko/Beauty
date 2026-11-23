@@ -119,3 +119,51 @@ test.describe("expected results, notes and provider wording", () => {
     expect(errors).toEqual([]);
   });
 });
+
+test.describe("finding the right treatment and clinic without Google", () => {
+  test("goals are explained in everyday words and search finds brands and concerns", async ({ page }) => {
+    const errors = await setup(page);
+    await page.goto("/");
+    await page.getByPlaceholder(/Search a treatment or a concern/).fill("morpheus");
+    await expect(page.getByRole("link", { name: /Morpheus8/ }).first()).toBeVisible();
+    await page.getByPlaceholder(/Search a treatment or a concern/).fill("sun spots");
+    await expect(page.getByRole("link", { name: /Options for spots/i })).toBeVisible();
+    await page.getByPlaceholder(/Search a treatment or a concern/).fill("zzzz");
+    await expect(page.getByText(/Not in our guide/)).toBeVisible();
+    await page.getByRole("button", { name: "New York City", exact: true }).click();
+    await expect(page.getByText("Sun spots, dark patches, uneven tone")).toBeVisible();
+    await expectNoOverflow(page);
+    expect(errors).toEqual([]);
+  });
+
+  test("your list shows clinics that offer it, costs, and a share link without health answers", async ({ page }) => {
+    const errors = await setup(page);
+    await page.goto("/");
+    await takeQuiz(page, { goals: ["Lines & Wrinkles"], flags: [] });
+    await page.getByRole("button", { name: /Find clinics for my top matches/ }).click();
+    const clinics = page.getByRole("list", { name: "Clinics that offer your list" });
+    await expect(clinics.getByText(/\d of \d/).first()).toBeVisible();
+    const href = await page.getByRole("link", { name: "Printable page" }).getAttribute("href");
+    expect(href).toMatch(/^\/list\?city=nyc&ids=[a-z0-9,-]+$/);
+    await page.goto(href!);
+    await expect(page.getByRole("heading", { name: "Treatment shortlist" })).toBeVisible();
+    await expect(page.getByText(/not recommendations or medical advice/)).toBeVisible();
+    await expectNoOverflow(page);
+    expect(errors).toEqual([]);
+  });
+
+  test("clinic cards in the finder show other treatments from your list", async ({ page }) => {
+    const errors = await setup(page);
+    await page.addInitScript(() => sessionStorage.setItem("aesthetic_guide_list", JSON.stringify(["botox", "sofwave", "fraxel"])));
+    await page.goto("/clinics?t=botox&city=nyc");
+    await expect(page.getByText(/Also offers from your list: .*Sofwave/).first()).toBeVisible();
+    expect(errors).toEqual([]);
+  });
+
+  test("off-label treatments are not the top match for lines and texture", async ({ page }) => {
+    await setup(page);
+    await page.goto("/");
+    await takeQuiz(page, { goals: ["Lines & Wrinkles", "Texture & Pores"], tone: "Medium — tans" });
+    await expect(page.locator("ol li a.font-semibold").first()).not.toHaveText(/Photodynamic/);
+  });
+});

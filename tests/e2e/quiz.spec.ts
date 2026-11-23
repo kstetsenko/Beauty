@@ -28,7 +28,7 @@ test("city, then goals; results are about those goals, with reasons", async ({ p
   await page.getByRole("tab", { name: /All your goals/ }).click();
   await page.locator("button[aria-label^='Save']").first().click();
   await page.getByRole("button", { name: /Your list \(1\)/ }).click();
-  await expect(page.getByRole("heading", { name: "Your list" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Your list", exact: true })).toBeVisible();
   await page.locator("a[href^='/clinics']").first().click();
   await expect(page.getByRole("heading", { name: /Find a clinic for/ })).toBeVisible();
   expect(errors).toEqual([]);

@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 
 /** Bump when the notice text changes so everyone sees it again. */
-const KEY = "disclaimer_acknowledged_v2";
+const KEY = "disclaimer_acknowledged_v3";
 
 export function DisclaimerModal() {
   // Open by default (including the server render) so content is never
@@ -46,8 +46,9 @@ export function DisclaimerModal() {
       >
         <h2 id="dm-title" className="text-lg font-semibold mb-2">Before you start</h2>
         <p id="dm-body" className="text-sm text-muted leading-relaxed mb-5">
-          This guide is for education only. It isn&apos;t medical advice, and results vary. Always see a board-certified dermatologist
-          or plastic surgeon before any procedure. In an emergency, call 911.
+          This guide is for education only. It isn&apos;t medical advice or a referral service, and results vary. Your provider gives
+          you instructions for your own situation; always consult a board-certified dermatologist or plastic surgeon. In an
+          emergency, call 911.
         </p>
         <label className="flex items-start gap-3 text-sm mb-5 cursor-pointer">
           <input

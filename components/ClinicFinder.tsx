@@ -7,6 +7,7 @@ import type { City } from "@/lib/types";
 import { ClinicCard } from "./ClinicCard";
 import { TrackedLink } from "./TrackedLink";
 import { Disclosure } from "./Disclosure";
+import { readList } from "./ShareList";
 
 /**
  * In-app clinic finder. People contact clinics directly (website, booking, call, directions);
@@ -19,6 +20,8 @@ export function ClinicFinder({ treatment, city: initialCity, area: initialArea =
   const [area, setArea] = useState(NEIGHBORHOODS[initialCity].includes(initialArea) ? initialArea : "");
   const [zip, setZip] = useState("");
   const [zipNote, setZipNote] = useState("");
+  const [list, setList] = useState<string[]>([]);
+  useEffect(() => setList(readList()), []);
 
   // Count each search (treatment + city + neighborhood) so demand is visible to the owner.
   useEffect(() => {
@@ -82,7 +85,7 @@ export function ClinicFinder({ treatment, city: initialCity, area: initialArea =
       {partners.length > 0 && (
         <div>
           <h2 className="font-semibold mb-2">Partner clinics</h2>
-          <ul className="space-y-2.5">{partners.map((c) => <ClinicCard key={c.id} c={c} treatment={p.id} />)}</ul>
+          <ul className="space-y-2.5">{partners.map((c) => <ClinicCard key={c.id} c={c} treatment={p.id} list={list} />)}</ul>
           <p className="text-[11px] text-muted mt-2">{PARTNER_NOTE}</p>
         </div>
       )}
@@ -90,7 +93,7 @@ export function ClinicFinder({ treatment, city: initialCity, area: initialArea =
       <div>
         <h2 className="font-semibold mb-1">{area ? `In ${area}` : `Clinics offering ${name} in ${CITY_LABELS[city]}`}</h2>
         {here.length > 0 ? (
-          <ul className="space-y-2.5 mt-2" aria-label={area ? `Clinics in ${area}` : "Clinics"}>{here.map((c) => <ClinicCard key={c.id} c={c} treatment={p.id} />)}</ul>
+          <ul className="space-y-2.5 mt-2" aria-label={area ? `Clinics in ${area}` : "Clinics"}>{here.map((c) => <ClinicCard key={c.id} c={c} treatment={p.id} list={list} />)}</ul>
         ) : (
           <div className="rounded-3xl bg-white border border-line p-4 mt-2">
             <p className="text-sm">
@@ -110,7 +113,7 @@ export function ClinicFinder({ treatment, city: initialCity, area: initialArea =
         {elsewhere.length > 0 && (
           <div className="mt-4">
             <Disclosure title={`Elsewhere in ${CITY_LABELS[city]} (${elsewhere.length})`} hint="Checked clinics in other neighborhoods">
-              <ul className="space-y-2.5" aria-label={`Elsewhere in ${CITY_LABELS[city]}`}>{elsewhere.map((c) => <ClinicCard key={c.id} c={c} treatment={p.id} />)}</ul>
+              <ul className="space-y-2.5" aria-label={`Elsewhere in ${CITY_LABELS[city]}`}>{elsewhere.map((c) => <ClinicCard key={c.id} c={c} treatment={p.id} list={list} />)}</ul>
             </Disclosure>
           </div>
         )}

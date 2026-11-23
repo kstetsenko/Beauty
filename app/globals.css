@@ -14,3 +14,8 @@ body { @apply bg-sand text-ink antialiased; }
   .btn-soft { @apply btn bg-white border border-line hover:border-ink; }
   .tile { @apply w-full rounded-2xl bg-white border border-line px-4 py-4 text-left transition-colors hover:border-ink; }
 }
+
+@media print {
+  header, footer, .fixed, .print\:hidden { display: none !important; }
+  body { background: white; }
+}

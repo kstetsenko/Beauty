@@ -2,7 +2,9 @@
 import { useEffect, useMemo, useState } from "react";
 import { CITY_LABELS } from "@/lib/clinics";
 import { clearProfile, personalize, readProfileOnce, saveProfile, type Flag } from "@/lib/profile";
-import { GOAL_LABELS, PROCEDURES } from "@/lib/procedures";
+import { GOAL_EVERYDAY, GOAL_LABELS, PROCEDURES } from "@/lib/procedures";
+import { TreatmentSearch } from "./TreatmentSearch";
+import { LIST_KEY } from "./ShareList";
 import type { AgeBand, City, Goal, SkinTone } from "@/lib/types";
 import { Chips } from "./Chips";
 import { ResultsList } from "./ResultsList";
@@ -66,6 +68,11 @@ export function Guide() {
     setFlags(p.flags);
     setHad(p.had ?? []);
   }, []);
+
+  // The shortlist (treatment ids only, no health answers) is shared with the clinic finder in this tab.
+  useEffect(() => {
+    try { sessionStorage.setItem(LIST_KEY, JSON.stringify(saved)); } catch {}
+  }, [saved]);
 
   const go = (s: Step) => setHistory((h) => [...h, s]);
   const back = () => setHistory((h) => (h.length > 1 ? h.slice(0, -1) : h));
@@ -131,6 +138,7 @@ export function Guide() {
               go("goals");
             }}
           />
+          <TreatmentSearch />
           <p className="mt-8 text-center text-sm text-muted">
             Or <a href="/goals" className="underline">explore by goal</a> · <a href="/procedures" className="underline">browse all {PROCEDURES.length} treatments</a> ·{" "}
             <a href="/insights" className="underline">core insights</a> ·{" "}
@@ -152,10 +160,13 @@ export function Guide() {
                   type="button"
                   aria-pressed={on}
                   disabled={!on && goals.length >= 3}
+                  aria-label={GOAL_LABELS[g]}
+                  aria-describedby={`goal-${g}-hint`}
                   onClick={() => setGoals(on ? goals.filter((x) => x !== g) : [...goals, g])}
                   className={"tile disabled:opacity-40 " + (on ? "!border-ink bg-blush" : "")}
                 >
-                  <span className="font-medium">{on ? "✓ " : ""}{GOAL_LABELS[g]}</span>
+                  <span className="font-medium block">{on ? "✓ " : ""}{GOAL_LABELS[g]}</span>
+                  <span id={`goal-${g}-hint`} aria-hidden="true" className="block text-[11px] text-muted leading-snug mt-0.5">{GOAL_EVERYDAY[g]}</span>
                 </button>
               );
             })}

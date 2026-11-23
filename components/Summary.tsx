@@ -9,6 +9,8 @@ import { Disclosure } from "./Disclosure";
 import { HiddenReasons } from "./HiddenReasons";
 import { Dots } from "./ProcedureFacts";
 import { TrackedLink } from "./TrackedLink";
+import { ListClinics } from "./ListClinics";
+import { ShareList } from "./ShareList";
 
 
 export function Summary({
@@ -68,6 +70,9 @@ export function Summary({
               </li>
             ))}
           </ul>
+
+          <ListClinics city={city} ids={ids} />
+          <ShareList city={city} ids={ids} />
 
           {compareGroups.length > 0 && (
             <div className="grid gap-2">

@@ -1,6 +1,7 @@
 import { useEffect, useSyncExternalStore } from "react";
 import { createRoot } from "react-dom/client";
 import About from "@/app/about/page";
+import Accessibility from "@/app/accessibility/page";
 import Privacy from "@/app/privacy/page";
 import Sources from "@/app/sources/page";
 import Terms from "@/app/terms/page";
@@ -13,6 +14,7 @@ import { Guide } from "@/components/Guide";
 import { Insights } from "@/components/Insights";
 import { ProcedureBrowser } from "@/components/ProcedureBrowser";
 import { ProcedureDetail } from "@/components/ProcedureDetail";
+import { SharedList } from "@/components/SharedList";
 import { GOAL_LABELS, PROCEDURES } from "@/lib/procedures";
 import type { Goal } from "@/lib/types";
 import { fromHash, navigate, subscribe } from "./router";
@@ -38,6 +40,8 @@ function Page() {
       return GOAL_LABELS[r.goal] ? <GoalGuide goal={r.goal as Goal} city={r.city} /> : <GoalIndex />;
     case "compare":
       return <CompareView />;
+    case "list":
+      return <SharedList city={r.city} ids={r.ids} />;
     case "clinics":
       return <ClinicFinder key={hash} treatment={r.t} city={r.city} area={r.area} />;
     case "insights":
@@ -48,6 +52,8 @@ function Page() {
       return <Privacy />;
     case "terms":
       return <Terms />;
+    case "accessibility":
+      return <Accessibility />;
     case "about":
       return <About />;
     default:

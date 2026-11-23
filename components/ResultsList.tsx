@@ -1,4 +1,5 @@
 "use client";
+import { offLabelGoals } from "@/lib/basis";
 import { useEffect, useMemo, useState } from "react";
 import { CAUTIONS } from "@/lib/cautions";
 import { RANK_RULES, downtimeShort, priceFrom, type Match } from "@/lib/match";
@@ -50,7 +51,7 @@ export function ResultsList({
   const now = list.filter((m) => !m.later);
   const later = list.filter((m) => m.later);
   const bestPerGoal = (tab ? [] : goals)
-    .map((g) => ({ g, m: now.find((x) => x.procedure.goals.includes(g)) }))
+    .map((g) => ({ g, m: now.find((x) => x.procedure.goals.includes(g) && offLabelGoals(x.procedure.id, [g]).length === 0) }))
     .filter((x): x is { g: Goal; m: Match } => !!x.m);
   const card = (m: Match, i: number, top = false) => {
             const p = m.procedure;

@@ -3,7 +3,7 @@ import { PROCEDURES, GOAL_LABELS } from "../../lib/procedures";
 import { expectNoOverflow, setup, typical, withProfile } from "./helpers";
 
 const pages = [
-  "/", "/about", "/goals", "/procedures", "/compare?goal=lines", "/insights", "/sources", "/privacy", "/terms", "/report",
+  "/", "/about", "/goals", "/procedures", "/compare?goal=lines", "/insights", "/sources", "/privacy", "/terms", "/report", "/accessibility", "/list?city=nyc&ids=botox,sofwave,fraxel", "/list?city=miami&ids=botox",
   ...Object.keys(GOAL_LABELS).map((g) => `/goals/${g}?city=nyc`),
   ...PROCEDURES.flatMap((p) => [`/procedures/${p.id}?city=nyc`, `/procedures/${p.id}?city=miami`]),
 ];

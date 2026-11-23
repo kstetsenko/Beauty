@@ -123,7 +123,7 @@ export function laterReason(p: Procedure, a: QuizAnswers): string | undefined {
 }
 
 export const RANK_RULES = [
-  "How many of your goals it is used for (biggest factor)",
+  "How many of your goals its FDA approval or clearance covers (biggest factor); goals it is only used for off-label count less",
   "Certainty of the evidence behind it",
   "How noticeable typical results are, counted only when the evidence is at least moderate",
   "Fit with your skin tone, conditions and recent treatments",
@@ -137,13 +137,14 @@ export function rank(p: Procedure, a: QuizAnswers): { score: number; why: { good
   let score = 0;
 
   const hit = p.goals.filter((g) => a.goals.includes(g));
-  score += 3 * hit.length;
+  // 3 points for each goal its FDA approval/clearance covers; 1 point for a goal it is only used for (off-label).
+  const offLabel = offLabelGoals(p.id, hit);
+  score += 3 * (hit.length - offLabel.length) + offLabel.length;
   if (hit.length > 1) good.push(`Used for ${hit.length} of your goals: ${hit.map((g) => GOAL_LABELS[g].toLowerCase()).join(", ")}`);
   else if (hit.length === 1) good.push(`Used for your goal: ${GOAL_LABELS[hit[0]].toLowerCase()}`);
   // Official basis (FDA approval/clearance) for one of the person's goals goes first.
   const basis = basisFor(p.id, hit);
   if (basis) good.unshift(basis.text);
-  const offLabel = offLabelGoals(p.id, hit);
   if (offLabel.length) watch.push(`Its FDA clearance doesn't cover ${offLabel.map((g) => GOAL_LABELS[g].toLowerCase()).join(" or ")}`);
 
   const ev = RESEARCH[p.id].evidence;

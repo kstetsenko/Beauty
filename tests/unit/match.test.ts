@@ -127,3 +127,27 @@ describe("conditions are linked to their sources", () => {
       }
   });
 });
+
+describe("FDA-covered treatments outrank off-label ones", () => {
+  it("lines + texture never puts an off-label treatment on top", async () => {
+    const { offLabelGoals } = await import("../../lib/basis");
+    for (const tone of ["light", "medium", "deep"] as const) {
+      const { shown } = matchProcedures({ goals: ["lines", "texture"], downtime: "any", cautions: [], tone } as never);
+      const top = shown[0].procedure;
+      expect(offLabelGoals(top.id, ["lines", "texture"]).length, top.id).toBeLessThan(2);
+      expect(shown.findIndex((m) => m.procedure.id === "pdt")).toBeGreaterThan(shown.findIndex((m) => m.procedure.id === "botox"));
+    }
+  });
+  it("for every single goal, an off-label top match must have stronger evidence than every FDA-covered option", async () => {
+    const { RESEARCH } = await import("../../lib/research");
+    const { offLabelGoals } = await import("../../lib/basis");
+    const { GOAL_LABELS } = await import("../../lib/procedures");
+    for (const g of Object.keys(GOAL_LABELS)) {
+      const { shown } = matchProcedures({ goals: [g], downtime: "any", cautions: [], tone: "light" } as never);
+      const covered = shown.filter((m) => offLabelGoals(m.procedure.id, [g as never]).length === 0);
+      const top = shown[0].procedure.id;
+      if (covered.length && offLabelGoals(top, [g as never]).length)
+        for (const c of covered) expect(RESEARCH[top].evidence, `${g}: ${top} vs ${c.procedure.id}`).toBeGreaterThan(RESEARCH[c.procedure.id].evidence);
+    }
+  });
+});

@@ -6,6 +6,7 @@ import { LEARN } from "@/lib/learn";
 import { VIDEOS } from "@/lib/videos";
 import { LEVEL_MEANING, PLAIN, studySummary } from "@/lib/plain";
 import { BASIS } from "@/lib/basis";
+import { courseCost, courseNote, yearNote, yearlyCost } from "@/lib/cost";
 import { Disclosure } from "./Disclosure";
 import { CHECKED, EVIDENCE_LABELS, RESEARCH, priceChecked } from "@/lib/research";
 import type { City, Procedure } from "@/lib/types";
@@ -44,6 +45,8 @@ export function KeyFacts({ p, city }: { p: Procedure; city: City }) {
         ) : (
           <dd className="text-[11px] text-muted">Not available at the moment</dd>
         )}
+        {courseCost(p, city) && <dd className="text-[11px] mt-1.5"><span className="font-medium">Full course about {courseCost(p, city)}</span><span className="block text-muted">Estimate: {courseNote(p)}</span></dd>}
+        {yearlyCost(p, city) && <dd className="text-[11px] mt-1.5"><span className="font-medium">About {yearlyCost(p, city)} a year</span><span className="block text-muted">Estimate: {yearNote(p)}</span></dd>}
       </div>
       <div className="rounded-2xl bg-sand p-3">
         <dt className="text-[11px] text-muted">Recovery</dt>

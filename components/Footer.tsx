@@ -4,13 +4,14 @@ import { FeedbackForm } from "./FeedbackForm";
 export function Footer() {
   return (
     <footer className="max-w-md w-full mx-auto px-5 py-6 text-[11px] text-muted leading-relaxed text-center">
-      <p>For education only — not medical advice. Always consult a board-certified dermatologist or plastic surgeon.</p>
+      <p>For education only, not medical advice. Not a referral service: clinics never pay per patient. Always consult a board-certified dermatologist or plastic surgeon. In an emergency, call 911.</p>
       <nav className="mt-1.5 flex flex-wrap justify-center gap-x-3 gap-y-1">
         <Link href="/about" className="underline">About</Link>
         <Link href="/privacy" className="underline">Privacy</Link>
         <Link href="/terms" className="underline">Terms</Link>
         <Link href="/insights" className="underline">Core insights</Link>
         <Link href="/sources" className="underline">How we research</Link>
+        <Link href="/accessibility" className="underline">Accessibility</Link>
       </nav>
       <div className="mt-3 text-sm">
         <FeedbackForm />

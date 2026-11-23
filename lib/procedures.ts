@@ -326,6 +326,31 @@ export const GOAL_LABELS: Record<string, string> = {
   breakouts: "Breakouts",
 };
 
+/** Each goal in everyday words, shown under the goal in the quiz and used by search. */
+export const GOAL_EVERYDAY: Record<string, string> = {
+  texture: "Large pores, rough or uneven skin",
+  lines: "Forehead, frown or smile lines, crow's feet",
+  lift: "Sagging jawline, loose skin, heavy brows",
+  volume: "Hollow cheeks or under-eyes, a thinner face",
+  pigment: "Sun spots, dark patches, uneven tone",
+  redness: "Flushing, rosacea, small visible veins",
+  acne: "Pitted or rolling marks left by acne",
+  glow: "Dull or tired-looking skin",
+  breakouts: "Pimples that keep coming back",
+};
+/** Extra words people type for each goal. */
+export const GOAL_WORDS: Record<string, string[]> = {
+  texture: ["pores", "rough", "bumpy", "uneven skin", "smooth"],
+  lines: ["wrinkle", "lines", "crow", "forehead", "frown", "11s", "eleven", "smile lines", "laugh lines"],
+  lift: ["sagging", "saggy", "jowl", "jawline", "loose", "droopy", "lift", "firm", "tighten", "neck"],
+  volume: ["hollow", "volume", "cheeks", "under eye", "under-eye", "eye bags", "thin face"],
+  pigment: ["spots", "sun spots", "dark spots", "melasma", "pigment", "brown", "uneven tone", "age spots"],
+  redness: ["red", "redness", "rosacea", "flush", "veins", "broken capillaries", "spider veins"],
+  acne: ["acne scars", "scars", "pitted", "pock", "ice pick"],
+  glow: ["glow", "dull", "tired", "radiance", "hydration", "dry"],
+  breakouts: ["breakout", "pimple", "acne", "zits", "spots on chin"],
+};
+
 export const PAIN_LABELS = ["", "Minimal", "Mild", "Moderate", "Strong", "Intense"];
 export const RESULT_LABELS = ["", "Subtle", "Noticeable", "Dramatic"];
 /** What each "Expected results" level means. Our estimate from the studies and FDA trials for each treatment. */

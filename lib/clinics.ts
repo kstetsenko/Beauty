@@ -136,6 +136,17 @@ export function clinicsFor(city: City, treatment: string, area = "") {
 }
 
 /**
+ * Clinics in a city that offer at least one treatment on the person's list, most matches first, then A–Z.
+ * Partners get no boost: they are only labeled.
+ */
+export function clinicsForList(city: City, ids: string[]) {
+  return CLINICS.filter((c) => c.city === city)
+    .map((c) => ({ clinic: c, matches: ids.filter((id) => c.offers.includes(id)) }))
+    .filter((x) => x.matches.length > 0)
+    .sort((a, b) => b.matches.length - a.matches.length || a.clinic.name.localeCompare(b.clinic.name));
+}
+
+/**
  * ZIP code → neighborhood, matched on the person's device only (a typed ZIP is never sent or stored).
  * Approximate: ZIPs that span areas are assigned to the main one.
  */
