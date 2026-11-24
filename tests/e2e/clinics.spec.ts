@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { expectNoOverflow, setup } from "./helpers";
+import { expectNoOverflow, setup, takeQuiz } from "./helpers";
 
 test("clinic finder: ZIP stays local, links are tagged, no personal-data form", async ({ page, context }) => {
   const errors = await setup(page);
@@ -57,4 +57,14 @@ test.describe("every neighborhood shows only its own clinics", () => {
       }
       expect(errors).toEqual([]);
     });
+});
+
+test("your list has no email sign-up", async ({ page }) => {
+  await setup(page);
+  await page.goto("/");
+  await takeQuiz(page, { goals: ["Redness"] });
+  await page.getByRole("button", { name: /Find clinics for my top matches/ }).click();
+  await expect(page.getByRole("heading", { name: "Your list", exact: true })).toBeVisible();
+  await expect(page.getByText(/Email me/)).toHaveCount(0);
+  await expect(page.locator("main input[type=email]")).toHaveCount(0);
 });

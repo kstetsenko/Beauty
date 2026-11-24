@@ -1,10 +1,8 @@
 "use client";
-import { useState } from "react";
 import { directoryLinks } from "@/lib/clinics";
 import { downtimeShort, priceFrom, type Hidden, type Match } from "@/lib/match";
 import { GOAL_LABELS } from "@/lib/procedures";
 import type { City, Goal } from "@/lib/types";
-import { LeadCaptureForm } from "./LeadCaptureForm";
 import { Disclosure } from "./Disclosure";
 import { HiddenReasons } from "./HiddenReasons";
 import { Dots } from "./ProcedureFacts";
@@ -28,7 +26,6 @@ export function Summary({
   onBrowseAgain: () => void;
   onRestart: () => void;
 }) {
-  const [showEmail, setShowEmail] = useState(false);
   const links = directoryLinks(city, "");
   const ids = saved.map((m) => m.procedure.id);
   // Compare only like with like: saved treatments that share one of the user's goals.
@@ -83,8 +80,6 @@ export function Summary({
               ))}
             </div>
           )}
-          <button type="button" onClick={() => setShowEmail(true)} className="btn-soft text-sm">Email me this guide</button>
-          {showEmail && <LeadCaptureForm city={city} procedureIds={ids} />}
         </>
       )}
 

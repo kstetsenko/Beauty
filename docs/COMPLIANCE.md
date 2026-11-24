@@ -30,8 +30,7 @@ This is a working list, not legal advice. Every item needs a lawyer's sign-off b
 4. **Health-data privacy.** New York's Health Information Privacy Act (S.929) was vetoed on December 19, 2025, and a
    revised bill was introduced; check its status before launch. The guide sends no health answers, but tap counts
    include the treatment viewed.
-5. **Email sign-up** ("Email me this guide"): confirm consent wording and CAN-SPAM details (physical address, unsubscribe).
-6. Fill in the bracketed business name, address, governing law and contact emails in Terms, Privacy and Accessibility.
+5. Fill in the bracketed business name, address, governing law and contact emails in Terms, Privacy and Accessibility.
 
 Sources: Fla. Stat. § 817.505 (flsenate.gov/Laws/Statutes/2018/817.505); Fla. Stat. § 458.3312
 (m.flsenate.gov/Statutes/458.3312); NY S.929 veto (ebglaw.com Health Law Advisor update; nycbar.org report).

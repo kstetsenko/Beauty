@@ -22,7 +22,6 @@ npm run data-check             # the weekly data check, without opening an issue
 ## Deploy (Vercel)
 1. Import this GitHub repo in Vercel (framework preset: Next.js).
 2. Environment variables (all optional — see `.env.example`):
-   - `SUBSCRIBE_WEBHOOK_URL` / `SUBSCRIBE_WEBHOOK_TOKEN` — where "Email me this guide" sign-ups go.
    - `FEEDBACK_GITHUB_REPO` + `FEEDBACK_GITHUB_TOKEN` — visitor feedback becomes GitHub issues labeled `feedback`
      (use a fine-grained token with *Issues: read & write* on this repo only). Or `FEEDBACK_WEBHOOK_URL`.
    - `SUPABASE_URL` + `SUPABASE_SERVICE_KEY` + `REPORT_KEY` — referral tracking and the owner-only `/report` page
@@ -55,7 +54,7 @@ so the same problem can't come back.
 | `lib/clinics.ts` | Listed clinics (with criteria, sources, booking codes), neighborhoods, ZIP → neighborhood map, `PARTNER_NOTE` |
 | `lib/tracking.ts`, `lib/store.ts` | Referral tracking: tap logging, UTM tags, storage (Supabase or local file) — see `docs/TRACKING.md` |
 | `components/` | UI: quiz (`Guide`), cards, procedure page, goal guides, compare, browser, feedback form |
-| `app/` | Pages and API routes (`/api/subscribe`, `/api/feedback`, `/api/track`, `/api/report`); clinic finder `/clinics`; owner-only `/report` |
+| `app/` | Pages and API routes (`/api/feedback`, `/api/track`, `/api/report`); clinic finder `/clinics`; owner-only `/report` |
 | `prototype/` | Single-file prototype build (hash router + small shims) |
 | `scripts/weekly-check.mjs` | Weekly link / PubMed / freshness check |
 | `tests/unit`, `tests/e2e` | Unit/data tests (Vitest) and browser tests (Playwright) |
